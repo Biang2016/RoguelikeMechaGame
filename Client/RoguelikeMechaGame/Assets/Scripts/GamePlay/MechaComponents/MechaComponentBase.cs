@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-public abstract class MechaComponentBase : PoolObject
+public abstract class MechaComponentBase : PoolObject, IGridPos
 {
     public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Transform parent)
     {
@@ -12,17 +12,19 @@ public abstract class MechaComponentBase : PoolObject
         return mcb;
     }
 
-    public MechaComponentInfo MechaComponentInfo;
+    internal MechaComponentInfo MechaComponentInfo;
 
     public virtual void Initialize(MechaComponentInfo mechaComponentInfo)
     {
         MechaComponentInfo = mechaComponentInfo;
+        GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.M_GridPos, transform);
     }
 
     public MechaComponentEditOperator MechaComponentEditOperator;
     public MechaComponentGrids MechaComponentGrids;
+    public HitBoxRoot HitBoxRoot;
 
-    #region  Life
+    #region Life
 
     private int m_LeftLife;
 
@@ -74,4 +76,9 @@ public abstract class MechaComponentBase : PoolObject
     }
 
     #endregion
+
+    public GridPos GetGridPos()
+    {
+        return GridPos.GetGridPosByLocalTrans(transform);
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[ExecuteInEditMode]
 public class MechaComponentEditOperator : MonoBehaviour
 {
     public bool IsSelected = false;
@@ -9,15 +10,12 @@ public class MechaComponentEditOperator : MonoBehaviour
     {
         if (IsSelected)
         {
-            if (Input.GetKeyUp(KeyCode.R))
-            {
-                Rotate();
-            }
+            Rotate();
         }
     }
 
     public void Rotate()
     {
-        Debug.Log("Rotate");
+        transform.Rotate(0, 90, 0);
     }
 }
