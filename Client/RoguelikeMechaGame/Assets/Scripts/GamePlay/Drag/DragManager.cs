@@ -114,4 +114,6 @@ public class DragManager : MonoSingleton<DragManager>
             CurrentDrag = null;
         }
     }
+
+    internal bool IsMouseInsideBag = false;
 }

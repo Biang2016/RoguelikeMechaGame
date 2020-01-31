@@ -7,7 +7,7 @@ public class BagManager : MonoSingleton<BagManager>
     internal int BagItemGridSize;
 
     public Dictionary<MechaComponentType, Sprite> MechaComponentSpriteDict = new Dictionary<MechaComponentType, Sprite>();
-    private Dictionary<MechaComponentType, List<GridPos>> mechaComponentOccupiedGridPosDict = new Dictionary<MechaComponentType, List<GridPos>>();
+    public Dictionary<MechaComponentType, List<GridPos>> MechaComponentOccupiedGridPosDict = new Dictionary<MechaComponentType, List<GridPos>>();
 
     private BagPanel bagPanel;
     private List<MechaComponentInfo> mechaComponentInfosInBag = new List<MechaComponentInfo>();
@@ -30,7 +30,7 @@ public class BagManager : MonoSingleton<BagManager>
     /// </summary>
     private void LoadBlockOccupiedGridInfo()
     {
-        mechaComponentOccupiedGridPosDict.Clear();
+        MechaComponentOccupiedGridPosDict.Clear();
         List<MechaComponentBase> mcbs = new List<MechaComponentBase>();
 
         foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
@@ -38,7 +38,7 @@ public class BagManager : MonoSingleton<BagManager>
             MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
             MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up)), null, null);
             mcbs.Add(mcb);
-            mechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentInfo.OccupiedGridPositions));
+            MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentInfo.OccupiedGridPositions));
         }
 
         foreach (MechaComponentBase mcb in mcbs)
@@ -77,8 +77,6 @@ public class BagManager : MonoSingleton<BagManager>
         }
     }
 
-    internal bool IsMouseInsideBag = false;
-
     private void Reset()
     {
         mechaComponentInfosInBag.Clear();
@@ -97,7 +95,7 @@ public class BagManager : MonoSingleton<BagManager>
 
     public bool AddMechaComponentToBag(MechaComponentInfo mci)
     {
-        bool suc = bagPanel.AddItem(mci, mechaComponentOccupiedGridPosDict[mci.MechaComponentType]);
+        bool suc = bagPanel.TryAddItem(mci, true);
         if (suc)
         {
             mechaComponentInfosInBag.Add(mci);
