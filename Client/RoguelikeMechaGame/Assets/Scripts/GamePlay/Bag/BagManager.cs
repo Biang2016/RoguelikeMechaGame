@@ -32,7 +32,7 @@ public class BagManager : MonoSingleton<BagManager>
         foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
         {
             MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, 0, GridPos.Orientation.Up)), null, null);
+            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up)), null, null);
             mcbs.Add(mcb);
             MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentInfo.OccupiedGridPositions));
         }
@@ -82,16 +82,27 @@ public class BagManager : MonoSingleton<BagManager>
 
     private void Initialize()
     {
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 1, 0, GridPos.Orientation.Down)));
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 1, 0, GridPos.Orientation.Right)));
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Armor, new GridPos(3, 1, 3, GridPos.Orientation.Right)));
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 1, -3, GridPos.Orientation.Right)));
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 1, 3, GridPos.Orientation.Right)));
+        BagPanel.UnlockBagGridTo(40);
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 0, GridPos.Orientation.Down)));
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 0, GridPos.Orientation.Right)));
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Armor, new GridPos(3, 3, GridPos.Orientation.Right)));
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)));
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 3, GridPos.Orientation.Right)));
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Core, new GridPos(3, 3, GridPos.Orientation.Right)));
     }
 
-    public void AddMechaComponentToBag(MechaComponentInfo mci)
+    public bool AddMechaComponentToBag(MechaComponentInfo mci)
     {
-        MechaComponentInfos.Add(mci);
-        BagPanel.AddItem(mci, MechaComponentOccupiedGridPosDict[mci.M_MechaComponentType]);
+        bool suc = BagPanel.AddItem(mci, MechaComponentOccupiedGridPosDict[mci.M_MechaComponentType]);
+        if (suc)
+        {
+            MechaComponentInfos.Add(mci);
+        }
+
+        return suc;
+    }
+
+    public void UnlockBagGridTo(int gridNumber)
+    {
     }
 }

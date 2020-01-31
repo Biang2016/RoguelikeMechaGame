@@ -3,22 +3,19 @@
 public struct GridPos
 {
     public int x;
-    public int y;
     public int z;
     public Orientation orientation;
 
-    public GridPos(int x, int y, int z)
+    public GridPos(int x, int z)
     {
         this.x = x;
-        this.y = y;
         this.z = z;
         orientation = Orientation.Up;
     }
 
-    public GridPos(int x, int y, int z, Orientation orientation)
+    public GridPos(int x, int z, Orientation orientation)
     {
         this.x = x;
-        this.y = y;
         this.z = z;
         this.orientation = orientation;
     }
@@ -26,20 +23,43 @@ public struct GridPos
     public static GridPos GetGridPosByLocalTrans(Transform transform, int gridSize)
     {
         int x = Mathf.FloorToInt(transform.localPosition.x / gridSize) * gridSize;
-        int y = Mathf.FloorToInt(transform.localPosition.y / gridSize) * gridSize;
         int z = Mathf.FloorToInt(transform.localPosition.z / gridSize) * gridSize;
         int rotY = Mathf.RoundToInt(transform.localRotation.eulerAngles.y / 90f) % 4;
-        return new GridPos(x, y, z, (Orientation) rotY);
+        return new GridPos(x, z, (Orientation) rotY);
     }
 
     public static void ApplyGridPosToLocalTrans(GridPos gridPos, Transform transform, int gridSize)
     {
         float x = gridPos.x * gridSize;
-        float y = gridPos.y * gridSize;
         float z = gridPos.z * gridSize;
         float rotY = (int) gridPos.orientation * 90f;
-        transform.localPosition = new Vector3(x, y, z);
-        transform.Rotate(0, rotY, 0);
+        transform.localPosition = new Vector3(x, transform.localPosition.y, z);
+        transform.rotation = Quaternion.Euler(0, rotY, 0);
+    }
+
+    public static GridPos RotateGridPos(GridPos oriGP, Orientation orientation)
+    {
+        switch (orientation)
+        {
+            case Orientation.Up:
+            {
+                return oriGP;
+            }
+            case Orientation.Right:
+            {
+                return new GridPos(oriGP.z, -oriGP.x, Orientation.Up);
+            }
+            case Orientation.Down:
+            {
+                return new GridPos(-oriGP.x, -oriGP.z, Orientation.Up);
+            }
+            case Orientation.Left:
+            {
+                return new GridPos(-oriGP.z, oriGP.x, Orientation.Up);
+            }
+        }
+
+        return new GridPos(0, 00, Orientation.Up);
     }
 
     public enum Orientation

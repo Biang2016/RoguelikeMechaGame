@@ -130,8 +130,16 @@ public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBa
         {
             case DragAreaTypes.Bag:
             {
-                BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo);
-                PoolRecycle();
+                bool suc = BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo);
+                if (suc)
+                {
+                    PoolRecycle();
+                    }
+                else
+                {
+                    DragManager.Instance.CurrentDrag.ReturnOriginalPositionRotation();
+                }
+
                 break;
             }
         }
@@ -140,7 +148,7 @@ public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBa
     public void DragComponent_SetStates(ref bool canDrag, ref DragAreaTypes dragFrom)
     {
         canDrag = true;
-        dragFrom = DragAreaTypes.Bag;
+        dragFrom = DragAreaTypes.MechaEditorArea;
     }
 
     public float DragComponent_DragMinDistance()
@@ -160,8 +168,6 @@ public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBa
     #endregion
 
     #region  IBagItem
-
-    
 
     #endregion
 }

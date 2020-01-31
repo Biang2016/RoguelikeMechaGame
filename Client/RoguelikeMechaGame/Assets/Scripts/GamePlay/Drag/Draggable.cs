@@ -13,13 +13,17 @@ public class Draggable : MonoBehaviour
         caller = GetComponent<IDraggable>();
     }
 
-    [SerializeField] private bool canDrag;
+    private bool canDrag;
     private DragAreaTypes dragFrom;
     private float dragMinDistance;
     private float dragMaxDistance;
 
     private bool isBegin = true;
-    private Vector3 dragBeginPosition;
+    private Vector3 dragBeginPosition_WorldObject;
+    private Vector3 dragBeginPosition_UIObject;
+    private Vector3 oriPosition_WorldObject;
+    private Quaternion oriQuaternion_WorldObject;
+    private Vector2 oriAnchoredPosition_UIObject;
     private Vector3 mOffset;
 
     void Update()
@@ -27,20 +31,25 @@ public class Draggable : MonoBehaviour
         if (!canDrag) return;
         if (IsOnDrag)
         {
-            Vector3 cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 uiCameraPosition = UIManager.Instance.UICamera.ScreenToWorldPoint(Input.mousePosition);
 
             if (isBegin)
             {
                 mOffset = gameObject.transform.position - GetMouseAsWorldPoint();
-                dragBeginPosition = cameraPosition;
-                isBegin = false;
             }
 
             switch (dragFrom)
             {
-                case DragAreaTypes.Bag:
+                case DragAreaTypes.MechaEditorArea:
                 {
-                    float draggedDistance = (transform.position - dragBeginPosition).magnitude;
+                    if (isBegin)
+                    {
+                        dragBeginPosition_WorldObject = GetMouseAsWorldPoint() + mOffset + new Vector3(0.5f, 0, 0.5f) * GameManager.GridSize;
+                        oriPosition_WorldObject = transform.localPosition;
+                        oriQuaternion_WorldObject = transform.localRotation;
+                    }
+
+                    float draggedDistance = (transform.position - dragBeginPosition_WorldObject).magnitude;
                     if (draggedDistance < dragMinDistance) //不动
                     {
                     }
@@ -51,16 +60,45 @@ public class Draggable : MonoBehaviour
                     }
                     else //消失 （显示特效或其他逻辑）
                     {
+                        caller.DragComponent_DragOutEffects();
+                    }
+
+                    caller.DragComponent_OnMousePressed(CheckMoveToArea()); //将鼠标悬停的区域告知拖动对象主体
+                    break;
+                }
+                case DragAreaTypes.Bag:
+                {
+                    if (isBegin)
+                    {
+                        dragBeginPosition_UIObject = uiCameraPosition;
+                        oriAnchoredPosition_UIObject = ((RectTransform) transform).anchoredPosition;
+                    }
+
+                    float draggedDistance = (uiCameraPosition - dragBeginPosition_UIObject).magnitude;
+                    if (draggedDistance < dragMinDistance) //不动
+                    {
+                    }
+                    else if (BagManager.Instance.IsMouseInsideBag) //拖拽物体本身 
+                    {
+                        Vector3 delta_v3 = uiCameraPosition - dragBeginPosition_UIObject;
+                        Vector2 delta = new Vector2(delta_v3.x, delta_v3.y);
+                        ((RectTransform) transform).anchoredPosition = oriAnchoredPosition_UIObject + delta * 100 + Vector2.one * BagManager.Instance.BagItemGridSize / 2f;
+                    }
+                    else //拖出背包
+                    {
+                        caller.DragComponent_DragOutEffects();
                     }
 
                     caller.DragComponent_OnMousePressed(CheckMoveToArea()); //将鼠标悬停的区域告知拖动对象主体
                     break;
                 }
             }
+
+            isBegin = false;
         }
     }
 
-    [SerializeField] private bool _isOnDrag = false;
+    private bool _isOnDrag = false;
 
     public bool IsOnDrag
     {
@@ -68,40 +106,47 @@ public class Draggable : MonoBehaviour
 
         set
         {
-            if (value) //鼠标按下
+            if (_isOnDrag != value)
             {
-                caller.DragComponent_SetStates(ref canDrag, ref dragFrom);
-                if (canDrag)
+                if (value) //鼠标按下
                 {
-                    caller.DragComponent_OnMouseDown();
-                    dragMinDistance = caller.DragComponent_DragMinDistance();
-                    dragMaxDistance = caller.DragComponent_DragMaxDistance();
-                    _isOnDrag = value;
-                    caller.DragComponent_DragOutEffects();
+                    caller.DragComponent_SetStates(ref canDrag, ref dragFrom);
+                    if (canDrag)
+                    {
+                        caller.DragComponent_OnMouseDown();
+                        dragMinDistance = caller.DragComponent_DragMinDistance();
+                        dragMaxDistance = caller.DragComponent_DragMaxDistance();
+                        _isOnDrag = value;
+                    }
+                    else
+                    {
+                        _isOnDrag = false;
+                        DragManager.Instance.CancelCurrentDrag();
+                    }
                 }
-                else
+                else //鼠标放开
                 {
-                    _isOnDrag = false;
-                    DragManager.Instance.CancelCurrentDrag();
-                }
-            }
-            else //鼠标放开
-            {
-                if (canDrag)
-                {
-                    //将鼠标放开的区域告知拖动对象主体，并提供拖动起始姿态信息以供还原
-                    caller.DragComponent_OnMouseUp(CheckMoveToArea());
-                    isBegin = true;
-                    _isOnDrag = value;
-                    DragManager.Instance.CurrentDrag = null;
-                }
-                else
-                {
-                    _isOnDrag = false;
-                    DragManager.Instance.CurrentDrag = null;
+                    if (canDrag)
+                    {
+                        caller.DragComponent_OnMouseUp(CheckMoveToArea()); //将鼠标放开的区域告知拖动对象主体，并提供拖动起始姿态信息以供还原
+                        isBegin = true;
+                        _isOnDrag = value;
+                        DragManager.Instance.CurrentDrag = null;
+                    }
+                    else
+                    {
+                        _isOnDrag = false;
+                        DragManager.Instance.CurrentDrag = null;
+                    }
                 }
             }
         }
+    }
+
+    public void ReturnOriginalPositionRotation()
+    {
+        transform.localPosition = oriPosition_WorldObject;
+        transform.rotation = oriQuaternion_WorldObject;
     }
 
     private Vector3 GetMouseAsWorldPoint()

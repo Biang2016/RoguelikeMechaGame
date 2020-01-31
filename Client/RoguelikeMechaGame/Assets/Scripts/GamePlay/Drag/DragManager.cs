@@ -53,41 +53,58 @@ public class DragManager : MonoSingleton<DragManager>
         {
             if (!CurrentDrag)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Physics.Raycast(ray, out RaycastHit hit, 50f, GameManager.Instance.LayerMask_ComponentHitBox);
-                if (hit.collider != null)
                 {
-                    HitBox hitBox = hit.collider.gameObject.GetComponent<HitBox>();
-                    if (hitBox)
+                    Ray ray = UIManager.Instance.UICamera.ScreenPointToRay(Input.mousePosition);
+                    Physics.Raycast(ray, out RaycastHit hit, 50f, GameManager.Instance.LayerMask_ComponentHitBox);
+                    Debug.DrawRay(ray.origin, ray.direction * 50f, Color.green);
+                    if (hit.collider != null)
                     {
-                        CurrentDrag_MechaComponentBase = hitBox.ParentHitBoxRoot.MechaComponentBase;
-                        CurrentDrag = CurrentDrag_MechaComponentBase.gameObject.GetComponent<Draggable>();
-                        CurrentDrag.IsOnDrag = true;
+                        BagItem bagItem = hit.collider.gameObject.GetComponent<BagItem>();
+                        if (bagItem)
+                        {
+                            CurrentDrag = bagItem.gameObject.GetComponent<Draggable>();
+                            CurrentDrag.IsOnDrag = true;
+                        }
+                        else
+                        {
+                            CancelCurrentDrag();
+                        }
                     }
                     else
                     {
-                        ResetCurrentDrag();
+                        CancelCurrentDrag();
                     }
                 }
-                else
+
+                if (!CurrentDrag)
                 {
-                    ResetCurrentDrag();
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Physics.Raycast(ray, out RaycastHit hit, 50f, GameManager.Instance.LayerMask_ComponentHitBox);
+                    if (hit.collider != null)
+                    {
+                        HitBox hitBox = hit.collider.gameObject.GetComponent<HitBox>();
+                        if (hitBox)
+                        {
+                            CurrentDrag_MechaComponentBase = hitBox.ParentHitBoxRoot.MechaComponentBase;
+                            CurrentDrag = CurrentDrag_MechaComponentBase.gameObject.GetComponent<Draggable>();
+                            CurrentDrag.IsOnDrag = true;
+                        }
+                        else
+                        {
+                            CancelCurrentDrag();
+                        }
+                    }
+                    else
+                    {
+                        CancelCurrentDrag();
+                    }
                 }
             }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            ResetCurrentDrag();
-        }
-    }
-
-    public void ResetCurrentDrag()
-    {
-        if (CurrentDrag)
-        {
-            CurrentDrag.IsOnDrag = false;
-            CurrentDrag = null;
+            CancelCurrentDrag();
         }
     }
 

@@ -26,7 +26,6 @@ public class MechaComponentInfo
             XmlElement gridPosNode = doc.CreateElement("GridPos");
             blockNode.AppendChild(gridPosNode);
             gridPosNode.SetAttribute("x", gridPos.x.ToString());
-            gridPosNode.SetAttribute("y", gridPos.y.ToString());
             gridPosNode.SetAttribute("z", gridPos.z.ToString());
             gridPosNode.SetAttribute("orientation", gridPos.orientation.ToString());
         }
