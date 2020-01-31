@@ -2,37 +2,71 @@
 using System.Collections;
 using UnityEngine.UI;
 
-
 /// <summary>
 /// The class control the display and the background of a grid in a bag
 /// </summary>
 public class BagGrid : PoolObject
 {
     [SerializeField] private Image Image;
+    [SerializeField] private Color LockedColor;
     [SerializeField] private Color AvailableColor;
     [SerializeField] private Color UnavailableColor;
+    [SerializeField] private Color TempUnavailableColor;
+    [SerializeField] private Color PreviewColor;
 
-    private bool _available;
-
-    public bool Available
+    public enum States
     {
-        get { return _available && !_locked; }
+        Locked,
+        Unavailable,
+        TempUnavailable,
+        Available,
+        Preview
+    }
+
+    private States _state;
+
+    public States State
+    {
+        get { return _state; }
         set
         {
-            _available = value;
-            Image.color = value ? AvailableColor : UnavailableColor;
+            if (_state != value)
+            {
+                switch (value)
+                {
+                    case States.Locked:
+                    {
+                        Image.color = LockedColor;
+                        break;
+                    }
+                    case States.Unavailable:
+                    {
+                        Image.color = UnavailableColor;
+                        break;
+                    }
+                    case States.TempUnavailable:
+                    {
+                        Image.color = TempUnavailableColor;
+                        break;
+                    }
+                    case States.Available:
+                    {
+                        Image.color = AvailableColor;
+                        break;
+                    }
+                    case States.Preview:
+                    {
+                        Image.color = PreviewColor;
+                        break;
+                    }
+                }
+
+                _state = value;
+            }
         }
     }
 
-    private bool _locked;
+    public bool Available => _state == States.TempUnavailable || _state == States.Available || _state == States.Preview;
 
-    public bool Locked
-    {
-        get { return _locked; }
-        set
-        {
-            _locked = value;
-            Image.enabled = !value;
-        }
-    }
+    public bool Locked => _state == States.Locked;
 }

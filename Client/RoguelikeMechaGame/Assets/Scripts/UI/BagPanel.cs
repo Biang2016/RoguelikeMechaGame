@@ -29,8 +29,7 @@ public class BagPanel : BaseUIForm
             for (int j = 0; j < 10; j++)
             {
                 BagGrid big = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagGrid].AllocateGameObject<BagGrid>(GridContainer);
-                big.Available = true;
-                big.Locked = true;
+                big.State = BagGrid.States.Unavailable;
                 bagGridMatrix[j, i] = big;
             }
         }
@@ -42,15 +41,6 @@ public class BagPanel : BaseUIForm
 
     void Reset()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                bagGridMatrix[j, i].Available = true;
-                bagGridMatrix[j, i].Locked = true;
-            }
-        }
-
         foreach (BagItem bi in bagItems)
         {
             bi.PoolRecycle();
@@ -67,7 +57,7 @@ public class BagPanel : BaseUIForm
             for (int j = 0; j < 10; j++)
             {
                 count++;
-                bagGridMatrix[j, i].Locked = count > gridNumber;
+                bagGridMatrix[j, i].State = count > gridNumber ? BagGrid.States.Locked : BagGrid.States.Available;
             }
         }
     }
@@ -167,7 +157,7 @@ public class BagPanel : BaseUIForm
 
         foreach (GridPos gp in realOccupiedGPs)
         {
-            bagGridMatrix[gp.x, gp.z].Available = false;
+            bagGridMatrix[gp.x, gp.z].State = BagGrid.States.Unavailable;
         }
     }
 
@@ -175,7 +165,7 @@ public class BagPanel : BaseUIForm
     {
         foreach (GridPos gp in bagItem.RealPositionsInBagPanel)
         {
-            bagGridMatrix[gp.x, gp.z].Available = true;
+            bagGridMatrix[gp.x, gp.z].State = BagGrid.States.Available;
         }
 
         bagItems.Remove(bagItem);
