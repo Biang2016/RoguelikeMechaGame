@@ -6,14 +6,14 @@ using System.Linq;
 [ExecuteInEditMode]
 public class MechaComponentGrids : MonoBehaviour
 {
-    private List<MechaComponentGrid> M_MechaComponentGrids = new List<MechaComponentGrid>();
+    private List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
 
     internal List<GridPos> MechaComponentGridPositions = new List<GridPos>();
 
     void Awake()
     {
-        M_MechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
-        foreach (MechaComponentGrid mcg in M_MechaComponentGrids)
+        mechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
+        foreach (MechaComponentGrid mcg in mechaComponentGrids)
         {
             MechaComponentGridPositions.Add(mcg.GetGridPos());
         }
@@ -21,15 +21,15 @@ public class MechaComponentGrids : MonoBehaviour
 
     public void SetSlotLightsShown(bool shown)
     {
-        foreach (MechaComponentGrid mcg in M_MechaComponentGrids)
+        foreach (MechaComponentGrid mcg in mechaComponentGrids)
         {
-           mcg.SetSlotLightsShown(shown);
+            mcg.SetSlotLightsShown(shown);
         }
     }
 
     public void SetGridShown(bool shown)
     {
-        foreach (MechaComponentGrid mcg in M_MechaComponentGrids)
+        foreach (MechaComponentGrid mcg in mechaComponentGrids)
         {
             mcg.SetGridShown(shown);
         }

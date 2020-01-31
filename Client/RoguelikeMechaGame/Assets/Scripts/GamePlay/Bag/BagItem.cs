@@ -10,11 +10,15 @@ public class BagItem : PoolObject, IDraggable
 
     public MechaComponentInfo MechaComponentInfo;
     public List<GridPos> RealPosInBagPanel;
+    private float _dragComponentDragMinDistance;
+    private float _dragComponentDragMaxDistance;
 
     public void Initialize(MechaComponentInfo mci, int width, int height, GridPos myPos, List<GridPos> realPosInBagPanel)
     {
         MechaComponentInfo = mci;
-        Image.sprite = BagManager.Instance.MechaComponentSpriteDict[mci.M_MechaComponentType];
+        Image.sprite = BagManager.Instance.MechaComponentSpriteDict[mci.MechaComponentType];
+
+        // Resize and rotate to fit the grid
         Vector2 size = new Vector2(width * BagManager.Instance.BagItemGridSize, height * BagManager.Instance.BagItemGridSize);
         Vector2 size_rev = new Vector2(height * BagManager.Instance.BagItemGridSize, width * BagManager.Instance.BagItemGridSize);
         bool isRotated = myPos.orientation == GridPos.Orientation.Right || myPos.orientation == GridPos.Orientation.Left;
@@ -40,7 +44,7 @@ public class BagItem : PoolObject, IDraggable
         RealPosInBagPanel = realPosInBagPanel;
     }
 
-    #region  IDraggable
+    #region IDraggable
 
     public void DragComponent_OnMouseDown()
     {
@@ -60,25 +64,19 @@ public class BagItem : PoolObject, IDraggable
         dragFrom = DragAreaTypes.Bag;
     }
 
-    public float DragComponent_DragMinDistance()
-    {
-        return 0f;
-    }
+    float IDraggable.DragComponent_DragMinDistance => 0f;
 
-    public float DragComponent_DragMaxDistance()
-    {
-        return 999f;
-    }
+    float IDraggable.DragComponent_DragMaxDistance => 99f;
 
     public void DragComponent_DragOutEffects()
     {
         MechaComponentBase mcb = MechaComponentBase.BaseInitialize(MechaComponentInfo, GameManager.Instance.PlayerMecha.transform, GameManager.Instance.PlayerMecha);
-        GridPos gp = GridPos.GetGridPosByMousePos(GameManager.Instance.PlayerMecha.transform, GameManager.GridSize);
+        GridPos gp = GridPos.GetGridPosByMousePos(GameManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
         GridPos.ApplyGridPosToLocalTrans(gp, mcb.transform, GameManager.GridSize);
         DragManager.Instance.CancelCurrentDrag();
         DragManager.Instance.CurrentDrag = mcb.Draggable;
         mcb.Draggable.IsOnDrag = true;
-        BagManager.Instance.RemoveMechaCoponentFromBag(this);
+        BagManager.Instance.RemoveMechaComponentFromBag(this);
         PoolRecycle();
     }
 

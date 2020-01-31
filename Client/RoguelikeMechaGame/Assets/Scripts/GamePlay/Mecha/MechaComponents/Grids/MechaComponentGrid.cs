@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class MechaComponentGrid : MonoBehaviour, IGridPos
+public class MechaComponentGrid : MonoBehaviour
 {
     private MeshRenderer GridMeshRenderer;
 

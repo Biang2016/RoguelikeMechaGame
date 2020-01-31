@@ -8,6 +8,7 @@ public class MechaComponentSlot : MonoBehaviour
     [SerializeField] private Material[] SlotLightMaterials;
 
     [SerializeField] private SlotType _slotType;
+    internal GridPos.Orientation Orientation;
 
     public SlotType SlotType
     {
@@ -28,7 +29,6 @@ public class MechaComponentSlot : MonoBehaviour
         SlotLightRenderer.material = SlotLightMaterials[(int) slotType];
     }
 
-    internal GridPos.Orientation Orientation;
 
     void Awake()
     {

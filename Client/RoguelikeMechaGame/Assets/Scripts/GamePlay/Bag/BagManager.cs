@@ -4,9 +4,13 @@ using System.Collections.Generic;
 
 public class BagManager : MonoSingleton<BagManager>
 {
-    private BagPanel BagPanel;
-
     internal int BagItemGridSize;
+
+    public Dictionary<MechaComponentType, Sprite> MechaComponentSpriteDict = new Dictionary<MechaComponentType, Sprite>();
+    private Dictionary<MechaComponentType, List<GridPos>> mechaComponentOccupiedGridPosDict = new Dictionary<MechaComponentType, List<GridPos>>();
+
+    private BagPanel bagPanel;
+    private List<MechaComponentInfo> mechaComponentInfosInBag = new List<MechaComponentInfo>();
 
     void Awake()
     {
@@ -14,19 +18,19 @@ public class BagManager : MonoSingleton<BagManager>
 
     void Start()
     {
-        RefreshBlockOccupiedGridInfo();
         LoadAllBlockItemPics();
-        BagPanel = UIManager.Instance.ShowUIForms<BagPanel>();
-        BagPanel.CloseUIForm();
+        LoadBlockOccupiedGridInfo();
+        bagPanel = UIManager.Instance.ShowUIForms<BagPanel>();
+        bagPanel.CloseUIForm();
         Initialize();
     }
 
-    private Dictionary<MechaComponentType, List<GridPos>> MechaComponentOccupiedGridPosDict = new Dictionary<MechaComponentType, List<GridPos>>();
-    public Dictionary<MechaComponentType, Sprite> MechaComponentSpriteDict = new Dictionary<MechaComponentType, Sprite>();
-
-    private void RefreshBlockOccupiedGridInfo()
+    /// <summary>
+    /// Load all prefabs to see which grids does a mecha component take
+    /// </summary>
+    private void LoadBlockOccupiedGridInfo()
     {
-        MechaComponentOccupiedGridPosDict.Clear();
+        mechaComponentOccupiedGridPosDict.Clear();
         List<MechaComponentBase> mcbs = new List<MechaComponentBase>();
 
         foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
@@ -34,7 +38,7 @@ public class BagManager : MonoSingleton<BagManager>
             MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
             MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up)), null, null);
             mcbs.Add(mcb);
-            MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentInfo.OccupiedGridPositions));
+            mechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentInfo.OccupiedGridPositions));
         }
 
         foreach (MechaComponentBase mcb in mcbs)
@@ -43,6 +47,9 @@ public class BagManager : MonoSingleton<BagManager>
         }
     }
 
+    /// <summary>
+    /// Load all 2D sprites of mecha components
+    /// </summary>
     private void LoadAllBlockItemPics()
     {
         foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
@@ -57,9 +64,9 @@ public class BagManager : MonoSingleton<BagManager>
     {
         if (Input.GetKeyUp(KeyCode.Tab))
         {
-            if (BagPanel.gameObject.activeInHierarchy)
+            if (bagPanel.gameObject.activeInHierarchy)
             {
-                BagPanel.CloseUIForm();
+                bagPanel.CloseUIForm();
                 GameManager.Instance.SetState(GameState.Fighting);
             }
             else
@@ -74,15 +81,12 @@ public class BagManager : MonoSingleton<BagManager>
 
     private void Reset()
     {
-        MechaComponentInfos.Clear();
+        mechaComponentInfosInBag.Clear();
     }
-
-    public Transform BagContainer;
-    private List<MechaComponentInfo> MechaComponentInfos = new List<MechaComponentInfo>();
 
     private void Initialize()
     {
-        BagPanel.UnlockBagGridTo(40);
+        UnlockBagGridTo(40);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 0, GridPos.Orientation.Down)));
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 0, GridPos.Orientation.Right)));
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Armor, new GridPos(3, 3, GridPos.Orientation.Right)));
@@ -93,21 +97,23 @@ public class BagManager : MonoSingleton<BagManager>
 
     public bool AddMechaComponentToBag(MechaComponentInfo mci)
     {
-        bool suc = BagPanel.AddItem(mci, MechaComponentOccupiedGridPosDict[mci.M_MechaComponentType]);
+        bool suc = bagPanel.AddItem(mci, mechaComponentOccupiedGridPosDict[mci.MechaComponentType]);
         if (suc)
         {
-            MechaComponentInfos.Add(mci);
+            mechaComponentInfosInBag.Add(mci);
         }
 
         return suc;
     }
 
-    public void RemoveMechaCoponentFromBag(BagItem bagItem)
+    public void RemoveMechaComponentFromBag(BagItem bagItem)
     {
-        BagPanel.RemoveItem(bagItem);
+        bagPanel.RemoveItem(bagItem);
+        mechaComponentInfosInBag.Remove(bagItem.MechaComponentInfo);
     }
 
     public void UnlockBagGridTo(int gridNumber)
     {
+        bagPanel.UnlockBagGridTo(gridNumber);
     }
 }

@@ -2,11 +2,11 @@
 using UnityEngine;
 
 /// <summary>
-/// 可拖动组件，应用于机甲部件
+/// 可拖动组件，应用于机甲部件、背包物品
 /// </summary>
 public class Draggable : MonoBehaviour
 {
-    IDraggable caller;
+    private IDraggable caller;
 
     void Awake()
     {
@@ -15,15 +15,16 @@ public class Draggable : MonoBehaviour
 
     private bool canDrag;
     private DragAreaTypes dragFrom;
-    private float dragMinDistance;
-    private float dragMaxDistance;
 
     private bool isBegin = true;
+
     private Vector3 dragBeginPosition_WorldObject;
     private Vector3 dragBeginPosition_UIObject;
+
     private Vector3 oriPosition_WorldObject;
     private Quaternion oriQuaternion_WorldObject;
     private Vector2 oriAnchoredPosition_UIObject;
+
     private Vector3 mOffset;
 
     void Update()
@@ -50,10 +51,10 @@ public class Draggable : MonoBehaviour
                     }
 
                     float draggedDistance = (transform.position - dragBeginPosition_WorldObject).magnitude;
-                    if (draggedDistance < dragMinDistance) //不动
+                    if (draggedDistance < caller.DragComponent_DragMinDistance) //不动
                     {
                     }
-                    else if (draggedDistance < dragMaxDistance) //拖拽物体本身 
+                    else if (draggedDistance < caller.DragComponent_DragMaxDistance) //拖拽物体本身 
                     {
                         Vector3 newPos = GetMouseAsWorldPoint() + mOffset + new Vector3(0.5f, 0, 0.5f) * GameManager.GridSize;
                         transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);
@@ -75,8 +76,9 @@ public class Draggable : MonoBehaviour
                     }
 
                     float draggedDistance = (uiCameraPosition - dragBeginPosition_UIObject).magnitude;
-                    if (draggedDistance < dragMinDistance) //不动
+                    if (draggedDistance < caller.DragComponent_DragMinDistance)
                     {
+                        //不动
                     }
                     else if (BagManager.Instance.IsMouseInsideBag) //拖拽物体本身 
                     {
@@ -113,9 +115,7 @@ public class Draggable : MonoBehaviour
                     if (canDrag)
                     {
                         caller.DragComponent_OnMouseDown();
-                        dragMinDistance = caller.DragComponent_DragMinDistance();
-                        dragMaxDistance = caller.DragComponent_DragMaxDistance();
-                        _isOnDrag = value;
+                        _isOnDrag = true;
                     }
                     else
                     {
@@ -129,14 +129,14 @@ public class Draggable : MonoBehaviour
                     {
                         caller.DragComponent_OnMouseUp(CheckMoveToArea()); //将鼠标放开的区域告知拖动对象主体，并提供拖动起始姿态信息以供还原
                         isBegin = true;
-                        _isOnDrag = value;
                         DragManager.Instance.CurrentDrag = null;
                     }
                     else
                     {
-                        _isOnDrag = false;
                         DragManager.Instance.CurrentDrag = null;
                     }
+
+                    _isOnDrag = false;
                 }
             }
         }
@@ -151,21 +151,21 @@ public class Draggable : MonoBehaviour
     public Vector3 GetMouseAsWorldPoint()
     {
         Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        return Camera.main.ScreenToWorldPoint(mousePoint);
+        mousePoint.z = GameManager.Instance.MainCamera.WorldToScreenPoint(gameObject.transform.position).z;
+        return GameManager.Instance.MainCamera.ScreenToWorldPoint(mousePoint);
     }
 
     public DragAreaTypes CheckMoveToArea()
     {
         if (BagManager.Instance.IsMouseInsideBag) return DragAreaTypes.Bag;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray, out RaycastHit raycast, 100f, GameManager.Instance.LayerMask_DragAreas);
-        if (raycast.collider != null)
+        if (raycast.collider)
         {
             DragArea da = raycast.collider.gameObject.GetComponent<DragArea>();
             if (da)
             {
-                return da.M_DragAreaTypes;
+                return da.DragAreaTypes;
             }
         }
 
@@ -183,21 +183,17 @@ internal interface IDraggable
     /// <summary>
     /// 传达鼠标左键按住拖动时的鼠标位置信息
     /// </summary>
-    /// <param name="dragLastPosition"></param>
     void DragComponent_OnMousePressed(DragAreaTypes dragAreaTypes);
 
     /// <summary>
     /// 传达鼠标左键松开时的鼠标位置信息
     /// </summary>
     /// <param name="dragAreaTypes">移动到了哪个区域</param>
-    /// <param name="dragLastPosition">移动的最后位置</param>
-    /// <param name="dragBeginPosition">移动的初始位置</param>
-    /// <param name="dragBeginQuaternion">被拖动对象的初始旋转</param>
     void DragComponent_OnMouseUp(DragAreaTypes dragAreaTypes);
 
     void DragComponent_SetStates(ref bool canDrag, ref DragAreaTypes dragFrom);
-    float DragComponent_DragMinDistance();
-    float DragComponent_DragMaxDistance();
+    float DragComponent_DragMinDistance { get; }
+    float DragComponent_DragMaxDistance { get; }
     void DragComponent_DragOutEffects();
 }
 

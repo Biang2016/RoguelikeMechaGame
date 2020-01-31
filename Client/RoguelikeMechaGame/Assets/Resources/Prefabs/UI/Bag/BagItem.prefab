@@ -86,7 +86,6 @@ GameObject:
   - component: {fileID: 7180132716111535730}
   - component: {fileID: 8776051413533575887}
   - component: {fileID: 6461644280705919517}
-  - component: {fileID: 5681826383276566195}
   - component: {fileID: 4778536774600163163}
   m_Layer: 10
   m_Name: BagItem
@@ -160,18 +159,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30c822fa077e76b4c987bbda9acdaa78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5681826383276566195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 962769552901066460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f2c572dc0873f84ebc322c7c66cf8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &4778536774600163163

@@ -3,21 +3,21 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBagItem
+public abstract class MechaComponentBase : PoolObject, IDraggable
 {
     internal Mecha ParentMecha = null;
-    private GridSnapper GridSnapper;
     internal Draggable Draggable;
+    private GridSnapper gridSnapper;
 
     void Awake()
     {
-        GridSnapper = GetComponent<GridSnapper>();
+        gridSnapper = GetComponent<GridSnapper>();
         Draggable = GetComponent<Draggable>();
     }
 
     public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Transform parent, Mecha parentMecha)
     {
-        GameObjectPoolManager.PrefabNames prefabName = (GameObjectPoolManager.PrefabNames) Enum.Parse(typeof(GameObjectPoolManager.PrefabNames), "MechaComponent_" + mechaComponentInfo.M_MechaComponentType);
+        GameObjectPoolManager.PrefabNames prefabName = (GameObjectPoolManager.PrefabNames) Enum.Parse(typeof(GameObjectPoolManager.PrefabNames), "MechaComponent_" + mechaComponentInfo.MechaComponentType);
         MechaComponentBase mcb = GameObjectPoolManager.Instance.PoolDict[prefabName].AllocateGameObject<MechaComponentBase>(parent);
         mcb.Initialize(mechaComponentInfo, parentMecha);
         return mcb;
@@ -29,26 +29,15 @@ public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBa
     {
         MechaComponentInfo = mechaComponentInfo;
         MechaComponentInfo.OccupiedGridPositions = CloneVariantUtils.List(MechaComponentGrids.MechaComponentGridPositions);
-        GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.M_GridPos, transform, GameManager.GridSize);
+        GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, GameManager.GridSize);
         ParentMecha = parentMecha;
     }
 
     public MechaComponentGrids MechaComponentGrids;
-    public HitBoxRoot HitBoxRoot;
-
-    public GridPos GetGridPos()
-    {
-        return GridPos.GetGridPosByLocalTrans(transform, GameManager.GridSize);
-    }
 
     public void Rotate()
     {
         transform.Rotate(0, 90, 0);
-    }
-
-    public void RefreshComponentOffset(Transform transform)
-    {
-        GridSnapper.Offset = transform;
     }
 
     #region Life
@@ -61,6 +50,8 @@ public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBa
     }
 
     private int _totalLife;
+    private float _dragComponentDragMinDistance;
+    private float _dragComponentDragMaxDistance;
 
     public int M_TotalLife
     {
@@ -104,7 +95,7 @@ public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBa
 
     #endregion
 
-    #region  IDraggable
+    #region IDraggable
 
     public void DragComponent_OnMouseDown()
     {
@@ -136,7 +127,7 @@ public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBa
                 if (suc)
                 {
                     PoolRecycle();
-                    }
+                }
                 else
                 {
                     DragManager.Instance.CurrentDrag.ReturnOriginalPositionRotation();
@@ -153,23 +144,13 @@ public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBa
         dragFrom = DragAreaTypes.MechaEditorArea;
     }
 
-    public float DragComponent_DragMinDistance()
-    {
-        return 0f;
-    }
+    float IDraggable.DragComponent_DragMinDistance => 0f;
 
-    public float DragComponent_DragMaxDistance()
-    {
-        return 9999f;
-    }
+    float IDraggable.DragComponent_DragMaxDistance => 9999f;
 
     public void DragComponent_DragOutEffects()
     {
     }
-
-    #endregion
-
-    #region  IBagItem
 
     #endregion
 }

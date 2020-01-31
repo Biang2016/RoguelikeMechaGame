@@ -10,8 +10,8 @@ public class BagPanel : BaseUIForm
     [SerializeField] private Transform GridContainer;
     [SerializeField] private Transform ItemContainer;
 
-    private BagGrid[,] BagGridMatrix = new BagGrid[10, 10]; // column, row
-    private List<BagItem> BagItems = new List<BagItem>();
+    private BagGrid[,] bagGridMatrix = new BagGrid[10, 10]; // column, row
+    private List<BagItem> bagItems = new List<BagItem>();
 
     void Awake()
     {
@@ -31,7 +31,7 @@ public class BagPanel : BaseUIForm
                 BagGrid big = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagGrid].AllocateGameObject<BagGrid>(GridContainer);
                 big.Available = true;
                 big.Locked = true;
-                BagGridMatrix[j, i] = big;
+                bagGridMatrix[j, i] = big;
             }
         }
     }
@@ -46,17 +46,17 @@ public class BagPanel : BaseUIForm
         {
             for (int j = 0; j < 10; j++)
             {
-                BagGridMatrix[j, i].Available = true;
-                BagGridMatrix[j, i].Locked = true;
+                bagGridMatrix[j, i].Available = true;
+                bagGridMatrix[j, i].Locked = true;
             }
         }
 
-        foreach (BagItem bi in BagItems)
+        foreach (BagItem bi in bagItems)
         {
             bi.PoolRecycle();
         }
 
-        BagItems.Clear();
+        bagItems.Clear();
     }
 
     public void UnlockBagGridTo(int gridNumber)
@@ -67,7 +67,7 @@ public class BagPanel : BaseUIForm
             for (int j = 0; j < 10; j++)
             {
                 count++;
-                BagGridMatrix[j, i].Locked = count > gridNumber;
+                bagGridMatrix[j, i].Locked = count > gridNumber;
             }
         }
     }
@@ -82,11 +82,11 @@ public class BagPanel : BaseUIForm
             GridPos GridPos = new GridPos(_xStart, _zStart, orientation);
             BagItem bi = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItem].AllocateGameObject<BagItem>(ItemContainer);
             bi.Initialize(mci, width, height, GridPos, realOccupiedGPs);
-            BagItems.Add(bi);
+            bagItems.Add(bi);
 
             foreach (GridPos gp in realOccupiedGPs)
             {
-                BagGridMatrix[gp.x, gp.z].Available = false;
+                bagGridMatrix[gp.x, gp.z].Available = false;
             }
 
             return true;
@@ -101,10 +101,10 @@ public class BagPanel : BaseUIForm
     {
         foreach (GridPos gp in bagItem.RealPosInBagPanel)
         {
-            BagGridMatrix[gp.x, gp.z].Available = true;
+            bagGridMatrix[gp.x, gp.z].Available = true;
         }
 
-        BagItems.Remove(bagItem);
+        bagItems.Remove(bagItem);
     }
 
     private bool FindSpaceToPutItem(List<GridPos> occupiedGridPositions, int width, int height, int xStart, int zStart, out GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs)
@@ -137,7 +137,7 @@ public class BagPanel : BaseUIForm
                             break;
                         }
 
-                        if (!BagGridMatrix[col, row].Available)
+                        if (!bagGridMatrix[col, row].Available)
                         {
                             canHold = false;
                             break;

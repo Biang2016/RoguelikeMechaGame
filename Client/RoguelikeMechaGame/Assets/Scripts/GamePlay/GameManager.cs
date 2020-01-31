@@ -10,15 +10,16 @@ public class GameManager : MonoSingleton<GameManager>
     [NonSerialized] public int LayerMask_ComponentHitBox;
     [NonSerialized] public int LayerMask_DragAreas;
 
+    public Camera MainCamera;
+    [SerializeField] private Transform MechaContainer;
+
+    internal Mecha PlayerMecha;
+
     void Awake()
     {
         LayerMask_ComponentHitBox = LayerMask.GetMask("ComponentHitBox");
         LayerMask_DragAreas = LayerMask.GetMask("DragAreas");
     }
-
-    [SerializeField] private Transform MechaContainer;
-
-    public Mecha PlayerMecha;
 
     private void Start()
     {

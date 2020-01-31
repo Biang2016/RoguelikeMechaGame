@@ -21,14 +21,10 @@ public class DragManager : MonoSingleton<DragManager>
         get { return currentDrag; }
         set
         {
-            currentDrag = value;
-            if (currentDrag == null)
+            if (currentDrag != value)
             {
-                CurrentDrag_MechaComponentBase = null;
-            }
-            else
-            {
-                CurrentDrag_MechaComponentBase = currentDrag.GetComponent<MechaComponentBase>();
+                currentDrag = value;
+                CurrentDrag_MechaComponentBase = currentDrag ? currentDrag.GetComponent<MechaComponentBase>() : null;
             }
         }
     }
@@ -37,13 +33,13 @@ public class DragManager : MonoSingleton<DragManager>
 
     void Update()
     {
-        if (!ForbidDrag)
+        if (ForbidDrag)
         {
-            CommonDrag();
+            CancelCurrentDrag();
         }
         else
         {
-            CancelCurrentDrag();
+            CommonDrag();
         }
     }
 
@@ -54,6 +50,7 @@ public class DragManager : MonoSingleton<DragManager>
             if (!CurrentDrag)
             {
                 {
+                    // Drag items in bag
                     Ray ray = UIManager.Instance.UICamera.ScreenPointToRay(Input.mousePosition);
                     Physics.Raycast(ray, out RaycastHit hit, 50f, GameManager.Instance.LayerMask_ComponentHitBox);
                     Debug.DrawRay(ray.origin, ray.direction * 50f, Color.green);
@@ -76,9 +73,10 @@ public class DragManager : MonoSingleton<DragManager>
                     }
                 }
 
+                //Drag components in scene
                 if (!CurrentDrag)
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
                     Physics.Raycast(ray, out RaycastHit hit, 50f, GameManager.Instance.LayerMask_ComponentHitBox);
                     if (hit.collider != null)
                     {

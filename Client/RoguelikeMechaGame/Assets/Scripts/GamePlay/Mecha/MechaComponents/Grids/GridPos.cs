@@ -37,10 +37,10 @@ public struct GridPos
         transform.rotation = Quaternion.Euler(0, rotY, 0);
     }
 
-    public static GridPos GetGridPosByMousePos(Transform parentTransform, int gridSize)
+    public static GridPos GetGridPosByMousePos(Transform parentTransform, Vector3 planeNormal, int gridSize)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Vector3 intersect = ClientUtil.GetIntersectWithLineAndPlane(ray.origin, ray.direction, Vector3.up, parentTransform.position);
+        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+        Vector3 intersect = ClientUtil.GetIntersectWithLineAndPlane(ray.origin, ray.direction, planeNormal, parentTransform.position);
         Vector3 diff = intersect - parentTransform.position + Vector3.one * gridSize / 2f;
         int x = Mathf.FloorToInt(diff.x / gridSize) * gridSize;
         int z = Mathf.FloorToInt(diff.z / gridSize) * gridSize;

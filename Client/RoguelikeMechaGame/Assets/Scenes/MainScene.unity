@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43703917, g: 0.4847377, b: 0.5650006, a: 1}
+  m_IndirectSpecularColor: {r: 0.43703875, g: 0.4847368, b: 0.5649996, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -210,6 +210,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameObjectPrefab: {fileID: -7116951252366172540, guid: 27ea8d381fc975e4c9b31dcc6c6c53b4,
     type: 3}
+--- !u!20 &310902747 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1500443317, guid: 776f29a684a9a412eb9b5171aa4742bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 851843845}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &367317253
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +468,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5980882138566427481, guid: 776f29a684a9a412eb9b5171aa4742bd,
+        type: 3}
+      propertyPath: MainCamera
+      value: 
+      objectReference: {fileID: 310902747}
+    - target: {fileID: 5980882138566427481, guid: 776f29a684a9a412eb9b5171aa4742bd,
+        type: 3}
+      propertyPath: MechaContainer
+      value: 
+      objectReference: {fileID: 1917620445}
     - target: {fileID: 1500443315, guid: 776f29a684a9a412eb9b5171aa4742bd, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.35355338
@@ -705,7 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b68fa5515aeb054084be41af220deab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  M_DragAreaTypes: 2
+  DragAreaTypes: 2
 --- !u!65 &1929732502
 BoxCollider:
   m_ObjectHideFlags: 0

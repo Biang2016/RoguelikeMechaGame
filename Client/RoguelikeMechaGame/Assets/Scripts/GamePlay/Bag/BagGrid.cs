@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// The class control the display and the background of a grid in a bag
+/// </summary>
 public class BagGrid : PoolObject
 {
     [SerializeField] private Image Image;

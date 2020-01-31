@@ -6,7 +6,7 @@ public class Mecha : PoolObject
 {
     public MechaInfo MechaInfo;
 
-    private List<MechaComponentBase> MechaComponents = new List<MechaComponentBase>();
+    private List<MechaComponentBase> mechaComponents = new List<MechaComponentBase>();
 
     [SerializeField] private Transform MechaComponentContainer;
 
@@ -16,7 +16,7 @@ public class Mecha : PoolObject
         foreach (MechaComponentInfo mci in mechaInfo.MechaComponentInfos)
         {
             MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mci, MechaComponentContainer, this);
-            MechaComponents.Add(mcb);
+            mechaComponents.Add(mcb);
         }
     }
 
@@ -67,7 +67,7 @@ public class Mecha : PoolObject
         {
             if (_slotLightsShown != value)
             {
-                foreach (MechaComponentBase mcb in MechaComponents)
+                foreach (MechaComponentBase mcb in mechaComponents)
                 {
                     mcb.MechaComponentGrids.SetSlotLightsShown(value);
                 }
@@ -86,7 +86,7 @@ public class Mecha : PoolObject
         {
             if (_gridShown != value)
             {
-                foreach (MechaComponentBase mcb in MechaComponents)
+                foreach (MechaComponentBase mcb in mechaComponents)
                 {
                     mcb.MechaComponentGrids.SetGridShown(value);
                 }

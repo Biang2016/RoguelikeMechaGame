@@ -3,23 +3,13 @@
 [ExecuteInEditMode]
 public class GridSnapper : MonoBehaviour
 {
-    internal Transform Offset;
-
     void LateUpdate()
     {
-        float x_delta = 0;
-        float y_delta = 0;
-        float z_delta = 0;
-        if (Offset)
-        {
-            x_delta = Offset.localPosition.x % GameManager.GridSize;
-            y_delta = Offset.localPosition.y % GameManager.GridSize;
-            z_delta = Offset.localPosition.z % GameManager.GridSize;
-        }
-
-        float x = Mathf.Floor((transform.localPosition.x - x_delta) / GameManager.GridSize) * GameManager.GridSize + x_delta;
-        float y = Mathf.Floor((transform.localPosition.y - y_delta) / GameManager.GridSize) * GameManager.GridSize + y_delta;
-        float z = Mathf.Floor((transform.localPosition.z - z_delta) / GameManager.GridSize) * GameManager.GridSize + z_delta;
-        transform.localPosition = new Vector3(x, y, z);
+        Vector3 localPosition = transform.localPosition;
+        float x = Mathf.Floor((localPosition.x) / GameManager.GridSize) * GameManager.GridSize;
+        float y = Mathf.Floor((localPosition.y) / GameManager.GridSize) * GameManager.GridSize;
+        float z = Mathf.Floor((localPosition.z) / GameManager.GridSize) * GameManager.GridSize;
+        localPosition = new Vector3(x, y, z);
+        transform.localPosition = localPosition;
     }
 }

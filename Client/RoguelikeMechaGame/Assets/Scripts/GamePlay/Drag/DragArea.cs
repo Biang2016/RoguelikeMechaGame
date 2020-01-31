@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DragArea : MonoBehaviour
 {
-    public DragAreaTypes M_DragAreaTypes;
+    public DragAreaTypes DragAreaTypes;
 }
