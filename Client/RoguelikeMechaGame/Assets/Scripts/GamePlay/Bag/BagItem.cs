@@ -8,8 +8,12 @@ public class BagItem : PoolObject, IDraggable
     [SerializeField] private BagGridSnapper BagGridSnapper;
     [SerializeField] private BoxCollider BoxCollider;
 
-    public void Initialize(MechaComponentInfo mci, int width, int height, GridPos myPos)
+    public MechaComponentInfo MechaComponentInfo;
+    public List<GridPos> RealPosInBagPanel;
+
+    public void Initialize(MechaComponentInfo mci, int width, int height, GridPos myPos, List<GridPos> realPosInBagPanel)
     {
+        MechaComponentInfo = mci;
         Image.sprite = BagManager.Instance.MechaComponentSpriteDict[mci.M_MechaComponentType];
         Vector2 size = new Vector2(width * BagManager.Instance.BagItemGridSize, height * BagManager.Instance.BagItemGridSize);
         Vector2 size_rev = new Vector2(height * BagManager.Instance.BagItemGridSize, width * BagManager.Instance.BagItemGridSize);
@@ -32,6 +36,8 @@ public class BagItem : PoolObject, IDraggable
         }
 
         ((RectTransform) transform).anchoredPosition = new Vector2(myPos.x * BagManager.Instance.BagItemGridSize, -myPos.z * BagManager.Instance.BagItemGridSize);
+
+        RealPosInBagPanel = realPosInBagPanel;
     }
 
     #region  IDraggable
@@ -66,6 +72,14 @@ public class BagItem : PoolObject, IDraggable
 
     public void DragComponent_DragOutEffects()
     {
+        MechaComponentBase mcb = MechaComponentBase.BaseInitialize(MechaComponentInfo, GameManager.Instance.PlayerMecha.transform, GameManager.Instance.PlayerMecha);
+        GridPos gp = GridPos.GetGridPosByMousePos(GameManager.Instance.PlayerMecha.transform, GameManager.GridSize);
+        GridPos.ApplyGridPosToLocalTrans(gp, mcb.transform, GameManager.GridSize);
+        DragManager.Instance.CancelCurrentDrag();
+        DragManager.Instance.CurrentDrag = mcb.Draggable;
+        mcb.Draggable.IsOnDrag = true;
+        BagManager.Instance.RemoveMechaCoponentFromBag(this);
+        PoolRecycle();
     }
 
     #endregion

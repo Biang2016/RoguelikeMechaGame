@@ -89,7 +89,6 @@ public class Draggable : MonoBehaviour
                         caller.DragComponent_DragOutEffects();
                     }
 
-                    caller.DragComponent_OnMousePressed(CheckMoveToArea()); //将鼠标悬停的区域告知拖动对象主体
                     break;
                 }
             }
@@ -149,7 +148,7 @@ public class Draggable : MonoBehaviour
         transform.rotation = oriQuaternion_WorldObject;
     }
 
-    private Vector3 GetMouseAsWorldPoint()
+    public Vector3 GetMouseAsWorldPoint()
     {
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;

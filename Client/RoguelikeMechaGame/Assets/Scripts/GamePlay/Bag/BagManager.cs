@@ -77,7 +77,7 @@ public class BagManager : MonoSingleton<BagManager>
         MechaComponentInfos.Clear();
     }
 
-    [SerializeField] private Transform BagContainer;
+    public Transform BagContainer;
     private List<MechaComponentInfo> MechaComponentInfos = new List<MechaComponentInfo>();
 
     private void Initialize()
@@ -100,6 +100,11 @@ public class BagManager : MonoSingleton<BagManager>
         }
 
         return suc;
+    }
+
+    public void RemoveMechaCoponentFromBag(BagItem bagItem)
+    {
+        BagPanel.RemoveItem(bagItem);
     }
 
     public void UnlockBagGridTo(int gridNumber)

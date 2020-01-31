@@ -18,7 +18,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     [SerializeField] private Transform MechaContainer;
 
-    private Mecha PlayerMecha;
+    public Mecha PlayerMecha;
 
     private void Start()
     {

@@ -81,7 +81,7 @@ public class BagPanel : BaseUIForm
             GetSizeFromGridPositions(realOccupiedGPs, out int _width, out int _height, out int _xStart, out int _zStart);
             GridPos GridPos = new GridPos(_xStart, _zStart, orientation);
             BagItem bi = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItem].AllocateGameObject<BagItem>(ItemContainer);
-            bi.Initialize(mci, width, height, GridPos);
+            bi.Initialize(mci, width, height, GridPos, realOccupiedGPs);
             BagItems.Add(bi);
 
             foreach (GridPos gp in realOccupiedGPs)
@@ -95,6 +95,16 @@ public class BagPanel : BaseUIForm
         {
             return false;
         }
+    }
+
+    public void RemoveItem(BagItem bagItem)
+    {
+        foreach (GridPos gp in bagItem.RealPosInBagPanel)
+        {
+            BagGridMatrix[gp.x, gp.z].Available = true;
+        }
+
+        BagItems.Remove(bagItem);
     }
 
     private bool FindSpaceToPutItem(List<GridPos> occupiedGridPositions, int width, int height, int xStart, int zStart, out GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs)

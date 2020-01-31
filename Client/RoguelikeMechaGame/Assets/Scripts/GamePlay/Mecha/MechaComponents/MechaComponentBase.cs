@@ -7,10 +7,12 @@ public abstract class MechaComponentBase : PoolObject, IGridPos, IDraggable, IBa
 {
     internal Mecha ParentMecha = null;
     private GridSnapper GridSnapper;
+    internal Draggable Draggable;
 
     void Awake()
     {
         GridSnapper = GetComponent<GridSnapper>();
+        Draggable = GetComponent<Draggable>();
     }
 
     public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Transform parent, Mecha parentMecha)

@@ -37,6 +37,16 @@ public struct GridPos
         transform.rotation = Quaternion.Euler(0, rotY, 0);
     }
 
+    public static GridPos GetGridPosByMousePos(Transform parentTransform, int gridSize)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 intersect = ClientUtil.GetIntersectWithLineAndPlane(ray.origin, ray.direction, Vector3.up, parentTransform.position);
+        Vector3 diff = intersect - parentTransform.position + Vector3.one * gridSize / 2f;
+        int x = Mathf.FloorToInt(diff.x / gridSize) * gridSize;
+        int z = Mathf.FloorToInt(diff.z / gridSize) * gridSize;
+        return new GridPos(x, z, Orientation.Up);
+    }
+
     public static GridPos RotateGridPos(GridPos oriGP, Orientation orientation)
     {
         switch (orientation)
