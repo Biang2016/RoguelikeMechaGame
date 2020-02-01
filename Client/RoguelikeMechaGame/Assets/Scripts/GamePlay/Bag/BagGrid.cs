@@ -8,11 +8,24 @@ using UnityEngine.UI;
 public class BagGrid : PoolObject
 {
     [SerializeField] private Image Image;
+    [SerializeField] private Image BanSign;
     [SerializeField] private Color LockedColor;
     [SerializeField] private Color AvailableColor;
     [SerializeField] private Color UnavailableColor;
     [SerializeField] private Color TempUnavailableColor;
     [SerializeField] private Color PreviewColor;
+
+    private bool _banned;
+
+    public bool Banned
+    {
+        get { return _banned; }
+        set
+        {
+            _banned = value;
+            BanSign.enabled = value;
+        }
+    }
 
     public enum States
     {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.iOS.Xcode;
+using UnityEngine;
 
 public struct GridPos
 {
@@ -19,7 +20,7 @@ public struct GridPos
         this.z = z;
         this.orientation = orientation;
     }
-
+    
     public static GridPos GetGridPosByLocalTrans(Transform transform, int gridSize)
     {
         int x = Mathf.FloorToInt(transform.localPosition.x / gridSize) * gridSize;

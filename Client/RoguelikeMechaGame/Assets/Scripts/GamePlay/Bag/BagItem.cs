@@ -6,7 +6,7 @@ public class BagItem : PoolObject, IDraggable
 {
     [SerializeField] private Image Image;
     [SerializeField] private BagGridSnapper BagGridSnapper;
-    [SerializeField] private BoxCollider BoxCollider;
+    [SerializeField] private BagItemGridHitBoxes BagItemGridHitBoxes;
 
     public MechaComponentInfo MechaComponentInfo;
     public List<GridPos> RealPositionsInBagPanel;
@@ -31,16 +31,14 @@ public class BagItem : PoolObject, IDraggable
         if (isRotated)
         {
             ((RectTransform) transform).sizeDelta = size;
-            BoxCollider.size = new Vector3(size.x, size.y, 1);
-            BoxCollider.center = new Vector3(size.x / 2f, size.y / -2f, 0);
+            BagItemGridHitBoxes.Initialize(realPositionsInBagPanel, myPos);
             Image.rectTransform.sizeDelta = size_rev;
             Image.transform.rotation = Quaternion.Euler(0, 0, 90f);
         }
         else
         {
             ((RectTransform) transform).sizeDelta = size;
-            BoxCollider.size = new Vector3(size.x, size.y, 1);
-            BoxCollider.center = new Vector3(size.x / 2f, size.y / -2f, 0);
+            BagItemGridHitBoxes.Initialize(realPositionsInBagPanel, myPos);
             Image.rectTransform.sizeDelta = size;
             Image.transform.rotation = Quaternion.Euler(0, 0, 0f);
         }
@@ -49,7 +47,7 @@ public class BagItem : PoolObject, IDraggable
         RealPositionsInBagPanel = realPositionsInBagPanel;
     }
 
-    public void Rotate()
+    private void Rotate()
     {
         GridPos.Orientation newOrientation = (GridPos.Orientation) (((int) GridPos.orientation + 1) % 4);
         //todo edit RealPositionsInBagPanel and change in bagpanel
@@ -60,6 +58,7 @@ public class BagItem : PoolObject, IDraggable
 
     public void DragComponent_OnMouseDown()
     {
+        BagManager.Instance.RemoveMechaComponentFromBag(this, true);
     }
 
     public void DragComponent_OnMousePressed(DragAreaTypes dragAreaTypes)
@@ -71,12 +70,17 @@ public class BagItem : PoolObject, IDraggable
                 if (Input.GetKeyUp(KeyCode.R))
                 {
                     Rotate();
-                    return;
                 }
+
+                RefreshPreviewGridPositions();
 
                 break;
             }
         }
+    }
+
+    private void RefreshPreviewGridPositions()
+    {
     }
 
     public void DragComponent_OnMouseUp(DragAreaTypes dragAreaTypes)
@@ -101,7 +105,7 @@ public class BagItem : PoolObject, IDraggable
         DragManager.Instance.CancelCurrentDrag();
         DragManager.Instance.CurrentDrag = mcb.Draggable;
         mcb.Draggable.IsOnDrag = true;
-        BagManager.Instance.RemoveMechaComponentFromBag(this);
+        BagManager.Instance.RemoveMechaComponentFromBag(this, false);
         PoolRecycle();
     }
 

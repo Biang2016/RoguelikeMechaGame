@@ -54,9 +54,9 @@ public class DragManager : MonoSingleton<DragManager>
                     Ray ray = UIManager.Instance.UICamera.ScreenPointToRay(Input.mousePosition);
                     Physics.Raycast(ray, out RaycastHit hit, 50f, GameManager.Instance.LayerMask_ComponentHitBox);
                     Debug.DrawRay(ray.origin, ray.direction * 50f, Color.green);
-                    if (hit.collider != null)
+                    if (hit.collider)
                     {
-                        BagItem bagItem = hit.collider.gameObject.GetComponent<BagItem>();
+                        BagItem bagItem = hit.collider.gameObject.GetComponentInParent<BagItem>();
                         if (bagItem)
                         {
                             CurrentDrag = bagItem.gameObject.GetComponent<Draggable>();
@@ -78,7 +78,7 @@ public class DragManager : MonoSingleton<DragManager>
                 {
                     Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
                     Physics.Raycast(ray, out RaycastHit hit, 50f, GameManager.Instance.LayerMask_ComponentHitBox);
-                    if (hit.collider != null)
+                    if (hit.collider)
                     {
                         HitBox hitBox = hit.collider.gameObject.GetComponent<HitBox>();
                         if (hitBox)

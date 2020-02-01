@@ -161,14 +161,15 @@ public class BagPanel : BaseUIForm
         }
     }
 
-    public void RemoveItem(BagItem bagItem)
+    public void RemoveItem(BagItem bagItem, bool temporary)
     {
         foreach (GridPos gp in bagItem.RealPositionsInBagPanel)
         {
-            bagGridMatrix[gp.x, gp.z].State = BagGrid.States.Available;
+            bagGridMatrix[gp.x, gp.z].State = temporary ? BagGrid.States.TempUnavailable : BagGrid.States.Available;
         }
 
         bagItems.Remove(bagItem);
+        if (!temporary) bagItem.PoolRecycle();
     }
 
     private IntRect GetSizeFromGridPositions(List<GridPos> occupiedGridPositions)

@@ -104,9 +104,9 @@ public class BagManager : MonoSingleton<BagManager>
         return suc;
     }
 
-    public void RemoveMechaComponentFromBag(BagItem bagItem)
+    public void RemoveMechaComponentFromBag(BagItem bagItem,bool temporary)
     {
-        bagPanel.RemoveItem(bagItem);
+        bagPanel.RemoveItem(bagItem,temporary);
         mechaComponentInfosInBag.Remove(bagItem.MechaComponentInfo);
     }
 
