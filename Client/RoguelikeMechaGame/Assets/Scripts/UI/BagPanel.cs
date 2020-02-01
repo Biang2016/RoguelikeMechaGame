@@ -8,7 +8,7 @@ public class BagPanel : BaseUIForm
 {
     [SerializeField] private GridLayoutGroup ItemContainerGridLayout;
     [SerializeField] private Transform GridContainer;
-    [SerializeField] private Transform ItemContainer;
+    public Transform ItemContainer;
 
     private BagGrid[,] bagGridMatrix = new BagGrid[10, 10]; // column, row
     private List<BagItem> bagItems = new List<BagItem>();
@@ -62,39 +62,47 @@ public class BagPanel : BaseUIForm
         }
     }
 
-    public bool TryAddItem(MechaComponentInfo mci, bool autoSpacing)
+    public bool TryAddItem(MechaComponentInfo mci, out BagItem bagItem)
     {
-        bool placeFound = FindSpaceToPutItem(mci, autoSpacing, out GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs);
+        bool placeFound = FindSpaceToPutItem(mci, out GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs);
         if (placeFound)
         {
-            AddItem(mci, orientation, realOccupiedGPs);
+            AddItem(mci, orientation, realOccupiedGPs, out bagItem);
             return true;
         }
         else
         {
+            bagItem = null;
             return false;
         }
     }
 
-    private bool FindSpaceToPutItem(MechaComponentInfo mci, bool allowRotate, out GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs)
+    public bool TryAddItem(MechaComponentInfo mci, GridPos.Orientation orientation, List<GridPos> realGridPoses, out BagItem bagItem)
     {
-        realOccupiedGPs = new List<GridPos>();
-        if (allowRotate)
+        bool placeFound = CheckSpaceAvailable(realGridPoses, new GridPos(0, 0));
+        if (placeFound)
         {
-            orientation = GridPos.Orientation.Up;
-            foreach (string s in Enum.GetNames(typeof(GridPos.Orientation)))
-            {
-                orientation = (GridPos.Orientation) Enum.Parse(typeof(GridPos.Orientation), s);
-                if (FindSpaceToPutRotatedItem(mci, orientation, realOccupiedGPs)) return true;
-            }
-
-            return false;
+            AddItem(mci, orientation, realGridPoses, out bagItem);
+            return true;
         }
         else
         {
-            orientation = GridPos.Orientation.Up;
-            return FindSpaceToPutRotatedItem(mci, orientation, realOccupiedGPs);
+            bagItem = null;
+            return false;
         }
+    }
+
+    private bool FindSpaceToPutItem(MechaComponentInfo mci, out GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs)
+    {
+        realOccupiedGPs = new List<GridPos>();
+        orientation = GridPos.Orientation.Up;
+        foreach (string s in Enum.GetNames(typeof(GridPos.Orientation)))
+        {
+            orientation = (GridPos.Orientation) Enum.Parse(typeof(GridPos.Orientation), s);
+            if (FindSpaceToPutRotatedItem(mci, orientation, realOccupiedGPs)) return true;
+        }
+
+        return false;
     }
 
     private bool FindSpaceToPutRotatedItem(MechaComponentInfo mci, GridPos.Orientation orientation, List<GridPos> realOccupiedGPs)
@@ -146,14 +154,50 @@ public class BagPanel : BaseUIForm
         return false;
     }
 
-    private void AddItem(MechaComponentInfo mci, GridPos.Orientation orientation, List<GridPos> realOccupiedGPs)
+    public bool CheckSpaceAvailable(List<GridPos> realGridPoses, GridPos offset)
+    {
+        foreach (GridPos gp in realGridPoses)
+        {
+            if (gp.x + offset.x < 0 || gp.x + offset.x >= 10 || gp.z + offset.z < 0 || gp.z + offset.z >= 10)
+            {
+                return false;
+            }
+
+            if (!bagGridMatrix[gp.x + offset.x, gp.z + offset.z].Available)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool CheckSpaceLocked(List<GridPos> realGridPoses, GridPos offset)
+    {
+        foreach (GridPos gp in realGridPoses)
+        {
+            if (gp.x + offset.x < 0 || gp.x + offset.x >= 10 || gp.z + offset.z < 0 || gp.z + offset.z >= 10)
+            {
+                return false;
+            }
+
+            if (bagGridMatrix[gp.x + offset.x, gp.z + offset.z].Locked)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void AddItem(MechaComponentInfo mci, GridPos.Orientation orientation, List<GridPos> realOccupiedGPs, out BagItem bagItem)
     {
         IntRect realSpace = GetSizeFromGridPositions(realOccupiedGPs);
         GridPos GridPos = new GridPos(realSpace.x, realSpace.z, orientation);
 
-        BagItem bi = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItem].AllocateGameObject<BagItem>(ItemContainer);
-        bi.Initialize(mci, realSpace.width, realSpace.height, GridPos, realOccupiedGPs);
-        bagItems.Add(bi);
+        bagItem = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItem].AllocateGameObject<BagItem>(ItemContainer);
+        bagItem.Initialize(mci, realSpace.width, realSpace.height, GridPos, realOccupiedGPs, false);
+        bagItems.Add(bagItem);
 
         foreach (GridPos gp in realOccupiedGPs)
         {
@@ -163,13 +207,19 @@ public class BagPanel : BaseUIForm
 
     public void RemoveItem(BagItem bagItem, bool temporary)
     {
-        foreach (GridPos gp in bagItem.RealPositionsInBagPanel)
+        if (bagItems.Contains(bagItem))
         {
-            bagGridMatrix[gp.x, gp.z].State = temporary ? BagGrid.States.TempUnavailable : BagGrid.States.Available;
-        }
+            foreach (GridPos gp in bagItem.RealPositionsInBagPanel_BeforeMove)
+            {
+                bagGridMatrix[gp.x, gp.z].State = temporary ? BagGrid.States.TempUnavailable : BagGrid.States.Available;
+            }
 
-        bagItems.Remove(bagItem);
-        if (!temporary) bagItem.PoolRecycle();
+            if (!temporary)
+            {
+                bagItems.Remove(bagItem);
+                bagItem.PoolRecycle();
+            }
+        }
     }
 
     private IntRect GetSizeFromGridPositions(List<GridPos> occupiedGridPositions)

@@ -84,7 +84,6 @@ GameObject:
   - component: {fileID: 5752145989991758656}
   - component: {fileID: 3607725738807460286}
   - component: {fileID: 7180132716111535730}
-  - component: {fileID: 8776051413533575887}
   - component: {fileID: 6461644280705919517}
   - component: {fileID: 4778536774600163163}
   m_Layer: 10
@@ -136,20 +135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Image: {fileID: 4348618815623475802}
-  BagGridSnapper: {fileID: 8776051413533575887}
+  BagGridSnapper: {fileID: 0}
   BagItemGridHitBoxes: {fileID: 4848988158495615229}
---- !u!114 &8776051413533575887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 962769552901066460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 059a5ed2a291f944490b4b9ab956caea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6461644280705919517
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 public class UIManager : MonoSingleton<UIManager>
 {
     public Camera UICamera;
+    public Canvas UICanvas;
 
     //缓存所有UI窗体
     private Dictionary<string, BaseUIForm> AllUIFormDict = new Dictionary<string, BaseUIForm>();

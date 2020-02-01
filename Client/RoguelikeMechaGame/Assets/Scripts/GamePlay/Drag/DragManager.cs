@@ -13,6 +13,7 @@ public class DragManager : MonoSingleton<DragManager>
     }
 
     internal MechaComponentBase CurrentDrag_MechaComponentBase;
+    internal BagItem CurrentDrag_BagItem;
 
     [SerializeField] private Draggable currentDrag;
 
@@ -25,6 +26,7 @@ public class DragManager : MonoSingleton<DragManager>
             {
                 currentDrag = value;
                 CurrentDrag_MechaComponentBase = currentDrag ? currentDrag.GetComponent<MechaComponentBase>() : null;
+                CurrentDrag_BagItem = currentDrag ? currentDrag.GetComponent<BagItem>() : null;
             }
         }
     }

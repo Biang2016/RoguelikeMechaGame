@@ -15,10 +15,9 @@ public class BagItemGridHitBoxes : MonoBehaviour
 
         bagItemGridHitBoxes.Clear();
 
-        bool isRotated = centerGP.orientation == GridPos.Orientation.Right || centerGP.orientation == GridPos.Orientation.Left;
         foreach (GridPos gp in gridPositions)
         {
-            GridPos localGP = GridPos.RotateGridPos(new GridPos(gp.x - centerGP.x, gp.z - centerGP.z), isRotated ? GridPos.Orientation.Right : GridPos.Orientation.Up);
+            GridPos localGP = new GridPos(gp.x - centerGP.x, gp.z - centerGP.z);
             BagItemGridHitBox hb = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItemGridHitBox].AllocateGameObject<BagItemGridHitBox>(HitBoxContainer);
             hb.Initialize(new IntRect(localGP.x, -localGP.z, BagManager.Instance.BagItemGridSize, BagManager.Instance.BagItemGridSize));
             bagItemGridHitBoxes.Add(hb);

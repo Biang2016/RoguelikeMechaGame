@@ -9,7 +9,7 @@ public class BagManager : MonoSingleton<BagManager>
     public Dictionary<MechaComponentType, Sprite> MechaComponentSpriteDict = new Dictionary<MechaComponentType, Sprite>();
     public Dictionary<MechaComponentType, List<GridPos>> MechaComponentOccupiedGridPosDict = new Dictionary<MechaComponentType, List<GridPos>>();
 
-    private BagPanel bagPanel;
+    internal BagPanel BagPanel;
     private List<MechaComponentInfo> mechaComponentInfosInBag = new List<MechaComponentInfo>();
 
     void Awake()
@@ -20,8 +20,8 @@ public class BagManager : MonoSingleton<BagManager>
     {
         LoadAllBlockItemPics();
         LoadBlockOccupiedGridInfo();
-        bagPanel = UIManager.Instance.ShowUIForms<BagPanel>();
-        bagPanel.CloseUIForm();
+        BagPanel = UIManager.Instance.ShowUIForms<BagPanel>();
+        BagPanel.CloseUIForm();
         Initialize();
     }
 
@@ -64,9 +64,9 @@ public class BagManager : MonoSingleton<BagManager>
     {
         if (Input.GetKeyUp(KeyCode.Tab))
         {
-            if (bagPanel.gameObject.activeInHierarchy)
+            if (BagPanel.gameObject.activeInHierarchy)
             {
-                bagPanel.CloseUIForm();
+                BagPanel.CloseUIForm();
                 GameManager.Instance.SetState(GameState.Fighting);
             }
             else
@@ -84,18 +84,18 @@ public class BagManager : MonoSingleton<BagManager>
 
     private void Initialize()
     {
-        UnlockBagGridTo(40);
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 0, GridPos.Orientation.Down)));
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 0, GridPos.Orientation.Right)));
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Armor, new GridPos(3, 3, GridPos.Orientation.Right)));
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)));
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 3, GridPos.Orientation.Right)));
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Core, new GridPos(3, 3, GridPos.Orientation.Right)));
+        CurrentBagGridNumber = 40;
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 0, GridPos.Orientation.Down)), out BagItem _);
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 0, GridPos.Orientation.Right)), out BagItem _);
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Armor, new GridPos(3, 3, GridPos.Orientation.Right)), out BagItem _);
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Core, new GridPos(3, 3, GridPos.Orientation.Right)), out BagItem _);
     }
 
-    public bool AddMechaComponentToBag(MechaComponentInfo mci)
+    public bool AddMechaComponentToBag(MechaComponentInfo mci, out BagItem bagItem)
     {
-        bool suc = bagPanel.TryAddItem(mci, true);
+        bool suc = BagPanel.TryAddItem(mci, out bagItem);
         if (suc)
         {
             mechaComponentInfosInBag.Add(mci);
@@ -104,14 +104,36 @@ public class BagManager : MonoSingleton<BagManager>
         return suc;
     }
 
-    public void RemoveMechaComponentFromBag(BagItem bagItem,bool temporary)
+    public bool AddMechaComponentToBag(MechaComponentInfo mci, GridPos.Orientation orientation, List<GridPos> realGridPoses, out BagItem bagItem)
     {
-        bagPanel.RemoveItem(bagItem,temporary);
-        mechaComponentInfosInBag.Remove(bagItem.MechaComponentInfo);
+        bool suc = BagPanel.TryAddItem(mci, orientation, realGridPoses, out bagItem);
+        if (suc)
+        {
+            mechaComponentInfosInBag.Add(mci);
+        }
+
+        return suc;
     }
 
-    public void UnlockBagGridTo(int gridNumber)
+    public void RemoveMechaComponentFromBag(BagItem bagItem, bool temporary)
     {
-        bagPanel.UnlockBagGridTo(gridNumber);
+        BagPanel.RemoveItem(bagItem, temporary);
+        if (!temporary) mechaComponentInfosInBag.Remove(bagItem.MechaComponentInfo);
+    }
+
+    private int _currentBagGridNumber = 0;
+
+    public int CurrentBagGridNumber
+    {
+        get { return _currentBagGridNumber; }
+
+        set
+        {
+            if (_currentBagGridNumber != value)
+            {
+                BagPanel.UnlockBagGridTo(value);
+                _currentBagGridNumber = value;
+            }
+        }
     }
 }

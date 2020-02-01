@@ -5,24 +5,26 @@ using UnityEngine.UI;
 public class BagItem : PoolObject, IDraggable
 {
     [SerializeField] private Image Image;
-    [SerializeField] private BagGridSnapper BagGridSnapper;
     [SerializeField] private BagItemGridHitBoxes BagItemGridHitBoxes;
 
     public MechaComponentInfo MechaComponentInfo;
+    internal GridPos GridPos_BeforeMove;
+    public List<GridPos> RealPositionsInBagPanel_BeforeMove;
+    internal GridPos GridPos;
     public List<GridPos> RealPositionsInBagPanel;
     private float _dragComponentDragMinDistance;
     private float _dragComponentDragMaxDistance;
     internal int Width;
     internal int Height;
-    internal GridPos GridPos;
 
-    public void Initialize(MechaComponentInfo mci, int width, int height, GridPos myPos, List<GridPos> realPositionsInBagPanel)
+    public void Initialize(MechaComponentInfo mci, int width, int height, GridPos myPos, List<GridPos> realPositionsInBagPanel, bool moving)
     {
         MechaComponentInfo = mci;
         Image.sprite = BagManager.Instance.MechaComponentSpriteDict[mci.MechaComponentType];
         Width = width;
         Height = height;
         GridPos = myPos;
+        if (!moving) GridPos_BeforeMove = myPos;
 
         // Resize and rotate to fit the grid
         Vector2 size = new Vector2(Width * BagManager.Instance.BagItemGridSize, Height * BagManager.Instance.BagItemGridSize);
@@ -45,13 +47,29 @@ public class BagItem : PoolObject, IDraggable
 
         ((RectTransform) transform).anchoredPosition = new Vector2(GridPos.x * BagManager.Instance.BagItemGridSize, -GridPos.z * BagManager.Instance.BagItemGridSize);
         RealPositionsInBagPanel = realPositionsInBagPanel;
+        if (!moving)
+        {
+            RealPositionsInBagPanel_BeforeMove = CloneVariantUtils.List(RealPositionsInBagPanel);
+        }
     }
 
     private void Rotate()
     {
-        GridPos.Orientation newOrientation = (GridPos.Orientation) (((int) GridPos.orientation + 1) % 4);
+        GridPos.Orientation newOrientation = GridPos.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Up;
+
+        List<GridPos> newRealPositions = new List<GridPos>();
+        foreach (GridPos gp in RealPositionsInBagPanel)
+        {
+            GridPos newLocalGrid = GridPos.RotateGridPos(new GridPos(gp.x - GridPos.x, gp.z - GridPos.z), GridPos.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Left);
+            GridPos newRealGrid = new GridPos(newLocalGrid.x + GridPos.x, newLocalGrid.z + GridPos.z, GridPos.Orientation.Up);
+            newRealPositions.Add(newRealGrid);
+        }
+
+        RealPositionsInBagPanel.Clear();
+        RealPositionsInBagPanel = newRealPositions;
+
         //todo edit RealPositionsInBagPanel and change in bagpanel
-        Initialize(MechaComponentInfo, Height, Width, new GridPos(GridPos.x, GridPos.z, newOrientation), RealPositionsInBagPanel);
+        Initialize(MechaComponentInfo, Height, Width, new GridPos(GridPos.x, GridPos.z, newOrientation), newRealPositions, true);
     }
 
     #region IDraggable
@@ -73,7 +91,6 @@ public class BagItem : PoolObject, IDraggable
                 }
 
                 RefreshPreviewGridPositions();
-
                 break;
             }
         }
@@ -81,10 +98,39 @@ public class BagItem : PoolObject, IDraggable
 
     private void RefreshPreviewGridPositions()
     {
+        Vector2 pos = ((RectTransform) transform).anchoredPosition;
+        int x = Mathf.FloorToInt((pos.x) / BagManager.Instance.BagItemGridSize);
+        int y = Mathf.FloorToInt(-(pos.y) / BagManager.Instance.BagItemGridSize);
+
+        int x_delta = x - GridPos.x;
+        int y_delta = y - GridPos.z;
+
+        if (x_delta != 0 || y_delta != 0)
+        {
+            List<GridPos> newRealPositions = new List<GridPos>();
+            GridPos = new GridPos(x, y, GridPos.orientation);
+            foreach (GridPos gp in RealPositionsInBagPanel)
+            {
+                GridPos newRealGrid = new GridPos(gp.x + x_delta, gp.z + y_delta, gp.orientation);
+                newRealPositions.Add(newRealGrid);
+            }
+
+            RealPositionsInBagPanel.Clear();
+            RealPositionsInBagPanel = newRealPositions;
+        }
     }
 
     public void DragComponent_OnMouseUp(DragAreaTypes dragAreaTypes)
     {
+        BagManager.Instance.RemoveMechaComponentFromBag(this, false);
+        if (dragAreaTypes == DragAreaTypes.Bag)
+        {
+            bool suc = BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo, GridPos.orientation, RealPositionsInBagPanel, out BagItem _);
+            if (!suc)
+            {
+                BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo, GridPos_BeforeMove.orientation, RealPositionsInBagPanel_BeforeMove, out BagItem _);
+            }
+        }
     }
 
     public void DragComponent_SetStates(ref bool canDrag, ref DragAreaTypes dragFrom)

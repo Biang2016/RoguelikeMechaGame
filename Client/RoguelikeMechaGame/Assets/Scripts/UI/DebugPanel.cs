@@ -16,10 +16,11 @@ public class DebugPanel : BaseUIForm
 
     public void AddSword()
     {
-        BagManager.Instance.AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 3, GridPos.Orientation.Right)));
+        BagManager.Instance.AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem bagItem);
     }
+
     public void AddEngine()
     {
-        BagManager.Instance.AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)));
+        BagManager.Instance.AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem bagItem);
     }
 }

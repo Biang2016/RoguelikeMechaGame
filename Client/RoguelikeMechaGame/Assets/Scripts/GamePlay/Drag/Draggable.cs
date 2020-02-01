@@ -85,9 +85,36 @@ public class Draggable : MonoBehaviour
                     }
                     else if (DragManager.Instance.IsMouseInsideBag) //拖拽物体本身 
                     {
-                        Vector3 delta_v3 = uiCameraPosition - dragBeginPosition_UIObject;
-                        Vector2 delta = new Vector2(delta_v3.x, delta_v3.y);
-                        ((RectTransform) transform).anchoredPosition = oriAnchoredPosition_UIObject + delta * 100 + Vector2.one * BagManager.Instance.BagItemGridSize / 2f;
+                        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BagManager.Instance.BagPanel.ItemContainer.transform as RectTransform, Input.mousePosition, UIManager.Instance.UICamera, out Vector2 mousePos))
+                        {
+                            mousePos.x += ((RectTransform) BagManager.Instance.BagPanel.ItemContainer).rect.width / 2f;
+                            mousePos.y -= ((RectTransform) BagManager.Instance.BagPanel.ItemContainer).rect.height / 2f;
+                            int grid_X = Mathf.FloorToInt((mousePos.x) / BagManager.Instance.BagItemGridSize);
+                            int grid_Y = Mathf.FloorToInt((-mousePos.y) / BagManager.Instance.BagItemGridSize);
+
+                            int grid_X_delta = grid_X - DragManager.Instance.CurrentDrag_BagItem.GridPos.x;
+                            int grid_Y_delta = grid_Y - DragManager.Instance.CurrentDrag_BagItem.GridPos.z;
+
+                            if (grid_X_delta != 0)
+                            {
+                                bool suc = BagManager.Instance.BagPanel.CheckSpaceLocked(DragManager.Instance.CurrentDrag_BagItem.RealPositionsInBagPanel, new GridPos(grid_X_delta, 0));
+                                if (suc)
+                                {
+                                    int x = grid_X * BagManager.Instance.BagItemGridSize;
+                                    ((RectTransform) transform).anchoredPosition = new Vector2(x, ((RectTransform) transform).anchoredPosition.y);
+                                }
+                            }
+
+                            if (grid_Y_delta != 0)
+                            {
+                                bool suc = BagManager.Instance.BagPanel.CheckSpaceLocked(DragManager.Instance.CurrentDrag_BagItem.RealPositionsInBagPanel, new GridPos(0, grid_Y_delta));
+                                if (suc)
+                                {
+                                    int y = grid_Y * BagManager.Instance.BagItemGridSize;
+                                    ((RectTransform) transform).anchoredPosition = new Vector2(((RectTransform) transform).anchoredPosition.x, -y);
+                                }
+                            }
+                        }
                     }
                     else //拖出背包
                     {
