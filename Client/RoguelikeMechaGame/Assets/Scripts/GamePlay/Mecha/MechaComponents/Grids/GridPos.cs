@@ -40,7 +40,7 @@ public struct GridPos
     public static GridPos GetGridPosByMousePos(Transform parentTransform, Vector3 planeNormal, int gridSize)
     {
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
-        Vector3 intersect = ClientUtil.GetIntersectWithLineAndPlane(ray.origin, ray.direction, planeNormal, parentTransform.position);
+        Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, planeNormal, parentTransform.position);
         Vector3 diff = intersect - parentTransform.position + Vector3.one * gridSize / 2f;
         int x = Mathf.FloorToInt(diff.x / gridSize) * gridSize;
         int z = Mathf.FloorToInt(diff.z / gridSize) * gridSize;

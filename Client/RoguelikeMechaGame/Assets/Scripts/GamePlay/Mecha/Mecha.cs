@@ -9,6 +9,7 @@ public class Mecha : PoolObject
     private List<MechaComponentBase> mechaComponents = new List<MechaComponentBase>();
 
     [SerializeField] private Transform MechaComponentContainer;
+    public MechaEditArea MechaEditArea;
 
     public void Initialize(MechaInfo mechaInfo)
     {
@@ -18,6 +19,8 @@ public class Mecha : PoolObject
             MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mci, MechaComponentContainer, this);
             mechaComponents.Add(mcb);
         }
+
+        MechaEditArea.Hide();
     }
 
     public float Speed = 3f;
@@ -54,7 +57,21 @@ public class Mecha : PoolObject
                     SlotLightsShown = !SlotLightsShown;
                     GridShown = !GridShown;
                 }
+
+                RotateToMouseDirection();
             }
+        }
+    }
+
+    private void RotateToMouseDirection()
+    {
+        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out RaycastHit hit, 100f, GameManager.Instance.LayerMask_DragAreas);
+        if (hit.collider)
+        {
+            Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
+            Quaternion rotation = Quaternion.LookRotation(destination - transform.position);
+            transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
         }
     }
 

@@ -67,11 +67,13 @@ public class BagManager : MonoSingleton<BagManager>
             if (BagPanel.gameObject.activeInHierarchy)
             {
                 BagPanel.CloseUIForm();
+                GameManager.Instance.PlayerMecha.MechaEditArea.Hide();
                 GameManager.Instance.SetState(GameState.Fighting);
             }
             else
             {
                 UIManager.Instance.ShowUIForms<BagPanel>();
+                GameManager.Instance.PlayerMecha.MechaEditArea.Show();
                 GameManager.Instance.SetState(GameState.Building);
             }
         }
@@ -90,7 +92,6 @@ public class BagManager : MonoSingleton<BagManager>
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Armor, new GridPos(3, 3, GridPos.Orientation.Right)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Core, new GridPos(3, 3, GridPos.Orientation.Right)), out BagItem _);
     }
 
     public bool AddMechaComponentToBag(MechaComponentInfo mci, out BagItem bagItem)

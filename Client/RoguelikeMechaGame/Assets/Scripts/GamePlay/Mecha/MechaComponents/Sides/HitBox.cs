@@ -12,10 +12,6 @@ public class HitBox : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Projectile p = other.gameObject.GetComponentInParent<Projectile>();
-        if (p)
-        {
-            ParentHitBoxRoot.OnHit(p.Damage);
-        }
+        //TODO hit by anything
     }
 }

@@ -27,12 +27,6 @@ public class GameManager : MonoSingleton<GameManager>
         PlayerMecha.Initialize(new MechaInfo(MechaType.Self, new List<MechaComponentInfo>
         {
             new MechaComponentInfo(MechaComponentType.Core, new GridPos(0, 0, GridPos.Orientation.Up)),
-            new MechaComponentInfo(MechaComponentType.Core, new GridPos(1, 1, GridPos.Orientation.Up)),
-            new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 1, GridPos.Orientation.Up)),
-            new MechaComponentInfo(MechaComponentType.Armor, new GridPos(1, 1, GridPos.Orientation.Up)),
-            new MechaComponentInfo(MechaComponentType.Engine, new GridPos(1, 1, GridPos.Orientation.Up)),
-            new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 1, GridPos.Orientation.Up)),
-            new MechaComponentInfo(MechaComponentType.Sword, new GridPos(1, 1, GridPos.Orientation.Up)),
         }));
         SetState(GameState.Fighting);
 
