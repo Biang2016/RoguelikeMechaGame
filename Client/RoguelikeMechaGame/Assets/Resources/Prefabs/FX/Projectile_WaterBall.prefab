@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 54530307865729164}
   - component: {fileID: 135664649076355494}
   m_Layer: 13
-  m_Name: Projectile 14
+  m_Name: Projectile_WaterBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -4765,12 +4765,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 14
   speed: 15
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1270335207818070, guid: 8f5e087c57b11ef4cbed619d26886292, type: 3}
-  flash: {fileID: 1558033086931108, guid: c42932cbc55cdd94c992455a94bfd523, type: 3}
   Detached:
   - {fileID: 1993799643894748}
 --- !u!199 &199069760737636358

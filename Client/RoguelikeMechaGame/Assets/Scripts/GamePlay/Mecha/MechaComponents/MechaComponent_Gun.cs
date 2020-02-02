@@ -7,7 +7,7 @@ public class MechaComponent_Gun : MechaComponentBase
 
     void Start()
     {
-        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new BulletInfo(MechaType.Self, ProjectileType.ArrowsFly)));
+        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_ArrowsFly)));
     }
 
     void Update()

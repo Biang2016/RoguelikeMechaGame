@@ -4778,7 +4778,7 @@ GameObject:
   - component: {fileID: 54406299046715380}
   - component: {fileID: 135464267038536590}
   m_Layer: 13
-  m_Name: Projectile 10
+  m_Name: Projectile_GreenPoisonous
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4815,7 +4815,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -9527,12 +9527,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 10
   speed: 15
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1098451438589226, guid: afa1163e40fd2904fbf38e4c00924127, type: 3}
-  flash: {fileID: 1351939137292810, guid: 56bde4ce6c483884084a4ff8b76b3267, type: 3}
   Detached:
   - {fileID: 1973628126080328}
 --- !u!199 &199500896755526810

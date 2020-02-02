@@ -4782,7 +4782,7 @@ GameObject:
   - component: {fileID: 54347867007870338}
   - component: {fileID: 135713622178651324}
   m_Layer: 13
-  m_Name: Projectile 7
+  m_Name: Projectile_WhiteFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4820,7 +4820,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -9532,12 +9532,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 7
   speed: 30
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1900636369659048, guid: c8c637b8f0130b84b8e2d623d873832d, type: 3}
-  flash: {fileID: 1687680602027628, guid: 86443fa1d98b18345bce2157b9568cc4, type: 3}
   Detached:
   - {fileID: 1510226138140356}
 --- !u!199 &199317234387275066

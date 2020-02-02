@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 135195918683395516}
   - component: {fileID: 199280347088039186}
   m_Layer: 13
-  m_Name: Projectile 13
+  m_Name: Projectile_YellowLightening
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,9 +50,9 @@ ParticleSystem:
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -4724,12 +4724,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 13
   speed: 40
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1914345040822934, guid: 3a3ebdd477adb6444969752e68f9e55e, type: 3}
-  flash: {fileID: 1477807231266488, guid: 87ad75dca7ceef44bafef0a49761f8fb, type: 3}
   Detached: []
 --- !u!108 &108095448666582800
 Light:

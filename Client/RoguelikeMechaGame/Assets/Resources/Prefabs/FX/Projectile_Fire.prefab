@@ -14364,7 +14364,7 @@ GameObject:
   - component: {fileID: 54729807578932012}
   - component: {fileID: 135951470721667518}
   m_Layer: 13
-  m_Name: Projectile 4
+  m_Name: Projectile_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14404,7 +14404,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -19134,12 +19134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 4
   speed: 25
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1339124478685776, guid: 983ffc7b1f02f0d46a330ab4d104d17d, type: 3}
-  flash: {fileID: 1738175644799202, guid: c9e6ddab55c69eb4b81803e860d80c55, type: 3}
   Detached:
   - {fileID: 1112018524344104}
 --- !u!199 &199828426782813410

@@ -14413,7 +14413,7 @@ GameObject:
   - component: {fileID: 54921219820361980}
   - component: {fileID: 135890836330974772}
   m_Layer: 13
-  m_Name: Projectile 15
+  m_Name: Projectile_FlyCutter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14452,7 +14452,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -19164,12 +19164,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 15
   speed: 20
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1479929942879240, guid: 4776bca22f3b439449b75f5931a27440, type: 3}
-  flash: {fileID: 0}
   Detached:
   - {fileID: 1603163787069334}
 --- !u!199 &199904888891523420

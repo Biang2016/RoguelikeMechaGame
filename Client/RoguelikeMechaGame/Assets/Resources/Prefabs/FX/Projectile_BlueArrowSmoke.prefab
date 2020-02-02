@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 54508532002122222}
   - component: {fileID: 135895367616126662}
   m_Layer: 13
-  m_Name: Projectile 18
+  m_Name: Projectile_BlueArrowSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -4764,12 +4764,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  hitOffset: 0.1
+  ProjectileType: 18
+  speed: 15
+  hitOffset: 0
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1088318192215600, guid: fcb7ef11e81f7264990b58f26051651b, type: 3}
-  flash: {fileID: 1851657805948188, guid: 48e0fabf2b2853a41aea1b678a158ae5, type: 3}
   Detached: []
 --- !u!199 &199029229939319142
 ParticleSystemRenderer:

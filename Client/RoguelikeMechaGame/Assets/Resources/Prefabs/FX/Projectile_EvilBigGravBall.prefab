@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 135446770454793880}
   - component: {fileID: 108014936755814536}
   m_Layer: 13
-  m_Name: Projectile 20
+  m_Name: Projectile_EvilBigGravBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -4770,12 +4770,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 20
   speed: 15
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1767841913861676, guid: 7e33fe33aff4f49449f51ed88f138e9c, type: 3}
-  flash: {fileID: 1840367976591474, guid: e9d1f52e709876143b75f93f52a48156, type: 3}
   Detached:
   - {fileID: 1274617587750062}
 --- !u!199 &199989270669818508

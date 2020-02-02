@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameObjectPoolManager : MonoSingleton<GameObjectPoolManager>
@@ -42,6 +43,9 @@ public class GameObjectPoolManager : MonoSingleton<GameObjectPoolManager>
     };
 
     public Dictionary<PrefabNames, GameObjectPool> PoolDict = new Dictionary<PrefabNames, GameObjectPool>();
+    public Dictionary<ProjectileType, GameObjectPool> ProjectileDict = new Dictionary<ProjectileType, GameObjectPool>();
+    public Dictionary<ProjectileType, GameObjectPool> ProjectileHitDict = new Dictionary<ProjectileType, GameObjectPool>();
+    public Dictionary<ProjectileType, GameObjectPool> ProjectileFlashDict = new Dictionary<ProjectileType, GameObjectPool>();
 
     void Awake()
     {
@@ -57,6 +61,51 @@ public class GameObjectPoolManager : MonoSingleton<GameObjectPoolManager>
             PoolObject po = go_Prefab.GetComponent<PoolObject>();
             pool.Initiate(po, kv.Value);
             pool.transform.SetParent(transform);
+        }
+
+        foreach (string s in Enum.GetNames(typeof(ProjectileType)))
+        {
+            string prefabName = s;
+            ProjectileType projectileType = (ProjectileType) Enum.Parse(typeof(ProjectileType), s);
+            GameObject go = new GameObject("Pool_" + prefabName);
+            GameObjectPool pool = go.AddComponent<GameObjectPool>();
+            ProjectileDict.Add(projectileType, pool);
+            GameObject go_Prefab = PrefabManager.Instance.GetPrefab(prefabName);
+            PoolObject po = go_Prefab.GetComponent<PoolObject>();
+            pool.Initiate(po, 20);
+            pool.transform.SetParent(transform);
+        }
+
+        foreach (string s in Enum.GetNames(typeof(ProjectileType)))
+        {
+            string prefabName = s.Replace("Projectile_", "Hit_");
+            ProjectileType projectileType = (ProjectileType) Enum.Parse(typeof(ProjectileType), s);
+            GameObject go = new GameObject("Pool_" + prefabName);
+            GameObjectPool pool = go.AddComponent<GameObjectPool>();
+            GameObject go_Prefab = PrefabManager.Instance.GetPrefab(prefabName);
+            if (go_Prefab)
+            {
+                ProjectileHitDict.Add(projectileType, pool);
+                PoolObject po = go_Prefab.GetComponent<PoolObject>();
+                pool.Initiate(po, 20);
+                pool.transform.SetParent(transform);
+            }
+        }
+
+        foreach (string s in Enum.GetNames(typeof(ProjectileType)))
+        {
+            string prefabName = s.Replace("Projectile_", "Flash_");
+            ProjectileType projectileType = (ProjectileType) Enum.Parse(typeof(ProjectileType), s);
+            GameObject go = new GameObject("Pool_" + prefabName);
+            GameObjectPool pool = go.AddComponent<GameObjectPool>();
+            GameObject go_Prefab = PrefabManager.Instance.GetPrefab(prefabName);
+            if (go_Prefab)
+            {
+                ProjectileFlashDict.Add(projectileType, pool);
+                PoolObject po = go_Prefab.GetComponent<PoolObject>();
+                pool.Initiate(po, 20);
+                pool.transform.SetParent(transform);
+            }
         }
     }
 

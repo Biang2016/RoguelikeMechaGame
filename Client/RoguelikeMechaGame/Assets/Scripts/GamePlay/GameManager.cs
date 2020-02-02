@@ -10,6 +10,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     [NonSerialized] public int LayerMask_ComponentHitBox;
     [NonSerialized] public int LayerMask_DragAreas;
+    [SerializeField] private bool ShowDebugPanel;
 
     public Camera MainCamera;
     public CameraFollow MainCameraFollow;
@@ -36,7 +37,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         UIManager.Instance.ShowUIForms<DebugPanel>();
 #if !UNITY_EDITOR
-        UIManager.Instance.CloseUIForm<DebugPanel>();
+        if(!ShowDebugPanel) UIManager.Instance.CloseUIForm<DebugPanel>();
 #endif
     }
 

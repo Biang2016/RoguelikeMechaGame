@@ -38,6 +38,6 @@ public class Shooter : MonoBehaviour
 
     private void FireByFirePointDirection()
     {
-        ProjectileManager.Instance.ShootProjectile(ShooterInfo.BulletInfo.ProjectileType, FirePoint.position, FirePoint.forward);
+        ProjectileManager.Instance.ShootProjectile(ShooterInfo.ProjectileInfo.ProjectileType, FirePoint.position, FirePoint.forward);
     }
 }

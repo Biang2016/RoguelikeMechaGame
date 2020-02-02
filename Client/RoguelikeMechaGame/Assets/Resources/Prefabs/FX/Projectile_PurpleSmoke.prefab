@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 54347867007870338}
   - component: {fileID: 135713622178651324}
   m_Layer: 13
-  m_Name: Projectile 6
+  m_Name: Projectile_PurpleSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -4765,12 +4765,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 6
   speed: 25
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1021820888038418, guid: 4754d1c93d0ffde46a4b52472f289725, type: 3}
-  flash: {fileID: 1013902274184218, guid: 8f3f932519e18564e81c0a4c89d87f11, type: 3}
   Detached:
   - {fileID: 1984230739644340}
 --- !u!199 &199317234387275066

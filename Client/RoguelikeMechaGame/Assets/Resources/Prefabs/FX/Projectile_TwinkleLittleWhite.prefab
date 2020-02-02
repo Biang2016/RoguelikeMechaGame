@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 135627091332810106}
   - component: {fileID: 114460598514863804}
   m_Layer: 13
-  m_Name: Projectile 22
+  m_Name: Projectile_TwinkleLittleWhite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,9 +52,9 @@ ParticleSystem:
   cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -4784,12 +4784,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 22
   speed: 15
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1036333269638840, guid: c5a11cdca0c02ec46af89a4f25515b5f, type: 3}
-  flash: {fileID: 1368339559166676, guid: 1702711b22bc3204d80c7f85a3de0c80, type: 3}
   Detached:
   - {fileID: 1512875676520532}
 --- !u!199 &199626401336443300

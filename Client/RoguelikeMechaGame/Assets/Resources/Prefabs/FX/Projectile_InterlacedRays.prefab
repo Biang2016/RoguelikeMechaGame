@@ -4783,7 +4783,7 @@ GameObject:
   - component: {fileID: 54071781892700886}
   - component: {fileID: 135993822685259368}
   m_Layer: 13
-  m_Name: Projectile 9
+  m_Name: Projectile_InterlacedRays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4820,7 +4820,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -9532,12 +9532,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 9
   speed: 20
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1059669524233346, guid: 7bb551564a4a9a1498e0624fd34ce7d3, type: 3}
-  flash: {fileID: 1224217824244948, guid: 291223895b5952f488a6f94886872e78, type: 3}
   Detached:
   - {fileID: 1113143600131104}
 --- !u!108 &108991988279912604

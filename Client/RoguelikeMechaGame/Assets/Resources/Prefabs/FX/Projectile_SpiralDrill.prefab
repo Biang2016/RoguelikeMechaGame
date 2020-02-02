@@ -9593,7 +9593,7 @@ GameObject:
   - component: {fileID: 54051928621575228}
   - component: {fileID: 135478432046551302}
   m_Layer: 13
-  m_Name: Projectile 16
+  m_Name: Projectile_SpiralDrill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9631,7 +9631,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -14343,12 +14343,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 16
   speed: 30
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1923500111986380, guid: f95ef7e849953e2428a605bb742e8b9e, type: 3}
-  flash: {fileID: 1692286084053898, guid: 317b300dc45260745bc6df5b8d9b1f82, type: 3}
   Detached: []
 --- !u!199 &199307963145921556
 ParticleSystemRenderer:

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 54637759880830186}
   - component: {fileID: 135729131846127588}
   m_Layer: 13
-  m_Name: Projectile 24
+  m_Name: Projectile_Butter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,9 +51,9 @@ ParticleSystem:
   cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -4765,12 +4765,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileType: 24
   speed: 25
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 90, z: 0}
-  hit: {fileID: 1473797069004288, guid: 5f609255c5be93c4a8f34b880b754eac, type: 3}
-  flash: {fileID: 1262005199533444, guid: 155a6e65975c2834a85ca6e20ce89621, type: 3}
   Detached:
   - {fileID: 1864313438439992}
 --- !u!199 &199781326384758696

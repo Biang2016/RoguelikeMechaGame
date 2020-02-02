@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PoolObject : MonoBehaviour
 {
@@ -16,4 +17,5 @@ public class PoolObject : MonoBehaviour
         Pool.RecycleGameObject(this);
         IsRecycled = true;
     }
+
 }
