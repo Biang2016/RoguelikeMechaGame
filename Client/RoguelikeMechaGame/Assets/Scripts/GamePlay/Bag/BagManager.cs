@@ -70,12 +70,16 @@ public class BagManager : MonoSingleton<BagManager>
             {
                 BagPanel.CloseUIForm();
                 GameManager.Instance.PlayerMecha.MechaEditArea.Hide();
+                GameManager.Instance.PlayerMecha.SlotLightsShown = false;
+                GameManager.Instance.PlayerMecha.GridShown = false;
                 GameManager.Instance.SetState(GameState.Fighting);
             }
             else
             {
                 UIManager.Instance.ShowUIForms<BagPanel>();
                 GameManager.Instance.PlayerMecha.MechaEditArea.Show();
+                GameManager.Instance.PlayerMecha.SlotLightsShown = true;
+                GameManager.Instance.PlayerMecha.GridShown = true;
                 GameManager.Instance.SetState(GameState.Building);
             }
         }

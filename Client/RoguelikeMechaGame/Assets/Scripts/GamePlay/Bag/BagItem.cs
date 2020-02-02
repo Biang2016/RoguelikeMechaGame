@@ -155,10 +155,9 @@ public class BagItem : PoolObject, IDraggable
         BagManager.Instance.RemoveMechaComponentFromBag(this, false);
         PoolRecycle();
 
-
         if (!BagManager.Instance.InfiniteComponents)
         {
-         
+            BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo, out BagItem _);
         }
     }
 

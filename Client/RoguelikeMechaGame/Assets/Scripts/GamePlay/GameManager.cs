@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GamePlay;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -11,6 +12,7 @@ public class GameManager : MonoSingleton<GameManager>
     [NonSerialized] public int LayerMask_DragAreas;
 
     public Camera MainCamera;
+    public CameraFollow MainCameraFollow;
     [SerializeField] private Transform MechaContainer;
 
     internal Mecha PlayerMecha;
@@ -28,6 +30,8 @@ public class GameManager : MonoSingleton<GameManager>
         {
             new MechaComponentInfo(MechaComponentType.Core, new GridPos(0, 0, GridPos.Orientation.Up)),
         }));
+
+        MainCameraFollow.SetTarget(PlayerMecha.transform);
         SetState(GameState.Fighting);
 
         UIManager.Instance.ShowUIForms<DebugPanel>();

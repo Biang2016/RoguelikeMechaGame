@@ -21,11 +21,15 @@ public class Mecha : PoolObject
         }
 
         MechaEditArea.Hide();
+        GridShown = false;
+        SlotLightsShown = false;
     }
 
     public void AddMechaComponent(MechaComponentBase mcb)
     {
         mechaComponents.Add(mcb);
+        mcb.MechaComponentGrids.SetGridShown(GridShown);
+        mcb.MechaComponentGrids.SetSlotLightsShown(SlotLightsShown);
     }
 
     public float Speed = 3f;
@@ -76,7 +80,7 @@ public class Mecha : PoolObject
         transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
     }
 
-    private bool _slotLightsShown = false;
+    private bool _slotLightsShown = true;
 
     public bool SlotLightsShown
     {
@@ -95,7 +99,7 @@ public class Mecha : PoolObject
         }
     }
 
-    private bool _gridShown = false;
+    private bool _gridShown = true;
 
     public bool GridShown
     {
