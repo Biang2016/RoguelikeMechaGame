@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MechaComponentContainer: {fileID: 1154461616125127710}
   MechaEditArea: {fileID: 6405004443083676034}
-  Speed: 3
+  Speed: 10
 --- !u!1001 &3059506952661825119
 PrefabInstance:
   m_ObjectHideFlags: 0

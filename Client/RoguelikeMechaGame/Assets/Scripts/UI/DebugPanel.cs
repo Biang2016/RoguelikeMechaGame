@@ -34,4 +34,9 @@ public class DebugPanel : BaseUIForm
     {
         BagManager.Instance.AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem bagItem);
     }
+
+    public void SetInfiniteComponents(bool infinite)
+    {
+        BagManager.Instance.InfiniteComponents = infinite;
+    }
 }

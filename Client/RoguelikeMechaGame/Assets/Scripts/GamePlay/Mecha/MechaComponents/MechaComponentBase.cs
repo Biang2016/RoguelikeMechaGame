@@ -7,11 +7,9 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
 {
     internal Mecha ParentMecha = null;
     internal Draggable Draggable;
-    private GridSnapper gridSnapper;
 
     void Awake()
     {
-        gridSnapper = GetComponent<GridSnapper>();
         Draggable = GetComponent<Draggable>();
     }
 
@@ -20,6 +18,7 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         GameObjectPoolManager.PrefabNames prefabName = (GameObjectPoolManager.PrefabNames) Enum.Parse(typeof(GameObjectPoolManager.PrefabNames), "MechaComponent_" + mechaComponentInfo.MechaComponentType);
         MechaComponentBase mcb = GameObjectPoolManager.Instance.PoolDict[prefabName].AllocateGameObject<MechaComponentBase>(parent);
         mcb.Initialize(mechaComponentInfo, parentMecha);
+        mcb.transform.rotation = Quaternion.Euler(0, 0, 0);
         return mcb;
     }
 

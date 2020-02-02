@@ -29,10 +29,9 @@ public class MechaComponentSlot : MonoBehaviour
         SlotLightRenderer.material = SlotLightMaterials[(int) slotType];
     }
 
-
-    void Awake()
+    public void Initialize()
     {
-        Orientation = GridPos.GetGridPosByLocalTrans(transform,GameManager.GridSize).orientation;
+        Orientation = GridPos.GetGridPosByLocalTrans(transform, GameManager.GridSize).orientation;
     }
 
     void Update()

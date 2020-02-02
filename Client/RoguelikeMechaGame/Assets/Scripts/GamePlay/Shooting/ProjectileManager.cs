@@ -1,15 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ProjectileManager : MonoSingleton<ProjectileManager>
 {
+    private List<GameObject> AllProjectiles = new List<GameObject>();
+
     public GameObject ShootProjectile(ProjectileType projectileType, Vector3 from, Vector3 dir)
     {
         GameObject prefab = PrefabManager.Instance.GetPrefab("Projectile_" + projectileType);
         GameObject go = Instantiate(prefab);
+        go.transform.SetParent(transform);
         go.transform.position = from;
         go.transform.LookAt(from + dir);
         return go;
+    }
+
+    public void ClearAllProjectiles()
+    {
+        foreach (GameObject go in AllProjectiles)
+        {
+            DestroyImmediate(go);
+        }
+
+        AllProjectiles.Clear();
     }
 }
 

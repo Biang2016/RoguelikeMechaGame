@@ -148,11 +148,18 @@ public class BagItem : PoolObject, IDraggable
         MechaComponentBase mcb = MechaComponentBase.BaseInitialize(MechaComponentInfo, GameManager.Instance.PlayerMecha.transform, GameManager.Instance.PlayerMecha);
         GridPos gp = GridPos.GetGridPosByMousePos(GameManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
         GridPos.ApplyGridPosToLocalTrans(gp, mcb.transform, GameManager.GridSize);
+        GameManager.Instance.PlayerMecha.AddMechaComponent(mcb);
         DragManager.Instance.CancelCurrentDrag();
         DragManager.Instance.CurrentDrag = mcb.Draggable;
         mcb.Draggable.IsOnDrag = true;
         BagManager.Instance.RemoveMechaComponentFromBag(this, false);
         PoolRecycle();
+
+
+        if (!BagManager.Instance.InfiniteComponents)
+        {
+         
+        }
     }
 
     #endregion

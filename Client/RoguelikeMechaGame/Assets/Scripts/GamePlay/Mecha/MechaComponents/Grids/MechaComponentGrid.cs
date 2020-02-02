@@ -29,6 +29,7 @@ public class MechaComponentGrid : MonoBehaviour
         MechaComponentSlot[] slots = GetComponentsInChildren<MechaComponentSlot>();
         foreach (MechaComponentSlot slot in slots)
         {
+            slot.Initialize();
             Slots[slot.Orientation] = slot;
         }
     }

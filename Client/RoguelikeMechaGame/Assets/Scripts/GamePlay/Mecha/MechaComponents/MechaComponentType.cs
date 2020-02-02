@@ -6,4 +6,5 @@
     Gun = 3,
     Sword = 4,
     Engine = 5,
+    Missile = 6,
 }

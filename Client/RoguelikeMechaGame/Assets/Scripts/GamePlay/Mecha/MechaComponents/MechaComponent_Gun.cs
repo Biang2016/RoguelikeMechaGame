@@ -7,22 +7,25 @@ public class MechaComponent_Gun : MechaComponentBase
 
     void Start()
     {
-        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.3f, 50f, new BulletInfo(MechaType.Self, ProjectileType.ArrowsFly)));
+        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new BulletInfo(MechaType.Self, ProjectileType.ArrowsFly)));
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (GameManager.Instance.GetState() == GameState.Fighting)
         {
-            if (Shooter)
+            if (Input.GetButtonDown("Fire1"))
             {
-                Shooter.Shoot();
+                if (Shooter)
+                {
+                    Shooter.Shoot();
+                }
             }
-        }
 
-        if (Input.GetMouseButton(1))
-        {
-            Shooter.ContinuousShoot();
+            if (Input.GetMouseButton(1))
+            {
+                Shooter.ContinuousShoot();
+            }
         }
     }
 }

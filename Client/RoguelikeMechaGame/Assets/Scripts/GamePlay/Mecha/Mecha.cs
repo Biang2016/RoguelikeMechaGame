@@ -23,6 +23,11 @@ public class Mecha : PoolObject
         MechaEditArea.Hide();
     }
 
+    public void AddMechaComponent(MechaComponentBase mcb)
+    {
+        mechaComponents.Add(mcb);
+    }
+
     public float Speed = 3f;
 
     void Update()
@@ -34,31 +39,31 @@ public class Mecha : PoolObject
                 float movement = 0.7f * Time.deltaTime * Speed;
                 if (Input.GetKey(KeyCode.A))
                 {
-                    transform.Translate(-movement, 0, -movement);
+                    transform.Translate(-movement, 0, -movement, Space.World);
                 }
 
                 if (Input.GetKey(KeyCode.D))
                 {
-                    transform.Translate(movement, 0, movement);
+                    transform.Translate(movement, 0, movement, Space.World);
                 }
 
                 if (Input.GetKey(KeyCode.W))
                 {
-                    transform.Translate(-movement, 0, movement);
+                    transform.Translate(-movement, 0, movement, Space.World);
                 }
 
                 if (Input.GetKey(KeyCode.S))
                 {
-                    transform.Translate(movement, 0, -movement);
-                }
-
-                if (Input.GetKeyUp(KeyCode.G))
-                {
-                    SlotLightsShown = !SlotLightsShown;
-                    GridShown = !GridShown;
+                    transform.Translate(movement, 0, -movement, Space.World);
                 }
 
                 RotateToMouseDirection();
+            }
+
+            if (Input.GetKeyUp(KeyCode.G))
+            {
+                SlotLightsShown = !SlotLightsShown;
+                GridShown = !GridShown;
             }
         }
     }
@@ -66,13 +71,9 @@ public class Mecha : PoolObject
     private void RotateToMouseDirection()
     {
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out RaycastHit hit, 100f, GameManager.Instance.LayerMask_DragAreas);
-        if (hit.collider)
-        {
-            Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
-            Quaternion rotation = Quaternion.LookRotation(destination - transform.position);
-            transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
-        }
+        Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, Vector3.up, transform.position);
+        Quaternion rotation = Quaternion.LookRotation(intersect - transform.position);
+        transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
     }
 
     private bool _slotLightsShown = false;
