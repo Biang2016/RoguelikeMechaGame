@@ -96,6 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c379cb7002494c8de9b1f90060d2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Camera: {fileID: 1500443317}
+  MinFOW: 10
+  MaxFOW: 30
 --- !u!1 &1917620444
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,17 +574,17 @@ PrefabInstance:
     - target: {fileID: 7574745312018746254, guid: 7fcdd2b42846247e781421ef5fc2919e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7574745312018746254, guid: 7fcdd2b42846247e781421ef5fc2919e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7574745312018746254, guid: 7fcdd2b42846247e781421ef5fc2919e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7574745312018746254, guid: 7fcdd2b42846247e781421ef5fc2919e,
         type: 3}

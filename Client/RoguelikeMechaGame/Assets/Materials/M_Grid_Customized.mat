@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Grid_Customized
-  m_Shader: {fileID: 4800000, guid: 837f6aa02eec1de42b4738b884be19f7, type: 3}
-  m_ShaderKeywords: WPOS_ON
+  m_Shader: {fileID: 4800000, guid: cb5124dde26e46e4189cd9ce6f196b06, type: 3}
+  m_ShaderKeywords: WPOS_OFF
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,15 +20,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BasePatternTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 0.2, y: 0.2}
-        m_Offset: {x: 0.13, y: -0.11}
+        m_Texture: {fileID: 2800000, guid: eb17463f1042f924e9107baa7df30815, type: 3}
+        m_Scale: {x: 0.025, y: 0.025}
+        m_Offset: {x: 0.5, y: 0.5}
     - _CenterGridTex:
-        m_Texture: {fileID: 2800000, guid: f14c45fea3a7f1941a2dc24d13a60fa9, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 0.1, y: 0.1}
         m_Offset: {x: 0, y: 0}
     - _CenterLineTex:
-        m_Texture: {fileID: 2800000, guid: f2cf69d1ccbbb904f8b2aac6dd1444e3, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 0.05, y: 0.05}
         m_Offset: {x: 0, y: 0}
     - _EdgeTex:
@@ -40,9 +40,9 @@ Material:
         m_Scale: {x: 0.05, y: 0.05}
         m_Offset: {x: 0.06, y: -0.08}
     m_Floats:
-    - _BasePatternEmi: 0
-    - _BasePatternMet: 0
-    - _BasePatternSmo: 0.3
+    - _BasePatternEmi: 2.15
+    - _BasePatternMet: 1
+    - _BasePatternSmo: 1
     - _CenterGridEmi: 0
     - _CenterGridMet: 0
     - _CenterGridSmo: 0.3
@@ -52,9 +52,9 @@ Material:
     - _EdgeEmi: 0
     - _EdgeMet: 0.282
     - _EdgeSmo: 0.53
-    - _GlobalEmi: 1
-    - _GlobalMet: 0.71
-    - _GlobalSmo: 1
+    - _GlobalEmi: 1.88
+    - _GlobalMet: 2
+    - _GlobalSmo: 2
     - _TextEmi: 0
     - _TextMet: 0
     - _TextSmo: 0
@@ -62,11 +62,11 @@ Material:
     - _TilingY: 1
     - _WorldPosition: 0
     m_Colors:
-    - _BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    - _BasePatternColor: {r: 0.375, g: 0.375, b: 0.375, a: 1}
-    - _CenterGridColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
-    - _CenterLineColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
-    - _EdgeColor: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 1}
+    - _BaseColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0}
+    - _BasePatternColor: {r: 0.375, g: 0.375, b: 0.375, a: 0.7254902}
+    - _CenterGridColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.47058824}
+    - _CenterLineColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0.30980393}
+    - _EdgeColor: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 0.9372549}
     - _TextColor: {r: 0.5735294, g: 0.5735294, b: 0.5735294, a: 1}
     - _WolrdBpattTiling: {r: 0.2, g: 0.2, b: 0.17, a: 0}
     - _WolrdCgridTiling: {r: 0.1, g: 0.1, b: 0, a: 0}

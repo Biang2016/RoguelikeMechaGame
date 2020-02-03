@@ -22,7 +22,7 @@ public class MechaEditArea : DragArea
         {
             if (DragManager.Instance.CurrentDrag == null)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(1))
                 {
                     onMouseDrag = true;
                     if (GetMousePosOnThisArea(out Vector3 pos))
@@ -31,7 +31,7 @@ public class MechaEditArea : DragArea
                     }
                 }
 
-                if (onMouseDrag && Input.GetMouseButton(0))
+                if (onMouseDrag && Input.GetMouseButton(1))
                 {
                     if (GetMousePosOnThisArea(out Vector3 pos))
                     {
@@ -49,7 +49,7 @@ public class MechaEditArea : DragArea
                     }
                 }
 
-                if (Input.GetMouseButtonUp(0))
+                if (Input.GetMouseButtonUp(1))
                 {
                     onMouseDrag = false;
                     mouseDownPos = Vector3.zero;
