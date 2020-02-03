@@ -189,4 +189,27 @@ public static class ClientUtils
 
         return 0F;
     }
+
+    public static void CenterOnChildren(this Transform parent, List<MechaComponentBase> children)
+    {
+        List<Transform> childrenTrans = new List<Transform>();
+        foreach (MechaComponentBase mcb in children)
+        {
+            childrenTrans.Add(mcb.transform);
+        }
+
+        Vector3 pos = Vector3.zero;
+        foreach (Transform child in childrenTrans)
+        {
+            pos += child.position;
+            child.parent = null;
+        }
+
+        pos /= children.Count;
+        parent.position = pos;
+        foreach (Transform child in childrenTrans)
+        {
+            child.parent = parent;
+        }
+    }
 }

@@ -19,6 +19,11 @@ public class Shooter : MonoBehaviour
         {
             fireCountdown -= Time.deltaTime;
         }
+
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            ShooterInfo.ProjectileInfo.ProjectileType = (ProjectileType) (((int) ShooterInfo.ProjectileInfo.ProjectileType + 1) % 25 + 1);
+        }
     }
 
     public void Shoot()

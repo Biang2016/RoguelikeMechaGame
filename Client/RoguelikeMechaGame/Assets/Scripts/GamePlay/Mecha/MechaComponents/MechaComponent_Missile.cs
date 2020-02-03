@@ -7,7 +7,7 @@ public class MechaComponent_Missile : MechaComponentBase
 
     void Start()
     {
-        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_BubbleBlade)));
+        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_Butter)));
     }
 
     void Update()

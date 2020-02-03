@@ -72,6 +72,7 @@ public class BagManager : MonoSingleton<BagManager>
                 GameManager.Instance.PlayerMecha.MechaEditArea.Hide();
                 GameManager.Instance.PlayerMecha.SlotLightsShown = false;
                 GameManager.Instance.PlayerMecha.GridShown = false;
+                GameManager.Instance.PlayerMecha.RefreshCenter();
                 GameManager.Instance.SetState(GameState.Fighting);
             }
             else
@@ -93,9 +94,8 @@ public class BagManager : MonoSingleton<BagManager>
     private void Initialize()
     {
         CurrentBagGridNumber = 40;
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 0, GridPos.Orientation.Down)), out BagItem _);
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Core, new GridPos(1, 0, GridPos.Orientation.Down)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 0, GridPos.Orientation.Right)), out BagItem _);
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Armor, new GridPos(3, 3, GridPos.Orientation.Right)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Missile, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);

@@ -109,7 +109,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 30, y: 30}
-  m_SizeDelta: {x: 500, y: 500}
+  m_SizeDelta: {x: 800, y: 500}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &1092758896173512115
 CanvasRenderer:
@@ -160,7 +160,9 @@ MonoBehaviour:
 
     Left Mouse Button, single shoot
 
-    Right Mouse Button, continuous shoot'
+    Right Mouse Button, continuous shoot
+
+    C change bullet type'
 --- !u!1 &2372085670733716343
 GameObject:
   m_ObjectHideFlags: 0

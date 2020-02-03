@@ -111,22 +111,28 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         {
             case DragAreaTypes.Bag:
             {
-                bool suc = BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo, out BagItem bagItem);
-                if (suc)
-                {
-                    DragManager.Instance.CancelCurrentDrag();
-                    DragManager.Instance.CurrentDrag = bagItem.gameObject.GetComponent<Draggable>();
-                    DragManager.Instance.CurrentDrag.IsOnDrag = true;
-                    PoolRecycle();
-                }
-                else
-                {
-                    DragManager.Instance.CurrentDrag.ReturnOriginalPositionRotation();
-                }
-
+                ReturnToBag(true, true);
                 break;
             }
         }
+    }
+
+    private bool ReturnToBag(bool cancelDrag, bool dragTheItem)
+    {
+        bool suc = BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo, out BagItem bagItem);
+        if (suc)
+        {
+            if (cancelDrag) DragManager.Instance.CancelCurrentDrag();
+            if (dragTheItem)
+            {
+                DragManager.Instance.CurrentDrag = bagItem.gameObject.GetComponent<Draggable>();
+                DragManager.Instance.CurrentDrag.IsOnDrag = true;
+            }
+
+            PoolRecycle();
+        }
+
+        return suc;
     }
 
     public void DragComponent_OnMouseUp(DragAreaTypes dragAreaTypes)
@@ -135,6 +141,31 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         {
             case DragAreaTypes.Bag:
             {
+                bool suc = ReturnToBag(false, false);
+                if (!suc)
+                {
+                    DragManager.Instance.CurrentDrag.ReturnOriginalPositionRotation();
+                }
+
+                break;
+            }
+            case DragAreaTypes.MechaEditorArea:
+            {
+                //todo if not contact
+                break;
+            }
+            case DragAreaTypes.DiscardedArea:
+            {
+                break;
+            }
+            case DragAreaTypes.None:
+            {
+                bool suc = ReturnToBag(false, false);
+                if (!suc)
+                {
+                    DragManager.Instance.CurrentDrag.ReturnOriginalPositionRotation();
+                }
+
                 break;
             }
         }

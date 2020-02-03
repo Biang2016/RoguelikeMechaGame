@@ -80,6 +80,11 @@ public class Mecha : PoolObject
         transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
     }
 
+    public void RefreshCenter()
+    {
+        transform.CenterOnChildren(mechaComponents);
+    }
+
     private bool _slotLightsShown = true;
 
     public bool SlotLightsShown

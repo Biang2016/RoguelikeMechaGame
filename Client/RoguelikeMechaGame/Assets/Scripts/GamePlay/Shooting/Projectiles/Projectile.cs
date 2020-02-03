@@ -42,7 +42,7 @@ public class Projectile : PoolObject_ParticleEffect
         Collider.enabled = true;
         curSpeed = speed;
         ParticleSystem.Play(true);
-        if (GameObjectPoolManager.Instance.ProjectileHitDict.ContainsKey(ProjectileType))
+        if (GameObjectPoolManager.Instance.ProjectileFlashDict.ContainsKey(ProjectileType))
         {
             ProjectileFlash flash = GameObjectPoolManager.Instance.ProjectileFlashDict[ProjectileType].AllocateGameObject<ProjectileFlash>(ProjectileManager.Instance.transform);
             flash.transform.position = transform.position;

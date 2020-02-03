@@ -48,6 +48,8 @@ public class Draggable : MonoBehaviour
                         dragBeginPosition_WorldObject = GetMouseAsWorldPoint() + mOffset + new Vector3(0.5f, 0, 0.5f) * GameManager.GridSize;
                         oriPosition_WorldObject = transform.localPosition;
                         oriQuaternion_WorldObject = transform.localRotation;
+                        Debug.Log("begin pos: " + oriPosition_WorldObject);
+                        Debug.Log("begin rot: " + oriQuaternion_WorldObject);
                     }
 
                     caller.DragComponent_OnMousePressed(CheckMoveToArea()); //将鼠标悬停的区域告知拖动对象主体
@@ -175,7 +177,7 @@ public class Draggable : MonoBehaviour
     public void ReturnOriginalPositionRotation()
     {
         transform.localPosition = oriPosition_WorldObject;
-        transform.rotation = oriQuaternion_WorldObject;
+        transform.localRotation = oriQuaternion_WorldObject;
     }
 
     public Vector3 GetMouseAsWorldPoint()
