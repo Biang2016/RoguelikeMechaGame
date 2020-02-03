@@ -4,15 +4,21 @@ using System.Collections.Generic;
 
 public class ProjectileManager : MonoSingleton<ProjectileManager>
 {
-    private List<GameObject> AllProjectiles = new List<GameObject>();
+    //private List<GameObject> AllProjectiles = new List<GameObject>();
 
     public Projectile ShootProjectile(ProjectileType projectileType, Vector3 from, Vector3 dir)
     {
         Projectile projectile = GameObjectPoolManager.Instance.ProjectileDict[projectileType].AllocateGameObject<Projectile>(transform);
         projectile.transform.position = from;
         projectile.transform.LookAt(from + dir);
-        projectile.Play();
+        StartCoroutine(Co_ShootProjectile(projectile));
         return projectile;
+    }
+
+    IEnumerator Co_ShootProjectile(Projectile projectile)
+    {
+        yield return null;
+        projectile.Play();
     }
 }
 

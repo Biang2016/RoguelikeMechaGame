@@ -10,7 +10,8 @@ public class Projectile : PoolObject_ParticleEffect
     public Vector3 rotationOffset = new Vector3(0, 0, 0);
     private Rigidbody Rigidbody;
     private Collider Collider;
-    private ParticleSystem ParticleSystem;
+    internal ParticleSystem ParticleSystem;
+    internal ParticleSystem.TrailModule ParticleSystemTrail;
     public GameObject[] Detached;
 
     void Awake()
@@ -22,6 +23,8 @@ public class Projectile : PoolObject_ParticleEffect
         {
             ParticleSystem = GetComponentInChildren<ParticleSystem>();
         }
+
+        ParticleSystemTrail = ParticleSystem.trails;
     }
 
     void Start()
@@ -31,6 +34,7 @@ public class Projectile : PoolObject_ParticleEffect
     public override void PoolRecycle()
     {
         ParticleSystem.Stop(true);
+        ParticleSystemTrail.enabled = false;
         base.PoolRecycle();
     }
 
@@ -38,6 +42,7 @@ public class Projectile : PoolObject_ParticleEffect
 
     public void Play()
     {
+        ParticleSystemTrail.enabled = true;
         Rigidbody.constraints = RigidbodyConstraints.None;
         Collider.enabled = true;
         curSpeed = speed;

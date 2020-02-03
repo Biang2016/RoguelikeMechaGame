@@ -18,39 +18,42 @@ public class MechaEditArea : DragArea
 
     void Update()
     {
-        if (DragManager.Instance.CurrentDrag == null)
+        if (GameManager.Instance.GetState() == GameState.Building)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (DragManager.Instance.CurrentDrag == null)
             {
-                onMouseDrag = true;
-                if (GetMousePosOnThisArea(out Vector3 pos))
+                if (Input.GetMouseButtonDown(0))
                 {
-                    mouseDownPos = pos;
+                    onMouseDrag = true;
+                    if (GetMousePosOnThisArea(out Vector3 pos))
+                    {
+                        mouseDownPos = pos;
+                    }
                 }
-            }
 
-            if (onMouseDrag && Input.GetMouseButton(0))
-            {
-                if (GetMousePosOnThisArea(out Vector3 pos))
+                if (onMouseDrag && Input.GetMouseButton(0))
                 {
-                    Vector3 startVec = mouseDownPos - transform.position;
-                    Vector3 endVec = pos - transform.position;
+                    if (GetMousePosOnThisArea(out Vector3 pos))
+                    {
+                        Vector3 startVec = mouseDownPos - transform.position;
+                        Vector3 endVec = pos - transform.position;
 
-                    float rotateAngle = Vector3.SignedAngle(startVec, endVec, transform.up);
-                    GameManager.Instance.PlayerMecha.transform.Rotate(0, rotateAngle, 0);
-                    mouseDownPos = pos;
+                        float rotateAngle = Vector3.SignedAngle(startVec, endVec, transform.up);
+                        GameManager.Instance.PlayerMecha.transform.Rotate(0, rotateAngle, 0);
+                        mouseDownPos = pos;
+                    }
+                    else
+                    {
+                        onMouseDrag = false;
+                        mouseDownPos = Vector3.zero;
+                    }
                 }
-                else
+
+                if (Input.GetMouseButtonUp(0))
                 {
                     onMouseDrag = false;
                     mouseDownPos = Vector3.zero;
                 }
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                onMouseDrag = false;
-                mouseDownPos = Vector3.zero;
             }
         }
     }
