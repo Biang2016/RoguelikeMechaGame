@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections;
 
-public class ProjectileFlash : PoolObject
+public class FX : PoolObject
 {
-    internal ParticleSystem ParticleSystem;
+    private ParticleSystem ParticleSystem;
 
     void Awake()
     {
@@ -15,7 +16,13 @@ public class ProjectileFlash : PoolObject
 
     public override void PoolRecycle()
     {
-        base.PoolRecycle();
         ParticleSystem.Stop(true);
+        base.PoolRecycle();
+    }
+
+    public void Play()
+    {
+        ParticleSystem.Play(true);
+        PoolRecycle(5f);
     }
 }

@@ -17,6 +17,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private Transform MechaContainer;
 
     internal Mecha PlayerMecha;
+    internal Mecha EnemyMecha;
 
     void Awake()
     {
@@ -33,6 +34,18 @@ public class GameManager : MonoSingleton<GameManager>
         }));
 
         MainCameraFollow.SetTarget(PlayerMecha.transform);
+
+        EnemyMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainer);
+        EnemyMecha.Initialize(new MechaInfo(MechaType.Enemy, new List<MechaComponentInfo>
+        {
+            new MechaComponentInfo(MechaComponentType.Block, new GridPos(5, 5, GridPos.Orientation.Up)),
+            new MechaComponentInfo(MechaComponentType.Block, new GridPos(4, 5, GridPos.Orientation.Up)),
+            new MechaComponentInfo(MechaComponentType.Block, new GridPos(3, 5, GridPos.Orientation.Up)),
+            new MechaComponentInfo(MechaComponentType.Block, new GridPos(2, 5, GridPos.Orientation.Up)),
+            new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 5, GridPos.Orientation.Up)),
+        }));
+
+
         SetState(GameState.Fighting);
 
         UIManager.Instance.ShowUIForms<DebugPanel>();

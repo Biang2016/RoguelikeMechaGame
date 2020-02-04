@@ -10,8 +10,12 @@ public class HitBox : MonoBehaviour
         ParentHitBoxRoot =GetComponentInParent<HitBoxRoot>();
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision collision)
     {
-        //TODO hit by anything
+        Projectile p = collision.gameObject.GetComponent<Projectile>();
+        if (p)
+        {
+            ParentHitBoxRoot.MechaComponentBase.Damage(5);
+        }
     }
 }

@@ -26,10 +26,12 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
 
     public virtual void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
     {
+        IsDead = false;
         MechaComponentInfo = mechaComponentInfo;
         MechaComponentInfo.OccupiedGridPositions = CloneVariantUtils.List(MechaComponentGrids.MechaComponentGridPositions);
         GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, GameManager.GridSize);
         ParentMecha = parentMecha;
+        AddLife(50);
     }
 
     public MechaComponentGrids MechaComponentGrids;
@@ -40,6 +42,9 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
     }
 
     #region Life
+
+    internal bool IsDead = false;
+
 
     private int _leftLife;
 
@@ -75,6 +80,13 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
     public void Damage(int damage)
     {
         _leftLife -= damage;
+        FXManager.Instance.PlayFX(FX_Type.FX_BlockDamaged, transform.position);
+        if (!IsDead && !CheckAlive())
+        {
+            FXManager.Instance.PlayFX(FX_Type.FX_BlockExplode, transform.position);
+            ParentMecha.RemoveMechaComponent(this);
+            PoolRecycle(0.2f);
+        }
     }
 
     public void HealAll()

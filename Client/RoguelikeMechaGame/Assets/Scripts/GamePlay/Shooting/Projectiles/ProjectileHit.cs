@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ProjectileHit : PoolObject_ParticleEffect
+public class ProjectileHit : PoolObject
 {
     internal ParticleSystem ParticleSystem;
 

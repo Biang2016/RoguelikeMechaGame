@@ -46,6 +46,7 @@ public class GameObjectPoolManager : MonoSingleton<GameObjectPoolManager>
     public Dictionary<ProjectileType, GameObjectPool> ProjectileDict = new Dictionary<ProjectileType, GameObjectPool>();
     public Dictionary<ProjectileType, GameObjectPool> ProjectileHitDict = new Dictionary<ProjectileType, GameObjectPool>();
     public Dictionary<ProjectileType, GameObjectPool> ProjectileFlashDict = new Dictionary<ProjectileType, GameObjectPool>();
+    public Dictionary<FX_Type, GameObjectPool> FXDict = new Dictionary<FX_Type, GameObjectPool>();
 
     void Awake()
     {
@@ -102,6 +103,20 @@ public class GameObjectPoolManager : MonoSingleton<GameObjectPoolManager>
             if (go_Prefab)
             {
                 ProjectileFlashDict.Add(projectileType, pool);
+                PoolObject po = go_Prefab.GetComponent<PoolObject>();
+                pool.Initiate(po, 20);
+                pool.transform.SetParent(transform);
+            }
+        }
+        foreach (string s in Enum.GetNames(typeof(FX_Type)))
+        {
+            FX_Type fx_Type = (FX_Type) Enum.Parse(typeof(FX_Type), s);
+            GameObject go = new GameObject("Pool_" + s);
+            GameObjectPool pool = go.AddComponent<GameObjectPool>();
+            GameObject go_Prefab = PrefabManager.Instance.GetPrefab(s);
+            if (go_Prefab)
+            {
+                FXDict.Add(fx_Type, pool);
                 PoolObject po = go_Prefab.GetComponent<PoolObject>();
                 pool.Initiate(po, 20);
                 pool.transform.SetParent(transform);

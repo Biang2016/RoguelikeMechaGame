@@ -32,6 +32,11 @@ public class Mecha : PoolObject
         mcb.MechaComponentGrids.SetSlotLightsShown(SlotLightsShown);
     }
 
+    public void RemoveMechaComponent(MechaComponentBase mcb)
+    {
+        mechaComponents.Remove(mcb);
+    }
+
     public float Speed = 3f;
 
     void Update()
@@ -81,12 +86,18 @@ public class Mecha : PoolObject
         }
     }
 
+    private Quaternion lastRotationByMouse;
+
     private void RotateToMouseDirection()
     {
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
         Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, Vector3.up, transform.position);
         Quaternion rotation = Quaternion.LookRotation(intersect - transform.position);
-        transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
+        if (Mathf.Abs((rotation.eulerAngles - lastRotationByMouse.eulerAngles).magnitude) > 0.5f)
+        {
+            lastRotationByMouse = rotation;
+            transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
+        }
     }
 
     public void RefreshCenter()

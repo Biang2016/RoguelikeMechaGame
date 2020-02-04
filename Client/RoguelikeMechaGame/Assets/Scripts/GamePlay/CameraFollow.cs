@@ -60,14 +60,14 @@ namespace GamePlay
                     {
                         Vector3 destination = transform.position + target.position - targetingPoint + Offset_Building;
                         Vector3 curVelocity = Vector3.zero;
-                        transform.position = Vector3.SmoothDamp(transform.position, destination, ref curVelocity, 0.1f);
+                        transform.position = Vector3.SmoothDamp(transform.position, destination, ref curVelocity, 0.05f);
                         break;
                     }
                     case GameState.Fighting:
                     {
                         Vector3 destination = transform.position + target.position - targetingPoint + Offset_Fighting;
                         Vector3 curVelocity = Vector3.zero;
-                        transform.position = Vector3.SmoothDamp(transform.position, destination, ref curVelocity, 0.1f);
+                        transform.position = Vector3.SmoothDamp(transform.position, destination, ref curVelocity, 0.05f);
                         break;
                     }
                 }

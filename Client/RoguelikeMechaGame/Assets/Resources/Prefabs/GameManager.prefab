@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5980882138566427480}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 45, y: -45, z: 0}
 --- !u!20 &1500443317
 Camera:
@@ -123,12 +123,55 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917620444}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.02, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5980882138566427480}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &686034613691991008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9089932413446660701}
+  - component: {fileID: 4020527617352353627}
+  m_Layer: 0
+  m_Name: '@FXManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9089932413446660701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686034613691991008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5980882138566427480}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4020527617352353627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686034613691991008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dadd03f8f595a0447a0086dd58e2dd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1774223084060858966
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +244,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5980882138566427480}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 83.36, y: -30, z: 0}
 --- !u!108 &5980882136729047177
 Light:
@@ -383,6 +426,7 @@ Transform:
   - {fileID: 393853758059586356}
   - {fileID: 154242578669631144}
   - {fileID: 3599782641948506053}
+  - {fileID: 9089932413446660701}
   - {fileID: 5980882138589961546}
   - {fileID: 1500443315}
   - {fileID: 5980882136729047176}
@@ -436,7 +480,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5980882138566427480}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5980882138589961547
 MonoBehaviour:
@@ -626,8 +670,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6679462849041280490, guid: 7fcdd2b42846247e781421ef5fc2919e,
+        type: 3}
+      propertyPath: UICanvas
+      value: 
+      objectReference: {fileID: 3507463539855278156}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcdd2b42846247e781421ef5fc2919e, type: 3}
+--- !u!223 &3507463539855278156 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 4046382818433892523, guid: 7fcdd2b42846247e781421ef5fc2919e,
+    type: 3}
+  m_PrefabInstance: {fileID: 615480485195956455}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7031322463944608617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7574745312018746254, guid: 7fcdd2b42846247e781421ef5fc2919e,

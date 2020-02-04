@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Projectile : PoolObject_ParticleEffect
+public class Projectile : PoolObject
 {
     public ProjectileType ProjectileType;
 
