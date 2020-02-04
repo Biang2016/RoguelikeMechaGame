@@ -60,14 +60,23 @@ public class Mecha : PoolObject
                 {
                     transform.Translate(movement, 0, -movement, Space.World);
                 }
-
-                RotateToMouseDirection();
             }
 
             if (Input.GetKeyUp(KeyCode.G))
             {
                 SlotLightsShown = !SlotLightsShown;
                 GridShown = !GridShown;
+            }
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (MechaInfo.MechaType == MechaType.Self)
+        {
+            if (GameManager.Instance.GetState() == GameState.Fighting)
+            {
+                RotateToMouseDirection();
             }
         }
     }

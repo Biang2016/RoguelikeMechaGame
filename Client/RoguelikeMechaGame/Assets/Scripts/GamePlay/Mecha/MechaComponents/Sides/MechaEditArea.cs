@@ -39,8 +39,11 @@ public class MechaEditArea : DragArea
                         Vector3 endVec = pos - transform.position;
 
                         float rotateAngle = Vector3.SignedAngle(startVec, endVec, transform.up);
-                        GameManager.Instance.PlayerMecha.transform.Rotate(0, rotateAngle, 0);
-                        mouseDownPos = pos;
+                        if (Mathf.Abs(rotateAngle) > 3)
+                        {
+                            GameManager.Instance.PlayerMecha.transform.Rotate(0, rotateAngle, 0);
+                            mouseDownPos = pos;
+                        }
                     }
                     else
                     {
