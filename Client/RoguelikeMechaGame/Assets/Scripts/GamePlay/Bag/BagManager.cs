@@ -73,6 +73,7 @@ public class BagManager : MonoSingleton<BagManager>
                 GameManager.Instance.PlayerMecha.SlotLightsShown = false;
                 GameManager.Instance.PlayerMecha.GridShown = false;
                 GameManager.Instance.PlayerMecha.RefreshCenter();
+                GameManager.Instance.MainCameraFollow.FOW_Level = 2;
                 GameManager.Instance.SetState(GameState.Fighting);
             }
             else
@@ -80,6 +81,7 @@ public class BagManager : MonoSingleton<BagManager>
                 UIManager.Instance.ShowUIForms<BagPanel>();
                 GameManager.Instance.PlayerMecha.MechaEditArea.Show();
                 GameManager.Instance.PlayerMecha.SlotLightsShown = true;
+                GameManager.Instance.MainCameraFollow.FOW_Level = 1;
                 GameManager.Instance.PlayerMecha.GridShown = true;
                 GameManager.Instance.SetState(GameState.Building);
             }
