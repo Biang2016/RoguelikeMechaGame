@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MechaComponentGrids: {fileID: 4618707353109224937}
+  MechaHitBoxRoot: {fileID: 1995381407424360452}
   Shooter: {fileID: 348459106108629423}
 --- !u!1 &6787901420841635056
 GameObject:

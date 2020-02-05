@@ -13,6 +13,22 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         Draggable = GetComponent<Draggable>();
     }
 
+    public override void PoolRecycle()
+    {
+        base.PoolRecycle();
+        if (ParentMecha)
+        {
+            ParentMecha.RemoveMechaComponent(this);
+        }
+
+        foreach (FX lighteningFX in lighteningFXs)
+        {
+            lighteningFX.PoolRecycle();
+        }
+
+        lighteningFXs.Clear();
+    }
+
     public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Transform parent, Mecha parentMecha)
     {
         GameObjectPoolManager.PrefabNames prefabName = (GameObjectPoolManager.PrefabNames) Enum.Parse(typeof(GameObjectPoolManager.PrefabNames), "MechaComponent_" + mechaComponentInfo.MechaComponentType);
@@ -35,6 +51,7 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
     }
 
     public MechaComponentGrids MechaComponentGrids;
+    public HitBoxRoot MechaHitBoxRoot;
 
     public void Rotate()
     {
@@ -44,7 +61,6 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
     #region Life
 
     internal bool IsDead = false;
-
 
     private int _leftLife;
 
@@ -77,10 +93,22 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
     {
     }
 
+    private List<FX> lighteningFXs = new List<FX>();
+
     public void Damage(int damage)
     {
+        if (_leftLife > M_TotalLife * 0.5f && _leftLife - damage <= M_TotalLife * 0.5f)
+        {
+            foreach (HitBox hb in MechaHitBoxRoot.HitBoxes)
+            {
+                FX lighteningFX = FXManager.Instance.PlayFX(FX_Type.FX_BlockDamagedLightening, hb.transform.position);
+                lighteningFXs.Add(lighteningFX);
+            }
+        }
+
         _leftLife -= damage;
-        FXManager.Instance.PlayFX(FX_Type.FX_BlockDamaged, transform.position);
+        FXManager.Instance.PlayFX(FX_Type.FX_BlockDamageHit, transform.position + Vector3.up * 0.5f);
+
         if (!IsDead && !CheckAlive())
         {
             FXManager.Instance.PlayFX(FX_Type.FX_BlockExplode, transform.position);

@@ -20,6 +20,7 @@ public class Mecha : PoolObject
             mechaComponents.Add(mcb);
         }
 
+        MechaEditArea.gameObject.SetActive(mechaInfo.MechaType == MechaType.Self);
         MechaEditArea.Hide();
         GridShown = false;
         SlotLightsShown = false;

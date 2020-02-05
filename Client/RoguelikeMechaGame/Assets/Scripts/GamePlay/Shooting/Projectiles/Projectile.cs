@@ -81,7 +81,6 @@ public class Projectile : PoolObject
         if (GameObjectPoolManager.Instance.ProjectileHitDict.ContainsKey(ProjectileType))
         {
             ProjectileHit hit = GameObjectPoolManager.Instance.ProjectileHitDict[ProjectileType].AllocateGameObject<ProjectileHit>(ProjectileManager.Instance.transform);
-
             hit.transform.position = contact.point + contact.normal * hitOffset;
             hit.transform.rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
             if (UseFirePointRotation)

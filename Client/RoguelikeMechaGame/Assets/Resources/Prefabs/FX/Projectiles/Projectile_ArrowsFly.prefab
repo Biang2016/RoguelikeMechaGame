@@ -4828,7 +4828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectileType: 25
   speed: 30
-  hitOffset: 0.1
+  hitOffset: 0.5
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 90, z: 0}
   Detached: []

@@ -153,8 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MechaComponentGrids: {fileID: 4618707353109224937}
-  HitBoxRoot: {fileID: 1995381407424360452}
-  BagItem: {fileID: 0}
+  MechaHitBoxRoot: {fileID: 1995381407424360452}
 --- !u!114 &8787363159894584536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,8 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c822fa077e76b4c987bbda9acdaa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDrag: 0
-  _isOnDrag: 0
 --- !u!1 &5143153460687789167
 GameObject:
   m_ObjectHideFlags: 0

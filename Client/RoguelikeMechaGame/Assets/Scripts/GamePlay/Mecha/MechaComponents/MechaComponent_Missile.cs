@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MechaComponent_Missile : MechaComponentBase
+public class MechaComponent_Missile : MechaComponent_Controllable_Base
 {
     public Shooter Shooter;
 
@@ -12,20 +12,21 @@ public class MechaComponent_Missile : MechaComponentBase
 
     void Update()
     {
-        if (GameManager.Instance.GetState() == GameState.Fighting)
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                if (Shooter)
-                {
-                    Shooter.Shoot();
-                }
-            }
+    }
 
-            if (Input.GetMouseButton(1))
+    protected override void ControlPerFrame()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (Shooter)
             {
-                Shooter.ContinuousShoot();
+                Shooter.Shoot();
             }
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            Shooter.ContinuousShoot();
         }
     }
 }

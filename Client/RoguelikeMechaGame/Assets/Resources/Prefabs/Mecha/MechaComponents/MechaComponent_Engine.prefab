@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MechaComponentGrids: {fileID: 4618707353109224937}
+  MechaHitBoxRoot: {fileID: 1995381407424360452}
 --- !u!114 &-4159767088752695195
 MonoBehaviour:
   m_ObjectHideFlags: 0

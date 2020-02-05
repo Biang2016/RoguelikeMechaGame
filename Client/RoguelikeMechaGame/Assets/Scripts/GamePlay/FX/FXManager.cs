@@ -15,6 +15,7 @@ public class FXManager : MonoSingleton<FXManager>
 
 public enum FX_Type
 {
-    FX_BlockDamaged = 1,
-    FX_BlockExplode = 2,
+    FX_BlockDamageHit = 1,
+    FX_BlockDamagedLightening = 2,
+    FX_BlockExplode = 3,
 }
