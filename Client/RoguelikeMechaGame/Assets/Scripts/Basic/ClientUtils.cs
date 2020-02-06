@@ -212,4 +212,20 @@ public static class ClientUtils
             child.parent = parent;
         }
     }
+
+    public static string GridPositionListToString(this List<GridPos> gridPositions)
+    {
+        string res = "";
+        foreach (GridPos gp in gridPositions)
+        {
+            res += gp + ", ";
+        }
+
+        return res;
+    }
+
+    public static GridPos ConvertGridPosToMatrixIndex(this GridPos gp)
+    {
+        return new GridPos(gp.x + ConfigManager.EDIT_AREA_SIZE + 1, gp.z + ConfigManager.EDIT_AREA_SIZE + 1, gp.orientation);
+    }
 }

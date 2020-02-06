@@ -1,12 +1,14 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using Random = System.Random;
 
 public abstract class MechaComponentBase : PoolObject, IDraggable
 {
     internal Mecha ParentMecha = null;
     internal Draggable Draggable;
+
+    internal MechaType MechaType => ParentMecha ? ParentMecha.MechaInfo.MechaType : MechaType.None;
 
     void Awake()
     {
@@ -21,20 +23,22 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
             ParentMecha.RemoveMechaComponent(this);
         }
 
+        ParentMecha = null;
+
         foreach (FX lighteningFX in lighteningFXs)
         {
             lighteningFX.PoolRecycle();
         }
 
         lighteningFXs.Clear();
+        isReturningToBag = false;
     }
 
-    public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Transform parent, Mecha parentMecha)
+    public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
     {
         GameObjectPoolManager.PrefabNames prefabName = (GameObjectPoolManager.PrefabNames) Enum.Parse(typeof(GameObjectPoolManager.PrefabNames), "MechaComponent_" + mechaComponentInfo.MechaComponentType);
-        MechaComponentBase mcb = GameObjectPoolManager.Instance.PoolDict[prefabName].AllocateGameObject<MechaComponentBase>(parent);
+        MechaComponentBase mcb = GameObjectPoolManager.Instance.PoolDict[prefabName].AllocateGameObject<MechaComponentBase>(parentMecha ? parentMecha.transform : null);
         mcb.Initialize(mechaComponentInfo, parentMecha);
-        mcb.transform.rotation = Quaternion.Euler(0, 0, 0);
         return mcb;
     }
 
@@ -44,16 +48,22 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
     {
         IsDead = false;
         MechaComponentInfo = mechaComponentInfo;
-        MechaComponentInfo.OccupiedGridPositions = CloneVariantUtils.List(MechaComponentGrids.MechaComponentGridPositions);
+        RefreshOccupiedGridPositions();
         GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, GameManager.GridSize);
         ParentMecha = parentMecha;
-        AddLife(50);
+        _totalLife = 50;
+        _leftLife = 50;
+    }
+
+    public void RefreshOccupiedGridPositions()
+    {
+        MechaComponentInfo.OccupiedGridPositions = GridPos.TransformOccupiedPositions(MechaComponentInfo.GridPos, MechaComponentGrids.MechaComponentGridPositions);
     }
 
     public MechaComponentGrids MechaComponentGrids;
     public HitBoxRoot MechaHitBoxRoot;
 
-    public void Rotate()
+    private void Rotate()
     {
         transform.Rotate(0, 90, 0);
     }
@@ -111,6 +121,7 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
 
         if (!IsDead && !CheckAlive())
         {
+            IsDead = true;
             FXManager.Instance.PlayFX(FX_Type.FX_BlockExplode, transform.position);
             ParentMecha.RemoveMechaComponent(this);
             PoolRecycle(0.2f);
@@ -157,12 +168,19 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         }
     }
 
+    private bool isReturningToBag = false;
+
     private bool ReturnToBag(bool cancelDrag, bool dragTheItem)
     {
         bool suc = BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo, out BagItem bagItem);
         if (suc)
         {
-            if (cancelDrag) DragManager.Instance.CancelCurrentDrag();
+            if (cancelDrag)
+            {
+                isReturningToBag = true;
+                DragManager.Instance.CancelCurrentDrag();
+            }
+
             if (dragTheItem)
             {
                 DragManager.Instance.CurrentDrag = bagItem.gameObject.GetComponent<Draggable>();
@@ -181,17 +199,22 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         {
             case DragAreaTypes.Bag:
             {
-                bool suc = ReturnToBag(false, false);
-                if (!suc)
+                if (!isReturningToBag)
                 {
-                    DragManager.Instance.CurrentDrag.ReturnOriginalPositionRotation();
+                    bool suc = ReturnToBag(false, false);
+                    if (!suc)
+                    {
+                        DragManager.Instance.CurrentDrag.ReturnOriginalPositionRotation();
+                    }
                 }
 
                 break;
             }
             case DragAreaTypes.MechaEditorArea:
             {
-                //todo if not contact
+                MechaComponentInfo.GridPos = GridPos.GetGridPosByLocalTrans(transform, 1);
+                MechaComponentInfo.OccupiedGridPositions = GridPos.TransformOccupiedPositions(MechaComponentInfo.GridPos, MechaComponentInfo.OccupiedGridPositions);
+                Debug.Log(MechaComponentInfo.OccupiedGridPositions);
                 break;
             }
             case DragAreaTypes.DiscardedArea:

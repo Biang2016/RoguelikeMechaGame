@@ -145,9 +145,11 @@ public class BagItem : PoolObject, IDraggable
 
     public void DragComponent_DragOutEffects()
     {
-        MechaComponentBase mcb = MechaComponentBase.BaseInitialize(MechaComponentInfo, GameManager.Instance.PlayerMecha.transform, GameManager.Instance.PlayerMecha);
+        MechaComponentBase mcb = MechaComponentBase.BaseInitialize(MechaComponentInfo, GameManager.Instance.PlayerMecha);
         GridPos gp = GridPos.GetGridPosByMousePos(GameManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
         GridPos.ApplyGridPosToLocalTrans(gp, mcb.transform, GameManager.GridSize);
+        mcb.MechaComponentInfo.GridPos = gp;
+        mcb.RefreshOccupiedGridPositions();
         GameManager.Instance.PlayerMecha.AddMechaComponent(mcb);
         DragManager.Instance.CancelCurrentDrag();
         DragManager.Instance.CurrentDrag = mcb.Draggable;

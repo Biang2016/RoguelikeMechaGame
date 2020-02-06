@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour
@@ -7,13 +6,13 @@ public class HitBox : MonoBehaviour
 
     private void Awake()
     {
-        ParentHitBoxRoot =GetComponentInParent<HitBoxRoot>();
+        ParentHitBoxRoot = GetComponentInParent<HitBoxRoot>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Projectile p = collision.gameObject.GetComponent<Projectile>();
-        if (p)
+        if (p && p.ProjectileInfo.MechaType != ParentHitBoxRoot.MechaComponentBase.MechaType)
         {
             ParentHitBoxRoot.MechaComponentBase.Damage(5);
         }

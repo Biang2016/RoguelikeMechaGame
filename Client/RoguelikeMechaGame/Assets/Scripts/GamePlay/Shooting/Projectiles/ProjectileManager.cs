@@ -6,11 +6,12 @@ public class ProjectileManager : MonoSingleton<ProjectileManager>
 {
     //private List<GameObject> AllProjectiles = new List<GameObject>();
 
-    public Projectile ShootProjectile(ProjectileType projectileType, Vector3 from, Vector3 dir)
+    public Projectile ShootProjectile(ProjectileInfo projectileInfo, Vector3 from, Vector3 dir)
     {
-        Projectile projectile = GameObjectPoolManager.Instance.ProjectileDict[projectileType].AllocateGameObject<Projectile>(transform);
+        Projectile projectile = GameObjectPoolManager.Instance.ProjectileDict[projectileInfo.ProjectileType].AllocateGameObject<Projectile>(transform);
         projectile.transform.position = from;
         projectile.transform.LookAt(from + dir);
+        projectile.Initialize(projectileInfo);
         StartCoroutine(Co_ShootProjectile(projectile));
         return projectile;
     }

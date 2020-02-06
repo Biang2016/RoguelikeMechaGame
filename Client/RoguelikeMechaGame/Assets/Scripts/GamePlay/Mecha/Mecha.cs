@@ -2,77 +2,69 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Mecha : PoolObject
+public partial class Mecha : PoolObject
 {
     public MechaInfo MechaInfo;
 
     private List<MechaComponentBase> mechaComponents = new List<MechaComponentBase>();
 
-    [SerializeField] private Transform MechaComponentContainer;
-    public MechaEditArea MechaEditArea;
+    private MechaComponentBase[,] mechaComponentMatrix = new MechaComponentBase[ConfigManager.EDIT_AREA_SIZE * 2 + 1, ConfigManager.EDIT_AREA_SIZE * 2 + 1]; //[z,x]
 
     public void Initialize(MechaInfo mechaInfo)
     {
         MechaInfo = mechaInfo;
+        RefreshMechaMatrix();
         foreach (MechaComponentInfo mci in mechaInfo.MechaComponentInfos)
         {
-            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mci, MechaComponentContainer, this);
-            mechaComponents.Add(mcb);
+            AddMechaComponent(mci);
         }
 
-        MechaEditArea.gameObject.SetActive(mechaInfo.MechaType == MechaType.Self);
-        MechaEditArea.Hide();
-        GridShown = false;
-        SlotLightsShown = false;
+        Initialize_Building(mechaInfo);
+        Initialize_Fighting(mechaInfo);
     }
 
-    public void AddMechaComponent(MechaComponentBase mcb)
+    private void RefreshMechaMatrix()
     {
-        mechaComponents.Add(mcb);
-        mcb.MechaComponentGrids.SetGridShown(GridShown);
-        mcb.MechaComponentGrids.SetSlotLightsShown(SlotLightsShown);
-    }
+        ClearForbidComponents();
+        List<GridPos> conflictGridPositions = new List<GridPos>();
 
-    public void RemoveMechaComponent(MechaComponentBase mcb)
-    {
-        mechaComponents.Remove(mcb);
-    }
+        for (int z = 0; z < mechaComponentMatrix.GetLength(0); z++)
+        {
+            for (int x = 0; x < mechaComponentMatrix.GetLength(1); x++)
+            {
+                mechaComponentMatrix[z, x] = null;
+            }
+        }
 
-    public float Speed = 3f;
+        foreach (MechaComponentBase mcb in mechaComponents)
+        {
+            foreach (GridPos gp in mcb.MechaComponentInfo.OccupiedGridPositions)
+            {
+                GridPos gp_matrix = gp.ConvertGridPosToMatrixIndex();
+
+                if (mechaComponentMatrix[gp_matrix.x, gp_matrix.z] != null)
+                {
+                    conflictGridPositions.Add(gp);
+                }
+                else
+                {
+                    mechaComponentMatrix[gp_matrix.x, gp_matrix.z] = mcb;
+                }
+            }
+        }
+
+        foreach (GridPos gp in conflictGridPositions)
+        {
+            AddForbidComponentIndicator(gp);
+        }
+    }
 
     void Update()
     {
         if (MechaInfo.MechaType == MechaType.Self)
         {
-            if (GameManager.Instance.GetState() == GameState.Fighting)
-            {
-                float movement = 0.7f * Time.deltaTime * Speed;
-                if (Input.GetKey(KeyCode.A))
-                {
-                    transform.Translate(-movement, 0, -movement, Space.World);
-                }
-
-                if (Input.GetKey(KeyCode.D))
-                {
-                    transform.Translate(movement, 0, movement, Space.World);
-                }
-
-                if (Input.GetKey(KeyCode.W))
-                {
-                    transform.Translate(-movement, 0, movement, Space.World);
-                }
-
-                if (Input.GetKey(KeyCode.S))
-                {
-                    transform.Translate(movement, 0, -movement, Space.World);
-                }
-            }
-
-            if (Input.GetKeyUp(KeyCode.G))
-            {
-                SlotLightsShown = !SlotLightsShown;
-                GridShown = !GridShown;
-            }
+            Update_Building();
+            Update_Fighting();
         }
     }
 
@@ -82,65 +74,13 @@ public class Mecha : PoolObject
         {
             if (GameManager.Instance.GetState() == GameState.Fighting)
             {
-                RotateToMouseDirection();
+                LateUpdate_Fighting();
             }
-        }
-    }
 
-    private Quaternion lastRotationByMouse;
-
-    private void RotateToMouseDirection()
-    {
-        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
-        Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, Vector3.up, transform.position);
-        Quaternion rotation = Quaternion.LookRotation(intersect - transform.position);
-        if (Mathf.Abs((rotation.eulerAngles - lastRotationByMouse.eulerAngles).magnitude) > 0.5f)
-        {
-            lastRotationByMouse = rotation;
-            transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
-        }
-    }
-
-    public void RefreshCenter()
-    {
-        transform.CenterOnChildren(mechaComponents);
-    }
-
-    private bool _slotLightsShown = true;
-
-    public bool SlotLightsShown
-    {
-        get { return _slotLightsShown; }
-        set
-        {
-            if (_slotLightsShown != value)
+            if (GameManager.Instance.GetState() == GameState.Building)
             {
-                foreach (MechaComponentBase mcb in mechaComponents)
-                {
-                    mcb.MechaComponentGrids.SetSlotLightsShown(value);
-                }
+                LateUpdate_Building();
             }
-
-            _slotLightsShown = value;
-        }
-    }
-
-    private bool _gridShown = true;
-
-    public bool GridShown
-    {
-        get { return _gridShown; }
-        set
-        {
-            if (_gridShown != value)
-            {
-                foreach (MechaComponentBase mcb in mechaComponents)
-                {
-                    mcb.MechaComponentGrids.SetGridShown(value);
-                }
-            }
-
-            _gridShown = value;
         }
     }
 }

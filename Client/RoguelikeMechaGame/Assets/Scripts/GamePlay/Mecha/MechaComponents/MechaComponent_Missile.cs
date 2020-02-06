@@ -7,7 +7,7 @@ public class MechaComponent_Missile : MechaComponent_Controllable_Base
 
     void Start()
     {
-        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_Butter)));
+        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_Butter, ConfigManager.Instance.MissileSpeed)));
     }
 
     void Update()

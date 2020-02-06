@@ -128,6 +128,8 @@ Transform:
   m_Children:
   - {fileID: 265717878854607575}
   - {fileID: 5570218008558262321}
+  - {fileID: 8826551087886504790}
+  - {fileID: 8110173925074701152}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -143,7 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d82ea23828953ef45a52e9e46331aa52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MechaComponentContainer: {fileID: 1154461616125127710}
+  MechaComponentContainer: {fileID: 8826551087886504790}
+  ForbotComponentIndicatorContainer: {fileID: 8110173925074701152}
   MechaEditArea: {fileID: 6405004443083676034}
   Speed: 10
 --- !u!1 &5570218008558262326
@@ -268,3 +271,64 @@ MonoBehaviour:
   DragAreaTypes: 0
   MeshRenderer_Circle: {fileID: 2610974796736393842}
   MeshRenderer_Grid: {fileID: 265717878856900663}
+  BoxCollider: {fileID: 5570218008558262323}
+--- !u!1 &6407122747593056625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8826551087886504790}
+  m_Layer: 0
+  m_Name: MechaComponentContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8826551087886504790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6407122747593056625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1154461616125127710}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6556225918124154172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8110173925074701152}
+  m_Layer: 0
+  m_Name: MechaForbidIndicatorContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8110173925074701152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556225918124154172}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1154461616125127710}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

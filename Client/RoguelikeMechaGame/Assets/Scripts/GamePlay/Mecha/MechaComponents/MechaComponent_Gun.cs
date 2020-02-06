@@ -7,7 +7,7 @@ public class MechaComponent_Gun : MechaComponent_Controllable_Base
 
     void Start()
     {
-        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_ArrowsFly)));
+        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_ArrowsFly, ConfigManager.Instance.GunSpeed)));
     }
 
     protected override void ControlPerFrame()
@@ -26,4 +26,3 @@ public class MechaComponent_Gun : MechaComponent_Controllable_Base
         }
     }
 }
-

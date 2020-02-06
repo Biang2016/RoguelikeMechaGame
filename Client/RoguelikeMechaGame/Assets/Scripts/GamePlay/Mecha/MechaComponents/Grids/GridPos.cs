@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public struct GridPos
 {
@@ -19,13 +20,20 @@ public struct GridPos
         this.z = z;
         this.orientation = orientation;
     }
-    
+
     public static GridPos GetGridPosByLocalTrans(Transform transform, int gridSize)
     {
         int x = Mathf.FloorToInt(transform.localPosition.x / gridSize) * gridSize;
         int z = Mathf.FloorToInt(transform.localPosition.z / gridSize) * gridSize;
         int rotY = Mathf.RoundToInt(transform.localRotation.eulerAngles.y / 90f) % 4;
         return new GridPos(x, z, (Orientation) rotY);
+    }
+
+    public static GridPos GetGridPosByLocalPoint(Vector3 position, int gridSize)
+    {
+        int x = Mathf.FloorToInt(position.x / gridSize) * gridSize;
+        int z = Mathf.FloorToInt(position.z / gridSize) * gridSize;
+        return new GridPos(x, z, Orientation.Up);
     }
 
     public static void ApplyGridPosToLocalTrans(GridPos gridPos, Transform transform, int gridSize)
@@ -41,10 +49,12 @@ public struct GridPos
     {
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
         Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, planeNormal, parentTransform.position);
-        Vector3 rot_intersect = parentTransform.InverseTransformVector(intersect);
-        Vector3 diff = rot_intersect - parentTransform.position + Vector3.one * gridSize / 2f;
-        int x = Mathf.FloorToInt(diff.x / gridSize) * gridSize;
-        int z = Mathf.FloorToInt(diff.z / gridSize) * gridSize;
+
+        Vector3 rot_intersect = parentTransform.InverseTransformPoint(intersect);
+        GridPos local_GP = GetGridPosByLocalPoint(rot_intersect + Vector3.one * gridSize / 2f, 1);
+
+        int x = Mathf.FloorToInt(local_GP.x / gridSize) * gridSize;
+        int z = Mathf.FloorToInt(local_GP.z / gridSize) * gridSize;
         return new GridPos(x, z, Orientation.Up);
     }
 
@@ -71,6 +81,26 @@ public struct GridPos
         }
 
         return new GridPos(0, 00, Orientation.Up);
+    }
+
+    public static List<GridPos> TransformOccupiedPositions(GridPos localGridPos, List<GridPos> ori_occupiedPositions)
+    {
+        List<GridPos> resGP = new List<GridPos>();
+
+        foreach (GridPos oriGP in ori_occupiedPositions)
+        {
+            GridPos temp_rot = RotateGridPos(oriGP, localGridPos.orientation);
+            GridPos final = new GridPos(temp_rot.x + localGridPos.x, temp_rot.z + localGridPos.z, oriGP.orientation);
+            resGP.Add(final);
+        }
+
+        return resGP;
+    }
+
+
+    public override string ToString()
+    {
+        return $"({x},{z},{orientation})";
     }
 
     public enum Orientation

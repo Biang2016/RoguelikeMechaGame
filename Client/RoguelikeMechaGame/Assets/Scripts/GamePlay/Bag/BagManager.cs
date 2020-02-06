@@ -38,7 +38,7 @@ public class BagManager : MonoSingleton<BagManager>
         foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
         {
             MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up)), null, null);
+            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up)), null);
             mcbs.Add(mcb);
             MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentInfo.OccupiedGridPositions));
         }

@@ -6,11 +6,13 @@ public class MechaEditArea : DragArea
 {
     [SerializeField] private MeshRenderer MeshRenderer_Circle;
     [SerializeField] private MeshRenderer MeshRenderer_Grid;
+    [SerializeField] private BoxCollider BoxCollider;
 
     void Start()
     {
         MeshRenderer_Circle.enabled = false;
         MeshRenderer_Grid.enabled = false;
+        BoxCollider.enabled = false;
     }
 
     private bool onMouseDrag = false;
@@ -86,11 +88,13 @@ public class MechaEditArea : DragArea
     {
         MeshRenderer_Circle.enabled = true;
         MeshRenderer_Grid.enabled = true;
+        BoxCollider.enabled = true;
     }
 
     public void Hide()
     {
         MeshRenderer_Circle.enabled = false;
         MeshRenderer_Grid.enabled = false;
+        BoxCollider.enabled = false;
     }
 }

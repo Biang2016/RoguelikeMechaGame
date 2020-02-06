@@ -14,6 +14,7 @@ public class MechaInfo
 
 public enum MechaType
 {
-    Self,
-    Enemy
+    None = 0,
+    Self = 1,
+    Enemy = 2,
 }

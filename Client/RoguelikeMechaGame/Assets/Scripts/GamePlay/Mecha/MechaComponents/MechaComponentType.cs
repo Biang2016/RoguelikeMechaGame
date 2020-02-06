@@ -7,4 +7,5 @@
     Sword = 4,
     Engine = 5,
     Missile = 6,
+    Forbid = 999,
 }

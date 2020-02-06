@@ -2,18 +2,15 @@
 
 public class Projectile : PoolObject
 {
-    public ProjectileType ProjectileType;
-
-    public float speed = 15f;
-    public float hitOffset = 0f;
-    public bool UseFirePointRotation;
-    public Vector3 rotationOffset = new Vector3(0, 0, 0);
+    [SerializeField] private float hitOffset = 0f;
+    [SerializeField] private bool UseFirePointRotation;
+    [SerializeField] private Vector3 rotationOffset = new Vector3(0, 0, 0);
     private Rigidbody Rigidbody;
     private Collider Collider;
     private ParticleSystem ParticleSystem;
     private ParticleSystem.TrailModule ParticleSystemTrail;
     private bool useTrail = false;
-    public GameObject[] Detached;
+    [SerializeField] private GameObject[] Detached;
 
     void Awake()
     {
@@ -40,6 +37,13 @@ public class Projectile : PoolObject
         base.PoolRecycle();
     }
 
+    internal ProjectileInfo ProjectileInfo;
+
+    public void Initialize(ProjectileInfo projectileInfo)
+    {
+        ProjectileInfo = projectileInfo;
+    }
+
     private float curSpeed;
 
     public void Play()
@@ -47,11 +51,11 @@ public class Projectile : PoolObject
         if (useTrail) ParticleSystemTrail.enabled = true;
         Rigidbody.constraints = RigidbodyConstraints.None;
         Collider.enabled = true;
-        curSpeed = speed;
+        curSpeed = ProjectileInfo.Speed;
         ParticleSystem.Play(true);
-        if (GameObjectPoolManager.Instance.ProjectileFlashDict.ContainsKey(ProjectileType))
+        if (GameObjectPoolManager.Instance.ProjectileFlashDict.ContainsKey(ProjectileInfo.ProjectileType))
         {
-            ProjectileFlash flash = GameObjectPoolManager.Instance.ProjectileFlashDict[ProjectileType].AllocateGameObject<ProjectileFlash>(ProjectileManager.Instance.transform);
+            ProjectileFlash flash = GameObjectPoolManager.Instance.ProjectileFlashDict[ProjectileInfo.ProjectileType].AllocateGameObject<ProjectileFlash>(ProjectileManager.Instance.transform);
             flash.transform.position = transform.position;
             flash.transform.rotation = Quaternion.identity;
             flash.transform.forward = gameObject.transform.forward;
@@ -78,9 +82,9 @@ public class Projectile : PoolObject
 
         ContactPoint contact = collision.contacts[0];
 
-        if (GameObjectPoolManager.Instance.ProjectileHitDict.ContainsKey(ProjectileType))
+        if (GameObjectPoolManager.Instance.ProjectileHitDict.ContainsKey(ProjectileInfo.ProjectileType))
         {
-            ProjectileHit hit = GameObjectPoolManager.Instance.ProjectileHitDict[ProjectileType].AllocateGameObject<ProjectileHit>(ProjectileManager.Instance.transform);
+            ProjectileHit hit = GameObjectPoolManager.Instance.ProjectileHitDict[ProjectileInfo.ProjectileType].AllocateGameObject<ProjectileHit>(ProjectileManager.Instance.transform);
             hit.transform.position = contact.point + contact.normal * hitOffset;
             hit.transform.rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
             if (UseFirePointRotation)
