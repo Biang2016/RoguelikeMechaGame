@@ -72,7 +72,7 @@ public class BagManager : MonoSingleton<BagManager>
                 GameManager.Instance.PlayerMecha.MechaEditArea.Hide();
                 GameManager.Instance.PlayerMecha.SlotLightsShown = false;
                 GameManager.Instance.PlayerMecha.GridShown = false;
-                List<MechaComponentBase> conflictComponents = GameManager.Instance.PlayerMecha.RefreshMechaMatrix();
+                GameManager.Instance.PlayerMecha.RefreshMechaMatrix(out List<MechaComponentBase> conflictComponents, out List<MechaComponentBase> isolatedComponents);
 
                 foreach (MechaComponentBase mcb in conflictComponents)
                 {
@@ -80,7 +80,13 @@ public class BagManager : MonoSingleton<BagManager>
                     mcb.PoolRecycle();
                 }
 
-                // GameManager.Instance.PlayerMecha.RefreshCenter();
+                foreach (MechaComponentBase mcb in isolatedComponents)
+                {
+                    GameManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
+                    mcb.PoolRecycle();
+                }
+
+                GameManager.Instance.PlayerMecha.ExertComponentBuffs();
                 GameManager.Instance.MainCameraFollow.SetTarget(GameManager.Instance.PlayerMecha.transform);
                 GameManager.Instance.MainCameraFollow.FOW_Level = 2;
                 GameManager.Instance.SetState(GameState.Fighting);
@@ -88,6 +94,7 @@ public class BagManager : MonoSingleton<BagManager>
             else
             {
                 UIManager.Instance.ShowUIForms<BagPanel>();
+                GameManager.Instance.PlayerMecha.RemoveAllComponentBuffs();
                 GameManager.Instance.PlayerMecha.MechaEditArea.Show();
                 GameManager.Instance.PlayerMecha.SlotLightsShown = true;
                 GameManager.Instance.MainCameraFollow.FOW_Level = 1;

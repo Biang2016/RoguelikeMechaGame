@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public abstract class MechaComponentBase : PoolObject, IDraggable
@@ -83,21 +82,23 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
 
     #region Buffs
 
-    internal List<MechaComponentBuff_Base> AttachedBuffs = new List<MechaComponentBuff_Base>();
-    internal List<MechaComponentBuff_Base> GiveOutBuffs = new List<MechaComponentBuff_Base>();
+    internal List<MechaComponentBuff> AttachedBuffs = new List<MechaComponentBuff>();
+    internal List<MechaComponentBuff> GiveOutBuffs = new List<MechaComponentBuff>();
 
-    private void UnlinkAllBuffs()
+    public virtual void ExertEffectOnOtherComponents()
     {
-        foreach (MechaComponentBuff_Base buff in AttachedBuffs)
+    }
+
+    public void UnlinkAllBuffs()
+    {
+        foreach (MechaComponentBuff buff in AttachedBuffs)
         {
-            buff.DisableBuff();
-            buff.Source.GiveOutBuffs.Remove(buff);
+            buff.RemoveBuff();
         }
 
-        foreach (MechaComponentBuff_Base buff in GiveOutBuffs)
+        foreach (MechaComponentBuff buff in GiveOutBuffs)
         {
-            buff.DisableBuff();
-            buff.Target.AttachedBuffs.Remove(buff);
+            buff.RemoveBuff();
         }
 
         AttachedBuffs.Clear();

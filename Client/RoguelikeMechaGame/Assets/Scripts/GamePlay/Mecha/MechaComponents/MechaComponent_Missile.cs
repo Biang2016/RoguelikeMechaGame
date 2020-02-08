@@ -36,7 +36,7 @@ public class MechaComponent_Missile : MechaComponent_Controllable_Base, IBuff_Po
         Shooter.ShooterInfo.ProjectileInfo.Modifiers_Damage.Add(modifier);
     }
 
-    public void Remove(Modifier modifier)
+    public void RemoveModifier(Modifier modifier)
     {
         Shooter.ShooterInfo.ProjectileInfo.Modifiers_Damage.Remove(modifier);
     }

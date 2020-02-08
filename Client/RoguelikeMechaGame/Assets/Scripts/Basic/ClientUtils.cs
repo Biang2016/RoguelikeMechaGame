@@ -206,6 +206,11 @@ public static class ClientUtils
         return new GridPos(gp.z + ConfigManager.EDIT_AREA_SIZE, gp.x + ConfigManager.EDIT_AREA_SIZE, gp.orientation);
     }
 
+    public static GridPos ConvertMatrixIndexToGridPos(this GridPos gp_matrix)
+    {
+        return new GridPos(gp_matrix.x - ConfigManager.EDIT_AREA_SIZE, gp_matrix.z - ConfigManager.EDIT_AREA_SIZE, gp_matrix.orientation);
+    }
+
     public static int CalculateModifiers(this List<Modifier> modifiers, int value)
     {
         int res = value;

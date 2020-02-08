@@ -5,9 +5,11 @@ using System.Collections.Generic;
 public partial class Mecha
 {
     private List<MechaComponentBase> forbidComponentIndicators = new List<MechaComponentBase>();
+    private List<MechaComponentBase> isolatedComponentIndicators = new List<MechaComponentBase>();
 
     [SerializeField] private Transform MechaComponentContainer;
-    [SerializeField] private Transform ForbotComponentIndicatorContainer;
+    [SerializeField] private Transform ForbidComponentIndicatorContainer;
+    [SerializeField] private Transform IsolatedComponentIndicatorContainer;
     public MechaEditArea MechaEditArea;
 
     private void Initialize_Building(MechaInfo mechaInfo)
@@ -42,6 +44,13 @@ public partial class Mecha
                 forbidComponentIndicators.Remove(mcb);
             }
         }
+        else if (mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Isolated)
+        {
+            if (isolatedComponentIndicators.Contains(mcb))
+            {
+                isolatedComponentIndicators.Remove(mcb);
+            }
+        }
         else
         {
             if (mechaComponents.Contains(mcb))
@@ -62,10 +71,27 @@ public partial class Mecha
         forbidComponentIndicators.Clear();
     }
 
+    private void ClearIsolatedComponents()
+    {
+        foreach (MechaComponentBase mcb in isolatedComponentIndicators)
+        {
+            mcb.PoolRecycle();
+        }
+
+        isolatedComponentIndicators.Clear();
+    }
+
     private void AddForbidComponentIndicator(GridPos gp)
     {
         MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(MechaComponentType.Forbid, gp), this);
-        mcb.transform.SetParent(ForbotComponentIndicatorContainer);
+        mcb.transform.SetParent(ForbidComponentIndicatorContainer);
+        forbidComponentIndicators.Add(mcb);
+    }
+
+    private void AddIsolatedComponentIndicator(GridPos gp)
+    {
+        MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(MechaComponentType.Isolated, gp), this);
+        mcb.transform.SetParent(IsolatedComponentIndicatorContainer);
         forbidComponentIndicators.Add(mcb);
     }
 
