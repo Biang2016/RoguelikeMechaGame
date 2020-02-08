@@ -23,10 +23,11 @@ public partial class Mecha : PoolObject
         Initialize_Fighting(mechaInfo);
     }
 
-    private void RefreshMechaMatrix()
+    public List<MechaComponentBase> RefreshMechaMatrix()
     {
         ClearForbidComponents();
         List<GridPos> conflictGridPositions = new List<GridPos>();
+        List<MechaComponentBase> conflictComponents = new List<MechaComponentBase>();
 
         for (int z = 0; z < mechaComponentMatrix.GetLength(0); z++)
         {
@@ -38,18 +39,34 @@ public partial class Mecha : PoolObject
 
         foreach (MechaComponentBase mcb in mechaComponents)
         {
+            bool hasConflict = false;
             foreach (GridPos gp in mcb.MechaComponentInfo.OccupiedGridPositions)
             {
                 GridPos gp_matrix = gp.ConvertGridPosToMatrixIndex();
 
-                if (mechaComponentMatrix[gp_matrix.x, gp_matrix.z] != null)
+                if (gp_matrix.x < 0 || gp_matrix.x >= mechaComponentMatrix.GetLength(1)
+                                    || gp_matrix.z < 0 || gp_matrix.z >= mechaComponentMatrix.GetLength(0))
                 {
+                    hasConflict = true;
                     conflictGridPositions.Add(gp);
                 }
                 else
                 {
-                    mechaComponentMatrix[gp_matrix.x, gp_matrix.z] = mcb;
+                    if (mechaComponentMatrix[gp_matrix.z, gp_matrix.x] != null)
+                    {
+                        hasConflict = true;
+                        conflictGridPositions.Add(gp);
+                    }
+                    else
+                    {
+                        mechaComponentMatrix[gp_matrix.z, gp_matrix.x] = mcb;
+                    }
                 }
+            }
+
+            if (hasConflict)
+            {
+                conflictComponents.Add(mcb);
             }
         }
 
@@ -57,6 +74,13 @@ public partial class Mecha : PoolObject
         {
             AddForbidComponentIndicator(gp);
         }
+
+        return conflictComponents;
+    }
+
+    public void ClearConflictComponents()
+    {
+        
     }
 
     void Update()

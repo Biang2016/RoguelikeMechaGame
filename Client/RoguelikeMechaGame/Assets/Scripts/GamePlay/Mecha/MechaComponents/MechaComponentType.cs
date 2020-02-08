@@ -2,9 +2,9 @@
 {
     Core = 0,
     Block = 1,
-    Armor = 2,
+    // Armor = 2,
     Gun = 3,
-    Sword = 4,
+    PowerUp = 4,
     Engine = 5,
     Missile = 6,
     Forbid = 999,

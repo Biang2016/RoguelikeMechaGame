@@ -51,21 +51,6 @@ public class Draggable : MonoBehaviour
                     }
 
                     caller.DragComponent_OnMousePressed(CheckMoveToArea()); //将鼠标悬停的区域告知拖动对象主体
-
-                    float draggedDistance = (transform.position - dragBeginPosition_WorldObject).magnitude;
-                    if (draggedDistance < caller.DragComponent_DragMinDistance) //不动
-                    {
-                    }
-                    else if (draggedDistance < caller.DragComponent_DragMaxDistance) //拖拽物体本身 
-                    {
-                        Vector3 newPos = GetMouseAsWorldPoint() + mOffset + new Vector3(0.5f, 0, 0.5f) * GameManager.GridSize;
-                        transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);
-                    }
-                    else //消失 （显示特效或其他逻辑）
-                    {
-                        caller.DragComponent_DragOutEffects();
-                    }
-
                     break;
                 }
                 case DragAreaTypes.Bag:

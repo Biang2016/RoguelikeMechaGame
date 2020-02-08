@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MechaComponent_Missile : MechaComponent_Controllable_Base
+public class MechaComponent_Missile : MechaComponent_Controllable_Base, IBuff_PowerUp
 {
     public Shooter Shooter;
 
     void Start()
     {
-        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_Butter, ConfigManager.Instance.MissileSpeed)));
+        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_Butter, ConfigManager.Instance.MissileSpeed, ConfigManager.Instance.MissileDamage)));
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
     }
 
     protected override void ControlPerFrame()
@@ -28,5 +29,15 @@ public class MechaComponent_Missile : MechaComponent_Controllable_Base
         {
             Shooter.ContinuousShoot();
         }
+    }
+
+    public void AddModifier(Modifier modifier)
+    {
+        Shooter.ShooterInfo.ProjectileInfo.Modifiers_Damage.Add(modifier);
+    }
+
+    public void Remove(Modifier modifier)
+    {
+        Shooter.ShooterInfo.ProjectileInfo.Modifiers_Damage.Remove(modifier);
     }
 }

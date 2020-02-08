@@ -22,7 +22,6 @@ public partial class Mecha
     {
         MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mci, this);
         AddMechaComponent(mcb);
-        RefreshMechaMatrix();
     }
 
     public void AddMechaComponent(MechaComponentBase mcb)
@@ -31,6 +30,7 @@ public partial class Mecha
         mcb.transform.SetParent(MechaComponentContainer);
         mcb.MechaComponentGrids.SetGridShown(GridShown);
         mcb.MechaComponentGrids.SetSlotLightsShown(SlotLightsShown);
+        RefreshMechaMatrix();
     }
 
     public void RemoveMechaComponent(MechaComponentBase mcb)
@@ -80,13 +80,32 @@ public partial class Mecha
 
     void LateUpdate_Building()
     {
-        RefreshMechaMatrix();
     }
 
     public void RefreshCenter()
     {
-        transform.CenterOnChildren(mechaComponents);
-        RefreshMechaMatrix();
+        GridPos totalGP = new GridPos();
+        if (mechaComponents.Count > 0)
+        {
+            foreach (MechaComponentBase mcb in mechaComponents)
+            {
+                mcb.transform.parent = null;
+                totalGP.x += mcb.MechaComponentInfo.GridPos.x;
+                totalGP.z += mcb.MechaComponentInfo.GridPos.z;
+            }
+
+            GridPos centerGP = new GridPos(Mathf.RoundToInt((float) totalGP.x / mechaComponents.Count), Mathf.RoundToInt((float) totalGP.z / mechaComponents.Count));
+            transform.localPosition -= new Vector3(centerGP.x * GameManager.GridSize, 0, centerGP.z * GameManager.GridSize);
+            foreach (MechaComponentBase mcb in mechaComponents)
+            {
+                mcb.transform.parent = MechaComponentContainer;
+                GridPos newGP = new GridPos(mcb.MechaComponentInfo.GridPos.x - centerGP.x, mcb.MechaComponentInfo.GridPos.z - centerGP.z);
+                mcb.SetGridPosition(newGP);
+                mcb.RefreshOccupiedGridPositions();
+            }
+
+            RefreshMechaMatrix();
+        }
     }
 
     private bool _slotLightsShown = true;

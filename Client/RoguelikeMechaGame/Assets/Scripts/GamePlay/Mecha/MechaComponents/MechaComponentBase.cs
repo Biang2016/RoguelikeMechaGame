@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
-using Random = System.Random;
 
 public abstract class MechaComponentBase : PoolObject, IDraggable
 {
@@ -15,14 +14,13 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         Draggable = GetComponent<Draggable>();
     }
 
+    protected virtual void Update()
+    {
+    }
+
     public override void PoolRecycle()
     {
         base.PoolRecycle();
-        if (ParentMecha)
-        {
-            ParentMecha.RemoveMechaComponent(this);
-        }
-
         ParentMecha = null;
 
         foreach (FX lighteningFX in lighteningFXs)
@@ -36,28 +34,42 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
 
     public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
     {
-        GameObjectPoolManager.PrefabNames prefabName = (GameObjectPoolManager.PrefabNames) Enum.Parse(typeof(GameObjectPoolManager.PrefabNames), "MechaComponent_" + mechaComponentInfo.MechaComponentType);
-        MechaComponentBase mcb = GameObjectPoolManager.Instance.PoolDict[prefabName].AllocateGameObject<MechaComponentBase>(parentMecha ? parentMecha.transform : null);
+        MechaComponentBase mcb = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentType].AllocateGameObject<MechaComponentBase>(parentMecha ? parentMecha.transform : null);
         mcb.Initialize(mechaComponentInfo, parentMecha);
         return mcb;
     }
 
     public MechaComponentInfo MechaComponentInfo;
 
-    public virtual void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
+    private void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
     {
         IsDead = false;
+        UnlinkAllBuffs();
         MechaComponentInfo = mechaComponentInfo;
-        RefreshOccupiedGridPositions();
         GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, GameManager.GridSize);
+        RefreshOccupiedGridPositions();
         ParentMecha = parentMecha;
         _totalLife = 50;
         _leftLife = 50;
     }
 
+    public void SetGridPosition(GridPos gridPos)
+    {
+        if (!gridPos.Equals(MechaComponentInfo.GridPos))
+        {
+            MechaComponentInfo.GridPos = gridPos;
+            GridPos.ApplyGridPosToLocalTrans(gridPos, transform, GameManager.GridSize);
+            RefreshOccupiedGridPositions();
+            ParentMecha?.RefreshMechaMatrix();
+        }
+    }
+
     public void RefreshOccupiedGridPositions()
     {
-        MechaComponentInfo.OccupiedGridPositions = GridPos.TransformOccupiedPositions(MechaComponentInfo.GridPos, MechaComponentGrids.MechaComponentGridPositions);
+        if (BagManager.Instance.MechaComponentOccupiedGridPosDict.ContainsKey(MechaComponentInfo.MechaComponentType))
+        {
+            MechaComponentInfo.OccupiedGridPositions = GridPos.TransformOccupiedPositions(MechaComponentInfo.GridPos, BagManager.Instance.MechaComponentOccupiedGridPosDict[MechaComponentInfo.MechaComponentType]);
+        }
     }
 
     public MechaComponentGrids MechaComponentGrids;
@@ -65,8 +77,34 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
 
     private void Rotate()
     {
-        transform.Rotate(0, 90, 0);
+        GridPos newGP = new GridPos(MechaComponentInfo.GridPos.x, MechaComponentInfo.GridPos.z, GridPos.RotateOrientationClockwise90(MechaComponentInfo.GridPos.orientation));
+        SetGridPosition(newGP);
     }
+
+    #region Buffs
+
+    internal List<MechaComponentBuff_Base> AttachedBuffs = new List<MechaComponentBuff_Base>();
+    internal List<MechaComponentBuff_Base> GiveOutBuffs = new List<MechaComponentBuff_Base>();
+
+    private void UnlinkAllBuffs()
+    {
+        foreach (MechaComponentBuff_Base buff in AttachedBuffs)
+        {
+            buff.DisableBuff();
+            buff.Source.GiveOutBuffs.Remove(buff);
+        }
+
+        foreach (MechaComponentBuff_Base buff in GiveOutBuffs)
+        {
+            buff.DisableBuff();
+            buff.Target.AttachedBuffs.Remove(buff);
+        }
+
+        AttachedBuffs.Clear();
+        GiveOutBuffs.Clear();
+    }
+
+    #endregion
 
     #region Life
 
@@ -122,10 +160,16 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         if (!IsDead && !CheckAlive())
         {
             IsDead = true;
-            FXManager.Instance.PlayFX(FX_Type.FX_BlockExplode, transform.position);
-            ParentMecha.RemoveMechaComponent(this);
+            OnDied();
             PoolRecycle(0.2f);
         }
+    }
+
+    private void OnDied()
+    {
+        UnlinkAllBuffs();
+        FXManager.Instance.PlayFX(FX_Type.FX_BlockExplode, transform.position);
+        ParentMecha.RemoveMechaComponent(this);
     }
 
     public void HealAll()
@@ -166,11 +210,18 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
                 break;
             }
         }
+
+        if (ParentMecha)
+        {
+            GridPos gridPos = GridPos.GetGridPosByMousePos(ParentMecha.transform, Vector3.up, GameManager.GridSize);
+            gridPos.orientation = MechaComponentInfo.GridPos.orientation;
+            SetGridPosition(gridPos);
+        }
     }
 
     private bool isReturningToBag = false;
 
-    private bool ReturnToBag(bool cancelDrag, bool dragTheItem)
+    public bool ReturnToBag(bool cancelDrag, bool dragTheItem)
     {
         bool suc = BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo, out BagItem bagItem);
         if (suc)
@@ -187,6 +238,7 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
                 DragManager.Instance.CurrentDrag.IsOnDrag = true;
             }
 
+            ParentMecha?.RemoveMechaComponent(this);
             PoolRecycle();
         }
 
@@ -212,9 +264,6 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
             }
             case DragAreaTypes.MechaEditorArea:
             {
-                MechaComponentInfo.GridPos = GridPos.GetGridPosByLocalTrans(transform, 1);
-                MechaComponentInfo.OccupiedGridPositions = GridPos.TransformOccupiedPositions(MechaComponentInfo.GridPos, MechaComponentInfo.OccupiedGridPositions);
-                Debug.Log(MechaComponentInfo.OccupiedGridPositions);
                 break;
             }
             case DragAreaTypes.DiscardedArea:

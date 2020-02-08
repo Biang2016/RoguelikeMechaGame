@@ -58,6 +58,11 @@ public struct GridPos
         return new GridPos(x, z, Orientation.Up);
     }
 
+    public static Orientation RotateOrientationClockwise90(Orientation orientation)
+    {
+        return (Orientation) (((int) orientation + 1) % 4);
+    }
+    
     public static GridPos RotateGridPos(GridPos oriGP, Orientation orientation)
     {
         switch (orientation)
@@ -95,6 +100,11 @@ public struct GridPos
         }
 
         return resGP;
+    }
+
+    public bool Equals(GridPos gp)
+    {
+        return gp.x == x && gp.z == z && gp.orientation == orientation;
     }
 
 

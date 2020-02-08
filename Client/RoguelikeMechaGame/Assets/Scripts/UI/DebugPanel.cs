@@ -25,16 +25,6 @@ public class DebugPanel : BaseUIForm
         fpsText.text = Mathf.Ceil(fps).ToString();
     }
 
-    public void AddSword()
-    {
-        BagManager.Instance.AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem bagItem);
-    }
-
-    public void AddEngine()
-    {
-        BagManager.Instance.AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem bagItem);
-    }
-
     public void SetInfiniteComponents(bool infinite)
     {
         BagManager.Instance.InfiniteComponents = infinite;

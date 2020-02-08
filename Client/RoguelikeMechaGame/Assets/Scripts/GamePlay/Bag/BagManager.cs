@@ -40,7 +40,7 @@ public class BagManager : MonoSingleton<BagManager>
             MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
             MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up)), null);
             mcbs.Add(mcb);
-            MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentInfo.OccupiedGridPositions));
+            MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentGrids.MechaComponentGridPositions));
         }
 
         foreach (MechaComponentBase mcb in mcbs)
@@ -72,7 +72,15 @@ public class BagManager : MonoSingleton<BagManager>
                 GameManager.Instance.PlayerMecha.MechaEditArea.Hide();
                 GameManager.Instance.PlayerMecha.SlotLightsShown = false;
                 GameManager.Instance.PlayerMecha.GridShown = false;
-                GameManager.Instance.PlayerMecha.RefreshCenter();
+                List<MechaComponentBase> conflictComponents = GameManager.Instance.PlayerMecha.RefreshMechaMatrix();
+
+                foreach (MechaComponentBase mcb in conflictComponents)
+                {
+                    GameManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
+                    mcb.PoolRecycle();
+                }
+
+                // GameManager.Instance.PlayerMecha.RefreshCenter();
                 GameManager.Instance.MainCameraFollow.SetTarget(GameManager.Instance.PlayerMecha.transform);
                 GameManager.Instance.MainCameraFollow.FOW_Level = 2;
                 GameManager.Instance.SetState(GameState.Fighting);
@@ -101,7 +109,7 @@ public class BagManager : MonoSingleton<BagManager>
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 0, GridPos.Orientation.Right)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 0, GridPos.Orientation.Right)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Sword, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
+        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.PowerUp, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Missile, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
     }
 

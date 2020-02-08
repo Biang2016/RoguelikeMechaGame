@@ -14,7 +14,7 @@ public class HitBox : MonoBehaviour
         Projectile p = collision.gameObject.GetComponent<Projectile>();
         if (p && p.ProjectileInfo.MechaType != ParentHitBoxRoot.MechaComponentBase.MechaType)
         {
-            ParentHitBoxRoot.MechaComponentBase.Damage(5);
+            ParentHitBoxRoot.MechaComponentBase.Damage(p.ProjectileInfo.FinalDamage);
         }
     }
 }

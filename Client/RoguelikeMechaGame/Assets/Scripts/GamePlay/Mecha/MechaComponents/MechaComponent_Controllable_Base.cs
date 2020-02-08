@@ -3,8 +3,9 @@ using System.Collections;
 
 public abstract class MechaComponent_Controllable_Base : MechaComponentBase
 {
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (GameManager.Instance.GetState() == GameState.Fighting)
         {
             if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Self)
