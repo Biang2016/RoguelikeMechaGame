@@ -46,24 +46,27 @@ public class GameManager : MonoSingleton<GameManager>
         MainCameraFollow.SetTarget(PlayerMecha.transform);
 
         EnemyMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainer);
-        EnemyMecha.Initialize(new MechaInfo(MechaType.Enemy, new List<MechaComponentInfo>
+
+        List<MechaComponentInfo> enemyComponentInfos = new List<MechaComponentInfo>();
+        for (int i = 5; i <= 8; i++)
         {
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(5, 5, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(4, 5, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(3, 5, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(2, 5, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 5, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(5, 4, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(4, 4, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(3, 4, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(2, 4, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 4, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(5, 3, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(4, 3, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(3, 3, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(2, 3, GridPos.Orientation.Up)),
-            // new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 3, GridPos.Orientation.Up)),
-        }));
+            for (int j = -9; j <= 9; j++)
+            {
+                MechaComponentInfo mci;
+                if (i == 7 && j == 0)
+                {
+                    mci = new MechaComponentInfo(MechaComponentType.Core, new GridPos(i, j, GridPos.Orientation.Up));
+                }
+                else
+                {
+                    mci = new MechaComponentInfo(MechaComponentType.Block, new GridPos(i, j, GridPos.Orientation.Up));
+                }
+
+                enemyComponentInfos.Add(mci);
+            }
+        }
+
+        EnemyMecha.Initialize(new MechaInfo(MechaType.Enemy, enemyComponentInfos));
 
         SetState(GameState.Fighting);
     }

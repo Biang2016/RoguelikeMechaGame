@@ -30,8 +30,8 @@ public partial class Mecha : PoolObject
 
     public void RefreshMechaMatrix(out List<MechaComponentBase> conflictComponents, out List<MechaComponentBase> isolatedComponents)
     {
-        ClearForbidComponents();
-        ClearIsolatedComponents();
+        ClearForbidComponentIndicators();
+        ClearIsolatedComponentIndicators();
 
         List<GridPos> coreGPs = new List<GridPos>();
         List<MechaComponentBase> notConflictComponents = new List<MechaComponentBase>();

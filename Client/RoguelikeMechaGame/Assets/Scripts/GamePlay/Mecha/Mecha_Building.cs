@@ -61,7 +61,7 @@ public partial class Mecha
         }
     }
 
-    private void ClearForbidComponents()
+    private void ClearForbidComponentIndicators()
     {
         foreach (MechaComponentBase mcb in forbidComponentIndicators)
         {
@@ -71,7 +71,7 @@ public partial class Mecha
         forbidComponentIndicators.Clear();
     }
 
-    private void ClearIsolatedComponents()
+    private void ClearIsolatedComponentIndicators()
     {
         foreach (MechaComponentBase mcb in isolatedComponentIndicators)
         {
