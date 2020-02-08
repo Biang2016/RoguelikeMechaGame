@@ -29,7 +29,7 @@ public struct GridPos
         return new GridPos(x, z, (Orientation) rotY);
     }
 
-    public static GridPos GetGridPosByLocalPoint(Vector3 position, int gridSize)
+    public static GridPos GetGridPosByPoint(Vector3 position, int gridSize)
     {
         int x = Mathf.FloorToInt(position.x / gridSize) * gridSize;
         int z = Mathf.FloorToInt(position.z / gridSize) * gridSize;
@@ -51,7 +51,7 @@ public struct GridPos
         Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, planeNormal, parentTransform.position);
 
         Vector3 rot_intersect = parentTransform.InverseTransformPoint(intersect);
-        GridPos local_GP = GetGridPosByLocalPoint(rot_intersect + Vector3.one * gridSize / 2f, 1);
+        GridPos local_GP = GetGridPosByPoint(rot_intersect + Vector3.one * gridSize / 2f, 1);
 
         int x = Mathf.FloorToInt(local_GP.x / gridSize) * gridSize;
         int z = Mathf.FloorToInt(local_GP.z / gridSize) * gridSize;

@@ -82,30 +82,17 @@ public partial class Mecha
     {
     }
 
-    public void RefreshCenter()
+    public void MoveCenter(GridPos delta_local_GP)
     {
-        GridPos totalGP = new GridPos();
-        if (mechaComponents.Count > 0)
+        foreach (MechaComponentBase mcb in mechaComponents)
         {
-            foreach (MechaComponentBase mcb in mechaComponents)
-            {
-                mcb.transform.parent = null;
-                totalGP.x += mcb.MechaComponentInfo.GridPos.x;
-                totalGP.z += mcb.MechaComponentInfo.GridPos.z;
-            }
-
-            GridPos centerGP = new GridPos(Mathf.RoundToInt((float) totalGP.x / mechaComponents.Count), Mathf.RoundToInt((float) totalGP.z / mechaComponents.Count));
-            transform.localPosition -= new Vector3(centerGP.x * GameManager.GridSize, 0, centerGP.z * GameManager.GridSize);
-            foreach (MechaComponentBase mcb in mechaComponents)
-            {
-                mcb.transform.parent = MechaComponentContainer;
-                GridPos newGP = new GridPos(mcb.MechaComponentInfo.GridPos.x - centerGP.x, mcb.MechaComponentInfo.GridPos.z - centerGP.z);
-                mcb.SetGridPosition(newGP);
-                mcb.RefreshOccupiedGridPositions();
-            }
-
-            RefreshMechaMatrix();
+            mcb.transform.parent = MechaComponentContainer;
+            GridPos newGP = new GridPos(mcb.MechaComponentInfo.GridPos.x + delta_local_GP.x, mcb.MechaComponentInfo.GridPos.z + delta_local_GP.z);
+            mcb.SetGridPosition(newGP);
+            mcb.RefreshOccupiedGridPositions();
         }
+
+        RefreshMechaMatrix();
     }
 
     private bool _slotLightsShown = true;
