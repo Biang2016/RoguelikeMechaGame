@@ -27,6 +27,16 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
+        UIManager.Instance.ShowUIForms<DebugPanel>();
+#if !UNITY_EDITOR
+        if(!ShowDebugPanel) UIManager.Instance.CloseUIForm<DebugPanel>();
+#endif
+
+        Invoke("StartGame", 0.2f);
+    }
+
+    public void StartGame()
+    {
         PlayerMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainer);
         PlayerMecha.Initialize(new MechaInfo(MechaType.Self, new List<MechaComponentInfo>
         {
@@ -56,11 +66,6 @@ public class GameManager : MonoSingleton<GameManager>
         }));
 
         SetState(GameState.Fighting);
-
-        UIManager.Instance.ShowUIForms<DebugPanel>();
-#if !UNITY_EDITOR
-        if(!ShowDebugPanel) UIManager.Instance.CloseUIForm<DebugPanel>();
-#endif
     }
 
     void Update()
