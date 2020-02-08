@@ -126,7 +126,7 @@ public partial class Mecha : PoolObject
                 int a = connectedMatrix[z, x];
                 if (connectedMatrix[z, x] == 1)
                 {
-                    connectedQueue.Enqueue(new GridPos(z, x));
+                    connectedQueue.Enqueue(new GridPos(x, z));
                     connectedMatrix[z, x] = 2;
                 }
             }
@@ -135,10 +135,10 @@ public partial class Mecha : PoolObject
         while (connectedQueue.Count > 0)
         {
             GridPos gp = connectedQueue.Dequeue();
-            connectPos(gp.x + 1, gp.z);
-            connectPos(gp.x - 1, gp.z);
-            connectPos(gp.x, gp.z - 1);
-            connectPos(gp.x, gp.z + 1);
+            connectPos(gp.z + 1, gp.x);
+            connectPos(gp.z - 1, gp.x);
+            connectPos(gp.z, gp.x - 1);
+            connectPos(gp.z, gp.x + 1);
         }
 
         for (int z = 0; z < connectedMatrix.GetLength(0); z++)
