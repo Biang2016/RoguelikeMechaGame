@@ -33,6 +33,11 @@ public class Projectile : PoolObject
     public override void PoolRecycle()
     {
         ParticleSystem.Stop(true);
+
+        Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        Collider.enabled = false;
+        curSpeed = 0;
+
         if (useTrail) ParticleSystemTrail.enabled = false;
         base.PoolRecycle();
     }
@@ -63,7 +68,7 @@ public class Projectile : PoolObject
             flash.PoolRecycle(flash.ParticleSystem.main.duration);
         }
 
-        PoolRecycle(5f);
+        PoolRecycle(ParticleSystem.main.duration);
     }
 
     void FixedUpdate()
@@ -76,10 +81,6 @@ public class Projectile : PoolObject
 
     void OnCollisionEnter(Collision collision)
     {
-        Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        Collider.enabled = false;
-        curSpeed = 0;
-
         ContactPoint contact = collision.contacts[0];
 
         if (GameObjectPoolManager.Instance.ProjectileHitDict.ContainsKey(ProjectileInfo.ProjectileType))

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class BattleManager : MonoSingleton<BattleManager>
 {
     [SerializeField] private Transform MechaContainer;
+    public Transform MechaComponentDropSpriteContainer;
 
     internal Mecha PlayerMecha;
     internal List<Mecha> EnemyMechas = new List<Mecha>();

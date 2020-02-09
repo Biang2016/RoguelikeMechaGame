@@ -40,12 +40,21 @@ public partial class Mecha
             RefreshMechaMatrix(out List<MechaComponentBase> _, out List<MechaComponentBase> isolatedComponents);
             foreach (MechaComponentBase m in isolatedComponents)
             {
+                if (MechaInfo.MechaType == MechaType.Enemy)
+                {
+                    MechaComponentDropSprite mcds = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.MechaComponentDropSprite].AllocateGameObject<MechaComponentDropSprite>(BattleManager.Instance.MechaComponentDropSpriteContainer);
+                    mcds.Initialize(m.MechaComponentInfo.MechaComponentType, m.transform.position);
+                }
+
                 mechaComponents.Remove(m);
                 mcb.MechaComponentGrids.SetIsolatedIndicatorShown(true);
                 m.PoolRecycle(1f);
             }
 
-            RefreshMechaMatrix();
+            if (mechaComponents.Count == 0)
+            {
+                Die();
+            }
         }
     }
 

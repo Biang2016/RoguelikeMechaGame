@@ -55,4 +55,20 @@ public partial class Mecha
             transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
         }
     }
+
+    public void ExertComponentBuffs()
+    {
+        foreach (MechaComponentBase mcb in mechaComponents)
+        {
+            mcb.ExertEffectOnOtherComponents();
+        }
+    }
+
+    public void RemoveAllComponentBuffs()
+    {
+        foreach (MechaComponentBase mcb in mechaComponents)
+        {
+            mcb.UnlinkAllBuffs();
+        }
+    }
 }

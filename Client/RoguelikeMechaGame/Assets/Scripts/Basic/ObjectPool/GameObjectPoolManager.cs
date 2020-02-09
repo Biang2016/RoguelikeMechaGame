@@ -14,6 +14,7 @@ public class GameObjectPoolManager : MonoSingleton<GameObjectPoolManager>
         BagItem,
         BagGrid,
         BagItemGridHitBox,
+        MechaComponentDropSprite,
     }
 
     public Dictionary<PrefabNames, int> PoolConfigs = new Dictionary<PrefabNames, int>
@@ -22,6 +23,7 @@ public class GameObjectPoolManager : MonoSingleton<GameObjectPoolManager>
         {PrefabNames.BagItem, 4},
         {PrefabNames.BagGrid, 50},
         {PrefabNames.BagItemGridHitBox, 50},
+        {PrefabNames.MechaComponentDropSprite, 5},
     };
 
     public Dictionary<PrefabNames, int> PoolWarmUpDict = new Dictionary<PrefabNames, int>

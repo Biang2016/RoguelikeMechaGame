@@ -10,8 +10,20 @@ public partial class Mecha : PoolObject
 
     private MechaComponentBase[,] mechaComponentMatrix = new MechaComponentBase[ConfigManager.EDIT_AREA_SIZE * 2 + 1, ConfigManager.EDIT_AREA_SIZE * 2 + 1]; //[z,x]
 
+    public override void PoolRecycle()
+    {
+        base.PoolRecycle();
+        foreach (MechaComponentBase mcb in mechaComponents)
+        {
+            mcb.PoolRecycle();
+        }
+
+        mechaComponents.Clear();
+    }
+
     public void Initialize(MechaInfo mechaInfo)
     {
+        mechaComponentMatrix = new MechaComponentBase[ConfigManager.EDIT_AREA_SIZE * 2 + 1, ConfigManager.EDIT_AREA_SIZE * 2 + 1];
         MechaInfo = mechaInfo;
         RefreshMechaMatrix();
         foreach (MechaComponentInfo mci in mechaInfo.MechaComponentInfos)
@@ -21,22 +33,6 @@ public partial class Mecha : PoolObject
 
         Initialize_Building(mechaInfo);
         Initialize_Fighting(mechaInfo);
-    }
-
-    public void ExertComponentBuffs()
-    {
-        foreach (MechaComponentBase mcb in mechaComponents)
-        {
-            mcb.ExertEffectOnOtherComponents();
-        }
-    }
-
-    public void RemoveAllComponentBuffs()
-    {
-        foreach (MechaComponentBase mcb in mechaComponents)
-        {
-            mcb.UnlinkAllBuffs();
-        }
     }
 
     void Update()
@@ -75,5 +71,18 @@ public partial class Mecha : PoolObject
         }
 
         return null;
+    }
+
+    private void Die()
+    {
+        if (MechaInfo.MechaType == MechaType.Enemy)
+        {
+            BattleManager.Instance.EnemyMechas.Remove(this);
+            PoolRecycle(0.5f);
+        }
+        else
+        {
+            //TODO endgame
+        }
     }
 }
