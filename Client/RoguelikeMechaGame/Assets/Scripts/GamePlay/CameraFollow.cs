@@ -49,6 +49,8 @@ namespace GamePlay
 
         private float[] FOWs = new float[] {10, 15, 25, 35};
 
+        private Vector3 offset_Manually;
+
         private void LateUpdate()
         {
             RefreshTargetingPosition();
@@ -60,11 +62,12 @@ namespace GamePlay
                     {
                         Vector3 destination = transform.position + target.position - targetingPoint + Offset_Building;
                         Vector3 curVelocity = Vector3.zero;
-                        transform.position = Vector3.SmoothDamp(transform.position, destination, ref curVelocity, 0.05f);
+                        transform.position = Vector3.SmoothDamp(transform.position, destination + offset_Manually, ref curVelocity, 0.05f);
                         break;
                     }
                     case GameState.Fighting:
                     {
+                        offset_Manually = Vector3.zero;
                         Vector3 destination = transform.position + target.position - targetingPoint + Offset_Fighting;
                         Vector3 curVelocity = Vector3.zero;
                         transform.position = Vector3.SmoothDamp(transform.position, destination, ref curVelocity, 0.05f);
@@ -72,6 +75,9 @@ namespace GamePlay
                     }
                 }
             }
+
+            float movement = 5f;
+            offset_Manually = Input.GetAxis("Horizontal") * new Vector3(movement, 0, movement) + Input.GetAxis("Vertical") * new Vector3(-movement, 0, movement);
 
             if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {

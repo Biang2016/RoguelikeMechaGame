@@ -15,24 +15,22 @@ public partial class Mecha
         if (GameManager.Instance.GetState() == GameState.Fighting)
         {
             float movement = 0.7f * Time.deltaTime * Speed;
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetAxis("Horizontal") < 0)
             {
                 transform.Translate(-movement, 0, -movement, Space.World);
             }
-
-            if (Input.GetKey(KeyCode.D))
+            else if (Input.GetAxis("Horizontal") > 0)
             {
                 transform.Translate(movement, 0, movement, Space.World);
             }
 
-            if (Input.GetKey(KeyCode.W))
-            {
-                transform.Translate(-movement, 0, movement, Space.World);
-            }
-
-            if (Input.GetKey(KeyCode.S))
+            if (Input.GetAxis("Vertical") < 0)
             {
                 transform.Translate(movement, 0, -movement, Space.World);
+            }
+            else if (Input.GetAxis("Vertical") > 0)
+            {
+                transform.Translate(-movement, 0, movement, Space.World);
             }
         }
     }
