@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public partial class Mecha : PoolObject
 {
@@ -40,8 +41,17 @@ public partial class Mecha : PoolObject
         if (MechaInfo.MechaType == MechaType.Self)
         {
             Update_Building();
-            Update_Fighting();
         }
+    }
+
+    void FixedUpdate()
+    {
+        if (MechaInfo.MechaType == MechaType.Self)
+        {
+            FixedUpdate_Fighting();
+        }
+
+        UpdateLifeChange();
     }
 
     void LateUpdate()
@@ -73,6 +83,14 @@ public partial class Mecha : PoolObject
         return null;
     }
 
+    public void SetShown(bool shown)
+    {
+        foreach (MechaComponentBase mcb in mechaComponents)
+        {
+            mcb.SetShown(shown);
+        }
+    }
+
     private void Die()
     {
         if (MechaInfo.MechaType == MechaType.Enemy)
@@ -82,7 +100,105 @@ public partial class Mecha : PoolObject
         }
         else
         {
-            //TODO endgame
+            // TODO Endgame
         }
     }
+
+    #region Life & Power
+
+    private void UpdateLifeChange()
+    {
+        int totalLife = 0;
+        int leftLife = 0;
+        foreach (MechaComponentBase mcb in mechaComponents)
+        {
+            totalLife += mcb.M_TotalLife;
+            leftLife += mcb.M_LeftLife;
+        }
+
+        M_TotalLife = totalLife;
+        M_LeftLife = leftLife;
+    }
+
+    public UnityAction RefreshHUDPanelCoreLifeSliderCount;
+
+    public List<MechaComponentBase> GetCoreLifeChangeDelegates()
+    {
+        List<MechaComponentBase> res = new List<MechaComponentBase>();
+        foreach (MechaComponentBase mcb in mechaComponents)
+        {
+            if (mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
+            {
+                res.Add(mcb);
+            }
+        }
+
+        return res;
+    }
+
+    internal UnityAction<int, int> OnLifeChange;
+
+    private int _leftLife;
+
+    public int M_LeftLife
+    {
+        get { return _leftLife; }
+        set
+        {
+            if (_leftLife != value)
+            {
+                _leftLife = value;
+                OnLifeChange?.Invoke(_leftLife, M_TotalLife);
+            }
+        }
+    }
+
+    private int _totalLife;
+
+    public int M_TotalLife
+    {
+        get { return _totalLife; }
+        set
+        {
+            if (_totalLife != value)
+            {
+                _totalLife = value;
+                OnLifeChange?.Invoke(M_LeftLife, _totalLife);
+            }
+        }
+    }
+
+    internal UnityAction<int, int> OnPowerChange;
+
+    private int _leftPower;
+
+    public int M_LeftPower
+    {
+        get { return _leftPower; }
+        set
+        {
+            if (_leftPower != value)
+            {
+                _leftPower = value;
+                OnPowerChange?.Invoke(_leftPower, M_TotalPower);
+            }
+        }
+    }
+
+    private int _totalPower;
+
+    public int M_TotalPower
+    {
+        get { return _totalPower; }
+        set
+        {
+            if (_totalPower != value)
+            {
+                _totalPower = value;
+                OnPowerChange?.Invoke(M_LeftPower, _totalPower);
+            }
+        }
+    }
+
+    #endregion
 }

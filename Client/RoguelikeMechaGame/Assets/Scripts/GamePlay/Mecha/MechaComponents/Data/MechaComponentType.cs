@@ -2,9 +2,8 @@
 {
     Core = 0,
     Block = 1,
-    // Armor = 2,
-    Gun = 3,
-    PowerUp = 4,
-    Engine = 5,
-    Missile = 6,
+    Gun = 2,
+    PowerUp = 3,
+    Engine = 4,
+    Missile = 5,
 }

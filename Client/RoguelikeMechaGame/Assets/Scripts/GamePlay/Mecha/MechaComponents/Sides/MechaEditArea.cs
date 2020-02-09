@@ -7,12 +7,14 @@ public class MechaEditArea : DragArea
     [SerializeField] private MeshRenderer MeshRenderer_Circle;
     [SerializeField] private MeshRenderer MeshRenderer_Grid;
     [SerializeField] private BoxCollider BoxCollider;
+    [SerializeField] private GameObject PivotIndicator;
 
     void Start()
     {
         MeshRenderer_Circle.enabled = false;
         MeshRenderer_Grid.enabled = false;
         BoxCollider.enabled = false;
+        PivotIndicator.SetActive(false);
     }
 
     private bool onMouseDrag_Right = false;
@@ -106,7 +108,7 @@ public class MechaEditArea : DragArea
     {
         pos = Vector3.zero;
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out RaycastHit hit, 200f, GameManager.Instance.LayerMask_DragAreas);
+        Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_DragAreas);
         if (hit.collider)
         {
             if (hit.collider == BoxCollider)
@@ -128,6 +130,7 @@ public class MechaEditArea : DragArea
         MeshRenderer_Circle.enabled = true;
         MeshRenderer_Grid.enabled = true;
         BoxCollider.enabled = true;
+        PivotIndicator.SetActive(true);
     }
 
     public void Hide()
@@ -135,5 +138,6 @@ public class MechaEditArea : DragArea
         MeshRenderer_Circle.enabled = false;
         MeshRenderer_Grid.enabled = false;
         BoxCollider.enabled = false;
+        PivotIndicator.SetActive(false);
     }
 }

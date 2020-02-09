@@ -187,6 +187,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1500443317, guid: 776f29a684a9a412eb9b5171aa4742bd, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 129793
+      objectReference: {fileID: 0}
+    - target: {fileID: 313256838336511451, guid: 776f29a684a9a412eb9b5171aa4742bd,
+        type: 3}
+      propertyPath: GunDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 313256838336511451, guid: 776f29a684a9a412eb9b5171aa4742bd,
+        type: 3}
+      propertyPath: MissileDamage
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 776f29a684a9a412eb9b5171aa4742bd, type: 3}
 --- !u!1001 &4238988585209183668

@@ -10,7 +10,7 @@ public partial class Mecha
 
     public float Speed = 3f;
 
-    void Update_Fighting()
+    void FixedUpdate_Fighting()
     {
         if (GameManager.Instance.GetState() == GameState.Fighting)
         {

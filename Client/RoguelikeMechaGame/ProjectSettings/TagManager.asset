@@ -17,11 +17,11 @@ TagManager:
   - ComponentModel
   - ComponentHitBox
   - DragAreas
-  - 
+  - Mecha
   - Projectile
   - Surroundings
-  - 
-  - 
+  - ItemDropped
+  - ItemDroppedSprite
   - 
   - 
   - 

@@ -10,6 +10,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     [NonSerialized] public int LayerMask_ComponentHitBox;
     [NonSerialized] public int LayerMask_DragAreas;
+    [NonSerialized] public int LayerMask_ItemDropped;
     [SerializeField] private bool ShowDebugPanel;
 
     public Camera MainCamera;
@@ -19,6 +20,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         LayerMask_ComponentHitBox = LayerMask.GetMask("ComponentHitBox");
         LayerMask_DragAreas = LayerMask.GetMask("DragAreas");
+        LayerMask_ItemDropped = LayerMask.GetMask("ItemDropped");
     }
 
     private void Start()

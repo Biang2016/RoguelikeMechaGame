@@ -54,8 +54,7 @@ public class DragManager : MonoSingleton<DragManager>
                 {
                     // Drag items in bag
                     Ray ray = UIManager.Instance.UICamera.ScreenPointToRay(Input.mousePosition);
-                    Physics.Raycast(ray, out RaycastHit hit, 200f, GameManager.Instance.LayerMask_ComponentHitBox);
-                    Debug.DrawRay(ray.origin, ray.direction * 200f, Color.green);
+                    Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ComponentHitBox);
                     if (hit.collider)
                     {
                         BagItem bagItem = hit.collider.gameObject.GetComponentInParent<BagItem>();
@@ -79,7 +78,7 @@ public class DragManager : MonoSingleton<DragManager>
                 if (!CurrentDrag)
                 {
                     Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
-                    Physics.Raycast(ray, out RaycastHit hit, 200f, GameManager.Instance.LayerMask_ComponentHitBox);
+                    Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ComponentHitBox);
                     if (hit.collider)
                     {
                         HitBox hitBox = hit.collider.gameObject.GetComponent<HitBox>();
@@ -97,6 +96,30 @@ public class DragManager : MonoSingleton<DragManager>
                     else
                     {
                         CancelCurrentDrag();
+                    }
+                }
+
+                // Drag items dropped
+                if (!CurrentDrag)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+                        Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ItemDropped);
+                        if (hit.collider)
+                        {
+                            MechaComponentDropSprite mcds = hit.collider.GetComponentInParent<MechaComponentDropSprite>();
+                            if (mcds)
+                            {
+                                MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mcds.MechaComponentInfo.Clone(), BattleManager.Instance.PlayerMecha);
+                                GridPos gp = GridPos.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
+                                mcb.SetGridPosition(gp);
+                                BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
+                                CurrentDrag = mcb.GetComponent<Draggable>();
+                                CurrentDrag.IsOnDrag = true;
+                                mcds.PoolRecycle();
+                            }
+                        }
                     }
                 }
             }

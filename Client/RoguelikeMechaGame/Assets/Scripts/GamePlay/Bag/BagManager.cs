@@ -38,7 +38,7 @@ public class BagManager : MonoSingleton<BagManager>
         foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
         {
             MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up)), null);
+            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up), 0), null);
             mcbs.Add(mcb);
             MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentGrids.MechaComponentGridPositions));
         }
@@ -64,45 +64,61 @@ public class BagManager : MonoSingleton<BagManager>
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetButtonDown("Bag"))
         {
-            if (BagPanel.gameObject.activeInHierarchy)
+            if (!BagPanel.gameObject.activeInHierarchy)
             {
-                BattleManager.Instance.SetAllEnemyShown(true);
-                BagPanel.CloseUIForm();
-                BattleManager.Instance.PlayerMecha.MechaEditArea.Hide();
-                BattleManager.Instance.PlayerMecha.SlotLightsShown = false;
-                BattleManager.Instance.PlayerMecha.GridShown = false;
-                BattleManager.Instance.PlayerMecha.RefreshMechaMatrix(out List<MechaComponentBase> conflictComponents, out List<MechaComponentBase> isolatedComponents);
-
-                foreach (MechaComponentBase mcb in conflictComponents)
-                {
-                    BattleManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
-                    mcb.PoolRecycle();
-                }
-
-                foreach (MechaComponentBase mcb in isolatedComponents)
-                {
-                    BattleManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
-                    mcb.PoolRecycle();
-                }
-
-                BattleManager.Instance.PlayerMecha.ExertComponentBuffs();
-                GameManager.Instance.MainCameraFollow.SetTarget(BattleManager.Instance.PlayerMecha.transform);
-                GameManager.Instance.MainCameraFollow.FOW_Level = 2;
-                GameManager.Instance.SetState(GameState.Fighting);
+                OpenBag();
             }
             else
             {
-                BattleManager.Instance.SetAllEnemyShown(false);
-                UIManager.Instance.ShowUIForms<BagPanel>();
-                BattleManager.Instance.PlayerMecha.RemoveAllComponentBuffs();
-                BattleManager.Instance.PlayerMecha.MechaEditArea.Show();
-                BattleManager.Instance.PlayerMecha.SlotLightsShown = true;
-                GameManager.Instance.MainCameraFollow.FOW_Level = 1;
-                BattleManager.Instance.PlayerMecha.GridShown = true;
-                GameManager.Instance.SetState(GameState.Building);
+                CloseBag();
             }
+        }
+    }
+
+    public void OpenBag()
+    {
+        if (!BagPanel.gameObject.activeInHierarchy)
+        {
+            BattleManager.Instance.SetAllEnemyShown(false);
+            UIManager.Instance.ShowUIForms<BagPanel>();
+            BattleManager.Instance.PlayerMecha.RemoveAllComponentBuffs();
+            BattleManager.Instance.PlayerMecha.MechaEditArea.Show();
+            BattleManager.Instance.PlayerMecha.SlotLightsShown = true;
+            GameManager.Instance.MainCameraFollow.FOW_Level = 1;
+            BattleManager.Instance.PlayerMecha.GridShown = true;
+            GameManager.Instance.SetState(GameState.Building);
+        }
+    }
+
+    public void CloseBag()
+    {
+        if (BagPanel.gameObject.activeInHierarchy)
+        {
+            BattleManager.Instance.SetAllEnemyShown(true);
+            BagPanel.CloseUIForm();
+            BattleManager.Instance.PlayerMecha.MechaEditArea.Hide();
+            BattleManager.Instance.PlayerMecha.SlotLightsShown = false;
+            BattleManager.Instance.PlayerMecha.GridShown = false;
+            BattleManager.Instance.PlayerMecha.RefreshMechaMatrix(out List<MechaComponentBase> conflictComponents, out List<MechaComponentBase> isolatedComponents);
+
+            foreach (MechaComponentBase mcb in conflictComponents)
+            {
+                BattleManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
+                mcb.PoolRecycle();
+            }
+
+            foreach (MechaComponentBase mcb in isolatedComponents)
+            {
+                BattleManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
+                mcb.PoolRecycle();
+            }
+
+            BattleManager.Instance.PlayerMecha.ExertComponentBuffs();
+            GameManager.Instance.MainCameraFollow.SetTarget(BattleManager.Instance.PlayerMecha.transform);
+            GameManager.Instance.MainCameraFollow.FOW_Level = 2;
+            GameManager.Instance.SetState(GameState.Fighting);
         }
     }
 

@@ -17,17 +17,16 @@ public class MechaComponent_Gun : MechaComponent_Controllable_Base, IBuff_PowerU
 
     protected override void ControlPerFrame()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire2"))
         {
-            if (Shooter)
-            {
-                Shooter.Shoot();
-            }
+            Shooter?.ContinuousShoot();
         }
-
-        if (Input.GetMouseButton(1))
+        else
         {
-            Shooter.ContinuousShoot();
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Shooter?.Shoot();
+            }
         }
     }
 

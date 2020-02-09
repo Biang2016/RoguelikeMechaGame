@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public abstract class MechaComponentBase : PoolObject, IDraggable
 {
     internal Mecha ParentMecha = null;
+    [SerializeField] private GameObject Models;
     internal Draggable Draggable;
 
     internal MechaType MechaType => ParentMecha ? ParentMecha.MechaInfo.MechaType : MechaType.None;
@@ -48,8 +50,8 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, GameManager.GridSize);
         RefreshOccupiedGridPositions();
         ParentMecha = parentMecha;
-        _totalLife = 50;
-        _leftLife = 50;
+        M_TotalLife = 50;
+        M_LeftLife = 50;
     }
 
     public void SetGridPosition(GridPos gridPos)
@@ -109,6 +111,11 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         SetGridPosition(newGP);
     }
 
+    public void SetShown(bool shown)
+    {
+        Models.SetActive(shown);
+    }
+
     #region Buffs
 
     internal List<MechaComponentBuff> AttachedBuffs = new List<MechaComponentBuff>();
@@ -140,35 +147,41 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
 
     internal bool IsDead = false;
 
+    internal UnityAction<int, int> OnLifeChange;
+
     private int _leftLife;
 
     public int M_LeftLife
     {
         get { return _leftLife; }
+        set
+        {
+            if (_leftLife != value)
+            {
+                _leftLife = value;
+                OnLifeChange?.Invoke(_leftLife, M_TotalLife);
+            }
+        }
     }
 
     private int _totalLife;
-    private float _dragComponentDragMinDistance;
-    private float _dragComponentDragMaxDistance;
 
     public int M_TotalLife
     {
         get { return _totalLife; }
+        set
+        {
+            if (_totalLife != value)
+            {
+                _totalLife = value;
+                OnLifeChange?.Invoke(M_LeftLife, _totalLife);
+            }
+        }
     }
 
     public bool CheckAlive()
     {
         return M_LeftLife > 0;
-    }
-
-    public void AddLife(int addLifeValue)
-    {
-        _totalLife += addLifeValue;
-        _leftLife += addLifeValue;
-    }
-
-    public void Heal(int healValue)
-    {
     }
 
     private List<FX> lighteningFXs = new List<FX>();
@@ -184,7 +197,7 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
             }
         }
 
-        _leftLife -= damage;
+        M_LeftLife -= damage;
         FXManager.Instance.PlayFX(FX_Type.FX_BlockDamageHit, transform.position + Vector3.up * 0.5f);
 
         if (!IsDead && !CheckAlive())
@@ -200,21 +213,6 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         UnlinkAllBuffs();
         FXManager.Instance.PlayFX(FX_Type.FX_BlockExplode, transform.position);
         ParentMecha.RemoveMechaComponent(this);
-    }
-
-    public void HealAll()
-    {
-        _leftLife = M_TotalLife;
-    }
-
-    public void Change(int change)
-    {
-        _leftLife += change;
-    }
-
-    public void ChangeMaxLife(int change)
-    {
-        _totalLife += change;
     }
 
     #endregion
@@ -241,7 +239,7 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
             }
         }
 
-        if (ParentMecha)
+        if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Self)
         {
             GridPos gridPos = GridPos.GetGridPosByMousePos(ParentMecha.transform, Vector3.up, GameManager.GridSize);
             gridPos.orientation = MechaComponentInfo.GridPos.orientation;

@@ -24,6 +24,11 @@ public partial class Mecha
     public void AddMechaComponent(MechaComponentBase mcb)
     {
         mechaComponents.Add(mcb);
+        if (MechaInfo.MechaType == MechaType.Self && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
+        {
+            RefreshHUDPanelCoreLifeSliderCount?.Invoke();
+        }
+
         mcb.transform.SetParent(MechaComponentContainer);
         mcb.MechaComponentGrids.SetGridShown(GridShown);
         mcb.MechaComponentGrids.SetSlotLightsShown(SlotLightsShown);
@@ -37,18 +42,28 @@ public partial class Mecha
         if (mechaComponents.Contains(mcb))
         {
             mechaComponents.Remove(mcb);
-            RefreshMechaMatrix(out List<MechaComponentBase> _, out List<MechaComponentBase> isolatedComponents);
-            foreach (MechaComponentBase m in isolatedComponents)
+            if (MechaInfo.MechaType == MechaType.Self && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
             {
-                if (MechaInfo.MechaType == MechaType.Enemy)
-                {
-                    MechaComponentDropSprite mcds = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.MechaComponentDropSprite].AllocateGameObject<MechaComponentDropSprite>(BattleManager.Instance.MechaComponentDropSpriteContainer);
-                    mcds.Initialize(m.MechaComponentInfo.MechaComponentType, m.transform.position);
-                }
+                RefreshHUDPanelCoreLifeSliderCount?.Invoke();
+            }
 
-                mechaComponents.Remove(m);
-                mcb.MechaComponentGrids.SetIsolatedIndicatorShown(true);
-                m.PoolRecycle(1f);
+            RefreshMechaMatrix(out List<MechaComponentBase> _, out List<MechaComponentBase> isolatedComponents);
+            if (MechaInfo.MechaType == MechaType.Enemy)
+            {
+                foreach (MechaComponentBase m in isolatedComponents)
+                {
+                    int ran = Random.Range(0, 100);
+                    bool drop = ran < m.MechaComponentInfo.DropProbability;
+                    if (drop)
+                    {
+                        MechaComponentDropSprite mcds = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.MechaComponentDropSprite].AllocateGameObject<MechaComponentDropSprite>(BattleManager.Instance.MechaComponentDropSpriteContainer);
+                        mcds.Initialize(m.MechaComponentInfo, m.transform.position);
+                    }
+
+                    mechaComponents.Remove(m);
+                    mcb.MechaComponentGrids.SetIsolatedIndicatorShown(true);
+                    m.PoolRecycle(1f);
+                }
             }
 
             if (mechaComponents.Count == 0)
