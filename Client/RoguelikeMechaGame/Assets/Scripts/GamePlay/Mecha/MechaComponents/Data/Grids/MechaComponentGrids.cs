@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-[ExecuteInEditMode]
 public class MechaComponentGrids : MonoBehaviour
 {
     private List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
@@ -32,6 +30,34 @@ public class MechaComponentGrids : MonoBehaviour
         foreach (MechaComponentGrid mcg in mechaComponentGrids)
         {
             mcg.SetGridShown(shown);
+        }
+    }
+
+    public void TurnOffAllForbidIndicator()
+    {
+        foreach (MechaComponentGrid grid in mechaComponentGrids)
+        {
+            grid.SetForbidIndicatorShown(false);
+        }
+    }
+
+    public void SetForbidIndicatorShown(bool shown, GridPos gridPos)
+    {
+        foreach (MechaComponentGrid grid in mechaComponentGrids)
+        {
+            GridPos gp = grid.GetGridPos();
+            if (gp.x == gridPos.x && gp.z == gridPos.z)
+            {
+                grid.SetForbidIndicatorShown(shown);
+            }
+        }
+    }
+
+    public void SetIsolatedIndicatorShown(bool shown)
+    {
+        foreach (MechaComponentGrid grid in mechaComponentGrids)
+        {
+            grid.SetIsolatedIndicatorShown(shown);
         }
     }
 }

@@ -60,8 +60,8 @@ public class BagItem : PoolObject, IDraggable
         List<GridPos> newRealPositions = new List<GridPos>();
         foreach (GridPos gp in RealPositionsInBagPanel)
         {
-            GridPos newLocalGrid = GridPos.RotateGridPos(new GridPos(gp.x - GridPos.x, gp.z - GridPos.z), GridPos.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Left);
-            GridPos newRealGrid = new GridPos(newLocalGrid.x + GridPos.x, newLocalGrid.z + GridPos.z, GridPos.Orientation.Up);
+            GridPos newLocalGrid = GridPos.RotateGridPos(gp - GridPos, GridPos.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Left);
+            GridPos newRealGrid = newLocalGrid + GridPos;
             newRealPositions.Add(newRealGrid);
         }
 
@@ -145,12 +145,10 @@ public class BagItem : PoolObject, IDraggable
 
     public void DragComponent_DragOutEffects()
     {
-        MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(MechaComponentInfo.MechaComponentType, new GridPos(0, 0)), GameManager.Instance.PlayerMecha);
-        GridPos gp = GridPos.GetGridPosByMousePos(GameManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
-        GridPos.ApplyGridPosToLocalTrans(gp, mcb.transform, GameManager.GridSize);
-        mcb.MechaComponentInfo.GridPos = gp;
-        mcb.RefreshOccupiedGridPositions();
-        GameManager.Instance.PlayerMecha.AddMechaComponent(mcb);
+        MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(MechaComponentInfo.MechaComponentType, new GridPos(0, 0)), BattleManager.Instance.PlayerMecha);
+        GridPos gp = GridPos.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
+        mcb.SetGridPosition(gp);
+        BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
         DragManager.Instance.CancelCurrentDrag();
         DragManager.Instance.CurrentDrag = mcb.Draggable;
         mcb.Draggable.IsOnDrag = true;

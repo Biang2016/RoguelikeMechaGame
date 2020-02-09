@@ -17,7 +17,7 @@ public class BagItemGridHitBoxes : MonoBehaviour
 
         foreach (GridPos gp in gridPositions)
         {
-            GridPos localGP = new GridPos(gp.x - centerGP.x, gp.z - centerGP.z);
+            GridPos localGP = gp - centerGP;
             BagItemGridHitBox hb = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItemGridHitBox].AllocateGameObject<BagItemGridHitBox>(HitBoxContainer);
             hb.Initialize(new IntRect(localGP.x, -localGP.z, BagManager.Instance.BagItemGridSize, BagManager.Instance.BagItemGridSize));
             bagItemGridHitBoxes.Add(hb);

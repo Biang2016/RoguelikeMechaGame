@@ -79,7 +79,7 @@ public class BagPanel : BaseUIForm
 
     public bool TryAddItem(MechaComponentInfo mci, GridPos.Orientation orientation, List<GridPos> realGridPoses, out BagItem bagItem)
     {
-        bool placeFound = CheckSpaceAvailable(realGridPoses, new GridPos(0, 0));
+        bool placeFound = CheckSpaceAvailable(realGridPoses);
         if (placeFound)
         {
             AddItem(mci, orientation, realGridPoses, out bagItem);
@@ -154,16 +154,16 @@ public class BagPanel : BaseUIForm
         return false;
     }
 
-    public bool CheckSpaceAvailable(List<GridPos> realGridPoses, GridPos offset)
+    public bool CheckSpaceAvailable(List<GridPos> realGridPoses)
     {
         foreach (GridPos gp in realGridPoses)
         {
-            if (gp.x + offset.x < 0 || gp.x + offset.x >= 10 || gp.z + offset.z < 0 || gp.z + offset.z >= 10)
+            if (gp.x < 0 || gp.x >= 10 || gp.z < 0 || gp.z >= 10)
             {
                 return false;
             }
 
-            if (!bagGridMatrix[gp.x + offset.x, gp.z + offset.z].Available)
+            if (!bagGridMatrix[gp.x, gp.z].Available)
             {
                 return false;
             }

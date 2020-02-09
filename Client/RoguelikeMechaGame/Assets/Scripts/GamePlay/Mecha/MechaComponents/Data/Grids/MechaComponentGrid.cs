@@ -5,7 +5,9 @@ using System.Linq;
 
 public class MechaComponentGrid : MonoBehaviour
 {
-    private MeshRenderer GridMeshRenderer;
+    [SerializeField] private MeshRenderer BorderIndicator;
+    [SerializeField] private MeshRenderer ForbidIndicator;
+    [SerializeField] private MeshRenderer IsolatedIndicator;
 
     public SortedDictionary<GridPos.Orientation, MechaComponentSlot> Slots = new SortedDictionary<GridPos.Orientation, MechaComponentSlot>
     {
@@ -25,7 +27,6 @@ public class MechaComponentGrid : MonoBehaviour
 
     void Awake()
     {
-        GridMeshRenderer = GetComponent<MeshRenderer>();
         MechaComponentSlot[] slots = GetComponentsInChildren<MechaComponentSlot>();
         foreach (MechaComponentSlot slot in slots)
         {
@@ -47,7 +48,17 @@ public class MechaComponentGrid : MonoBehaviour
 
     public void SetGridShown(bool shown)
     {
-        GridMeshRenderer.enabled = shown;
+        BorderIndicator.enabled = shown;
+    }
+
+    public void SetForbidIndicatorShown(bool shown)
+    {
+        ForbidIndicator.enabled = shown;
+    }
+
+    public void SetIsolatedIndicatorShown(bool shown)
+    {
+        IsolatedIndicator.enabled = shown;
     }
 
     public GridPos GetGridPos()

@@ -46,7 +46,7 @@ public class MechaEditArea : DragArea
                         float rotateAngle = Vector3.SignedAngle(startVec, endVec, transform.up);
                         if (Mathf.Abs(rotateAngle) > 3)
                         {
-                            GameManager.Instance.PlayerMecha.transform.Rotate(0, rotateAngle, 0);
+                            BattleManager.Instance.PlayerMecha.transform.Rotate(0, rotateAngle, 0);
                             mouseDownPos_Right = pos;
                         }
                     }
@@ -78,11 +78,11 @@ public class MechaEditArea : DragArea
                     if (GetMousePosOnThisArea(out Vector3 pos))
                     {
                         Vector3 delta = pos - mouseDownPos_Left;
-                        Vector3 delta_local = GameManager.Instance.PlayerMecha.transform.InverseTransformVector(delta);
+                        Vector3 delta_local = BattleManager.Instance.PlayerMecha.transform.InverseTransformVector(delta);
                         GridPos delta_local_GP = GridPos.GetGridPosByPoint(delta_local + Vector3.one * GameManager.GridSize / 2f, 1);
                         if (delta_local_GP.x != 0 || delta_local_GP.z != 0)
                         {
-                            GameManager.Instance.PlayerMecha.MoveCenter(delta_local_GP);
+                            BattleManager.Instance.PlayerMecha.MoveCenter(delta_local_GP);
                             mouseDownPos_Left = pos;
                         }
                     }
@@ -109,7 +109,7 @@ public class MechaEditArea : DragArea
         Physics.Raycast(ray, out RaycastHit hit, 200f, GameManager.Instance.LayerMask_DragAreas);
         if (hit.collider)
         {
-            if (hit.collider.gameObject == gameObject)
+            if (hit.collider == BoxCollider)
             {
                 pos = hit.point;
                 return true;

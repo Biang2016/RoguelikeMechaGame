@@ -62,7 +62,7 @@ public struct GridPos
     {
         return (Orientation) (((int) orientation + 1) % 4);
     }
-    
+
     public static GridPos RotateGridPos(GridPos oriGP, Orientation orientation)
     {
         switch (orientation)
@@ -85,7 +85,7 @@ public struct GridPos
             }
         }
 
-        return new GridPos(0, 00, Orientation.Up);
+        return new GridPos(0, 0, Orientation.Up);
     }
 
     public static List<GridPos> TransformOccupiedPositions(GridPos localGridPos, List<GridPos> ori_occupiedPositions)
@@ -95,7 +95,8 @@ public struct GridPos
         foreach (GridPos oriGP in ori_occupiedPositions)
         {
             GridPos temp_rot = RotateGridPos(oriGP, localGridPos.orientation);
-            GridPos final = new GridPos(temp_rot.x + localGridPos.x, temp_rot.z + localGridPos.z, oriGP.orientation);
+            GridPos final = temp_rot + localGridPos;
+            final.orientation = oriGP.orientation;
             resGP.Add(final);
         }
 
@@ -107,6 +108,15 @@ public struct GridPos
         return gp.x == x && gp.z == z && gp.orientation == orientation;
     }
 
+    public static GridPos operator -(GridPos a, GridPos b)
+    {
+        return new GridPos(a.x - b.x, a.z - b.z);
+    }
+
+    public static GridPos operator +(GridPos a, GridPos b)
+    {
+        return new GridPos(a.x + b.x, a.z + b.z);
+    }
 
     public override string ToString()
     {

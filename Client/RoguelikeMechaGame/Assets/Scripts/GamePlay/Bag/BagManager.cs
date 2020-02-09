@@ -68,37 +68,39 @@ public class BagManager : MonoSingleton<BagManager>
         {
             if (BagPanel.gameObject.activeInHierarchy)
             {
+                BattleManager.Instance.SetAllEnemyShown(true);
                 BagPanel.CloseUIForm();
-                GameManager.Instance.PlayerMecha.MechaEditArea.Hide();
-                GameManager.Instance.PlayerMecha.SlotLightsShown = false;
-                GameManager.Instance.PlayerMecha.GridShown = false;
-                GameManager.Instance.PlayerMecha.RefreshMechaMatrix(out List<MechaComponentBase> conflictComponents, out List<MechaComponentBase> isolatedComponents);
+                BattleManager.Instance.PlayerMecha.MechaEditArea.Hide();
+                BattleManager.Instance.PlayerMecha.SlotLightsShown = false;
+                BattleManager.Instance.PlayerMecha.GridShown = false;
+                BattleManager.Instance.PlayerMecha.RefreshMechaMatrix(out List<MechaComponentBase> conflictComponents, out List<MechaComponentBase> isolatedComponents);
 
                 foreach (MechaComponentBase mcb in conflictComponents)
                 {
-                    GameManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
+                    BattleManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
                     mcb.PoolRecycle();
                 }
 
                 foreach (MechaComponentBase mcb in isolatedComponents)
                 {
-                    GameManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
+                    BattleManager.Instance.PlayerMecha.RemoveMechaComponent(mcb);
                     mcb.PoolRecycle();
                 }
 
-                GameManager.Instance.PlayerMecha.ExertComponentBuffs();
-                GameManager.Instance.MainCameraFollow.SetTarget(GameManager.Instance.PlayerMecha.transform);
+                BattleManager.Instance.PlayerMecha.ExertComponentBuffs();
+                GameManager.Instance.MainCameraFollow.SetTarget(BattleManager.Instance.PlayerMecha.transform);
                 GameManager.Instance.MainCameraFollow.FOW_Level = 2;
                 GameManager.Instance.SetState(GameState.Fighting);
             }
             else
             {
+                BattleManager.Instance.SetAllEnemyShown(false);
                 UIManager.Instance.ShowUIForms<BagPanel>();
-                GameManager.Instance.PlayerMecha.RemoveAllComponentBuffs();
-                GameManager.Instance.PlayerMecha.MechaEditArea.Show();
-                GameManager.Instance.PlayerMecha.SlotLightsShown = true;
+                BattleManager.Instance.PlayerMecha.RemoveAllComponentBuffs();
+                BattleManager.Instance.PlayerMecha.MechaEditArea.Show();
+                BattleManager.Instance.PlayerMecha.SlotLightsShown = true;
                 GameManager.Instance.MainCameraFollow.FOW_Level = 1;
-                GameManager.Instance.PlayerMecha.GridShown = true;
+                BattleManager.Instance.PlayerMecha.GridShown = true;
                 GameManager.Instance.SetState(GameState.Building);
             }
         }
@@ -111,7 +113,7 @@ public class BagManager : MonoSingleton<BagManager>
 
     private void Initialize()
     {
-        CurrentBagGridNumber = 40;
+        CurrentBagGridNumber = 100;
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Core, new GridPos(1, 0, GridPos.Orientation.Down)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 0, GridPos.Orientation.Right)), out BagItem _);
         AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 0, GridPos.Orientation.Right)), out BagItem _);

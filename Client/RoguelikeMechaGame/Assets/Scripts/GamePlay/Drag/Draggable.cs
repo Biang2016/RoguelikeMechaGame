@@ -177,7 +177,7 @@ public class Draggable : MonoBehaviour
         Physics.Raycast(ray, out RaycastHit raycast, 200f, GameManager.Instance.LayerMask_DragAreas);
         if (raycast.collider)
         {
-            DragArea da = raycast.collider.gameObject.GetComponent<DragArea>();
+            DragArea da = raycast.collider.gameObject.GetComponentInParent<DragArea>();
             if (da)
             {
                 return da.DragAreaTypes;
@@ -217,6 +217,4 @@ public enum DragAreaTypes
     None = 0,
     Bag = 1,
     MechaEditorArea = 2,
-    MechaInside = 3,
-    DiscardedArea = 4,
 }

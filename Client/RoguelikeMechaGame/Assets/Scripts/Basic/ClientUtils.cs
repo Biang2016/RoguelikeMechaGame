@@ -208,7 +208,7 @@ public static class ClientUtils
 
     public static GridPos ConvertMatrixIndexToGridPos(this GridPos gp_matrix)
     {
-        return new GridPos(gp_matrix.x - ConfigManager.EDIT_AREA_SIZE, gp_matrix.z - ConfigManager.EDIT_AREA_SIZE, gp_matrix.orientation);
+        return new GridPos(gp_matrix.z - ConfigManager.EDIT_AREA_SIZE, gp_matrix.x - ConfigManager.EDIT_AREA_SIZE, gp_matrix.orientation);
     }
 
     public static int CalculateModifiers(this List<Modifier> modifiers, int value)
@@ -232,4 +232,5 @@ public static class ClientUtils
 
         return res;
     }
+
 }

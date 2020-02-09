@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class DebugPanel : BaseUIForm
@@ -28,5 +29,10 @@ public class DebugPanel : BaseUIForm
     public void SetInfiniteComponents(bool infinite)
     {
         BagManager.Instance.InfiniteComponents = infinite;
+    }
+
+    public void AddEnemy()
+    {
+        BattleManager.Instance.AddEnemy();
     }
 }

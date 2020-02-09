@@ -56,6 +56,35 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
     {
         if (!gridPos.Equals(MechaComponentInfo.GridPos))
         {
+            foreach (GridPos gp in MechaComponentInfo.OccupiedGridPositions)
+            {
+                GridPos gp_rot = GridPos.RotateGridPos(gp - MechaComponentInfo.GridPos, (GridPos.Orientation) ((gridPos.orientation - MechaComponentInfo.GridPos.orientation + 4) % 4));
+                GridPos newGP = gp_rot + gridPos;
+                if (newGP.x > ConfigManager.EDIT_AREA_SIZE)
+                {
+                    SetGridPosition(new GridPos(gridPos.x - 1, gridPos.z, gridPos.orientation));
+                    return;
+                }
+
+                if (newGP.x < -ConfigManager.EDIT_AREA_SIZE)
+                {
+                    SetGridPosition(new GridPos(gridPos.x + 1, gridPos.z, gridPos.orientation));
+                    return;
+                }
+
+                if (newGP.z > ConfigManager.EDIT_AREA_SIZE)
+                {
+                    SetGridPosition(new GridPos(gridPos.x, gridPos.z - 1, gridPos.orientation));
+                    return;
+                }
+
+                if (newGP.z < -ConfigManager.EDIT_AREA_SIZE)
+                {
+                    SetGridPosition(new GridPos(gridPos.x, gridPos.z + 1, gridPos.orientation));
+                    return;
+                }
+            }
+
             MechaComponentInfo.GridPos = gridPos;
             GridPos.ApplyGridPosToLocalTrans(gridPos, transform, GameManager.GridSize);
             RefreshOccupiedGridPositions();
@@ -91,18 +120,18 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
 
     public void UnlinkAllBuffs()
     {
-        foreach (MechaComponentBuff buff in AttachedBuffs)
-        {
-            buff.RemoveBuff();
-        }
+        //foreach (MechaComponentBuff buff in AttachedBuffs)
+        //{
+        //    buff.RemoveBuff();
+        //}
 
-        foreach (MechaComponentBuff buff in GiveOutBuffs)
-        {
-            buff.RemoveBuff();
-        }
+        //foreach (MechaComponentBuff buff in GiveOutBuffs)
+        //{
+        //    buff.RemoveBuff();
+        //}
 
-        AttachedBuffs.Clear();
-        GiveOutBuffs.Clear();
+        //AttachedBuffs.Clear();
+        //GiveOutBuffs.Clear();
     }
 
     #endregion
@@ -264,10 +293,6 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
                 break;
             }
             case DragAreaTypes.MechaEditorArea:
-            {
-                break;
-            }
-            case DragAreaTypes.DiscardedArea:
             {
                 break;
             }

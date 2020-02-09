@@ -15,7 +15,7 @@ public class MechaComponent_PowerUp : MechaComponentBase
     public override void ExertEffectOnOtherComponents()
     {
         base.ExertEffectOnOtherComponents();
-        MechaComponentBase mcb = GameManager.Instance.PlayerMecha.GetMechaComponent<IBuff_PowerUp>();
+        MechaComponentBase mcb = BattleManager.Instance.PlayerMecha.GetMechaComponent<IBuff_PowerUp>();
         MechaComponentBuff buff = new MechaComponentBuff(typeof(IBuff_PowerUp), this, mcb, new Modifier(2, Sign.Multiply));
         buff.AddBuff();
     }
