@@ -16,10 +16,16 @@ public class HUDPanel : BaseUIForm
             uiForm_LucencyType: UIFormLucencyTypes.Penetrable);
     }
 
-    [SerializeField] private MechaInfoHUD MechaInfoHUD;
+    [SerializeField] private MechaInfoHUD PlayerMechaInfoHUD;
+    [SerializeField] private MechaInfoHUD EnemyMechaInfoHUD;
 
     public void Initialize()
     {
-        MechaInfoHUD.Initialize(BattleManager.Instance.PlayerMecha);
+        PlayerMechaInfoHUD.Initialize(BattleManager.Instance.PlayerMecha);
+    }
+
+    public void LoadEnemyMech(Mecha enemyMecha)
+    {
+        EnemyMechaInfoHUD.Initialize(enemyMecha);
     }
 }

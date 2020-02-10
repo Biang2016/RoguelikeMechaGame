@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class BattleManager : MonoSingleton<BattleManager>
 {
@@ -27,9 +29,9 @@ public class BattleManager : MonoSingleton<BattleManager>
         EnemyMechas.Clear();
 
         PlayerMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainer);
-        PlayerMecha.Initialize(new MechaInfo(MechaType.Self, new List<MechaComponentInfo>
+        PlayerMecha.Initialize(new MechaInfo("Solar 0", MechaType.Self, new List<MechaComponentInfo>
         {
-            new MechaComponentInfo(MechaComponentType.Core, new GridPos(0, 0, GridPos.Orientation.Up), 0),
+            new MechaComponentInfo(MechaComponentType.Core, new GridPos(0, 0, GridPos.Orientation.Up), 300, 0),
         }));
 
         GameManager.Instance.MainCameraFollow.SetTarget(PlayerMecha.transform);
@@ -43,25 +45,26 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         Mecha EnemyMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainer);
         List<MechaComponentInfo> enemyComponentInfos = new List<MechaComponentInfo>();
-        for (int i = 5; i <= 8; i++)
+        for (int i = -4; i <= 4; i++)
         {
             for (int j = -6; j <= 6; j++)
             {
                 MechaComponentInfo mci;
-                if (i == 7 && j == 0)
+                if (i == 0 && j == 0)
                 {
-                    mci = new MechaComponentInfo(MechaComponentType.Core, new GridPos(i, j, GridPos.Orientation.Up), 0);
+                    mci = new MechaComponentInfo(MechaComponentType.Core, new GridPos(i, j, GridPos.Orientation.Up), 500, 0);
                 }
                 else
                 {
-                    mci = new MechaComponentInfo((MechaComponentType) Random.Range(1, 6), new GridPos(i, j, GridPos.Orientation.Up), 10);
+                    mci = new MechaComponentInfo((MechaComponentType) Random.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), new GridPos(i, j, GridPos.Orientation.Up), 50, 5);
                 }
 
                 enemyComponentInfos.Add(mci);
             }
         }
 
-        EnemyMecha.Initialize(new MechaInfo(MechaType.Enemy, enemyComponentInfos));
+        EnemyMecha.Initialize(new MechaInfo("Junk Mecha", MechaType.Enemy, enemyComponentInfos));
+        EnemyMecha.transform.position = new Vector3(10, 0, 10);
         EnemyMechas.Add(EnemyMecha);
     }
 
@@ -70,6 +73,31 @@ public class BattleManager : MonoSingleton<BattleManager>
         foreach (Mecha em in EnemyMechas)
         {
             em.SetShown(shown);
+        }
+    }
+
+    void Update()
+    {
+        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ComponentHitBox))
+        {
+            if (hit.collider)
+            {
+                HitBox hitBox = hit.collider.GetComponent<HitBox>();
+                Mecha mecha = hitBox?.ParentHitBoxRoot?.MechaComponentBase?.ParentMecha;
+                if (mecha && mecha.MechaInfo.MechaType == MechaType.Enemy)
+                {
+                    HUDPanel.LoadEnemyMech(mecha);
+                }
+            }
+            else
+            {
+                HUDPanel.LoadEnemyMech(null);
+            }
+        }
+        else
+        {
+            HUDPanel.LoadEnemyMech(null);
         }
     }
 }

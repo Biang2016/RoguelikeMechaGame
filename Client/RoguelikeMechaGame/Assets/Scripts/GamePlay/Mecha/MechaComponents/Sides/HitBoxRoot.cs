@@ -13,8 +13,13 @@ public class HitBoxRoot : MonoBehaviour
         HitBoxes = GetComponentsInChildren<HitBox>().ToList();
     }
 
-    public void OnHit(int damage)
+
+    public void SetInBattle(bool inBattle)
     {
-        MechaComponentBase.Damage(damage);
+        foreach (HitBox hitBox in HitBoxes)
+        {
+            hitBox.SetInBattle(inBattle);
+        }
     }
+
 }

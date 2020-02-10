@@ -6,4 +6,7 @@
     PowerUp = 3,
     Engine = 4,
     Missile = 5,
+    JetPack = 6,
+    MirrorShield = 7,
+    Sword = 8,
 }

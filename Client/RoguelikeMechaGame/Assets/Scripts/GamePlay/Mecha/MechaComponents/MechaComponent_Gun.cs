@@ -5,9 +5,10 @@ public class MechaComponent_Gun : MechaComponent_Controllable_Base, IBuff_PowerU
 {
     public Shooter Shooter;
 
-    void Start()
+    protected override void Child_Initialize()
     {
-        Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_ArrowsFly, ConfigManager.Instance.GunSpeed, ConfigManager.Instance.GunDamage)));
+        base.Child_Initialize();
+        if (ParentMecha) Shooter.Initialize(new ShooterInfo(ParentMecha.MechaInfo.MechaType, 0.1f, 50f, new ProjectileInfo(ParentMecha.MechaInfo.MechaType, ProjectileType.Projectile_ArrowsFly, ConfigManager.Instance.GunSpeed, ConfigManager.Instance.GunDamage)));
     }
 
     protected override void Update()

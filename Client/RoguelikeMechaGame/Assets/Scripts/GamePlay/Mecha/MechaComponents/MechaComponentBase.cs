@@ -21,9 +21,9 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
 
     public override void PoolRecycle()
     {
-        base.PoolRecycle();
         ParentMecha = null;
-
+        MechaHitBoxRoot.SetInBattle(false);
+        base.PoolRecycle();
         foreach (FX lighteningFX in lighteningFXs)
         {
             lighteningFX.PoolRecycle();
@@ -50,8 +50,14 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, GameManager.GridSize);
         RefreshOccupiedGridPositions();
         ParentMecha = parentMecha;
-        M_TotalLife = 50;
-        M_LeftLife = 50;
+        M_TotalLife = mechaComponentInfo.TotalLife;
+        M_LeftLife = mechaComponentInfo.TotalLife;
+        MechaHitBoxRoot.SetInBattle(true);
+        Child_Initialize();
+    }
+
+    protected virtual void Child_Initialize()
+    {
     }
 
     public void SetGridPosition(GridPos gridPos)
@@ -156,6 +162,11 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
         get { return _leftLife; }
         set
         {
+            if (value < 0)
+            {
+                value = 0;
+            }
+
             if (_leftLife != value)
             {
                 _leftLife = value;
@@ -212,7 +223,7 @@ public abstract class MechaComponentBase : PoolObject, IDraggable
     {
         UnlinkAllBuffs();
         FXManager.Instance.PlayFX(FX_Type.FX_BlockExplode, transform.position);
-        ParentMecha.RemoveMechaComponent(this);
+        ParentMecha?.RemoveMechaComponent(this);
     }
 
     #endregion

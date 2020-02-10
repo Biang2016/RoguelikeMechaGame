@@ -34,6 +34,9 @@ public partial class Mecha : PoolObject
 
         Initialize_Building(mechaInfo);
         Initialize_Fighting(mechaInfo);
+
+        M_TotalLife = 0;
+        M_LeftLife = 1;
     }
 
     void Update()
@@ -116,7 +119,7 @@ public partial class Mecha : PoolObject
             leftLife += mcb.M_LeftLife;
         }
 
-        M_TotalLife = totalLife;
+        M_TotalLife = Mathf.Max(M_TotalLife, totalLife);
         M_LeftLife = leftLife;
     }
 
@@ -145,6 +148,11 @@ public partial class Mecha : PoolObject
         get { return _leftLife; }
         set
         {
+            if (value < 0)
+            {
+                value = 0;
+            }
+
             if (_leftLife != value)
             {
                 _leftLife = value;

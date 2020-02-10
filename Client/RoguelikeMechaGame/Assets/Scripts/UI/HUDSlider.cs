@@ -29,6 +29,13 @@ public class HUDSlider : PoolObject
     public void SetValue(int left, int total)
     {
         ValueText.text = left + " / " + total;
-        Slider.value = (float) left / total;
+        if (total == 0)
+        {
+            Slider.value = 0f;
+        }
+        else
+        {
+            Slider.value = (float)left / total;
+        }
     }
 }

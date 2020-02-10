@@ -38,7 +38,7 @@ public class BagManager : MonoSingleton<BagManager>
         foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
         {
             MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up), 0), null);
+            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up), 10, 0), null);
             mcbs.Add(mcb);
             MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentGrids.MechaComponentGridPositions));
         }
@@ -130,12 +130,11 @@ public class BagManager : MonoSingleton<BagManager>
     private void Initialize()
     {
         CurrentBagGridNumber = 100;
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Core, new GridPos(1, 0, GridPos.Orientation.Down)), out BagItem _);
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Block, new GridPos(1, 0, GridPos.Orientation.Right)), out BagItem _);
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Gun, new GridPos(1, 0, GridPos.Orientation.Right)), out BagItem _);
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Engine, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.PowerUp, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
-        AddMechaComponentToBag(new MechaComponentInfo(MechaComponentType.Missile, new GridPos(-2, 3, GridPos.Orientation.Right)), out BagItem _);
+        foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
+        {
+            MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
+            AddMechaComponentToBag(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up), 100, 0), out BagItem _);
+        }
     }
 
     public bool AddMechaComponentToBag(MechaComponentInfo mci, out BagItem bagItem)
