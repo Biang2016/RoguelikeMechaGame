@@ -62,8 +62,8 @@ Material:
     - _TilingY: 1
     - _WorldPosition: 0
     m_Colors:
-    - _BaseColor: {r: 0.15712701, g: 0.130874, b: 0.16037738, a: 1}
-    - _BasePatternColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
+    - _BasePatternColor: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
     - _CenterGridColor: {r: 0, g: 0, b: 0, a: 1}
     - _CenterLineColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
     - _EdgeColor: {r: 0, g: 0, b: 0, a: 0}

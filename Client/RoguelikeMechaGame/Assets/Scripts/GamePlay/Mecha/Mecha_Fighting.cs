@@ -46,8 +46,11 @@ public partial class Mecha
     {
         Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
         Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, Vector3.up, transform.position);
+
+        float nearFactor = 3f / (intersect - transform.position).magnitude;
+
         Quaternion rotation = Quaternion.LookRotation(intersect - transform.position);
-        if (Mathf.Abs((rotation.eulerAngles - lastRotationByMouse.eulerAngles).magnitude) > 0.5f)
+        if (Mathf.Abs((rotation.eulerAngles - lastRotationByMouse.eulerAngles).magnitude) > 0.5f * nearFactor)
         {
             lastRotationByMouse = rotation;
             transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
