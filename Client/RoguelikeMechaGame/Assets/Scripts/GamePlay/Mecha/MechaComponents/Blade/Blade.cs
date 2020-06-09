@@ -49,7 +49,7 @@ public class Blade : MonoBehaviour
         if (GameManager.Instance.GetState() == GameState.Fighting)
         {
             HitBox hb = c.gameObject.GetComponent<HitBox>();
-            if (hb && hb.ParentHitBoxRoot.MechaComponentBase.MechaType != BladeInfo.MechaType)
+            if (hb && hb.ParentHitBoxRoot.MechaComponentBase.CheckAlive() && hb.ParentHitBoxRoot.MechaComponentBase.MechaType != BladeInfo.MechaType)
             {
                 HittingHitBoxes.Remove(hb);
                 return;
