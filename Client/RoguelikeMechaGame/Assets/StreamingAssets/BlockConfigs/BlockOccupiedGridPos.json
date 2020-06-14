@@ -1,0 +1,120 @@
+{
+  "Core": [
+    {
+      "x": 0,
+      "z": 0,
+      "orientation": 0
+    }
+  ],
+  "Block": [
+    {
+      "x": 0,
+      "z": 0,
+      "orientation": 0
+    }
+  ],
+  "Gun": [
+    {
+      "x": 0,
+      "z": 0,
+      "orientation": 0
+    },
+    {
+      "x": 0,
+      "z": -1,
+      "orientation": 0
+    },
+    {
+      "x": 0,
+      "z": -2,
+      "orientation": 0
+    }
+  ],
+  "PowerUp": [
+    {
+      "x": 0,
+      "z": 0,
+      "orientation": 0
+    }
+  ],
+  "Engine": [
+    {
+      "x": 0,
+      "z": 1,
+      "orientation": 0
+    },
+    {
+      "x": 0,
+      "z": 0,
+      "orientation": 0
+    }
+  ],
+  "Missile": [
+    {
+      "x": 0,
+      "z": 0,
+      "orientation": 0
+    },
+    {
+      "x": 0,
+      "z": -1,
+      "orientation": 0
+    }
+  ],
+  "JetPack": [
+    {
+      "x": 0,
+      "z": 1,
+      "orientation": 0
+    },
+    {
+      "x": 1,
+      "z": 1,
+      "orientation": 0
+    },
+    {
+      "x": 0,
+      "z": 0,
+      "orientation": 0
+    },
+    {
+      "x": 1,
+      "z": 0,
+      "orientation": 0
+    }
+  ],
+  "MirrorShield": [
+    {
+      "x": 0,
+      "z": 0,
+      "orientation": 0
+    },
+    {
+      "x": 1,
+      "z": 0,
+      "orientation": 0
+    },
+    {
+      "x": -1,
+      "z": 0,
+      "orientation": 0
+    }
+  ],
+  "Sword": [
+    {
+      "x": 0,
+      "z": 0,
+      "orientation": 0
+    },
+    {
+      "x": 0,
+      "z": -1,
+      "orientation": 0
+    },
+    {
+      "x": 0,
+      "z": -2,
+      "orientation": 0
+    }
+  ]
+}
