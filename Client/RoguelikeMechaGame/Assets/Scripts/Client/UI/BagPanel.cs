@@ -75,7 +75,7 @@ namespace Client
         private void OnAddItemSuc(BagItemInfo bii)
         {
             BagItem bagItem = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItem].AllocateGameObject<BagItem>(ItemContainer);
-            bagItem.Initialize(bii, false);
+            bagItem.Initialize(bii);
             bagItems.Add(bii.GUID, bagItem);
         }
 

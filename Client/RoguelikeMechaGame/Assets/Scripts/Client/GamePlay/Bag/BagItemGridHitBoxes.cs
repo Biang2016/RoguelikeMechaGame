@@ -22,7 +22,7 @@ namespace Client
             {
                 GridPos localGP = gp - centerGP;
                 BagItemGridHitBox hb = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItemGridHitBox].AllocateGameObject<BagItemGridHitBox>(HitBoxContainer);
-                hb.Initialize(localGP, new IntRect(localGP.x, -localGP.z, BagManager.Instance.BagItemGridSize, BagManager.Instance.BagItemGridSize));
+                hb.Initialize(localGP, new GridRect(localGP.x, -localGP.z, BagManager.Instance.BagItemGridSize, BagManager.Instance.BagItemGridSize));
                 bagItemGridHitBoxes.Add(hb);
             }
         }

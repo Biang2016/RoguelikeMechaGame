@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameCore;
+using UnityEditor;
 
 namespace Client
 {
+    [ExecuteInEditMode]
     public class MechaComponentGrids : MonoBehaviour
     {
         private List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
 
-        internal List<GridPos> MechaComponentGridPositions = new List<GridPos>();
-
-        public void RefreshOccupiedPositions()
+#if UNITY_EDITOR
+        public List<GridPos> GetOccupiedPositions()
         {
+            List<GridPos> res = new List<GridPos>();
             if (mechaComponentGrids.Count == 0)
             {
                 mechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
@@ -20,9 +22,12 @@ namespace Client
 
             foreach (MechaComponentGrid mcg in mechaComponentGrids)
             {
-                MechaComponentGridPositions.Add(mcg.GetGridPos());
+                res.Add(mcg.GetGridPos());
             }
+
+            return res;
         }
+#endif
 
         public void SetSlotLightsShown(bool shown)
         {

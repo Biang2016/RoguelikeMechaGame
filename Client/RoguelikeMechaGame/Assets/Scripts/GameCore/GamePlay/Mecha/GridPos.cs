@@ -103,12 +103,12 @@ namespace GameCore
 
         public static GridPos operator -(GridPos a, GridPos b)
         {
-            return new GridPos(a.x - b.x, a.z - b.z);
+            return new GridPos(a.x - b.x, a.z - b.z, a.orientation);
         }
 
         public static GridPos operator +(GridPos a, GridPos b)
         {
-            return new GridPos(a.x + b.x, a.z + b.z);
+            return new GridPos(a.x + b.x, a.z + b.z, a.orientation);
         }
 
         public override string ToString()
@@ -120,7 +120,7 @@ namespace GameCore
         {
             return $"({x},{z})";
         }
-
+        
         public enum Orientation
         {
             Up = 0,

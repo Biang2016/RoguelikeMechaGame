@@ -90,7 +90,7 @@ namespace GameCore
 
         private bool FindSpaceToPutRotatedItem(BagItemInfo bii, GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs)
         {
-            IntRect space = bii.Size;
+            GridRect space = bii.Size;
 
             bool heightWidthSwap = orientation == GridPos.Orientation.Right || orientation == GridPos.Orientation.Left;
 

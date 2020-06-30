@@ -9,7 +9,7 @@ namespace Client
 
         public GridPos LocalGridPos;
 
-        public void Initialize(GridPos localGP, IntRect space)
+        public void Initialize(GridPos localGP, GridRect space)
         {
             LocalGridPos = localGP;
             BoxCollider.size = new Vector3(space.width, space.height, 1);

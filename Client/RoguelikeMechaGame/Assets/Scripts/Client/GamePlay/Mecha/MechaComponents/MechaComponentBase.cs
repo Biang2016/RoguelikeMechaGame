@@ -11,6 +11,7 @@ using UnityEngine.Events;
 
 namespace Client
 {
+    [ExecuteInEditMode]
     public abstract class MechaComponentBase : PoolObject, IDraggable
     {
         internal Mecha ParentMecha = null;
@@ -19,6 +20,7 @@ namespace Client
 
         internal MechaType MechaType => ParentMecha ? ParentMecha.MechaInfo.MechaType : MechaType.None;
         public MechaComponentInfo MechaComponentInfo;
+
 
         void Awake()
         {
@@ -67,8 +69,7 @@ namespace Client
                 MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
                 mcb.Initialize_Editor(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up), 10, 0));
                 mcbs.Add(mcb);
-                mcb.MechaComponentGrids.RefreshOccupiedPositions();
-                MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentGrids.MechaComponentGridPositions));
+                MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentGrids.GetOccupiedPositions()));
             }
 
             string json = JsonConvert.SerializeObject(MechaComponentOccupiedGridPosDict, Formatting.Indented);
