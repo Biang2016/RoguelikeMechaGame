@@ -28,7 +28,7 @@ namespace Client
 
             // Resize and rotate to fit the grid
             Vector2 size = new Vector2(bii.Size.width * BagManager.Instance.BagItemGridSize, bii.Size.height * BagManager.Instance.BagItemGridSize);
-            Vector2 size_rev = new Vector2(bii.Size.height * BagManager.Instance.BagItemGridSize, bii.Size.width * BagManager.Instance.BagItemGridSize);
+            Vector2 size_rev = new Vector2(size.y, size.x);
             bool isRotated = GridPos_AfterMove.orientation == GridPos.Orientation.Right || GridPos_AfterMove.orientation == GridPos.Orientation.Left;
 
             ((RectTransform) transform).sizeDelta = size;
