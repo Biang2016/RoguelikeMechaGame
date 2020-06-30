@@ -9,11 +9,9 @@ namespace Client
     {
         private BagItemInfo Data;
 
-        [SerializeField]
-        private Image Image;
+        [SerializeField] private Image Image;
 
-        [SerializeField]
-        private BagItemGridHitBoxes BagItemGridHitBoxes;
+        [SerializeField] private BagItemGridHitBoxes BagItemGridHitBoxes;
 
         private RectTransform RectTransform => (RectTransform) transform;
 
@@ -26,7 +24,7 @@ namespace Client
         public void Initialize(BagItemInfo data, bool moving)
         {
             Data = data;
-            Image.sprite = BagManager.Instance.MechaComponentSpriteDict[Data.MechaComponentInfo.MechaComponentType];
+            Image.sprite = BagManager.Instance.BagItemSpriteDict[data.BagItemContentInfo.BagItemSpriteKey];
             GridPos_Moving = Data.GridPos;
 
             Vector2 size = new Vector2(Data.Size.width * BagManager.Instance.BagItemGridSize, Data.Size.height * BagManager.Instance.BagItemGridSize);
@@ -68,7 +66,7 @@ namespace Client
             Data.GridPos = new GridPos(GridPos_Moving.x, GridPos_Moving.z, newOrientation);
             Data.OccupiedGridPositions = newRealPositions;
 
-            Initialize(Data, true);
+            //Initialize(Data, true);
         }
 
         #region IDraggable
@@ -90,8 +88,8 @@ namespace Client
 
         public void MoveBaseOnHitBox(GridPos hitBoxTargetPos)
         {
-            Debug.Log(hitBoxTargetPos.ToShortString());
             GridPos targetGP = hitBoxTargetPos - LastPickedUpHitBoxGridPos + GridPos_Moving;
+            Debug.Log(targetGP.ToShortString());
             MoveToGridPos(targetGP);
         }
 
@@ -114,7 +112,13 @@ namespace Client
                         OccupiedPositionsInBagPanel_Moving[i] += diff;
                     }
 
+                    LastPickedUpHitBoxGridPos += diff;
+
                     BagItemGridHitBoxes.Initialize(OccupiedPositionsInBagPanel_Moving, GridPos_Moving);
+                }
+                else
+                {
+                    int a = 0;
                 }
             }
         }
@@ -142,6 +146,7 @@ namespace Client
                 bool suc = BagManager.Instance.BagInfo.CheckSpaceAvailable(OccupiedPositionsInBagPanel_Moving, GridPos.Zero);
                 if (suc)
                 {
+                    BagManager.Instance.BagInfo.MoveItem(Data.OccupiedGridPositions, OccupiedPositionsInBagPanel_Moving);
                     Data.GridPos = GridPos_Moving;
                     Data.OccupiedGridPositions = CloneVariantUtils.List(OccupiedPositionsInBagPanel_Moving);
                 }
@@ -160,15 +165,23 @@ namespace Client
 
         public void DragComponent_DragOutEffects()
         {
-            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(Data.MechaComponentInfo.Clone(), BattleManager.Instance.PlayerMecha);
-            GridPos gp = ClientUtils.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
-            mcb.SetGridPosition(gp);
-            BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
-            DragManager.Instance.CancelCurrentDrag();
-            DragManager.Instance.CurrentDrag = mcb.Draggable;
-            mcb.Draggable.SetOnDrag(true, null);
-            BagManager.Instance.BagInfo.RemoveItem(Data);
-            PoolRecycle();
+            // todo 应该做成分治的，没有很好的办法剥离出去，暂时这样
+            switch (Data.BagItemContentInfo)
+            {
+                case MechaComponentInfo mechaComponentInfo:
+                {
+                    MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mechaComponentInfo.Clone(), BattleManager.Instance.PlayerMecha);
+                    GridPos gp = ClientUtils.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
+                    mcb.SetGridPosition(gp);
+                    BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
+                    DragManager.Instance.CancelCurrentDrag();
+                    DragManager.Instance.CurrentDrag = mcb.Draggable;
+                    mcb.Draggable.SetOnDrag(true, null);
+                    BagManager.Instance.BagInfo.RemoveItem(Data);
+                    PoolRecycle();
+                    break;
+                }
+            }
         }
 
         #endregion

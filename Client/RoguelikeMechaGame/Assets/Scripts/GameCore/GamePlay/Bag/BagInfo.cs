@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 namespace GameCore
@@ -143,12 +144,14 @@ namespace GameCore
         {
             foreach (GridPos gp in realGridPoses)
             {
-                if (gp.x + offset.x < 0 || gp.x + offset.x >= 10 || gp.z + offset.z < 0 || gp.z + offset.z >= 10)
+                GridPos addedGP = gp + offset;
+
+                if (addedGP.x < 0 || addedGP.x >= 10 || addedGP.z < 0 || addedGP.z >= 10)
                 {
                     return false;
                 }
 
-                if (!BagGridMatrix[gp.x, gp.z].Available)
+                if (!BagGridMatrix[addedGP.x, addedGP.z].Available)
                 {
                     return false;
                 }
@@ -168,6 +171,21 @@ namespace GameCore
             OnAddItemSucAction?.Invoke(bii);
             foreach (GridPos gp in realOccupiedGPs)
             {
+                BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Unavailable;
+            }
+        }
+
+        public void MoveItem(List<GridPos> oldOccupiedGPs, List<GridPos> newOccupiedGPs)
+        {
+            foreach (GridPos gp in oldOccupiedGPs)
+            {
+                Assert.AreEqual(BagGridMatrix[gp.x, gp.z].State, BagGridInfo.States.TempUnavailable);
+                BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Available;
+            }
+
+            foreach (GridPos gp in newOccupiedGPs)
+            {
+                Assert.AreEqual(BagGridMatrix[gp.x, gp.z].State, BagGridInfo.States.Available);
                 BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Unavailable;
             }
         }

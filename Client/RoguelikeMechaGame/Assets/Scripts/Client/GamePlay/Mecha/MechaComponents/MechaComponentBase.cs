@@ -281,7 +281,7 @@ namespace Client
         public bool ReturnToBag(bool cancelDrag, bool dragTheItem)
         {
             BagItemInfo bii = new BagItemInfo(MechaComponentInfo);
-            bii.MechaComponentInfo = MechaComponentInfo;
+            bii.BagItemContentInfo = MechaComponentInfo;
             bool suc = BagManager.Instance.BagInfo.TryAddItem(bii);
             if (suc)
             {

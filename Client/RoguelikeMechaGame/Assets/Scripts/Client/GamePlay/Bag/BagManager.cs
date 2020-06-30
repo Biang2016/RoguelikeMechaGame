@@ -19,7 +19,7 @@ namespace Client
             set { BagInfo.InfiniteComponents = value; }
         }
 
-        public Dictionary<MechaComponentType, Sprite> MechaComponentSpriteDict = new Dictionary<MechaComponentType, Sprite>();
+        public Dictionary<string, Sprite> BagItemSpriteDict = new Dictionary<string, Sprite>();
 
         void Awake()
         {
@@ -55,7 +55,7 @@ namespace Client
         {
             foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
             {
-                MechaComponentType mcType = (MechaComponentType)Enum.Parse(typeof(MechaComponentType), s);
+                MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
                 BagItemInfo bii = new BagItemInfo(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up), 100, 0));
                 BagInfo.TryAddItem(bii);
             }
@@ -70,7 +70,7 @@ namespace Client
             {
                 MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
                 Sprite sprite = Resources.Load<Sprite>("BlockItemPics/" + s);
-                MechaComponentSpriteDict.Add(mcType, sprite);
+                BagItemSpriteDict.Add(typeof(MechaComponentType).FullName + "." + mcType, sprite);
             }
         }
 

@@ -11,6 +11,16 @@ namespace GameCore
             None,
         }
 
+        public static T TryGetClone<T>(T src)
+        {
+            if (src is IClone<T> t_Clone)
+            {
+                return t_Clone.Clone();
+            }
+
+            return src;
+        }
+
         private static T GetOperationResult<T>(T src, OperationType operationType = OperationType.Clone)
         {
             T res_t = src;

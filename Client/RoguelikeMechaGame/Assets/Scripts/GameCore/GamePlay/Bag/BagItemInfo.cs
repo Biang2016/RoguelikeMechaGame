@@ -9,20 +9,20 @@ namespace GameCore
         private static int guidGenerator;
         public int GUID;
 
-        public MechaComponentInfo MechaComponentInfo;
+        public IBagItemContentInfo BagItemContentInfo;
 
         public GridPos GridPos;
         public List<GridPos> OccupiedGridPositions = new List<GridPos>();
 
         public IntRect Size;
 
-        public BagItemInfo(MechaComponentInfo mechaComponentInfo)
+        public BagItemInfo(IBagItemContentInfo bagItemContentInfo)
         {
             GUID = guidGenerator;
             guidGenerator++;
 
-            MechaComponentInfo = mechaComponentInfo;
-            OccupiedGridPositions = MechaComponentInfo.OccupiedGridPositions;
+            BagItemContentInfo = bagItemContentInfo;
+            OccupiedGridPositions = CloneVariantUtils.List(BagItemContentInfo.OriginalOccupiedGridPositions);
             RefreshSize();
         }
 
@@ -60,7 +60,7 @@ namespace GameCore
 
         public BagItemInfo Clone()
         {
-            BagItemInfo bii = new BagItemInfo(MechaComponentInfo.Clone());
+            BagItemInfo bii = new BagItemInfo(CloneVariantUtils.TryGetClone(BagItemContentInfo));
             bii.GridPos = GridPos;
             bii.Size = Size;
             bii.OccupiedGridPositions = CloneVariantUtils.List(OccupiedGridPositions);

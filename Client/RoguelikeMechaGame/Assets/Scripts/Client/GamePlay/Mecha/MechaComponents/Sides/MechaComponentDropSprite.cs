@@ -13,7 +13,7 @@ namespace Client
         public void Initialize(MechaComponentInfo mechaComponentInfo, Vector3 position)
         {
             MechaComponentInfo = mechaComponentInfo.Clone();
-            Sprite sprite = BagManager.Instance.MechaComponentSpriteDict[mechaComponentInfo.MechaComponentType];
+            Sprite sprite = BagManager.Instance.BagItemSpriteDict[mechaComponentInfo.BagItemSpriteKey];
             SpriteRenderer.sprite = sprite;
             transform.position = position;
         }

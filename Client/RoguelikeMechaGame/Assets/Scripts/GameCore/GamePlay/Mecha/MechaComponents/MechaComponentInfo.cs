@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace GameCore
 {
     [Serializable]
-    public class MechaComponentInfo
+    public class MechaComponentInfo : IBagItemContentInfo
     {
         public MechaComponentType MechaComponentType;
         public GridPos GridPos;
         public List<GridPos> OccupiedGridPositions = new List<GridPos>();
+
         public int DropProbability;
         public int TotalLife;
+
+        public List<GridPos> OriginalOccupiedGridPositions => OccupiedGridPositions;
+
+        public string BagItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
 
         public MechaComponentInfo(MechaComponentType mechaComponentType, GridPos gridPos, int totalLife, int dropProbability)
         {

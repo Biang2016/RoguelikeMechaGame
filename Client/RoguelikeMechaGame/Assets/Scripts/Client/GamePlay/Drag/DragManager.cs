@@ -18,8 +18,7 @@ namespace Client
         internal MechaComponentBase CurrentDrag_MechaComponentBase;
         internal BagItem CurrentDrag_BagItem;
 
-        [SerializeField]
-        private Draggable currentDrag;
+        [SerializeField] private Draggable currentDrag;
 
         internal Draggable CurrentDrag
         {
@@ -35,8 +34,7 @@ namespace Client
             }
         }
 
-        [NonSerialized]
-        public bool ForbidDrag = false;
+        [NonSerialized] public bool ForbidDrag = false;
 
         void Update()
         {
