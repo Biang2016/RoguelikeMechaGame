@@ -77,6 +77,8 @@ namespace Client
 
         private void OnRemoveItemSuc(BagItemInfo bii)
         {
+            BagItem bi = bagItems[bii.GUID];
+            bi.PoolRecycle();
             bagItems.Remove(bii.GUID);
         }
 

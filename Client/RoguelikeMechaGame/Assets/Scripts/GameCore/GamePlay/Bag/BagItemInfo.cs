@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace GameCore
 {
     [Serializable]
-    public class BagItemInfo
+    public class BagItemInfo : IClone<BagItemInfo>
     {
         private static int guidGenerator;
         public int GUID;
@@ -24,7 +24,6 @@ namespace GameCore
             MechaComponentInfo = mechaComponentInfo;
             OccupiedGridPositions = MechaComponentInfo.OccupiedGridPositions;
             RefreshSize();
-
         }
 
         public void RefreshSize()
@@ -57,6 +56,15 @@ namespace GameCore
             }
 
             Size = new IntRect(X_min, Z_min, X_max - X_min + 1, Z_max - Z_min + 1);
+        }
+
+        public BagItemInfo Clone()
+        {
+            BagItemInfo bii = new BagItemInfo(MechaComponentInfo.Clone());
+            bii.GridPos = GridPos;
+            bii.Size = Size;
+            bii.OccupiedGridPositions = CloneVariantUtils.List(OccupiedGridPositions);
+            return bii;
         }
     }
 }

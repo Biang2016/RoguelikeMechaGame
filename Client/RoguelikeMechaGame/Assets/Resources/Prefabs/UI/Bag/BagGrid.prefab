@@ -89,11 +89,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Image: {fileID: 3215156939143732101}
   BanSign: {fileID: 22693470385527272}
-  LockedColor: {r: 0, g: 0, b: 0, a: 0}
-  AvailableColor: {r: 0.34117648, g: 0.34117648, b: 0.34117648, a: 1}
+  LockedColor: {r: 0.9747987, g: 0, b: 1, a: 0.35686275}
+  AvailableColor: {r: 0, g: 1, b: 0.098634005, a: 1}
   UnavailableColor: {r: 0.34117648, g: 0.34117648, b: 0.34117648, a: 0.5176471}
   TempUnavailableColor: {r: 1, g: 0.9767335, b: 0.0047169924, a: 0.56078434}
-  PreviewColor: {r: 0, g: 0, b: 0, a: 0}
+  PreviewColor: {r: 0.24533129, g: 0, b: 1, a: 1}
 --- !u!1 &5090564379201125126
 GameObject:
   m_ObjectHideFlags: 0

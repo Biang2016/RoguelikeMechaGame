@@ -45,7 +45,7 @@ namespace Client
             }
 
             ((RectTransform) transform).anchoredPosition = new Vector2(GridPos_AfterMove.x * BagManager.Instance.BagItemGridSize, -GridPos_AfterMove.z * BagManager.Instance.BagItemGridSize);
-            OccupiedPositionsInBagPanel_AfterMove = bii.OccupiedGridPositions;
+            OccupiedPositionsInBagPanel_AfterMove = CloneVariantUtils.List(bii.OccupiedGridPositions);
             if (!moving)
             {
                 OccupiedPositionsInBagPanel = CloneVariantUtils.List(OccupiedPositionsInBagPanel_AfterMove);
@@ -77,7 +77,7 @@ namespace Client
 
         public void DragComponent_OnMouseDown()
         {
-            BagManager.Instance.BagInfo.RemoveItem(Data, true);
+            BagManager.Instance.BagInfo.PickUpItem(Data);
         }
 
         public void DragComponent_OnMousePressed(DragAreaTypes dragAreaTypes)
@@ -123,13 +123,14 @@ namespace Client
 
         public void DragComponent_OnMouseUp(DragAreaTypes dragAreaTypes)
         {
-            BagManager.Instance.BagInfo.RemoveItem(Data, false);
+            Data.GridPos = GridPos_AfterMove;
+            BagManager.Instance.BagInfo.RemoveItem(Data);
             if (dragAreaTypes == DragAreaTypes.Bag)
             {
-                bool suc = BagManager.Instance.BagInfo.TryAddItem(Data, GridPos_AfterMove.orientation, OccupiedPositionsInBagPanel_AfterMove);
+                bool suc = BagManager.Instance.BagInfo.TryAddItem(Data.Clone(), GridPos_AfterMove.orientation, CloneVariantUtils.List(OccupiedPositionsInBagPanel_AfterMove));
                 if (!suc)
                 {
-                    BagManager.Instance.BagInfo.TryAddItem(Data, Data.GridPos.orientation, OccupiedPositionsInBagPanel);
+                    BagManager.Instance.BagInfo.TryAddItem(Data.Clone(), Data.GridPos.orientation, CloneVariantUtils.List(OccupiedPositionsInBagPanel));
                 }
             }
         }
@@ -146,20 +147,15 @@ namespace Client
 
         public void DragComponent_DragOutEffects()
         {
-            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(new MechaComponentInfo(Data.MechaComponentInfo.MechaComponentType, new GridPos(0, 0), Data.MechaComponentInfo.TotalLife, 0), BattleManager.Instance.PlayerMecha);
+            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(Data.MechaComponentInfo.Clone(), BattleManager.Instance.PlayerMecha);
             GridPos gp = ClientUtils.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
             mcb.SetGridPosition(gp);
             BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
             DragManager.Instance.CancelCurrentDrag();
             DragManager.Instance.CurrentDrag = mcb.Draggable;
             mcb.Draggable.IsOnDrag = true;
-            BagManager.Instance.BagInfo.RemoveItem(Data, false);
+            BagManager.Instance.BagInfo.RemoveItem(Data);
             PoolRecycle();
-
-            if (BagManager.Instance.InfiniteComponents)
-            {
-                BagManager.Instance.BagInfo.TryAddItem(Data);
-            }
         }
 
         #endregion

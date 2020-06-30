@@ -23,17 +23,8 @@ namespace GameCore
             {
                 if (bagGridNumber != value)
                 {
-                    int count = 0;
-                    for (int i = 0; i < 10; i++)
-                    {
-                        for (int j = 0; j < 10; j++)
-                        {
-                            count++;
-                            BagGridMatrix[j, i].State = count > value ? BagGridInfo.States.Locked : BagGridInfo.States.Available;
-                        }
-                    }
-
                     bagGridNumber = value;
+                    RefreshBagGrid();
                 }
             }
         }
@@ -50,7 +41,20 @@ namespace GameCore
                 }
             }
 
-            BagGridNumber = bagGridNumber;
+            this.bagGridNumber = bagGridNumber;
+        }
+
+        public void RefreshBagGrid()
+        {
+            int count = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    count++;
+                    BagGridMatrix[j, i].State = count > bagGridNumber ? BagGridInfo.States.Locked : BagGridInfo.States.Available;
+                }
+            }
         }
 
         public bool TryAddItem(BagItemInfo bii)
@@ -105,16 +109,16 @@ namespace GameCore
             int zStart_temp = temp_rot.z;
 
             realOccupiedGPs = new List<GridPos>();
-            for (int i = 0 - zStart_temp; i <= 10 - (heightWidthSwap ? space.width : space.height) - zStart_temp; i++)
+            for (int z = 0 - zStart_temp; z <= 10 - (heightWidthSwap ? space.width : space.height) - zStart_temp; z++)
             {
-                for (int j = 0 - xStart_temp; j <= 10 - (heightWidthSwap ? space.height : space.width) - xStart_temp; j++)
+                for (int x = 0 - xStart_temp; x <= 10 - (heightWidthSwap ? space.height : space.width) - xStart_temp; x++)
                 {
                     bool canHold = true;
                     foreach (GridPos gp in bii.OccupiedGridPositions)
                     {
                         GridPos rot_gp = GridPos.RotateGridPos(gp, orientation);
-                        int col = j + rot_gp.x;
-                        int row = i + rot_gp.z;
+                        int col = x + rot_gp.x;
+                        int row = z + rot_gp.z;
                         if (col < 0 || col >= 10 || row < 0 || col >= 10)
                         {
                             canHold = false;
@@ -132,8 +136,8 @@ namespace GameCore
 
                     if (canHold)
                     {
-                        bii.GridPos.x = j;
-                        bii.GridPos.z = i;
+                        bii.GridPos.x = x + space.x;
+                        bii.GridPos.z = z + space.z;
                         bii.GridPos.orientation = orientation;
                         return true;
                     }
@@ -199,19 +203,27 @@ namespace GameCore
 
         public UnityAction<BagItemInfo> OnRemoveItemSucAction;
 
-        public void RemoveItem(BagItemInfo bii, bool temporary)
+        public void RemoveItem(BagItemInfo bii)
         {
             if (bagItemInfos.Contains(bii))
             {
                 foreach (GridPos gp in bii.OccupiedGridPositions)
                 {
-                    BagGridMatrix[gp.x, gp.z].State = temporary ? BagGridInfo.States.TempUnavailable : BagGridInfo.States.Available;
+                    BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Available;
                 }
 
-                if (!temporary)
+                bagItemInfos.Remove(bii);
+                OnRemoveItemSucAction?.Invoke(bii);
+            }
+        }
+
+        public void PickUpItem(BagItemInfo bii)
+        {
+            if (bagItemInfos.Contains(bii))
+            {
+                foreach (GridPos gp in bii.OccupiedGridPositions)
                 {
-                    bagItemInfos.Remove(bii);
-                    OnRemoveItemSucAction?.Invoke(bii);
+                    BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.TempUnavailable;
                 }
             }
         }

@@ -32,6 +32,7 @@ namespace Client
             BagPanel.CloseUIForm();
             BagInfo = new BagInfo(95);
             BagPanel.Init(BagInfo);
+            BagInfo.RefreshBagGrid();
         }
 
         void Update()
@@ -53,7 +54,7 @@ namespace Client
         {
             foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
             {
-                MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
+                MechaComponentType mcType = (MechaComponentType)Enum.Parse(typeof(MechaComponentType), s);
                 BagItemInfo bii = new BagItemInfo(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up), 100, 0));
                 BagInfo.TryAddItem(bii);
             }
