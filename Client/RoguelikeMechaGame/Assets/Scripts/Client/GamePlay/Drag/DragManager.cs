@@ -18,7 +18,8 @@ namespace Client
         internal MechaComponentBase CurrentDrag_MechaComponentBase;
         internal BagItem CurrentDrag_BagItem;
 
-        [SerializeField] private Draggable currentDrag;
+        [SerializeField]
+        private Draggable currentDrag;
 
         internal Draggable CurrentDrag
         {
@@ -34,7 +35,8 @@ namespace Client
             }
         }
 
-        [NonSerialized] public bool ForbidDrag = false;
+        [NonSerialized]
+        public bool ForbidDrag = false;
 
         void Update()
         {
@@ -64,7 +66,7 @@ namespace Client
                             if (bagItem)
                             {
                                 CurrentDrag = bagItem.gameObject.GetComponent<Draggable>();
-                                CurrentDrag.IsOnDrag = true;
+                                CurrentDrag.SetOnDrag(true, hit.collider);
                             }
                             else
                             {
@@ -89,7 +91,7 @@ namespace Client
                             {
                                 CurrentDrag_MechaComponentBase = hitBox.ParentHitBoxRoot.MechaComponentBase;
                                 CurrentDrag = CurrentDrag_MechaComponentBase.gameObject.GetComponent<Draggable>();
-                                CurrentDrag.IsOnDrag = true;
+                                CurrentDrag.SetOnDrag(true, hit.collider);
                             }
                             else
                             {
@@ -119,7 +121,7 @@ namespace Client
                                     mcb.SetGridPosition(gp);
                                     BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
                                     CurrentDrag = mcb.GetComponent<Draggable>();
-                                    CurrentDrag.IsOnDrag = true;
+                                    CurrentDrag.SetOnDrag(true, hit.collider);
                                     mcds.PoolRecycle();
                                 }
                             }
@@ -138,7 +140,7 @@ namespace Client
         {
             if (CurrentDrag)
             {
-                CurrentDrag.IsOnDrag = false;
+                CurrentDrag.SetOnDrag(false, null);
                 CurrentDrag = null;
             }
         }

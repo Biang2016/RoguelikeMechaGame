@@ -39,8 +39,8 @@ namespace Client
 
         private void StartGame()
         {
-            BattleManager.Instance.StartGame();
             BagManager.Instance.Initialize();
+            BattleManager.Instance.StartGame();
         }
 
         void Update()

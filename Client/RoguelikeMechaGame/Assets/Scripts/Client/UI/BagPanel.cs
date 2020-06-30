@@ -11,8 +11,12 @@ namespace Client
     {
         private BagInfo Data;
 
-        [SerializeField] private GridLayoutGroup ItemContainerGridLayout;
-        [SerializeField] private Transform GridContainer;
+        [SerializeField]
+        private GridLayoutGroup ItemContainerGridLayout;
+
+        [SerializeField]
+        private Transform GridContainer;
+
         public Transform ItemContainer;
 
         private BagGrid[,] bagGridMatrix = new BagGrid[10, 10]; // column, row
@@ -48,13 +52,13 @@ namespace Client
         public void Init(BagInfo bagInfo)
         {
             Data = bagInfo;
-            for (int i = 0; i < 10; i++)
+            for (int z = 0; z < 10; z++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int x = 0; x < 10; x++)
                 {
                     BagGrid big = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagGrid].AllocateGameObject<BagGrid>(GridContainer);
-                    big.Init(bagInfo.BagGridMatrix[j, i]);
-                    bagGridMatrix[j, i] = big;
+                    big.Init(bagInfo.BagGridMatrix[x, z], new GridPos(x, z));
+                    bagGridMatrix[x, z] = big;
                 }
             }
 

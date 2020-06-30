@@ -9,65 +9,63 @@ namespace Client
     {
         private BagItemInfo Data;
 
-        [SerializeField] private Image Image;
-        [SerializeField] private BagItemGridHitBoxes BagItemGridHitBoxes;
+        [SerializeField]
+        private Image Image;
 
-        public List<GridPos> OccupiedPositionsInBagPanel;
-        public GridPos GridPos_AfterMove;
-        public List<GridPos> OccupiedPositionsInBagPanel_AfterMove;
+        [SerializeField]
+        private BagItemGridHitBoxes BagItemGridHitBoxes;
+
+        private RectTransform RectTransform => (RectTransform) transform;
+
+        internal GridPos GridPos_Moving;
+        public List<GridPos> OccupiedPositionsInBagPanel_Moving;
 
         private float _dragComponentDragMinDistance;
         private float _dragComponentDragMaxDistance;
 
-        public void Initialize(BagItemInfo bii, bool moving)
+        public void Initialize(BagItemInfo data, bool moving)
         {
-            Data = bii;
+            Data = data;
             Image.sprite = BagManager.Instance.MechaComponentSpriteDict[Data.MechaComponentInfo.MechaComponentType];
-            GridPos_AfterMove = bii.GridPos;
-            if (!moving) Data.GridPos = bii.GridPos;
+            GridPos_Moving = Data.GridPos;
 
-            // Resize and rotate to fit the grid
-            Vector2 size = new Vector2(bii.Size.width * BagManager.Instance.BagItemGridSize, bii.Size.height * BagManager.Instance.BagItemGridSize);
-            Vector2 size_rev = new Vector2(size.y, size.x);
-            bool isRotated = GridPos_AfterMove.orientation == GridPos.Orientation.Right || GridPos_AfterMove.orientation == GridPos.Orientation.Left;
+            Vector2 size = new Vector2(Data.Size.width * BagManager.Instance.BagItemGridSize, Data.Size.height * BagManager.Instance.BagItemGridSize);
+            Vector2 sizeRev = new Vector2(size.y, size.x);
+            bool isRotated = GridPos_Moving.orientation == GridPos.Orientation.Right || GridPos_Moving.orientation == GridPos.Orientation.Left;
 
-            ((RectTransform) transform).sizeDelta = size;
-            BagItemGridHitBoxes.Initialize(bii.OccupiedGridPositions, bii.GridPos);
+            BagItemGridHitBoxes.Initialize(Data.OccupiedGridPositions, Data.GridPos);
+            Image.rectTransform.sizeDelta = size;
             if (isRotated)
             {
-                Image.rectTransform.sizeDelta = size_rev;
-                Image.transform.rotation = Quaternion.Euler(0, 0, 90f);
+                RectTransform.sizeDelta = sizeRev;
+                RectTransform.rotation = Quaternion.Euler(0, 0, 90f);
             }
             else
             {
-                Image.rectTransform.sizeDelta = size;
-                Image.transform.rotation = Quaternion.Euler(0, 0, 0f);
+                RectTransform.sizeDelta = size;
+                RectTransform.rotation = Quaternion.Euler(0, 0, 0f);
             }
 
-            ((RectTransform) transform).anchoredPosition = new Vector2(GridPos_AfterMove.x * BagManager.Instance.BagItemGridSize, -GridPos_AfterMove.z * BagManager.Instance.BagItemGridSize);
-            OccupiedPositionsInBagPanel_AfterMove = CloneVariantUtils.List(bii.OccupiedGridPositions);
-            if (!moving)
-            {
-                OccupiedPositionsInBagPanel = CloneVariantUtils.List(OccupiedPositionsInBagPanel_AfterMove);
-            }
+            RectTransform.anchoredPosition = new Vector2(GridPos_Moving.x * BagManager.Instance.BagItemGridSize, -GridPos_Moving.z * BagManager.Instance.BagItemGridSize);
+            OccupiedPositionsInBagPanel_Moving = CloneVariantUtils.List(Data.OccupiedGridPositions);
         }
 
         private void Rotate()
         {
-            GridPos.Orientation newOrientation = GridPos_AfterMove.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Up;
+            GridPos.Orientation newOrientation = GridPos_Moving.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Up;
 
             List<GridPos> newRealPositions = new List<GridPos>();
-            foreach (GridPos gp in OccupiedPositionsInBagPanel_AfterMove)
+            foreach (GridPos gp in OccupiedPositionsInBagPanel_Moving)
             {
-                GridPos newLocalGrid = GridPos.RotateGridPos(gp - GridPos_AfterMove, GridPos_AfterMove.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Left);
-                GridPos newRealGrid = newLocalGrid + GridPos_AfterMove;
+                GridPos newLocalGrid = GridPos.RotateGridPos(gp - GridPos_Moving, GridPos_Moving.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Left);
+                GridPos newRealGrid = newLocalGrid + GridPos_Moving;
                 newRealPositions.Add(newRealGrid);
             }
 
-            OccupiedPositionsInBagPanel_AfterMove.Clear();
-            OccupiedPositionsInBagPanel_AfterMove = newRealPositions;
+            OccupiedPositionsInBagPanel_Moving.Clear();
+            OccupiedPositionsInBagPanel_Moving = newRealPositions;
 
-            Data.GridPos = new GridPos(GridPos_AfterMove.x, GridPos_AfterMove.z, newOrientation);
+            Data.GridPos = new GridPos(GridPos_Moving.x, GridPos_Moving.z, newOrientation);
             Data.OccupiedGridPositions = newRealPositions;
 
             Initialize(Data, true);
@@ -75,9 +73,50 @@ namespace Client
 
         #region IDraggable
 
-        public void DragComponent_OnMouseDown()
+        public GridPos LastPickedUpHitBoxGridPos;
+
+        public void DragComponent_OnMouseDown(Collider collider)
         {
-            BagManager.Instance.BagInfo.PickUpItem(Data);
+            foreach (BagItemGridHitBox hitBox in BagItemGridHitBoxes.bagItemGridHitBoxes)
+            {
+                if (collider == hitBox.BoxCollider)
+                {
+                    LastPickedUpHitBoxGridPos = hitBox.LocalGridPos + GridPos_Moving;
+                    BagManager.Instance.BagInfo.PickUpItem(Data);
+                    return;
+                }
+            }
+        }
+
+        public void MoveBaseOnHitBox(GridPos hitBoxTargetPos)
+        {
+            Debug.Log(hitBoxTargetPos.ToShortString());
+            GridPos targetGP = hitBoxTargetPos - LastPickedUpHitBoxGridPos + GridPos_Moving;
+            MoveToGridPos(targetGP);
+        }
+
+        private void MoveToGridPos(GridPos targetGP)
+        {
+            GridPos diff = targetGP - GridPos_Moving;
+            if (diff.x != 0 || diff.z != 0)
+            {
+                bool suc = BagManager.Instance.BagInfo.CheckSpaceAvailable(DragManager.Instance.CurrentDrag_BagItem.OccupiedPositionsInBagPanel_Moving, diff);
+                if (suc)
+                {
+                    int UI_Pos_X = targetGP.x * BagManager.Instance.BagItemGridSize;
+                    int UI_Pos_Z = -targetGP.z * BagManager.Instance.BagItemGridSize;
+                    RectTransform.anchoredPosition = new Vector2(UI_Pos_X, UI_Pos_Z);
+
+                    GridPos_Moving = targetGP;
+
+                    for (int i = 0; i < OccupiedPositionsInBagPanel_Moving.Count; i++)
+                    {
+                        OccupiedPositionsInBagPanel_Moving[i] += diff;
+                    }
+
+                    BagItemGridHitBoxes.Initialize(OccupiedPositionsInBagPanel_Moving, GridPos_Moving);
+                }
+            }
         }
 
         public void DragComponent_OnMousePressed(DragAreaTypes dragAreaTypes)
@@ -91,46 +130,20 @@ namespace Client
                         Rotate();
                     }
 
-                    RefreshPreviewGridPositions();
                     break;
                 }
             }
         }
 
-        private void RefreshPreviewGridPositions()
-        {
-            Vector2 pos = ((RectTransform) transform).anchoredPosition;
-            int x = Mathf.FloorToInt((pos.x) / BagManager.Instance.BagItemGridSize);
-            int y = Mathf.FloorToInt(-(pos.y) / BagManager.Instance.BagItemGridSize);
-
-            int x_delta = x - GridPos_AfterMove.x;
-            int y_delta = y - GridPos_AfterMove.z;
-
-            if (x_delta != 0 || y_delta != 0)
-            {
-                List<GridPos> newRealPositions = new List<GridPos>();
-                GridPos_AfterMove = new GridPos(x, y, GridPos_AfterMove.orientation);
-                foreach (GridPos gp in OccupiedPositionsInBagPanel_AfterMove)
-                {
-                    GridPos newRealGrid = new GridPos(gp.x + x_delta, gp.z + y_delta, gp.orientation);
-                    newRealPositions.Add(newRealGrid);
-                }
-
-                OccupiedPositionsInBagPanel_AfterMove.Clear();
-                OccupiedPositionsInBagPanel_AfterMove = newRealPositions;
-            }
-        }
-
         public void DragComponent_OnMouseUp(DragAreaTypes dragAreaTypes)
         {
-            Data.GridPos = GridPos_AfterMove;
-            BagManager.Instance.BagInfo.RemoveItem(Data);
             if (dragAreaTypes == DragAreaTypes.Bag)
             {
-                bool suc = BagManager.Instance.BagInfo.TryAddItem(Data.Clone(), GridPos_AfterMove.orientation, CloneVariantUtils.List(OccupiedPositionsInBagPanel_AfterMove));
-                if (!suc)
+                bool suc = BagManager.Instance.BagInfo.CheckSpaceAvailable(OccupiedPositionsInBagPanel_Moving, GridPos.Zero);
+                if (suc)
                 {
-                    BagManager.Instance.BagInfo.TryAddItem(Data.Clone(), Data.GridPos.orientation, CloneVariantUtils.List(OccupiedPositionsInBagPanel));
+                    Data.GridPos = GridPos_Moving;
+                    Data.OccupiedGridPositions = CloneVariantUtils.List(OccupiedPositionsInBagPanel_Moving);
                 }
             }
         }
@@ -153,7 +166,7 @@ namespace Client
             BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
             DragManager.Instance.CancelCurrentDrag();
             DragManager.Instance.CurrentDrag = mcb.Draggable;
-            mcb.Draggable.IsOnDrag = true;
+            mcb.Draggable.SetOnDrag(true, null);
             BagManager.Instance.BagInfo.RemoveItem(Data);
             PoolRecycle();
         }

@@ -28,54 +28,45 @@ namespace GameCore
             }
         }
 
-        public BagInfo(int bagGridNumber)
+        public BagInfo()
         {
-            for (int i = 0; i < 10; i++)
+            for (int x = 0; x < 10; x++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int z = 0; z < 10; z++)
                 {
                     BagGridInfo bgi = new BagGridInfo();
                     bgi.State = BagGridInfo.States.Unavailable;
-                    BagGridMatrix[j, i] = bgi;
+                    BagGridMatrix[z, x] = bgi;
                 }
             }
-
-            this.bagGridNumber = bagGridNumber;
         }
 
         public void RefreshBagGrid()
         {
             int count = 0;
-            for (int i = 0; i < 10; i++)
+            for (int x = 0; x < 10; x++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int z = 0; z < 10; z++)
                 {
                     count++;
-                    BagGridMatrix[j, i].State = count > bagGridNumber ? BagGridInfo.States.Locked : BagGridInfo.States.Available;
+                    BagGridMatrix[z, x].State = count > bagGridNumber ? BagGridInfo.States.Locked : BagGridInfo.States.Available;
                 }
             }
         }
 
         public bool TryAddItem(BagItemInfo bii)
         {
+            bool canPlaceDirectly = CheckSpaceAvailable(bii.OccupiedGridPositions, GridPos.Zero);
+            if (canPlaceDirectly)
+            {
+                AddItem(bii, bii.GridPos.orientation, bii.OccupiedGridPositions);
+                return true;
+            }
+
             bool placeFound = FindSpaceToPutItem(bii, out GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs);
             if (placeFound)
             {
                 AddItem(bii, orientation, realOccupiedGPs);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool TryAddItem(BagItemInfo bii, GridPos.Orientation orientation, List<GridPos> realGridPoses)
-        {
-            bool placeFound = CheckSpaceAvailable(realGridPoses);
-            if (placeFound)
-            {
-                AddItem(bii, orientation, realGridPoses);
                 return true;
             }
             else
@@ -118,7 +109,7 @@ namespace GameCore
                         GridPos rot_gp = GridPos.RotateGridPos(gp, orientation);
                         int col = x + rot_gp.x;
                         int row = z + rot_gp.z;
-                        if (col < 0 || col >= 10 || row < 0 || col >= 10)
+                        if (col < 0 || col >= 10 || row < 0 || row >= 10)
                         {
                             canHold = false;
                             break;
@@ -148,11 +139,11 @@ namespace GameCore
             return false;
         }
 
-        public bool CheckSpaceAvailable(List<GridPos> realGridPoses)
+        public bool CheckSpaceAvailable(List<GridPos> realGridPoses, GridPos offset)
         {
             foreach (GridPos gp in realGridPoses)
             {
-                if (gp.x < 0 || gp.x >= 10 || gp.z < 0 || gp.z >= 10)
+                if (gp.x + offset.x < 0 || gp.x + offset.x >= 10 || gp.z + offset.z < 0 || gp.z + offset.z >= 10)
                 {
                     return false;
                 }
@@ -166,31 +157,12 @@ namespace GameCore
             return true;
         }
 
-        public bool CheckSpaceLocked(List<GridPos> realGridPoses, GridPos offset)
-        {
-            foreach (GridPos gp in realGridPoses)
-            {
-                if (gp.x + offset.x < 0 || gp.x + offset.x >= 10 || gp.z + offset.z < 0 || gp.z + offset.z >= 10)
-                {
-                    return false;
-                }
-
-                if (BagGridMatrix[gp.x + offset.x, gp.z + offset.z].Locked)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         public UnityAction<BagItemInfo> OnAddItemSucAction;
 
         private void AddItem(BagItemInfo bii, GridPos.Orientation orientation, List<GridPos> realOccupiedGPs)
         {
-            GridPos gridPos = new GridPos(bii.GridPos.x, bii.GridPos.z, orientation);
             bii.OccupiedGridPositions = realOccupiedGPs;
-            bii.GridPos = gridPos;
+            bii.GridPos.orientation = orientation;
             bii.RefreshSize();
             bagItemInfos.Add(bii);
             OnAddItemSucAction?.Invoke(bii);

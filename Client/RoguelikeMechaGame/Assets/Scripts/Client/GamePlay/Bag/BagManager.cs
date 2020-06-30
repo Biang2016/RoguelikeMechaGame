@@ -30,8 +30,9 @@ namespace Client
             LoadAllBlockItemPics();
             BagPanel = UIManager.Instance.ShowUIForms<BagPanel>();
             BagPanel.CloseUIForm();
-            BagInfo = new BagInfo(95);
+            BagInfo = new BagInfo();
             BagPanel.Init(BagInfo);
+            BagInfo.BagGridNumber = 95;
             BagInfo.RefreshBagGrid();
         }
 

@@ -11,6 +11,8 @@ namespace GameCore
         public int z;
         public Orientation orientation;
 
+        public static GridPos Zero = new GridPos(0, 0, Orientation.Up);
+
         public GridPos(int x, int z)
         {
             this.x = x;
@@ -112,6 +114,11 @@ namespace GameCore
         public override string ToString()
         {
             return $"({x},{z},{orientation})";
+        }
+
+        public string ToShortString()
+        {
+            return $"({x},{z})";
         }
 
         public enum Orientation

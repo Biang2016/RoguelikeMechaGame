@@ -248,7 +248,7 @@ namespace Client
 
         #region IDraggable
 
-        public void DragComponent_OnMouseDown()
+        public void DragComponent_OnMouseDown(Collider collider)
         {
         }
 
@@ -294,7 +294,7 @@ namespace Client
                 if (dragTheItem)
                 {
                     DragManager.Instance.CurrentDrag = BagManager.Instance.BagPanel.GetBagItem(bii.GUID).gameObject.GetComponent<Draggable>();
-                    DragManager.Instance.CurrentDrag.IsOnDrag = true;
+                    DragManager.Instance.CurrentDrag.SetOnDrag(true, null);
                 }
 
                 ParentMecha?.RemoveMechaComponent(this);

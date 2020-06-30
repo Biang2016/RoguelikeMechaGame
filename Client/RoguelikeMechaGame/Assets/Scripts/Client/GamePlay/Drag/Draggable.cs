@@ -33,7 +33,7 @@ namespace Client
         void Update()
         {
             if (!canDrag) return;
-            if (IsOnDrag)
+            if (_isOnDrag)
             {
                 Vector3 uiCameraPosition = UIManager.Instance.UICamera.ScreenToWorldPoint(Input.mousePosition);
 
@@ -73,35 +73,14 @@ namespace Client
                         }
                         else if (DragManager.Instance.IsMouseInsideBag) //拖拽物体本身 
                         {
-                            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BagManager.Instance.BagPanel.ItemContainer.transform as RectTransform, Input.mousePosition, UIManager.Instance.UICamera, out Vector2 mousePos))
+                            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BagManager.Instance.BagPanel.ItemContainer.transform as RectTransform, Input.mousePosition,
+                                UIManager.Instance.UICamera, out Vector2 mousePos))
                             {
                                 mousePos.x += ((RectTransform) BagManager.Instance.BagPanel.ItemContainer).rect.width / 2f;
                                 mousePos.y -= ((RectTransform) BagManager.Instance.BagPanel.ItemContainer).rect.height / 2f;
                                 int grid_X = Mathf.FloorToInt((mousePos.x) / BagManager.Instance.BagItemGridSize);
-                                int grid_Y = Mathf.FloorToInt((-mousePos.y) / BagManager.Instance.BagItemGridSize);
-
-                                int grid_X_delta = grid_X - DragManager.Instance.CurrentDrag_BagItem.GridPos_AfterMove.x;
-                                int grid_Y_delta = grid_Y - DragManager.Instance.CurrentDrag_BagItem.GridPos_AfterMove.z;
-
-                                if (grid_X_delta != 0)
-                                {
-                                    bool suc = BagManager.Instance.BagInfo.CheckSpaceLocked(DragManager.Instance.CurrentDrag_BagItem.OccupiedPositionsInBagPanel_AfterMove, new GridPos(grid_X_delta, 0));
-                                    if (suc)
-                                    {
-                                        int x = grid_X * BagManager.Instance.BagItemGridSize;
-                                        ((RectTransform) transform).anchoredPosition = new Vector2(x, ((RectTransform) transform).anchoredPosition.y);
-                                    }
-                                }
-
-                                if (grid_Y_delta != 0)
-                                {
-                                    bool suc = BagManager.Instance.BagInfo.CheckSpaceLocked(DragManager.Instance.CurrentDrag_BagItem.OccupiedPositionsInBagPanel_AfterMove, new GridPos(0, grid_Y_delta));
-                                    if (suc)
-                                    {
-                                        int y = grid_Y * BagManager.Instance.BagItemGridSize;
-                                        ((RectTransform) transform).anchoredPosition = new Vector2(((RectTransform) transform).anchoredPosition.x, -y);
-                                    }
-                                }
+                                int grid_Z = Mathf.FloorToInt((-mousePos.y) / BagManager.Instance.BagItemGridSize);
+                                DragManager.Instance.CurrentDrag_BagItem.MoveBaseOnHitBox(new GridPos(grid_X, grid_Z));
                             }
                         }
                         else //拖出背包
@@ -119,43 +98,38 @@ namespace Client
 
         private bool _isOnDrag = false;
 
-        public bool IsOnDrag
+        public void SetOnDrag(bool onDrag, Collider collider)
         {
-            get { return _isOnDrag; }
-
-            set
+            if (_isOnDrag != onDrag)
             {
-                if (_isOnDrag != value)
+                if (onDrag) //鼠标按下
                 {
-                    if (value) //鼠标按下
+                    caller.DragComponent_SetStates(ref canDrag, ref dragFrom);
+                    if (canDrag)
                     {
-                        caller.DragComponent_SetStates(ref canDrag, ref dragFrom);
-                        if (canDrag)
-                        {
-                            caller.DragComponent_OnMouseDown();
-                            _isOnDrag = true;
-                        }
-                        else
-                        {
-                            _isOnDrag = false;
-                            DragManager.Instance.CancelCurrentDrag();
-                        }
+                        caller.DragComponent_OnMouseDown(collider);
+                        _isOnDrag = true;
                     }
-                    else //鼠标放开
+                    else
                     {
-                        if (canDrag)
-                        {
-                            caller.DragComponent_OnMouseUp(CheckMoveToArea()); //将鼠标放开的区域告知拖动对象主体，并提供拖动起始姿态信息以供还原
-                            isBegin = true;
-                            DragManager.Instance.CurrentDrag = null;
-                        }
-                        else
-                        {
-                            DragManager.Instance.CurrentDrag = null;
-                        }
-
                         _isOnDrag = false;
+                        DragManager.Instance.CancelCurrentDrag();
                     }
+                }
+                else //鼠标放开
+                {
+                    if (canDrag)
+                    {
+                        caller.DragComponent_OnMouseUp(CheckMoveToArea()); //将鼠标放开的区域告知拖动对象主体，并提供拖动起始姿态信息以供还原
+                        isBegin = true;
+                        DragManager.Instance.CurrentDrag = null;
+                    }
+                    else
+                    {
+                        DragManager.Instance.CurrentDrag = null;
+                    }
+
+                    _isOnDrag = false;
                 }
             }
         }
@@ -196,7 +170,7 @@ namespace Client
         /// <summary>
         /// 此接口用于将除了Draggable通用效果之外的效果还给调用者自行处理
         /// </summary>
-        void DragComponent_OnMouseDown();
+        void DragComponent_OnMouseDown(Collider collider);
 
         /// <summary>
         /// 传达鼠标左键按住拖动时的鼠标位置信息
