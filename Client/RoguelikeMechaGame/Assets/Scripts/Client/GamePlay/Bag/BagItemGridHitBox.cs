@@ -12,8 +12,8 @@ namespace Client
         public void Initialize(GridPos localGP, GridRect space)
         {
             LocalGridPos = localGP;
-            BoxCollider.size = new Vector3(space.width, space.height, 1);
-            BoxCollider.center = new Vector3((space.x + 0.5f) * space.width, (space.z - 0.5f) * space.height, 0);
+            BoxCollider.size = new Vector3(space.size.x, space.size.z, 1);
+            BoxCollider.center = new Vector3((space.position.x + 0.5f) * space.size.x, (space.position.z - 0.5f) * space.size.z, 0);
         }
     }
 }

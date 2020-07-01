@@ -51,7 +51,7 @@ namespace Client
             Data.OnBanHandler = OnBan;
             Data.OnSetStateHandler = OnSetState;
 #if UNITY_EDITOR
-            GridPosText.text = gp.ToShortString();
+            GridPosText.text = gp.ToString();
 #else
             GridPosText.text = "";
 #endif

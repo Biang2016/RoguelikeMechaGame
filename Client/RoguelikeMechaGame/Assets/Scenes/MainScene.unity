@@ -201,6 +201,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8485718820004574436, guid: 776f29a684a9a412eb9b5171aa4742bd,
+        type: 3}
+      propertyPath: BagInfo.BagItemInfos.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 776f29a684a9a412eb9b5171aa4742bd, type: 3}
 --- !u!1001 &4238988585209183668

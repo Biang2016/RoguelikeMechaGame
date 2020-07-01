@@ -281,7 +281,7 @@ namespace GameCore
             return colorString;
         }
 
-        public static GridRect GetSizeFromListGridPos(this List<GridPos> gridPositions)
+        public static GridRect GetBoundingRectFromListGridPos(this List<GridPos> gridPositions)
         {
             int X_min = 999;
             int X_max = -999;

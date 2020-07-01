@@ -7,5 +7,6 @@ namespace GameCore
         List<GridPos> OriginalOccupiedGridPositions { get; }
 
         string BagItemSpriteKey { get; }
+        string BagItemName { get; }
     }
 }

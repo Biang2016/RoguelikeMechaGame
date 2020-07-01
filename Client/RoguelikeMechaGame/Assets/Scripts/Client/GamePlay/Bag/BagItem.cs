@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GameCore;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,21 +8,30 @@ namespace Client
 {
     public class BagItem : PoolObject, IDraggable
     {
+        [ShowInInspector]
         private BagItemInfo Data;
 
-        [SerializeField] private Image Image;
+        [SerializeField]
+        private Image Image;
 
-        [SerializeField] private BagItemGridHitBoxes BagItemGridHitBoxes;
+        [SerializeField]
+        private BagItemGridHitBoxes BagItemGridHitBoxes;
 
         private RectTransform RectTransform => (RectTransform) transform;
 
-        internal GridPos GridPos_Moving;
-        public List<GridPos> OccupiedPositionsInBagPanel_Moving;
+        [ShowInInspector]
+        private GridPosR GridPos_Moving;
+
+        [ShowInInspector]
+        private List<GridPos> OccupiedPositionsInBagPanel_Moving;
 
         private float _dragComponentDragMinDistance;
         private float _dragComponentDragMaxDistance;
 
+        [ShowInInspector]
         private Vector2 size;
+
+        [ShowInInspector]
         private Vector2 sizeRev;
 
         public void Initialize(BagItemInfo data)
@@ -30,7 +40,7 @@ namespace Client
             Image.sprite = BagManager.Instance.BagItemSpriteDict[Data.BagItemContentInfo.BagItemSpriteKey];
             GridPos_Moving = Data.GridPos;
             OccupiedPositionsInBagPanel_Moving = CloneVariantUtils.List(Data.OccupiedGridPositions);
-            size = new Vector2(Data.Size.width * BagManager.Instance.BagItemGridSize, Data.Size.height * BagManager.Instance.BagItemGridSize);
+            size = new Vector2(Data.BoundingRect.size.x * BagManager.Instance.BagItemGridSize, Data.BoundingRect.size.z * BagManager.Instance.BagItemGridSize);
             sizeRev = new Vector2(size.y, size.x);
             RefreshView();
         }
@@ -40,7 +50,7 @@ namespace Client
             int UI_Pos_X = GridPos_Moving.x * BagManager.Instance.BagItemGridSize;
             int UI_Pos_Z = -GridPos_Moving.z * BagManager.Instance.BagItemGridSize;
 
-            bool isRotated = GridPos_Moving.orientation == GridPos.Orientation.Right || GridPos_Moving.orientation == GridPos.Orientation.Left;
+            bool isRotated = GridPos_Moving.orientation == GridPosR.Orientation.Right || GridPos_Moving.orientation == GridPosR.Orientation.Left;
             Image.rectTransform.sizeDelta = size;
             if (isRotated)
             {
@@ -67,7 +77,7 @@ namespace Client
             {
                 if (collider == hitBox.BoxCollider)
                 {
-                    lastPickedUpHitBoxGridPos = hitBox.LocalGridPos + GridPos_Moving;
+                    lastPickedUpHitBoxGridPos = hitBox.LocalGridPos + (GridPos) GridPos_Moving;
                     BagManager.Instance.BagInfo.PickUpItem(Data);
                     return;
                 }
@@ -76,19 +86,19 @@ namespace Client
 
         public void MoveBaseOnHitBox(GridPos hitBoxTargetPos)
         {
-            GridPos targetGP = hitBoxTargetPos - lastPickedUpHitBoxGridPos + GridPos_Moving;
-            targetGP.orientation = GridPos_Moving.orientation;
-            MoveToGridPos(targetGP);
+            GridPosR targetGPR = hitBoxTargetPos - lastPickedUpHitBoxGridPos + (GridPos) GridPos_Moving;
+            targetGPR.orientation = GridPos_Moving.orientation;
+            MoveToGridPos(targetGPR);
         }
 
-        private void MoveToGridPos(GridPos targetGP)
+        private void MoveToGridPos(GridPosR targetGPR)
         {
-            GridPos diff = targetGP - GridPos_Moving;
+            GridPos diff = targetGPR - GridPos_Moving;
             if (diff.x != 0 || diff.z != 0)
             {
                 if (BagManager.Instance.BagInfo.CheckSpaceAvailable(OccupiedPositionsInBagPanel_Moving, diff))
                 {
-                    GridPos_Moving = targetGP;
+                    GridPos_Moving = targetGPR;
                     for (int i = 0; i < OccupiedPositionsInBagPanel_Moving.Count; i++)
                     {
                         OccupiedPositionsInBagPanel_Moving[i] += diff;
@@ -118,26 +128,23 @@ namespace Client
 
         private void Rotate(bool aroundClickHitBox)
         {
-            GridPos.Orientation newOrientation = GridPos_Moving.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Up;
+            GridPosR.Orientation newOrientation = GridPos_Moving.orientation == GridPosR.Orientation.Up ? GridPosR.Orientation.Left : GridPosR.Orientation.Up;
 
             List<GridPos> newRealPositions = new List<GridPos>();
             foreach (GridPos gp in OccupiedPositionsInBagPanel_Moving)
             {
-                GridPos newLocalGrid = GridPos.RotateGridPos(gp - (aroundClickHitBox ? lastPickedUpHitBoxGridPos : GridPos_Moving), GridPos_Moving.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Right : GridPos.Orientation.Left);
-                GridPos newRealGrid = newLocalGrid + (aroundClickHitBox ? lastPickedUpHitBoxGridPos : GridPos_Moving);
+                GridPos newLocalGrid = GridPos.RotateGridPos(gp - (aroundClickHitBox ? lastPickedUpHitBoxGridPos : (GridPos) GridPos_Moving),
+                    GridPos_Moving.orientation == GridPosR.Orientation.Up ? GridPosR.Orientation.Left : GridPosR.Orientation.Right);
+                GridPos newRealGrid = newLocalGrid + (aroundClickHitBox ? lastPickedUpHitBoxGridPos : (GridPos)GridPos_Moving);
                 newRealPositions.Add(newRealGrid);
             }
 
             if (BagManager.Instance.BagInfo.CheckSpaceAvailable(newRealPositions, GridPos.Zero))
             {
-                if (aroundClickHitBox)
-                {
-                    GridPos diffCenter = GridPos_Moving - lastPickedUpHitBoxGridPos;
-                    GridPos_Moving = lastPickedUpHitBoxGridPos + GridPos.RotateGridPos(diffCenter, GridPos_Moving.orientation == GridPos.Orientation.Up ? GridPos.Orientation.Left : GridPos.Orientation.Right);
-                }
-
                 GridPos_Moving.orientation = newOrientation;
                 OccupiedPositionsInBagPanel_Moving = newRealPositions;
+                GridPos_Moving.x = newRealPositions.GetBoundingRectFromListGridPos().x_min;
+                GridPos_Moving.z = newRealPositions.GetBoundingRectFromListGridPos().z_min;
                 RefreshView();
             }
         }

@@ -11,7 +11,7 @@ namespace Client
         [SerializeField] private Material[] SlotLightMaterials;
 
         [SerializeField] private SlotType _slotType;
-        internal GridPos.Orientation Orientation;
+        internal GridPosR.Orientation Orientation;
 
         public SlotType SlotType
         {
@@ -34,7 +34,7 @@ namespace Client
 
         public void Initialize()
         {
-            Orientation = GridPos.GetGridPosByLocalTrans(transform, GameManager.GridSize).orientation;
+            Orientation = GridPosR.GetGridPosByLocalTrans(transform, GameManager.GridSize).orientation;
         }
 
         void Update()

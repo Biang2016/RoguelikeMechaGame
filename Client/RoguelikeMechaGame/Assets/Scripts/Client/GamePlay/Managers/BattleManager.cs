@@ -34,7 +34,7 @@ namespace Client
             PlayerMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainer);
             PlayerMecha.Initialize(new MechaInfo("Solar 0", MechaType.Self, new List<MechaComponentInfo>
             {
-                new MechaComponentInfo(MechaComponentType.Core, new GridPos(0, 0, GridPos.Orientation.Up), 300, 0),
+                new MechaComponentInfo(MechaComponentType.Core, new GridPosR(0, 0, GridPosR.Orientation.Up), 300, 0),
             }));
 
             GameManager.Instance.MainCameraFollow.SetTarget(PlayerMecha.transform);
@@ -55,11 +55,11 @@ namespace Client
                     MechaComponentInfo mci;
                     if (i == 0 && j == 0)
                     {
-                        mci = new MechaComponentInfo(MechaComponentType.Core, new GridPos(i, j, GridPos.Orientation.Up), 500, 0);
+                        mci = new MechaComponentInfo(MechaComponentType.Core, new GridPosR(i, j, GridPosR.Orientation.Up), 500, 0);
                     }
                     else
                     {
-                        mci = new MechaComponentInfo((MechaComponentType) Random.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), new GridPos(i, j, GridPos.Orientation.Up), 50, 5);
+                        mci = new MechaComponentInfo((MechaComponentType) Random.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), new GridPosR(i, j, GridPosR.Orientation.Up), 50, 5);
                     }
 
                     enemyComponentInfos.Add(mci);

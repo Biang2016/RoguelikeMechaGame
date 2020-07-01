@@ -203,7 +203,7 @@ namespace Client
 
             int x = Mathf.FloorToInt(local_GP.x / gridSize) * gridSize;
             int z = Mathf.FloorToInt(local_GP.z / gridSize) * gridSize;
-            return new GridPos(x, z, GridPos.Orientation.Up);
+            return new GridPos(x, z);
         }
 
         public static string GridPositionListToString(this List<GridPos> gridPositions)
@@ -219,12 +219,12 @@ namespace Client
 
         public static GridPos ConvertGridPosToMatrixIndex(this GridPos gp)
         {
-            return new GridPos(gp.z + ConfigManager.EDIT_AREA_SIZE, gp.x + ConfigManager.EDIT_AREA_SIZE, gp.orientation);
+            return new GridPos(gp.z + ConfigManager.EDIT_AREA_SIZE, gp.x + ConfigManager.EDIT_AREA_SIZE);
         }
 
         public static GridPos ConvertMatrixIndexToGridPos(this GridPos gp_matrix)
         {
-            return new GridPos(gp_matrix.z - ConfigManager.EDIT_AREA_SIZE, gp_matrix.x - ConfigManager.EDIT_AREA_SIZE, gp_matrix.orientation);
+            return new GridPos(gp_matrix.z - ConfigManager.EDIT_AREA_SIZE, gp_matrix.x - ConfigManager.EDIT_AREA_SIZE);
         }
 
         public static int CalculateModifiers(this List<Modifier> modifiers, int value)

@@ -13,12 +13,6 @@ namespace Client
 
         internal int BagItemGridSize;
 
-        public bool InfiniteComponents
-        {
-            get { return BagInfo.InfiniteComponents; }
-            set { BagInfo.InfiniteComponents = value; }
-        }
-
         public Dictionary<string, Sprite> BagItemSpriteDict = new Dictionary<string, Sprite>();
 
         void Awake()
@@ -56,7 +50,7 @@ namespace Client
             foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
             {
                 MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-                BagItemInfo bii = new BagItemInfo(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up), 100, 0));
+                BagItemInfo bii = new BagItemInfo(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 100, 0));
                 BagInfo.TryAddItem(bii);
             }
         }

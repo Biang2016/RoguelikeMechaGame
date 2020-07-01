@@ -7,7 +7,9 @@ namespace Client
 {
     public partial class Mecha
     {
-        [SerializeField] private Transform MechaComponentContainer;
+        [SerializeField]
+        private Transform MechaComponentContainer;
+
         public MechaEditArea MechaEditArea;
 
         private void Initialize_Building(MechaInfo mechaInfo)
@@ -59,7 +61,8 @@ namespace Client
                         bool drop = ran < m.MechaComponentInfo.DropProbability;
                         if (drop)
                         {
-                            MechaComponentDropSprite mcds = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.MechaComponentDropSprite].AllocateGameObject<MechaComponentDropSprite>(BattleManager.Instance.MechaComponentDropSpriteContainer);
+                            MechaComponentDropSprite mcds = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.MechaComponentDropSprite]
+                                .AllocateGameObject<MechaComponentDropSprite>(BattleManager.Instance.MechaComponentDropSpriteContainer);
                             mcds.Initialize(m.MechaComponentInfo, m.transform.position);
                         }
 
@@ -225,8 +228,8 @@ namespace Client
             if (mcb)
             {
                 GridPos gp = gp_matrix.ConvertMatrixIndexToGridPos();
-                GridPos gp_local_noRotate = gp - mcb.MechaComponentInfo.GridPos;
-                GridPos gp_local_rotate = GridPos.RotateGridPos(gp_local_noRotate, (GridPos.Orientation) ((4 - (int) mcb.MechaComponentInfo.GridPos.orientation) % 4));
+                GridPos gp_local_noRotate = gp - (GridPos) mcb.MechaComponentInfo.GridPos;
+                GridPos gp_local_rotate = GridPos.RotateGridPos(gp_local_noRotate, (GridPosR.Orientation) ((4 - (int) mcb.MechaComponentInfo.GridPos.orientation) % 4));
                 mcb.MechaComponentGrids.SetForbidIndicatorShown(true, gp_local_rotate);
             }
         }
@@ -277,7 +280,7 @@ namespace Client
             foreach (MechaComponentBase mcb in mechaComponents)
             {
                 mcb.transform.parent = MechaComponentContainer;
-                GridPos newGP = mcb.MechaComponentInfo.GridPos + delta_local_GP;
+                GridPosR newGP = mcb.MechaComponentInfo.GridPos + (GridPosR) delta_local_GP;
                 newGP.orientation = mcb.MechaComponentInfo.GridPos.orientation;
                 mcb.SetGridPosition(newGP);
             }

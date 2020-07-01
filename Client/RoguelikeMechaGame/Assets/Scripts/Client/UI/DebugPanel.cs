@@ -28,11 +28,6 @@ namespace Client
             fpsText.text = Mathf.Ceil(fps).ToString();
         }
 
-        public void SetInfiniteComponents(bool infinite)
-        {
-            BagManager.Instance.InfiniteComponents = infinite;
-        }
-
         public void AddEnemy()
         {
             BattleManager.Instance.AddEnemy();

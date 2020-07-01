@@ -9,7 +9,7 @@ namespace GameCore
     public class MechaComponentInfo : IBagItemContentInfo
     {
         public MechaComponentType MechaComponentType;
-        public GridPos GridPos;
+        public GridPosR GridPos;
         public List<GridPos> OccupiedGridPositions = new List<GridPos>();
 
         public int DropProbability;
@@ -19,7 +19,9 @@ namespace GameCore
 
         public string BagItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
 
-        public MechaComponentInfo(MechaComponentType mechaComponentType, GridPos gridPos, int totalLife, int dropProbability)
+        public string BagItemName => "机甲组件." + MechaComponentType;
+
+        public MechaComponentInfo(MechaComponentType mechaComponentType, GridPosR gridPos, int totalLife, int dropProbability)
         {
             MechaComponentType = mechaComponentType;
             GridPos = gridPos;

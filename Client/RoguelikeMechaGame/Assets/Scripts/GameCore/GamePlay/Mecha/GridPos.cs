@@ -5,34 +5,35 @@ using UnityEngine;
 namespace GameCore
 {
     [Serializable]
-    public struct GridPos
+    public struct GridPosR
     {
         public int x;
         public int z;
         public Orientation orientation;
 
-        public static GridPos Zero = new GridPos(0, 0, Orientation.Up);
+        private static readonly GridPos zeroGPR = new GridPosR(0, 0, Orientation.Up);
+        public static GridPosR Zero => zeroGPR;
 
-        public GridPos(int x, int z)
+        public GridPosR(int x, int z)
         {
             this.x = x;
             this.z = z;
             orientation = Orientation.Up;
         }
 
-        public GridPos(int x, int z, Orientation orientation)
+        public GridPosR(int x, int z, Orientation orientation)
         {
             this.x = x;
             this.z = z;
             this.orientation = orientation;
         }
 
-        public static GridPos GetGridPosByLocalTrans(Transform transform, int gridSize)
+        public static GridPosR GetGridPosByLocalTrans(Transform transform, int gridSize)
         {
             int x = Mathf.FloorToInt(transform.localPosition.x / gridSize) * gridSize;
             int z = Mathf.FloorToInt(transform.localPosition.z / gridSize) * gridSize;
             int rotY = Mathf.RoundToInt(transform.localRotation.eulerAngles.y / 90f) % 4;
-            return new GridPos(x, z, (Orientation) rotY);
+            return new GridPosR(x, z, (Orientation) rotY);
         }
 
         public static GridPos GetGridPosByTrans(Transform transform, int gridSize)
@@ -40,17 +41,17 @@ namespace GameCore
             int x = Mathf.FloorToInt(transform.position.x / gridSize) * gridSize;
             int z = Mathf.FloorToInt(transform.position.z / gridSize) * gridSize;
             int rotY = Mathf.RoundToInt(transform.rotation.eulerAngles.y / 90f) % 4;
-            return new GridPos(x, z, (Orientation) rotY);
+            return new GridPosR(x, z, (Orientation) rotY);
         }
 
         public static GridPos GetGridPosByPoint(Vector3 position, int gridSize)
         {
             int x = Mathf.FloorToInt(position.x / gridSize) * gridSize;
             int z = Mathf.FloorToInt(position.z / gridSize) * gridSize;
-            return new GridPos(x, z, Orientation.Up);
+            return new GridPosR(x, z, Orientation.Up);
         }
 
-        public static void ApplyGridPosToLocalTrans(GridPos gridPos, Transform transform, int gridSize)
+        public static void ApplyGridPosToLocalTrans(GridPosR gridPos, Transform transform, int gridSize)
         {
             float x = gridPos.x * gridSize;
             float z = gridPos.z * gridSize;
@@ -64,69 +65,48 @@ namespace GameCore
             return (Orientation) (((int) orientation + 1) % 4);
         }
 
-        public static GridPos RotateGridPos(GridPos oriGP, Orientation orientation)
-        {
-            switch (orientation)
-            {
-                case Orientation.Up:
-                {
-                    return oriGP;
-                }
-                case Orientation.Right:
-                {
-                    return new GridPos(oriGP.z, -oriGP.x, Orientation.Up);
-                }
-                case Orientation.Down:
-                {
-                    return new GridPos(-oriGP.x, -oriGP.z, Orientation.Up);
-                }
-                case Orientation.Left:
-                {
-                    return new GridPos(-oriGP.z, oriGP.x, Orientation.Up);
-                }
-            }
-
-            return new GridPos(0, 0, Orientation.Up);
-        }
-
-        public static List<GridPos> TransformOccupiedPositions(GridPos localGridPos, List<GridPos> ori_occupiedPositions)
+        public static List<GridPos> TransformOccupiedPositions(GridPosR localGridPos, List<GridPos> ori_OccupiedPositions)
         {
             List<GridPos> resGP = new List<GridPos>();
 
-            foreach (GridPos oriGP in ori_occupiedPositions)
+            foreach (GridPos oriGP in ori_OccupiedPositions)
             {
-                GridPos temp_rot = RotateGridPos(oriGP, localGridPos.orientation);
-                GridPos final = temp_rot + localGridPos;
-                final.orientation = oriGP.orientation;
+                GridPos temp_rot = GridPos.RotateGridPos(oriGP, localGridPos.orientation);
+                GridPos final = temp_rot + (GridPos) localGridPos;
                 resGP.Add(final);
             }
 
             return resGP;
         }
 
-        public bool Equals(GridPos gp)
+        public bool Equals(GridPosR gp)
         {
             return gp.x == x && gp.z == z && gp.orientation == orientation;
         }
 
-        public static GridPos operator -(GridPos a, GridPos b)
+        public bool Equals(GridPos gp)
         {
-            return new GridPos(a.x - b.x, a.z - b.z, a.orientation);
+            return gp.x == x && gp.z == z;
         }
 
-        public static GridPos operator +(GridPos a, GridPos b)
+        public static GridPos operator -(GridPosR a, GridPosR b)
         {
-            return new GridPos(a.x + b.x, a.z + b.z, a.orientation);
+            return new GridPosR(a.x - b.x, a.z - b.z, a.orientation);
         }
 
-        public static GridPos operator *(GridPos a, int b)
+        public static GridPosR operator +(GridPosR a, GridPosR b)
         {
-            return new GridPos(a.x * b, a.z * b, a.orientation);
+            return new GridPosR(a.x + b.x, a.z + b.z, a.orientation);
         }
 
-        public static GridPos operator *(int b, GridPos a)
+        public static GridPosR operator *(GridPosR a, int b)
         {
-            return new GridPos(a.x * b, a.z * b, a.orientation);
+            return new GridPosR(a.x * b, a.z * b, a.orientation);
+        }
+
+        public static GridPosR operator *(int b, GridPosR a)
+        {
+            return new GridPosR(a.x * b, a.z * b, a.orientation);
         }
 
         public override string ToString()
@@ -145,6 +125,132 @@ namespace GameCore
             Right = 1,
             Down = 2,
             Left = 3,
+        }
+    }
+
+    [Serializable]
+    public struct GridPos
+    {
+        public int x;
+        public int z;
+
+        private static readonly GridPos zeroGP = new GridPos(0, 0);
+        public static GridPos Zero => zeroGP;
+
+        public GridPos(int x, int z)
+        {
+            this.x = x;
+            this.z = z;
+        }
+
+        public static GridPos GetGridPosByLocalTrans(Transform transform, int gridSize)
+        {
+            return GetGridPosByPoint(transform.localPosition, gridSize);
+        }
+
+        public static GridPos GetGridPosByTrans(Transform transform, int gridSize)
+        {
+            return GetGridPosByPoint(transform.position, gridSize);
+        }
+
+        public static GridPos GetGridPosByPoint(Vector3 position, int gridSize)
+        {
+            int x = Mathf.FloorToInt(position.x / gridSize) * gridSize;
+            int z = Mathf.FloorToInt(position.z / gridSize) * gridSize;
+            return new GridPos(x, z);
+        }
+
+        public static void ApplyGridPosToLocalTrans(GridPos gridPos, Transform transform, int gridSize)
+        {
+            float x = gridPos.x * gridSize;
+            float z = gridPos.z * gridSize;
+            transform.localPosition = new Vector3(x, transform.localPosition.y, z);
+        }
+
+        public static GridPos RotateGridPos(GridPos oriGP, GridPosR.Orientation orientation)
+        {
+            switch (orientation)
+            {
+                case GridPosR.Orientation.Up:
+                {
+                    return oriGP;
+                }
+                case GridPosR.Orientation.Right:
+                {
+                    return new GridPos(oriGP.z, -oriGP.x);
+                }
+                case GridPosR.Orientation.Down:
+                {
+                    return new GridPos(-oriGP.x, -oriGP.z);
+                }
+                case GridPosR.Orientation.Left:
+                {
+                    return new GridPos(-oriGP.z, oriGP.x);
+                }
+            }
+
+            return new GridPos(0, 0);
+        }
+
+        public static List<GridPos> TransformOccupiedPositions(GridPos localGridPos, List<GridPos> ori_OccupiedPositions)
+        {
+            for (int i = 0; i < ori_OccupiedPositions.Count; i++)
+            {
+                ori_OccupiedPositions[i] += localGridPos;
+            }
+
+            return ori_OccupiedPositions;
+        }
+
+        public bool Equals(GridPos gp)
+        {
+            return gp.x == x && gp.z == z;
+        }
+
+        public bool Equals(GridPosR r)
+        {
+            return r.x == x && r.z == z;
+        }
+
+        public static GridPos operator -(GridPos a)
+        {
+            return new GridPos(-a.x, -a.z);
+        }
+
+        public static GridPos operator -(GridPos a, GridPos b)
+        {
+            return new GridPos(a.x - b.x, a.z - b.z);
+        }
+
+        public static GridPos operator +(GridPos a, GridPos b)
+        {
+            return new GridPos(a.x + b.x, a.z + b.z);
+        }
+
+        public static GridPos operator *(GridPos a, int b)
+        {
+            return new GridPos(a.x * b, a.z * b);
+        }
+
+        public static GridPos operator *(int b, GridPos a)
+        {
+            return new GridPos(a.x * b, a.z * b);
+        }
+
+        public static implicit operator GridPos(GridPosR r)
+        {
+            return new GridPos(r.x, r.z);
+        }
+
+        public static implicit operator GridPosR(GridPos gp)
+        {
+            return new GridPosR(gp.x, gp.z, GridPosR.Orientation.Up);
+        }
+
+
+        public override string ToString()
+        {
+            return $"({x},{z})";
         }
     }
 }

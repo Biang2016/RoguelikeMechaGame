@@ -76,7 +76,7 @@ namespace Client
 
                 GameObject prefab = PrefabManager.Instance.GetPrefab("MechaComponent_" + mcType);
                 MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
-                mcb.Initialize_Editor(new MechaComponentInfo(mcType, new GridPos(0, 0, GridPos.Orientation.Up), 10, 0));
+                mcb.Initialize_Editor(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 10, 0));
                 mcbs.Add(mcb);
                 MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentGrids.GetOccupiedPositions()));
             }
@@ -116,35 +116,35 @@ namespace Client
         {
         }
 
-        public void SetGridPosition(GridPos gridPos)
+        public void SetGridPosition(GridPosR gridPos)
         {
             if (!gridPos.Equals(MechaComponentInfo.GridPos))
             {
                 foreach (GridPos gp in MechaComponentInfo.OccupiedGridPositions)
                 {
-                    GridPos gp_rot = GridPos.RotateGridPos(gp - MechaComponentInfo.GridPos, (GridPos.Orientation) ((gridPos.orientation - MechaComponentInfo.GridPos.orientation + 4) % 4));
-                    GridPos newGP = gp_rot + gridPos;
+                    GridPos gp_rot = GridPos.RotateGridPos(gp - (GridPos) MechaComponentInfo.GridPos, (GridPosR.Orientation) ((gridPos.orientation - MechaComponentInfo.GridPos.orientation + 4) % 4));
+                    GridPosR newGP = gridPos + (GridPosR) gp_rot;
                     if (newGP.x > ConfigManager.EDIT_AREA_SIZE)
                     {
-                        SetGridPosition(new GridPos(gridPos.x - 1, gridPos.z, gridPos.orientation));
+                        SetGridPosition(new GridPosR(gridPos.x - 1, gridPos.z, gridPos.orientation));
                         return;
                     }
 
                     if (newGP.x < -ConfigManager.EDIT_AREA_SIZE)
                     {
-                        SetGridPosition(new GridPos(gridPos.x + 1, gridPos.z, gridPos.orientation));
+                        SetGridPosition(new GridPosR(gridPos.x + 1, gridPos.z, gridPos.orientation));
                         return;
                     }
 
                     if (newGP.z > ConfigManager.EDIT_AREA_SIZE)
                     {
-                        SetGridPosition(new GridPos(gridPos.x, gridPos.z - 1, gridPos.orientation));
+                        SetGridPosition(new GridPosR(gridPos.x, gridPos.z - 1, gridPos.orientation));
                         return;
                     }
 
                     if (newGP.z < -ConfigManager.EDIT_AREA_SIZE)
                     {
-                        SetGridPosition(new GridPos(gridPos.x, gridPos.z + 1, gridPos.orientation));
+                        SetGridPosition(new GridPosR(gridPos.x, gridPos.z + 1, gridPos.orientation));
                         return;
                     }
                 }
@@ -169,7 +169,7 @@ namespace Client
 
         private void Rotate()
         {
-            GridPos newGP = new GridPos(MechaComponentInfo.GridPos.x, MechaComponentInfo.GridPos.z, GridPos.RotateOrientationClockwise90(MechaComponentInfo.GridPos.orientation));
+            GridPosR newGP = new GridPosR(MechaComponentInfo.GridPos.x, MechaComponentInfo.GridPos.z, GridPosR.RotateOrientationClockwise90(MechaComponentInfo.GridPos.orientation));
             SetGridPosition(newGP);
         }
 
@@ -280,7 +280,7 @@ namespace Client
 
             if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Self)
             {
-                GridPos gridPos = ClientUtils.GetGridPosByMousePos(ParentMecha.transform, Vector3.up, GameManager.GridSize);
+                GridPosR gridPos = ClientUtils.GetGridPosByMousePos(ParentMecha.transform, Vector3.up, GameManager.GridSize);
                 gridPos.orientation = MechaComponentInfo.GridPos.orientation;
                 SetGridPosition(gridPos);
             }

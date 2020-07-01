@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 namespace GameCore
 {
     [Serializable]
+    [LabelText("背包信息")]
     public class BagInfo
     {
-        public bool InfiniteComponents = false;
-
         public BagGridInfo[,] BagGridMatrix = new BagGridInfo[10, 10]; // column, row
-        private List<BagItemInfo> bagItemInfos = new List<BagItemInfo>();
+
+        [SerializeField]
+        public List<BagItemInfo> BagItemInfos = new List<BagItemInfo>();
 
         private int bagGridNumber = 0;
 
+        [ShowInInspector]
+        [PropertyOrder(-1)]
+        [LabelText("背包容量")]
         public int BagGridNumber
         {
             get { return bagGridNumber; }
@@ -64,7 +70,7 @@ namespace GameCore
                 return true;
             }
 
-            bool placeFound = FindSpaceToPutItem(bii, out GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs);
+            bool placeFound = FindSpaceToPutItem(bii, out GridPosR.Orientation orientation, out List<GridPos> realOccupiedGPs);
             if (placeFound)
             {
                 AddItem(bii, orientation, realOccupiedGPs);
@@ -76,10 +82,10 @@ namespace GameCore
             }
         }
 
-        private bool FindSpaceToPutItem(BagItemInfo bii, out GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs)
+        private bool FindSpaceToPutItem(BagItemInfo bii, out GridPosR.Orientation orientation, out List<GridPos> realOccupiedGPs)
         {
-            orientation = GridPos.Orientation.Up;
-            foreach (string s in Enum.GetNames(typeof(GridPos.Orientation)))
+            orientation = GridPosR.Orientation.Up;
+            foreach (string s in Enum.GetNames(typeof(GridPosR.Orientation)))
             {
                 if (FindSpaceToPutRotatedItem(bii, orientation, out realOccupiedGPs)) return true;
             }
@@ -88,21 +94,21 @@ namespace GameCore
             return false;
         }
 
-        private bool FindSpaceToPutRotatedItem(BagItemInfo bii, GridPos.Orientation orientation, out List<GridPos> realOccupiedGPs)
+        private bool FindSpaceToPutRotatedItem(BagItemInfo bii, GridPosR.Orientation orientation, out List<GridPos> realOccupiedGPs)
         {
-            GridRect space = bii.Size;
+            GridRect space = bii.BoundingRect;
 
-            bool heightWidthSwap = orientation == GridPos.Orientation.Right || orientation == GridPos.Orientation.Left;
+            bool heightWidthSwap = orientation == GridPosR.Orientation.Right || orientation == GridPosR.Orientation.Left;
 
-            GridPos temp = new GridPos(space.x, space.z);
+            GridPos temp = new GridPos(space.position.x, space.position.z);
             GridPos temp_rot = GridPos.RotateGridPos(temp, orientation);
             int xStart_temp = temp_rot.x;
             int zStart_temp = temp_rot.z;
 
             realOccupiedGPs = new List<GridPos>();
-            for (int z = 0 - zStart_temp; z <= 10 - (heightWidthSwap ? space.width : space.height) - zStart_temp; z++)
+            for (int z = 0 - zStart_temp; z <= 10 - (heightWidthSwap ? space.size.x : space.size.z) - zStart_temp; z++)
             {
-                for (int x = 0 - xStart_temp; x <= 10 - (heightWidthSwap ? space.height : space.width) - xStart_temp; x++)
+                for (int x = 0 - xStart_temp; x <= 10 - (heightWidthSwap ? space.size.z : space.size.x) - xStart_temp; x++)
                 {
                     bool canHold = true;
                     foreach (GridPos gp in bii.OccupiedGridPositions)
@@ -122,13 +128,13 @@ namespace GameCore
                             break;
                         }
 
-                        realOccupiedGPs.Add(new GridPos(col, row, GridPos.Orientation.Up));
+                        realOccupiedGPs.Add(new GridPosR(col, row, GridPosR.Orientation.Up));
                     }
 
                     if (canHold)
                     {
-                        bii.GridPos.x = x + space.x;
-                        bii.GridPos.z = z + space.z;
+                        bii.GridPos.x = x + space.position.x;
+                        bii.GridPos.z = z + space.position.z;
                         bii.GridPos.orientation = orientation;
                         return true;
                     }
@@ -162,12 +168,12 @@ namespace GameCore
 
         public UnityAction<BagItemInfo> OnAddItemSucAction;
 
-        private void AddItem(BagItemInfo bii, GridPos.Orientation orientation, List<GridPos> realOccupiedGPs)
+        private void AddItem(BagItemInfo bii, GridPosR.Orientation orientation, List<GridPos> realOccupiedGPs)
         {
             bii.OccupiedGridPositions = realOccupiedGPs;
             bii.GridPos.orientation = orientation;
             bii.RefreshSize();
-            bagItemInfos.Add(bii);
+            BagItemInfos.Add(bii);
             OnAddItemSucAction?.Invoke(bii);
             foreach (GridPos gp in realOccupiedGPs)
             {
@@ -194,21 +200,21 @@ namespace GameCore
 
         public void RemoveItem(BagItemInfo bii)
         {
-            if (bagItemInfos.Contains(bii))
+            if (BagItemInfos.Contains(bii))
             {
                 foreach (GridPos gp in bii.OccupiedGridPositions)
                 {
                     BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Available;
                 }
 
-                bagItemInfos.Remove(bii);
+                BagItemInfos.Remove(bii);
                 OnRemoveItemSucAction?.Invoke(bii);
             }
         }
 
         public void PickUpItem(BagItemInfo bii)
         {
-            if (bagItemInfos.Contains(bii))
+            if (BagItemInfos.Contains(bii))
             {
                 foreach (GridPos gp in bii.OccupiedGridPositions)
                 {
