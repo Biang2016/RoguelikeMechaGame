@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GameCore;
+using MS.Framework.Serialize;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
