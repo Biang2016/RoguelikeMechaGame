@@ -22,33 +22,25 @@ namespace Client
         void Update()
         {
             if (clickTabInFrame) return;
-            if (Input.GetKeyDown(KeyCode.Tab) && isSelect)
+            if (ControlManager.Instance.Common_Tab.Down && isSelect)
             {
                 clickTabInFrame = true;
                 Selectable next = null;
-                var sec = system.currentSelectedGameObject.GetComponent<Selectable>();
-                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                {
-                    next = sec.FindSelectableOnUp();
-                    if (next == null)
-                        next = sec;
-                }
-                else
-                {
-                    next = sec.FindSelectableOnDown();
+                Selectable sec = system.currentSelectedGameObject.GetComponent<Selectable>();
 
-                    if (next == null) //Recycle
+                next = sec.FindSelectableOnDown();
+
+                if (next == null) //Recycle
+                {
+                    Selectable temp = sec;
+                    Selectable temp_notNull = temp;
+                    while (temp != null)
                     {
-                        Selectable temp = sec;
-                        Selectable temp_notNull = temp;
-                        while (temp != null)
-                        {
-                            temp_notNull = temp;
-                            temp = temp.FindSelectableOnUp();
-                        }
-
-                        next = temp_notNull;
+                        temp_notNull = temp;
+                        temp = temp.FindSelectableOnUp();
                     }
+
+                    next = temp_notNull;
                 }
 
                 InputField inputField = next.GetComponent<InputField>();

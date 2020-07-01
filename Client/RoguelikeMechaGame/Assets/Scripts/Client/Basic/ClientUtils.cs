@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GameCore;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 namespace Client
@@ -195,7 +196,7 @@ namespace Client
 
         public static GridPos GetGridPosByMousePos(Transform parentTransform, Vector3 planeNormal, int gridSize)
         {
-            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
             Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, planeNormal, parentTransform.position);
 
             Vector3 rot_intersect = parentTransform.InverseTransformPoint(intersect);
@@ -247,6 +248,13 @@ namespace Client
             }
 
             return res;
+        }
+
+        public static void GetStateFromContext(this ControlManager.ButtonState state, InputAction.CallbackContext context)
+        {
+            state.Down = context.started;
+            state.Pressed = context.ReadValueAsButton();
+            state.Up = context.canceled;
         }
     }
 }

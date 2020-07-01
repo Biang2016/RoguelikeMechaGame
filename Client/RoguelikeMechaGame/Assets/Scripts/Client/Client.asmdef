@@ -1,7 +1,8 @@
 {
     "name": "Client",
     "references": [
-        "GUID:5002340f888409848933f28082e71eac"
+        "GUID:5002340f888409848933f28082e71eac",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

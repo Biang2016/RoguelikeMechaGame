@@ -18,11 +18,6 @@ namespace Client
         #region Inspector Settings
 
         /// <summary>
-        /// The hotkey to show and hide the console window.
-        /// </summary>
-        public KeyCode toggleKey = KeyCode.BackQuote;
-
-        /// <summary>
         /// Whether to open the window by shaking the device (mobile-only).
         /// </summary>
         public bool shakeToOpen = true;
@@ -86,7 +81,7 @@ namespace Client
         {
             if (logShow)
             {
-                if (Input.GetKeyDown(toggleKey))
+                if (ControlManager.Instance.Common_Debug.Down)
                 {
                     visible = !visible;
                 }

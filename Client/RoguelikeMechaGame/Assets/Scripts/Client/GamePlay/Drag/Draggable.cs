@@ -35,7 +35,7 @@ namespace Client
             if (!canDrag) return;
             if (_isOnDrag)
             {
-                Vector3 uiCameraPosition = UIManager.Instance.UICamera.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 uiCameraPosition = UIManager.Instance.UICamera.ScreenToWorldPoint(ControlManager.Instance.Common_MousePosition);
 
                 if (isBegin)
                 {
@@ -73,7 +73,7 @@ namespace Client
                         }
                         else if (DragManager.Instance.IsMouseInsideBag) //拖拽物体本身 
                         {
-                            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BagManager.Instance.BagPanel.ItemContainer.transform as RectTransform, Input.mousePosition,
+                            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BagManager.Instance.BagPanel.ItemContainer.transform as RectTransform, ControlManager.Instance.Common_MousePosition,
                                 UIManager.Instance.UICamera, out Vector2 mousePos))
                             {
                                 mousePos.x += ((RectTransform) BagManager.Instance.BagPanel.ItemContainer).rect.width / 2f;
@@ -142,7 +142,7 @@ namespace Client
 
         public Vector3 GetMouseAsWorldPoint()
         {
-            Vector3 mousePoint = Input.mousePosition;
+            Vector3 mousePoint = ControlManager.Instance.Common_MousePosition;
             mousePoint.z = GameManager.Instance.MainCamera.WorldToScreenPoint(gameObject.transform.position).z;
             return GameManager.Instance.MainCamera.ScreenToWorldPoint(mousePoint);
         }
@@ -150,7 +150,7 @@ namespace Client
         public DragAreaTypes CheckMoveToArea()
         {
             if (DragManager.Instance.IsMouseInsideBag) return DragAreaTypes.Bag;
-            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
             Physics.Raycast(ray, out RaycastHit raycast, 1000f, GameManager.Instance.LayerMask_DragAreas);
             if (raycast.collider)
             {

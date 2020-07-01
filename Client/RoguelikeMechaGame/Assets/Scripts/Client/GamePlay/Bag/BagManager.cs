@@ -32,7 +32,7 @@ namespace Client
 
         void Update()
         {
-            if (Input.GetButtonDown("Bag"))
+            if (ControlManager.Instance.Building_ToggleBag.Down)
             {
                 if (!BagPanel.gameObject.activeInHierarchy)
                 {

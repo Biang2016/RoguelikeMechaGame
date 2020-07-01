@@ -245,7 +245,7 @@ namespace Client
 
         void Update_Building()
         {
-            if (Input.GetKeyUp(KeyCode.G))
+            if (ControlManager.Instance.Building_ToggleWireLines.Down)
             {
                 SlotLightsShown = !SlotLightsShown;
                 GridShown = !GridShown;

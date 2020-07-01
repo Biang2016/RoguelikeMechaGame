@@ -32,7 +32,7 @@ namespace Client
         protected override void ChildUpdate()
         {
             base.ChildUpdate();
-            if (Input.GetKeyUp(KeyCode.Return))
+            if (ControlManager.Instance.Common_Confirm.Down)
             {
                 ConfirmClick?.Invoke();
             }

@@ -18,20 +18,20 @@ namespace Client
             if (GameManager.Instance.GetState() == GameState.Fighting)
             {
                 float movement = 0.7f * Time.deltaTime * Speed;
-                if (Input.GetAxis("Horizontal") < 0)
+                if (ControlManager.Instance.Battle_Move.x < 0)
                 {
                     transform.Translate(-movement, 0, -movement, Space.World);
                 }
-                else if (Input.GetAxis("Horizontal") > 0)
+                else if (ControlManager.Instance.Battle_Move.x > 0)
                 {
                     transform.Translate(movement, 0, movement, Space.World);
                 }
 
-                if (Input.GetAxis("Vertical") < 0)
+                if (ControlManager.Instance.Battle_Move.y < 0)
                 {
                     transform.Translate(movement, 0, -movement, Space.World);
                 }
-                else if (Input.GetAxis("Vertical") > 0)
+                else if (ControlManager.Instance.Battle_Move.y > 0)
                 {
                     transform.Translate(-movement, 0, movement, Space.World);
                 }
@@ -47,7 +47,7 @@ namespace Client
 
         private void RotateToMouseDirection()
         {
-            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
             Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, Vector3.up, transform.position);
 
             float nearFactor = 3f / (intersect - transform.position).magnitude;

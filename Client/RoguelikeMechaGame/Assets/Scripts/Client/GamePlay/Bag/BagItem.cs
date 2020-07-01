@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using GameCore;
-using MS.Framework.Serialize;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,31 +8,24 @@ namespace Client
 {
     public class BagItem : PoolObject, IDraggable
     {
-        [ShowInInspector]
-        private BagItemInfo Data;
+        [ShowInInspector] private BagItemInfo Data;
 
-        [SerializeField]
-        private Image Image;
+        [SerializeField] private Image Image;
 
-        [SerializeField]
-        private BagItemGridHitBoxes BagItemGridHitBoxes;
+        [SerializeField] private BagItemGridHitBoxes BagItemGridHitBoxes;
 
         private RectTransform RectTransform => (RectTransform) transform;
 
-        [ShowInInspector]
-        private GridPosR GridPos_Moving;
+        [ShowInInspector] private GridPosR GridPos_Moving;
 
-        [ShowInInspector]
-        private List<GridPos> OccupiedPositionsInBagPanel_Moving;
+        [ShowInInspector] private List<GridPos> OccupiedPositionsInBagPanel_Moving;
 
         private float _dragComponentDragMinDistance;
         private float _dragComponentDragMaxDistance;
 
-        [ShowInInspector]
-        private Vector2 size;
+        [ShowInInspector] private Vector2 size;
 
-        [ShowInInspector]
-        private Vector2 sizeRev;
+        [ShowInInspector] private Vector2 sizeRev;
 
         public void Initialize(BagItemInfo data)
         {
@@ -53,15 +45,15 @@ namespace Client
 
             bool isRotated = GridPos_Moving.orientation == GridPosR.Orientation.Right || GridPos_Moving.orientation == GridPosR.Orientation.Left;
             Image.rectTransform.sizeDelta = size;
+            Image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f * (int) GridPos_Moving.orientation);
+
             if (isRotated)
             {
                 RectTransform.sizeDelta = sizeRev;
-                Image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f);
             }
             else
             {
                 RectTransform.sizeDelta = size;
-                Image.rectTransform.rotation = Quaternion.Euler(0, 0, 0f);
             }
 
             RectTransform.anchoredPosition = new Vector2(UI_Pos_X, UI_Pos_Z);
@@ -117,9 +109,9 @@ namespace Client
             {
                 case DragAreaTypes.Bag:
                 {
-                    if (Input.GetKeyUp(KeyCode.R))
+                    if (ControlManager.Instance.Building_RotateItem.Down)
                     {
-                        Rotate(true);
+                        Rotate();
                     }
 
                     break;
@@ -127,26 +119,35 @@ namespace Client
             }
         }
 
-        private void Rotate(bool aroundClickHitBox)
+        private void Rotate()
         {
-            GridPosR.Orientation newOrientation = GridPos_Moving.orientation == GridPosR.Orientation.Up ? GridPosR.Orientation.Left : GridPosR.Orientation.Up;
-
-            List<GridPos> newRealPositions = new List<GridPos>();
-            foreach (GridPos gp in OccupiedPositionsInBagPanel_Moving)
+            int checkTime = 0;
+            GridPosR.Orientation newOrientation = GridPos_Moving.orientation;
+            List<GridPos> newRealPositions = CloneVariantUtils.List(OccupiedPositionsInBagPanel_Moving);
+            while (checkTime < 4)
             {
-                GridPos newLocalGrid = GridPos.RotateGridPos(gp - (aroundClickHitBox ? lastPickedUpHitBoxGridPos : (GridPos) GridPos_Moving),
-                    GridPos_Moving.orientation == GridPosR.Orientation.Up ? GridPosR.Orientation.Left : GridPosR.Orientation.Right);
-                GridPos newRealGrid = newLocalGrid + (aroundClickHitBox ? lastPickedUpHitBoxGridPos : (GridPos)GridPos_Moving);
-                newRealPositions.Add(newRealGrid);
-            }
+                newOrientation = GridPosR.RotateOrientationClockwise90(newOrientation);
+                List<GridPos> _newRealPositions = new List<GridPos>();
+                foreach (GridPos gp in newRealPositions)
+                {
+                    GridPos newLocalGrid = GridPos.RotateGridPos(gp - lastPickedUpHitBoxGridPos, (GridPosR.Orientation) ((newOrientation - GridPos_Moving.orientation + 4) % 4));
+                    GridPos newRealGrid = newLocalGrid + lastPickedUpHitBoxGridPos;
+                    _newRealPositions.Add(newRealGrid);
+                }
 
-            if (BagManager.Instance.BagInfo.CheckSpaceAvailable(newRealPositions, GridPos.Zero))
-            {
-                GridPos_Moving.orientation = newOrientation;
-                OccupiedPositionsInBagPanel_Moving = newRealPositions;
-                GridPos_Moving.x = newRealPositions.GetBoundingRectFromListGridPos().x_min;
-                GridPos_Moving.z = newRealPositions.GetBoundingRectFromListGridPos().z_min;
-                RefreshView();
+                if (BagManager.Instance.BagInfo.CheckSpaceAvailable(_newRealPositions, GridPos.Zero))
+                {
+                    GridPos_Moving.orientation = newOrientation;
+                    OccupiedPositionsInBagPanel_Moving = _newRealPositions;
+                    GridPos_Moving.x = _newRealPositions.GetBoundingRectFromListGridPos().x_min;
+                    GridPos_Moving.z = _newRealPositions.GetBoundingRectFromListGridPos().z_min;
+                    RefreshView();
+                    return;
+                }
+                else
+                {
+                    checkTime++;
+                }
             }
         }
 

@@ -22,7 +22,6 @@ namespace Client
             LayerMask_ComponentHitBox = LayerMask.GetMask("ComponentHitBox");
             LayerMask_DragAreas = LayerMask.GetMask("DragAreas");
             LayerMask_ItemDropped = LayerMask.GetMask("ItemDropped");
-
         }
 
         private void Start()

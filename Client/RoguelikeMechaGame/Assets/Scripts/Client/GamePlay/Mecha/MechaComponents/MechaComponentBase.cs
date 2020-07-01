@@ -264,7 +264,7 @@ namespace Client
 
         public void DragComponent_OnMousePressed(DragAreaTypes dragAreaTypes)
         {
-            if (Input.GetKeyUp(KeyCode.R))
+            if (ControlManager.Instance.Building_RotateItem.Down)
             {
                 Rotate();
             }

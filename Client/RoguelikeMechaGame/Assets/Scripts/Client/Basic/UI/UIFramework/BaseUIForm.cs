@@ -11,11 +11,15 @@ namespace Client
 
         private bool closeFlag = false;
 
+        void Awake()
+        {
+        }
+
         void Update()
         {
             if (UIType.IsESCClose)
             {
-                if (Input.GetKeyUp(KeyCode.Escape))
+                if (ControlManager.Instance.Common_Exit.Down)
                 {
                     BaseUIForm peek = UIManager.Instance.GetPeekUIForm();
                     if (peek == null || peek == this)

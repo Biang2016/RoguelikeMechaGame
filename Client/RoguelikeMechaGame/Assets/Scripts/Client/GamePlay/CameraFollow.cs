@@ -77,14 +77,14 @@ namespace Client
             }
 
             float movement = 5f;
-            offset_Manually = Input.GetAxis("Horizontal") * new Vector3(movement, 0, movement) + Input.GetAxis("Vertical") * new Vector3(-movement, 0, movement);
+            offset_Manually = ControlManager.Instance.Battle_Move.x * new Vector3(movement, 0, movement) + ControlManager.Instance.Battle_Move.y * new Vector3(-movement, 0, movement);
 
-            if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            if (ControlManager.Instance.Battle_MouseWheel < 0)
             {
                 FOW_Level++;
             }
 
-            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            if (ControlManager.Instance.Battle_MouseWheel > 0)
             {
                 FOW_Level--;
             }

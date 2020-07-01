@@ -56,6 +56,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -122,6 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1154461616125127710}
   - component: {fileID: 1012030491260099050}
+  - component: {fileID: 6302451502797826448}
   m_Layer: 12
   m_Name: Mecha
   m_TagString: Untagged
@@ -159,9 +161,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d82ea23828953ef45a52e9e46331aa52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MechaInfo:
+    MechaName: 
+    MechaType: 0
+    MechaComponentInfos: []
   MechaComponentContainer: {fileID: 8826551087886504790}
   MechaEditArea: {fileID: 6405004443083676034}
   Speed: 10
+--- !u!114 &6302451502797826448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2635090349110218829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: 0}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &5054746373957315172
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +330,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -330,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c7fe4194ed7624b912c82d115dd4c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DragAreaTypes: 0
+  DragAreaTypes: 2
   MeshRenderer_Circle: {fileID: 2610974796736393842}
   MeshRenderer_Grid: {fileID: 265717878856900663}
   BoxCollider: {fileID: 7381615765215493332}
@@ -346,7 +383,7 @@ GameObject:
   - component: {fileID: 7375040517632888419}
   - component: {fileID: 8246727665530614022}
   m_Layer: 0
-  m_Name: PivotSphere
+  m_Name: OrientationIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -380,6 +417,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

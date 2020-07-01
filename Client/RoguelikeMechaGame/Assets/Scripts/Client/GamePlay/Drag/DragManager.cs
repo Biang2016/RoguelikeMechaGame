@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using GameCore;
+using UnityEngine.InputSystem;
 
 namespace Client
 {
@@ -11,14 +11,12 @@ namespace Client
         {
         }
 
-        void Awake()
-        {
-        }
-
         internal MechaComponentBase CurrentDrag_MechaComponentBase;
         internal BagItem CurrentDrag_BagItem;
 
         [SerializeField] private Draggable currentDrag;
+        [NonSerialized] public bool ForbidDrag = false;
+        internal bool IsMouseInsideBag = false;
 
         internal Draggable CurrentDrag
         {
@@ -34,7 +32,9 @@ namespace Client
             }
         }
 
-        [NonSerialized] public bool ForbidDrag = false;
+        void Awake()
+        {
+        }
 
         void Update()
         {
@@ -50,13 +50,13 @@ namespace Client
 
         private void CommonDrag()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (ControlManager.Instance.Building_MouseLeft.Down)
             {
                 if (!CurrentDrag)
                 {
                     {
                         // Drag items in bag
-                        Ray ray = UIManager.Instance.UICamera.ScreenPointToRay(Input.mousePosition);
+                        Ray ray = UIManager.Instance.UICamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
                         Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ComponentHitBox);
                         if (hit.collider)
                         {
@@ -80,7 +80,7 @@ namespace Client
                     //Drag components in scene
                     if (!CurrentDrag)
                     {
-                        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+                        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
                         Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ComponentHitBox);
                         if (hit.collider)
                         {
@@ -105,30 +105,27 @@ namespace Client
                     // Drag items dropped
                     if (!CurrentDrag)
                     {
-                        if (Input.GetMouseButtonDown(0))
+                        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
+                        Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ItemDropped);
+                        if (hit.collider)
                         {
-                            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
-                            Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ItemDropped);
-                            if (hit.collider)
+                            MechaComponentDropSprite mcds = hit.collider.GetComponentInParent<MechaComponentDropSprite>();
+                            if (mcds)
                             {
-                                MechaComponentDropSprite mcds = hit.collider.GetComponentInParent<MechaComponentDropSprite>();
-                                if (mcds)
-                                {
-                                    MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mcds.MechaComponentInfo.Clone(), BattleManager.Instance.PlayerMecha);
-                                    GridPos gp = ClientUtils.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
-                                    mcb.SetGridPosition(gp);
-                                    BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
-                                    CurrentDrag = mcb.GetComponent<Draggable>();
-                                    CurrentDrag.SetOnDrag(true, hit.collider);
-                                    mcds.PoolRecycle();
-                                }
+                                MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mcds.MechaComponentInfo.Clone(), BattleManager.Instance.PlayerMecha);
+                                GridPos gp = ClientUtils.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, Vector3.up, GameManager.GridSize);
+                                mcb.SetGridPosition(gp);
+                                BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
+                                CurrentDrag = mcb.GetComponent<Draggable>();
+                                CurrentDrag.SetOnDrag(true, hit.collider);
+                                mcds.PoolRecycle();
                             }
                         }
                     }
                 }
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (ControlManager.Instance.Building_MouseLeft.Up)
             {
                 CancelCurrentDrag();
             }
@@ -142,7 +139,5 @@ namespace Client
                 CurrentDrag = null;
             }
         }
-
-        internal bool IsMouseInsideBag = false;
     }
 }

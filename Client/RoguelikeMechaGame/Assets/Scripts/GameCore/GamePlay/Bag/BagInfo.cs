@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 namespace GameCore
@@ -13,7 +11,7 @@ namespace GameCore
     {
         public BagGridInfo[,] BagGridMatrix = new BagGridInfo[10, 10]; // column, row
 
-        [SerializeField]
+        [ShowInInspector]
         public List<BagItemInfo> BagItemInfos = new List<BagItemInfo>();
 
         private int bagGridNumber = 0;
@@ -185,13 +183,11 @@ namespace GameCore
         {
             foreach (GridPos gp in oldOccupiedGPs)
             {
-                Assert.AreEqual(BagGridMatrix[gp.x, gp.z].State, BagGridInfo.States.TempUnavailable);
                 BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Available;
             }
 
             foreach (GridPos gp in newOccupiedGPs)
             {
-                Assert.AreEqual(BagGridMatrix[gp.x, gp.z].State, BagGridInfo.States.Available);
                 BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Unavailable;
             }
         }

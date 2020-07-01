@@ -32,7 +32,7 @@ namespace Client
                 if (DragManager.Instance.CurrentDrag == null)
                 {
                     // Mouse Right button drag for rotate view
-                    if (Input.GetMouseButtonDown(1))
+                    if (ControlManager.Instance.Building_MouseRight.Down)
                     {
                         onMouseDrag_Right = true;
                         if (GetMousePosOnThisArea(out Vector3 pos))
@@ -41,7 +41,7 @@ namespace Client
                         }
                     }
 
-                    if (onMouseDrag_Right && Input.GetMouseButton(1))
+                    if (onMouseDrag_Right && ControlManager.Instance.Building_MouseRight.Pressed)
                     {
                         if (GetMousePosOnThisArea(out Vector3 pos))
                         {
@@ -62,14 +62,14 @@ namespace Client
                         }
                     }
 
-                    if (Input.GetMouseButtonUp(1))
+                    if (ControlManager.Instance.Building_MouseRight.Up)
                     {
                         onMouseDrag_Right = false;
                         mouseDownPos_Right = Vector3.zero;
                     }
 
                     // Mouse Left button drag for move whole mecha
-                    if (Input.GetMouseButtonDown(0))
+                    if (ControlManager.Instance.Battle_MouseLeft.Down)
                     {
                         onMouseDrag_Left = true;
                         if (GetMousePosOnThisArea(out Vector3 pos))
@@ -78,7 +78,7 @@ namespace Client
                         }
                     }
 
-                    if (onMouseDrag_Left && Input.GetMouseButton(0))
+                    if (onMouseDrag_Left && ControlManager.Instance.Battle_MouseLeft.Pressed)
                     {
                         if (GetMousePosOnThisArea(out Vector3 pos))
                         {
@@ -98,7 +98,7 @@ namespace Client
                         }
                     }
 
-                    if (Input.GetMouseButtonUp(0))
+                    if (ControlManager.Instance.Battle_MouseLeft.Up)
                     {
                         onMouseDrag_Left = false;
                         mouseDownPos_Left = Vector3.zero;
@@ -110,7 +110,7 @@ namespace Client
         private bool GetMousePosOnThisArea(out Vector3 pos)
         {
             pos = Vector3.zero;
-            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
             Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_DragAreas);
             if (hit.collider)
             {
