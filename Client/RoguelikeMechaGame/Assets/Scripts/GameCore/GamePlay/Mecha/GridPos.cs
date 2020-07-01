@@ -35,6 +35,14 @@ namespace GameCore
             return new GridPos(x, z, (Orientation) rotY);
         }
 
+        public static GridPos GetGridPosByTrans(Transform transform, int gridSize)
+        {
+            int x = Mathf.FloorToInt(transform.position.x / gridSize) * gridSize;
+            int z = Mathf.FloorToInt(transform.position.z / gridSize) * gridSize;
+            int rotY = Mathf.RoundToInt(transform.rotation.eulerAngles.y / 90f) % 4;
+            return new GridPos(x, z, (Orientation) rotY);
+        }
+
         public static GridPos GetGridPosByPoint(Vector3 position, int gridSize)
         {
             int x = Mathf.FloorToInt(position.x / gridSize) * gridSize;
@@ -111,6 +119,16 @@ namespace GameCore
             return new GridPos(a.x + b.x, a.z + b.z, a.orientation);
         }
 
+        public static GridPos operator *(GridPos a, int b)
+        {
+            return new GridPos(a.x * b, a.z * b, a.orientation);
+        }
+
+        public static GridPos operator *(int b, GridPos a)
+        {
+            return new GridPos(a.x * b, a.z * b, a.orientation);
+        }
+
         public override string ToString()
         {
             return $"({x},{z},{orientation})";
@@ -120,7 +138,7 @@ namespace GameCore
         {
             return $"({x},{z})";
         }
-        
+
         public enum Orientation
         {
             Up = 0,

@@ -25,7 +25,10 @@ namespace GameCore
             GridPos = gridPos;
             TotalLife = totalLife;
             DropProbability = dropProbability;
-            OccupiedGridPositions = CloneVariantUtils.List(ConfigManager.MechaComponentOccupiedGridPosDict[mechaComponentType]);
+            if (ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(mechaComponentType, out List<GridPos> ops))
+            {
+                OccupiedGridPositions = CloneVariantUtils.List(ops);
+            }
         }
 
         public MechaComponentInfo Clone()

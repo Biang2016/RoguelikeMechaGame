@@ -15,7 +15,7 @@ namespace Client
 
         private float bladeAttackTick = 0;
 
-        List<HitBox> HittingHitBoxes = new List<HitBox>();
+        List<MechaComponentHitBox> HittingHitBoxes = new List<MechaComponentHitBox>();
 
         void Update()
         {
@@ -25,7 +25,7 @@ namespace Client
                 if (bladeAttackTick > BladeInfo.FinalInterval)
                 {
                     bladeAttackTick = 0;
-                    foreach (HitBox hb in HittingHitBoxes)
+                    foreach (MechaComponentHitBox hb in HittingHitBoxes)
                     {
                         hb.ParentHitBoxRoot.MechaComponentBase.Damage(BladeInfo.FinalDamage);
                     }
@@ -37,7 +37,7 @@ namespace Client
         {
             if (GameManager.Instance.GetState() == GameState.Fighting)
             {
-                HitBox hb = c.gameObject.GetComponent<HitBox>();
+                MechaComponentHitBox hb = c.gameObject.GetComponent<MechaComponentHitBox>();
                 if (hb && hb.ParentHitBoxRoot.MechaComponentBase.MechaType != BladeInfo.MechaType)
                 {
                     HittingHitBoxes.Add(hb);
@@ -50,7 +50,7 @@ namespace Client
         {
             if (GameManager.Instance.GetState() == GameState.Fighting)
             {
-                HitBox hb = c.gameObject.GetComponent<HitBox>();
+                MechaComponentHitBox hb = c.gameObject.GetComponent<MechaComponentHitBox>();
                 if (hb && hb.ParentHitBoxRoot.MechaComponentBase.CheckAlive() && hb.ParentHitBoxRoot.MechaComponentBase.MechaType != BladeInfo.MechaType)
                 {
                     HittingHitBoxes.Remove(hb);

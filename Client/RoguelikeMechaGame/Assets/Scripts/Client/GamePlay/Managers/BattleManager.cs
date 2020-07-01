@@ -86,7 +86,7 @@ namespace Client
             {
                 if (hit.collider)
                 {
-                    HitBox hitBox = hit.collider.GetComponent<HitBox>();
+                    MechaComponentHitBox hitBox = hit.collider.GetComponent<MechaComponentHitBox>();
                     Mecha mecha = hitBox?.ParentHitBoxRoot?.MechaComponentBase?.ParentMecha;
                     if (mecha && mecha.MechaInfo.MechaType == MechaType.Enemy)
                     {

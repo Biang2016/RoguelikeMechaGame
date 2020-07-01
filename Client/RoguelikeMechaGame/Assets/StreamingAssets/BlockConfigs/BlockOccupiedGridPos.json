@@ -16,17 +16,17 @@
   "Gun": [
     {
       "x": 0,
+      "z": 1,
+      "orientation": 0
+    },
+    {
+      "x": 0,
       "z": 0,
       "orientation": 0
     },
     {
       "x": 0,
       "z": -1,
-      "orientation": 0
-    },
-    {
-      "x": 0,
-      "z": -2,
       "orientation": 0
     }
   ],

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameCore;
-using UnityEditor;
 
 namespace Client
 {
     [ExecuteInEditMode]
-    public class MechaComponentGrids : MonoBehaviour
+    public class MechaComponentGridRoot : ForbidLocalMoveRoot
     {
         private List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
 
@@ -28,7 +27,6 @@ namespace Client
             return res;
         }
 #endif
-
         public void SetSlotLightsShown(bool shown)
         {
             foreach (MechaComponentGrid mcg in mechaComponentGrids)

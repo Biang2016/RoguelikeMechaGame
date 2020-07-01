@@ -84,7 +84,7 @@ namespace Client
                         Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ComponentHitBox);
                         if (hit.collider)
                         {
-                            HitBox hitBox = hit.collider.gameObject.GetComponent<HitBox>();
+                            MechaComponentHitBox hitBox = hit.collider.gameObject.GetComponent<MechaComponentHitBox>();
                             if (hitBox)
                             {
                                 CurrentDrag_MechaComponentBase = hitBox.ParentHitBoxRoot.MechaComponentBase;

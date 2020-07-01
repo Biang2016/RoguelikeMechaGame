@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Client
 {
-    public class HitBox : MonoBehaviour
+    public class MechaComponentHitBox : MonoBehaviour
     {
-        internal HitBoxRoot ParentHitBoxRoot;
+        internal MechaComponentHitBoxRoot ParentHitBoxRoot;
 
         private void Awake()
         {
-            ParentHitBoxRoot = GetComponentInParent<HitBoxRoot>();
+            ParentHitBoxRoot = GetComponentInParent<MechaComponentHitBoxRoot>();
         }
 
         private bool InBattle;

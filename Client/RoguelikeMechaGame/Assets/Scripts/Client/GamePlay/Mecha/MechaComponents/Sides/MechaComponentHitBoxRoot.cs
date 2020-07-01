@@ -4,20 +4,20 @@ using UnityEngine;
 
 namespace Client
 {
-    public class HitBoxRoot : MonoBehaviour
+    public class MechaComponentHitBoxRoot : ForbidLocalMoveRoot
     {
         internal MechaComponentBase MechaComponentBase;
-        internal List<HitBox> HitBoxes = new List<HitBox>();
+        internal List<MechaComponentHitBox> HitBoxes = new List<MechaComponentHitBox>();
 
         void Awake()
         {
             MechaComponentBase = GetComponentInParent<MechaComponentBase>();
-            HitBoxes = GetComponentsInChildren<HitBox>().ToList();
+            HitBoxes = GetComponentsInChildren<MechaComponentHitBox>().ToList();
         }
 
         public void SetInBattle(bool inBattle)
         {
-            foreach (HitBox hitBox in HitBoxes)
+            foreach (MechaComponentHitBox hitBox in HitBoxes)
             {
                 hitBox.SetInBattle(inBattle);
             }

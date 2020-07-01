@@ -15,7 +15,10 @@ namespace Client
     public abstract class MechaComponentBase : PoolObject, IDraggable
     {
         internal Mecha ParentMecha = null;
-        [SerializeField] private GameObject Models;
+
+        [SerializeField]
+        private GameObject Models;
+
         internal Draggable Draggable;
 
         internal MechaType MechaType => ParentMecha ? ParentMecha.MechaInfo.MechaType : MechaType.None;
@@ -29,6 +32,11 @@ namespace Client
 
         protected virtual void Update()
         {
+            if (!Application.isPlaying)
+            {
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
+            }
         }
 
         public override void PoolRecycle()
@@ -47,7 +55,8 @@ namespace Client
 
         public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
-            MechaComponentBase mcb = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentType].AllocateGameObject<MechaComponentBase>(parentMecha ? parentMecha.transform : null);
+            MechaComponentBase mcb = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentType]
+                .AllocateGameObject<MechaComponentBase>(parentMecha ? parentMecha.transform : null);
             mcb.Initialize(mechaComponentInfo, parentMecha);
             return mcb;
         }
@@ -155,8 +164,8 @@ namespace Client
             }
         }
 
-        public MechaComponentGrids MechaComponentGrids;
-        public HitBoxRoot MechaHitBoxRoot;
+        public MechaComponentGridRoot MechaComponentGrids;
+        public MechaComponentHitBoxRoot MechaHitBoxRoot;
 
         private void Rotate()
         {
@@ -221,7 +230,7 @@ namespace Client
         {
             if (_leftLife > M_TotalLife * 0.5f && _leftLife - damage <= M_TotalLife * 0.5f)
             {
-                foreach (HitBox hb in MechaHitBoxRoot.HitBoxes)
+                foreach (MechaComponentHitBox hb in MechaHitBoxRoot.HitBoxes)
                 {
                     FX lighteningFX = FXManager.Instance.PlayFX(FX_Type.FX_BlockDamagedLightening, hb.transform.position);
                     lighteningFXs.Add(lighteningFX);
