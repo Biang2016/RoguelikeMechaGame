@@ -250,11 +250,23 @@ namespace Client
             return res;
         }
 
-        public static void GetStateFromContext(this ControlManager.ButtonState state, InputAction.CallbackContext context)
+        public static void GetStateFromContext(this ControlManager.ButtonState state, InputAction action)
         {
-            state.Down = context.started;
-            state.Pressed = context.ReadValueAsButton();
-            state.Up = context.canceled;
+            action.performed += context =>
+            {
+                state.Pressed = context.ReadValue<float>() > 0.5f;
+                state.Down = !state.LastPressed && state.Pressed;
+                state.Up = state.LastPressed && !state.Pressed;
+                state.LastPressed = state.Pressed;
+            };
+
+            action.canceled += context =>
+            {
+                state.Down = false;
+                state.Up = false;
+                state.LastPressed = false;
+                state.Pressed = false;
+            };
         }
     }
 }
