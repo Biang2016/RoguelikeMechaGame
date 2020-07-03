@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Client;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace GameCore
 {
-    public static class ConfigManager
+    public class ConfigManager : TSingleton<ConfigManager>
     {
-        public const float GunSpeed= 20;
+        public const int EDIT_AREA_SIZE = 9;
+
+        public const float GunSpeed = 20;
         public const int GunDamage = 5;
         public const float MissileSpeed = 20;
         public const int MissileDamage = 10;

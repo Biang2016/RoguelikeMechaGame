@@ -47,7 +47,7 @@ namespace Client
 
         private void RotateToMouseDirection()
         {
-            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
+            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Battle_MousePosition);
             Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, Vector3.up, transform.position);
 
             float nearFactor = 3f / (intersect - transform.position).magnitude;

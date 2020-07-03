@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using Debug = UnityEngine.Debug;
 
 namespace Client
@@ -9,34 +9,11 @@ namespace Client
     public class ControlManager : MonoSingleton<ControlManager>
     {
         private PlayerInput PlayerInput;
-        public PlayerInput.CommonActions CommonActions;
-        public PlayerInput.MechaBattleInputActions MechaBattleInputActions;
-        public PlayerInput.MechaBuildingInputActions MechaBuildingInputActions;
+        private PlayerInput.CommonActions CommonInputActions;
+        private PlayerInput.MechaBattleInputActions MechaBattleInputActions;
+        private PlayerInput.MechaBuildingInputActions MechaBuildingInputActions;
 
         public List<ButtonState> ButtonStateList = new List<ButtonState>();
-
-        public class ButtonState
-        {
-            public string ButtonName;
-            public bool Down;
-            public bool Pressed;
-            public bool LastPressed;
-            public bool Up;
-
-            public override string ToString()
-            {
-                if (!Down && !Up) return "";
-                string res = ButtonName + (Down ? ",Down" : "") + (Up ? ",Up" : "");
-                return res;
-            }
-
-            public void Reset()
-            {
-                Down = false;
-                LastPressed = Pressed;
-                Up = false;
-            }
-        }
 
         #region Building
 
@@ -44,8 +21,22 @@ namespace Client
         public ButtonState Building_MouseRight = new ButtonState() {ButtonName = "Building_MouseRight"};
         public ButtonState Building_MouseMiddle = new ButtonState() {ButtonName = "Building_MouseMiddle"};
 
-        public Vector2 Building_MousePosition;
         public float Building_MouseWheel;
+
+        public Vector2 Building_MousePosition
+        {
+            get
+            {
+                if (MechaBuildingInputActions.enabled)
+                {
+                    return MousePosition;
+                }
+                else
+                {
+                    return Vector2.zero;
+                }
+            }
+        }
 
         public ButtonState Building_RotateItem = new ButtonState() {ButtonName = "Building_RotateItem"};
         public ButtonState Building_ToggleBag = new ButtonState() {ButtonName = "Building_ToggleBag"};
@@ -58,14 +49,29 @@ namespace Client
         public ButtonState Battle_MouseLeft = new ButtonState() {ButtonName = "Battle_MouseLeft"};
         public ButtonState Battle_MouseRight = new ButtonState() {ButtonName = "Battle_MouseRight"};
         public ButtonState Battle_MouseMiddle = new ButtonState() {ButtonName = "Battle_MouseMiddle"};
+
+        public Vector2 Battle_Move;
+        public float Battle_MouseWheel;
+
+        public Vector2 Battle_MousePosition
+        {
+            get
+            {
+                if (MechaBattleInputActions.enabled)
+                {
+                    return MousePosition;
+                }
+                else
+                {
+                    return Vector2.zero;
+                }
+            }
+        }
+
         public ButtonState Battle_Skill_0 = new ButtonState() {ButtonName = "Battle_Skill_0"};
         public ButtonState Battle_Skill_1 = new ButtonState() {ButtonName = "Battle_Skill_1"};
         public ButtonState Battle_Skill_2 = new ButtonState() {ButtonName = "Battle_Skill_2"};
         public ButtonState Battle_Skill_3 = new ButtonState() {ButtonName = "Battle_Skill_3"};
-
-        public Vector2 Battle_Move;
-        public Vector2 Battle_MousePosition;
-        public float Battle_MouseWheel;
 
         #endregion
 
@@ -75,8 +81,21 @@ namespace Client
         public ButtonState Common_MouseRight = new ButtonState() {ButtonName = "Common_MouseRight"};
         public ButtonState Common_MouseMiddle = new ButtonState() {ButtonName = "Common_MouseMiddle"};
 
-        public Vector2 Common_MousePosition;
         public float Common_MouseWheel;
+
+        public Vector2 Common_MousePosition {
+            get
+            {
+                if (CommonInputActions.enabled)
+                {
+                    return MousePosition;
+                }
+                else
+                {
+                    return Vector2.zero;
+                }
+            }
+        }
 
         public ButtonState Common_Confirm = new ButtonState() {ButtonName = "Common_Confirm"};
         public ButtonState Common_Debug = new ButtonState() {ButtonName = "Common_Debug"};
@@ -85,10 +104,12 @@ namespace Client
 
         #endregion
 
+        public Vector2 MousePosition => Mouse.current.scroll.ReadValue();
+
         void Awake()
         {
             PlayerInput = new PlayerInput();
-            CommonActions = new PlayerInput.CommonActions(PlayerInput);
+            CommonInputActions = new PlayerInput.CommonActions(PlayerInput);
             MechaBattleInputActions = new PlayerInput.MechaBattleInputActions(PlayerInput);
             MechaBuildingInputActions = new PlayerInput.MechaBuildingInputActions(PlayerInput);
 
@@ -96,7 +117,6 @@ namespace Client
             Building_MouseRight.GetStateCallbackFromContext(MechaBuildingInputActions.MouseRightClick);
             Building_MouseMiddle.GetStateCallbackFromContext(MechaBuildingInputActions.MouseMiddleClick);
 
-            MechaBuildingInputActions.MousePosition.started += context => Building_MousePosition = context.ReadValue<Vector2>();
             MechaBattleInputActions.MouseWheel.started += context => Building_MouseWheel = context.ReadValue<float>();
 
             Building_RotateItem.GetStateCallbackFromContext(MechaBuildingInputActions.RotateItem);
@@ -108,7 +128,6 @@ namespace Client
             Battle_MouseMiddle.GetStateCallbackFromContext(MechaBattleInputActions.MouseMiddleClick);
 
             MechaBattleInputActions.Move.performed += context => Battle_Move = context.ReadValue<Vector2>();
-            MechaBattleInputActions.MousePosition.started += context => Battle_MousePosition = context.ReadValue<Vector2>();
             MechaBattleInputActions.MouseWheel.started += context => Battle_MouseWheel = context.ReadValue<float>();
 
             Battle_Skill_0.GetStateCallbackFromContext(MechaBattleInputActions.Skill_0);
@@ -116,17 +135,16 @@ namespace Client
             Battle_Skill_2.GetStateCallbackFromContext(MechaBattleInputActions.Skill_2);
             Battle_Skill_3.GetStateCallbackFromContext(MechaBattleInputActions.Skill_3);
 
-            Common_MouseLeft.GetStateCallbackFromContext(CommonActions.MouseLeftClick);
-            Common_MouseRight.GetStateCallbackFromContext(CommonActions.MouseRightClick);
-            Common_MouseMiddle.GetStateCallbackFromContext(CommonActions.MouseMiddleClick);
+            Common_MouseLeft.GetStateCallbackFromContext(CommonInputActions.MouseLeftClick);
+            Common_MouseRight.GetStateCallbackFromContext(CommonInputActions.MouseRightClick);
+            Common_MouseMiddle.GetStateCallbackFromContext(CommonInputActions.MouseMiddleClick);
 
-            CommonActions.MousePosition.started += context => Common_MousePosition = context.ReadValue<Vector2>();
-            CommonActions.MouseWheel.started += context => Common_MouseWheel = context.ReadValue<float>();
+            CommonInputActions.MouseWheel.started += context => Common_MouseWheel = context.ReadValue<float>();
 
-            Common_Confirm.GetStateCallbackFromContext(CommonActions.Confirm);
-            Common_Debug.GetStateCallbackFromContext(CommonActions.Debug);
-            Common_Exit.GetStateCallbackFromContext(CommonActions.Exit);
-            Common_Tab.GetStateCallbackFromContext(CommonActions.Tab);
+            Common_Confirm.GetStateCallbackFromContext(CommonInputActions.Confirm);
+            Common_Debug.GetStateCallbackFromContext(CommonInputActions.Debug);
+            Common_Exit.GetStateCallbackFromContext(CommonInputActions.Exit);
+            Common_Tab.GetStateCallbackFromContext(CommonInputActions.Tab);
         }
 
         void Update()
@@ -139,6 +157,8 @@ namespace Client
                     Debug.Log(input);
                 }
             }
+
+            Debug.Log(Building_MouseWheel);
         }
 
         void LateUpdate()

@@ -197,7 +197,7 @@ namespace Client
 
         public static GridPos GetGridPosByMousePos(Transform parentTransform, Vector3 planeNormal, int gridSize)
         {
-            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
+            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.MousePosition);
             Vector3 intersect = ClientUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, planeNormal, parentTransform.position);
 
             Vector3 rot_intersect = parentTransform.InverseTransformPoint(intersect);
@@ -250,24 +250,5 @@ namespace Client
 
             return res;
         }
-
-        public static void GetStateCallbackFromContext(this ControlManager.ButtonState state, InputAction action)
-        {
-            ControlManager.Instance.ButtonStateList.Add(state);
-            action.performed += context =>
-            {
-                ButtonControl bc = (ButtonControl) context.control;
-                state.Down = !state.LastPressed;
-                state.Pressed = bc.isPressed;
-                state.Up = bc.wasReleasedThisFrame;
-                if (bc.wasReleasedThisFrame)
-                {
-                    state.Down = false;
-                    state.Pressed = false;
-                }
-            };
-
-            action.canceled += context => { state.Pressed = false; };
         }
-    }
 }

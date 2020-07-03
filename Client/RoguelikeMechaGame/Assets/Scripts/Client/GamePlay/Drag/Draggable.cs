@@ -35,7 +35,7 @@ namespace Client
             if (!canDrag) return;
             if (_isOnDrag)
             {
-                Vector3 uiCameraPosition = UIManager.Instance.UICamera.ScreenToWorldPoint(ControlManager.Instance.Common_MousePosition);
+                Vector3 buildingMousePos = UIManager.Instance.UICamera.ScreenToWorldPoint(ControlManager.Instance.Building_MousePosition);
 
                 if (isBegin)
                 {
@@ -60,20 +60,20 @@ namespace Client
                     {
                         if (isBegin)
                         {
-                            dragBeginPosition_UIObject = uiCameraPosition;
+                            dragBeginPosition_UIObject = buildingMousePos;
                             oriAnchoredPosition_UIObject = ((RectTransform) transform).anchoredPosition;
                         }
 
                         caller.DragComponent_OnMousePressed(CheckMoveToArea()); //将鼠标悬停的区域告知拖动对象主体
 
-                        float draggedDistance = (uiCameraPosition - dragBeginPosition_UIObject).magnitude;
+                        float draggedDistance = (buildingMousePos - dragBeginPosition_UIObject).magnitude;
                         if (draggedDistance < caller.DragComponent_DragMinDistance)
                         {
                             //不动
                         }
                         else if (DragManager.Instance.IsMouseInsideBag) //拖拽物体本身 
                         {
-                            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BagManager.Instance.BagPanel.ItemContainer.transform as RectTransform, ControlManager.Instance.Common_MousePosition,
+                            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BagManager.Instance.BagPanel.ItemContainer.transform as RectTransform, ControlManager.Instance.Building_MousePosition,
                                 UIManager.Instance.UICamera, out Vector2 mousePos))
                             {
                                 mousePos.x += ((RectTransform) BagManager.Instance.BagPanel.ItemContainer).rect.width / 2f;
@@ -142,7 +142,7 @@ namespace Client
 
         public Vector3 GetMouseAsWorldPoint()
         {
-            Vector3 mousePoint = ControlManager.Instance.Common_MousePosition;
+            Vector3 mousePoint = ControlManager.Instance.Building_MousePosition;
             mousePoint.z = GameManager.Instance.MainCamera.WorldToScreenPoint(gameObject.transform.position).z;
             return GameManager.Instance.MainCamera.ScreenToWorldPoint(mousePoint);
         }
@@ -150,7 +150,7 @@ namespace Client
         public DragAreaTypes CheckMoveToArea()
         {
             if (DragManager.Instance.IsMouseInsideBag) return DragAreaTypes.Bag;
-            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
+            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
             Physics.Raycast(ray, out RaycastHit raycast, 1000f, GameManager.Instance.LayerMask_DragAreas);
             if (raycast.collider)
             {

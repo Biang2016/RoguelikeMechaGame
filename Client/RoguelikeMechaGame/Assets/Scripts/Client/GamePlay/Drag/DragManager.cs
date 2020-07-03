@@ -56,7 +56,7 @@ namespace Client
                 {
                     {
                         // Drag items in bag
-                        Ray ray = UIManager.Instance.UICamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
+                        Ray ray = UIManager.Instance.UICamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
                         Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ComponentHitBox);
                         if (hit.collider)
                         {
@@ -80,7 +80,7 @@ namespace Client
                     //Drag components in scene
                     if (!CurrentDrag)
                     {
-                        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
+                        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
                         Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ComponentHitBox);
                         if (hit.collider)
                         {
@@ -105,7 +105,7 @@ namespace Client
                     // Drag items dropped
                     if (!CurrentDrag)
                     {
-                        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
+                        Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
                         Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ItemDropped);
                         if (hit.collider)
                         {

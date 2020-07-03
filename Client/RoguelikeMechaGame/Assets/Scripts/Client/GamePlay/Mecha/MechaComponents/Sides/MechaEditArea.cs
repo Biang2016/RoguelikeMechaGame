@@ -110,7 +110,7 @@ namespace Client
         private bool GetMousePosOnThisArea(out Vector3 pos)
         {
             pos = Vector3.zero;
-            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
+            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
             Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_DragAreas);
             if (hit.collider)
             {

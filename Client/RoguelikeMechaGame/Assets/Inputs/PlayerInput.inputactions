@@ -30,14 +30,6 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
-                    "name": "MousePosition",
-                    "type": "Value",
-                    "id": "870b1f07-902f-41e7-a369-f35dc0e91631",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "MouseWheel",
                     "type": "Value",
                     "id": "30f26ba5-25b9-4961-8434-e848d1079d9f",
@@ -87,28 +79,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "24a1606a-f34d-41ac-9215-146e02496c2e",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "MousePosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9883e5dd-cad2-413e-b6a2-989f335baec9",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "MousePosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "e4a4021e-82f8-43f0-885a-287d2c76bf59",
@@ -404,14 +374,6 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
-                    "name": "MousePosition",
-                    "type": "Value",
-                    "id": "bc7fcfb4-9223-4162-928b-a4596d2c796b",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "MouseWheel",
                     "type": "Value",
                     "id": "e8549032-9186-43d2-8ef5-15806bb016ba",
@@ -535,17 +497,6 @@
                 },
                 {
                     "name": "",
-                    "id": "7c07f695-4b9e-4b95-bf60-14ef1ac9806d",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "MousePosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8f46ccae-7a7e-4634-b2f9-1e1afb241b88",
                     "path": "<Mouse>/middleButton",
                     "interactions": "",
@@ -584,14 +535,6 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
-                },
-                {
-                    "name": "MousePosition",
-                    "type": "Value",
-                    "id": "4667d882-cce3-4537-860a-5473702c2792",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
                 },
                 {
                     "name": "MouseWheel",
@@ -714,17 +657,6 @@
                 },
                 {
                     "name": "",
-                    "id": "d5e064d5-2bef-4032-b415-9fd5acc375ea",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "MousePosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a1a5710a-99a2-4033-8f47-46dab9355f0a",
                     "path": "<Mouse>/middleButton",
                     "interactions": "",
@@ -749,7 +681,7 @@
                     "name": "",
                     "id": "9857762b-435f-433c-8c10-5693573aa119",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "MouseLeftClick",

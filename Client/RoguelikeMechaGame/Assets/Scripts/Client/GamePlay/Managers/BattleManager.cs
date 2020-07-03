@@ -81,7 +81,7 @@ namespace Client
 
         void Update()
         {
-            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Common_MousePosition);
+            Ray ray = GameManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Battle_MousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 1000f, GameManager.Instance.LayerMask_ComponentHitBox))
             {
                 if (hit.collider)
