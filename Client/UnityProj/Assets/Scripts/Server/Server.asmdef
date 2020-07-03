@@ -1,0 +1,15 @@
+{
+    "name": "Server",
+    "references": [
+        "GUID:5002340f888409848933f28082e71eac",
+        "GUID:0f4af21808e4eba498d720b42140e456"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

@@ -1,0 +1,14 @@
+{
+    "name": "GameCore",
+    "references": [
+        "GUID:0f4af21808e4eba498d720b42140e456"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
