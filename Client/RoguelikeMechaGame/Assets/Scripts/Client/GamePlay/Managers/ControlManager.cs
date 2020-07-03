@@ -25,8 +25,8 @@ namespace Client
 
             public override string ToString()
             {
-                if (!Down && !Pressed && !Up) return "";
-                string res = ButtonName + (Down ? ",Down" : "") + (Pressed ? ",Pressed" : "") + (Up ? ",Up" : "");
+                if (!Down && !Up) return "";
+                string res = ButtonName + (Down ? ",Down" : "") + (Up ? ",Up" : "");
                 return res;
             }
 
@@ -131,10 +131,13 @@ namespace Client
 
         void Update()
         {
-            string input = Common_Exit.ToString();
-            if (!string.IsNullOrWhiteSpace(input))
+            foreach (ButtonState buttonState in ButtonStateList)
             {
-                Debug.Log(Common_Exit.ToString());
+                string input = buttonState.ToString();
+                if (!string.IsNullOrWhiteSpace(input))
+                {
+                    Debug.Log(input);
+                }
             }
         }
 

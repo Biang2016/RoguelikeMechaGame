@@ -26,7 +26,7 @@ namespace Client
                     ""id"": ""5a64d0f6-9a46-49fe-834c-30f69d7569b0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""MouseRightClick"",
@@ -34,7 +34,7 @@ namespace Client
                     ""id"": ""78be1988-5a9e-4d77-a087-54214b8a8a85"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""MouseMiddleClick"",
@@ -42,7 +42,7 @@ namespace Client
                     ""id"": ""dcdf1bc6-6254-491a-874a-b162a7d558d8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""MousePosition"",
@@ -74,7 +74,7 @@ namespace Client
                     ""id"": ""10804770-1f15-4fa3-ab77-f9c65eda1450"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Skill_1"",
@@ -82,7 +82,7 @@ namespace Client
                     ""id"": ""d54c8a7b-ae23-43b7-b6a4-ea80959376ec"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Skill_2"",
@@ -90,7 +90,7 @@ namespace Client
                     ""id"": ""797408c5-59fe-4154-b3ea-9afca0591bb8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Skill_3"",
@@ -98,7 +98,7 @@ namespace Client
                     ""id"": ""f027c168-eca3-48e2-be31-6edf44e526b2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -400,7 +400,7 @@ namespace Client
                     ""id"": ""015b758b-31e4-4e14-ab9d-383d30922006"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""MouseRightClick"",
@@ -408,7 +408,7 @@ namespace Client
                     ""id"": ""dfc6415d-0fa1-4f02-897c-0a00d4f2c106"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""MouseMiddleClick"",
@@ -416,7 +416,7 @@ namespace Client
                     ""id"": ""91a6bbaa-0bcc-4eb3-b451-59fa66970d2d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""MousePosition"",
@@ -440,7 +440,7 @@ namespace Client
                     ""id"": ""097c04ba-5832-435d-8a3d-368f89c5f76b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""ToggleWireLines"",
@@ -448,7 +448,7 @@ namespace Client
                     ""id"": ""ab7dc26b-d210-49a5-bc1e-93e822716dbc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""ToggleBag"",
@@ -456,7 +456,7 @@ namespace Client
                     ""id"": ""9c4bb76c-4707-4e5c-a7f3-74e9d4fe4aa9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -582,7 +582,7 @@ namespace Client
                     ""id"": ""1c84be6d-be71-459a-b015-48d29931e2a2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""MouseRightClick"",
@@ -590,7 +590,7 @@ namespace Client
                     ""id"": ""01504029-9327-4d64-ae1b-ea8d51e2a146"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""MouseMiddleClick"",
@@ -598,7 +598,7 @@ namespace Client
                     ""id"": ""d3ecfc04-fec2-4614-8ff5-618873f00b28"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""MousePosition"",
