@@ -13,6 +13,8 @@ namespace Client
         public PlayerInput.MechaBattleInputActions MechaBattleInputActions;
         public PlayerInput.MechaBuildingInputActions MechaBuildingInputActions;
 
+        public List<ButtonState> ButtonStateList = new List<ButtonState>();
+
         public class ButtonState
         {
             public string ButtonName;
@@ -26,6 +28,13 @@ namespace Client
                 if (!Down && !Pressed && !Up) return "";
                 string res = ButtonName + (Down ? ",Down" : "") + (Pressed ? ",Pressed" : "") + (Up ? ",Up" : "");
                 return res;
+            }
+
+            public void Reset()
+            {
+                Down = false;
+                LastPressed = Pressed;
+                Up = false;
             }
         }
 
@@ -83,41 +92,41 @@ namespace Client
             MechaBattleInputActions = new PlayerInput.MechaBattleInputActions(PlayerInput);
             MechaBuildingInputActions = new PlayerInput.MechaBuildingInputActions(PlayerInput);
 
-            Building_MouseLeft.GetStateFromContext(MechaBuildingInputActions.MouseLeftClick);
-            Building_MouseRight.GetStateFromContext(MechaBuildingInputActions.MouseRightClick);
-            Building_MouseMiddle.GetStateFromContext(MechaBuildingInputActions.MouseMiddleClick);
+            Building_MouseLeft.GetStateCallbackFromContext(MechaBuildingInputActions.MouseLeftClick);
+            Building_MouseRight.GetStateCallbackFromContext(MechaBuildingInputActions.MouseRightClick);
+            Building_MouseMiddle.GetStateCallbackFromContext(MechaBuildingInputActions.MouseMiddleClick);
 
             MechaBuildingInputActions.MousePosition.started += context => Building_MousePosition = context.ReadValue<Vector2>();
             MechaBattleInputActions.MouseWheel.started += context => Building_MouseWheel = context.ReadValue<float>();
 
-            Building_RotateItem.GetStateFromContext(MechaBuildingInputActions.RotateItem);
-            Building_ToggleBag.GetStateFromContext(MechaBuildingInputActions.ToggleBag);
-            Building_ToggleWireLines.GetStateFromContext(MechaBuildingInputActions.ToggleWireLines);
+            Building_RotateItem.GetStateCallbackFromContext(MechaBuildingInputActions.RotateItem);
+            Building_ToggleBag.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleBag);
+            Building_ToggleWireLines.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleWireLines);
 
-            Battle_MouseLeft.GetStateFromContext(MechaBattleInputActions.MouseLeftClick);
-            Battle_MouseRight.GetStateFromContext(MechaBattleInputActions.MouseRightClick);
-            Battle_MouseMiddle.GetStateFromContext(MechaBattleInputActions.MouseMiddleClick);
+            Battle_MouseLeft.GetStateCallbackFromContext(MechaBattleInputActions.MouseLeftClick);
+            Battle_MouseRight.GetStateCallbackFromContext(MechaBattleInputActions.MouseRightClick);
+            Battle_MouseMiddle.GetStateCallbackFromContext(MechaBattleInputActions.MouseMiddleClick);
 
             MechaBattleInputActions.Move.performed += context => Battle_Move = context.ReadValue<Vector2>();
             MechaBattleInputActions.MousePosition.started += context => Battle_MousePosition = context.ReadValue<Vector2>();
             MechaBattleInputActions.MouseWheel.started += context => Battle_MouseWheel = context.ReadValue<float>();
 
-            Battle_Skill_0.GetStateFromContext(MechaBattleInputActions.Skill_0);
-            Battle_Skill_1.GetStateFromContext(MechaBattleInputActions.Skill_1);
-            Battle_Skill_2.GetStateFromContext(MechaBattleInputActions.Skill_2);
-            Battle_Skill_3.GetStateFromContext(MechaBattleInputActions.Skill_3);
+            Battle_Skill_0.GetStateCallbackFromContext(MechaBattleInputActions.Skill_0);
+            Battle_Skill_1.GetStateCallbackFromContext(MechaBattleInputActions.Skill_1);
+            Battle_Skill_2.GetStateCallbackFromContext(MechaBattleInputActions.Skill_2);
+            Battle_Skill_3.GetStateCallbackFromContext(MechaBattleInputActions.Skill_3);
 
-            Common_MouseLeft.GetStateFromContext(CommonActions.MouseLeftClick);
-            Common_MouseRight.GetStateFromContext(CommonActions.MouseRightClick);
-            Common_MouseMiddle.GetStateFromContext(CommonActions.MouseMiddleClick);
+            Common_MouseLeft.GetStateCallbackFromContext(CommonActions.MouseLeftClick);
+            Common_MouseRight.GetStateCallbackFromContext(CommonActions.MouseRightClick);
+            Common_MouseMiddle.GetStateCallbackFromContext(CommonActions.MouseMiddleClick);
 
             CommonActions.MousePosition.started += context => Common_MousePosition = context.ReadValue<Vector2>();
             CommonActions.MouseWheel.started += context => Common_MouseWheel = context.ReadValue<float>();
 
-            Common_Confirm.GetStateFromContext(CommonActions.Confirm);
-            Common_Debug.GetStateFromContext(CommonActions.Debug);
-            Common_Exit.GetStateFromContext(CommonActions.Exit);
-            Common_Tab.GetStateFromContext(CommonActions.Tab);
+            Common_Confirm.GetStateCallbackFromContext(CommonActions.Confirm);
+            Common_Debug.GetStateCallbackFromContext(CommonActions.Debug);
+            Common_Exit.GetStateCallbackFromContext(CommonActions.Exit);
+            Common_Tab.GetStateCallbackFromContext(CommonActions.Tab);
         }
 
         void Update()
@@ -126,6 +135,14 @@ namespace Client
             if (!string.IsNullOrWhiteSpace(input))
             {
                 Debug.Log(Common_Exit.ToString());
+            }
+        }
+
+        void LateUpdate()
+        {
+            foreach (ButtonState buttonState in ButtonStateList)
+            {
+                buttonState.Reset();
             }
         }
 

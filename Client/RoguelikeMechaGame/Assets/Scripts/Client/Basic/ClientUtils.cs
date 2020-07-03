@@ -4,6 +4,7 @@ using System.Linq;
 using GameCore;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using Random = UnityEngine.Random;
 
 namespace Client
@@ -250,23 +251,23 @@ namespace Client
             return res;
         }
 
-        public static void GetStateFromContext(this ControlManager.ButtonState state, InputAction action)
+        public static void GetStateCallbackFromContext(this ControlManager.ButtonState state, InputAction action)
         {
+            ControlManager.Instance.ButtonStateList.Add(state);
             action.performed += context =>
             {
-                state.Pressed = context.ReadValue<float>() > 0.5f;
-                state.Down = !state.LastPressed && state.Pressed;
-                state.Up = state.LastPressed && !state.Pressed;
-                state.LastPressed = state.Pressed;
+                ButtonControl bc = (ButtonControl) context.control;
+                state.Down = !state.LastPressed;
+                state.Pressed = bc.isPressed;
+                state.Up = bc.wasReleasedThisFrame;
+                if (bc.wasReleasedThisFrame)
+                {
+                    state.Down = false;
+                    state.Pressed = false;
+                }
             };
 
-            action.canceled += context =>
-            {
-                state.Down = false;
-                state.Up = false;
-                state.LastPressed = false;
-                state.Pressed = false;
-            };
+            action.canceled += context => { state.Pressed = false; };
         }
     }
 }

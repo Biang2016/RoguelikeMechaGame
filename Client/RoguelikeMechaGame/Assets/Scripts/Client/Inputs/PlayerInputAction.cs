@@ -622,7 +622,7 @@ namespace Client
                     ""id"": ""c221a3f9-4221-4da1-b188-bf04e006da04"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Tab"",
@@ -630,7 +630,7 @@ namespace Client
                     ""id"": ""21fa8e64-6108-4648-bbba-0381934760dd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Confirm"",
@@ -638,7 +638,7 @@ namespace Client
                     ""id"": ""9c95a13c-9036-4cae-9675-0ddef4b52926"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Debug"",
@@ -646,7 +646,7 @@ namespace Client
                     ""id"": ""a3d49bae-abc7-4e11-8476-9ad2ac9ac463"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -687,7 +687,7 @@ namespace Client
                     ""name"": """",
                     ""id"": ""c2a2ef1b-7b38-4f7c-aabe-258fb695fb5b"",
                     ""path"": ""*/{Cancel}"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad;KeyboardMouse"",
                     ""action"": ""Exit"",
