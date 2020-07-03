@@ -45,14 +45,6 @@ namespace Client
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
-                    ""name"": ""MouseWheel"",
-                    ""type"": ""Value"",
-                    ""id"": ""30f26ba5-25b9-4961-8434-e848d1079d9f"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""bd466e74-41ff-4ec2-9bc2-c86fdc792344"",
@@ -227,39 +219,6 @@ namespace Client
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""116f0e7f-e2f5-47ac-821c-b80d90febf24"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseWheel"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""366c5fb6-7394-43f5-851e-9b2e7da0df6a"",
-                    ""path"": ""*/{ScrollVertical}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""MouseWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""699044c3-5867-47b6-a65e-e3f0b4660350"",
-                    ""path"": ""*/{ScrollVertical}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""MouseWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""1badfae2-bf1a-445a-bfee-f4de44f3323c"",
                     ""path"": ""<Mouse>/middleButton"",
@@ -389,14 +348,6 @@ namespace Client
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
-                    ""name"": ""MouseWheel"",
-                    ""type"": ""Value"",
-                    ""id"": ""e8549032-9186-43d2-8ef5-15806bb016ba"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""RotateItem"",
                     ""type"": ""Button"",
                     ""id"": ""097c04ba-5832-435d-8a3d-368f89c5f76b"",
@@ -478,39 +429,6 @@ namespace Client
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""33f41b30-e4c4-43c0-a780-315efe3fa882"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseWheel"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""2a7f0941-4842-434d-b70c-1e05b9abfbff"",
-                    ""path"": ""*/{ScrollVertical}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""MouseWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""ff3a0fc3-a537-4b7e-b773-4efaa1a67151"",
-                    ""path"": ""*/{ScrollVertical}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""MouseWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""8f46ccae-7a7e-4634-b2f9-1e1afb241b88"",
                     ""path"": ""<Mouse>/middleButton"",
@@ -552,14 +470,6 @@ namespace Client
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
-                    ""name"": ""MouseWheel"",
-                    ""type"": ""Value"",
-                    ""id"": ""932e7ae4-0584-4519-8958-c553df9e905a"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Exit"",
                     ""type"": ""Button"",
                     ""id"": ""c221a3f9-4221-4da1-b188-bf04e006da04"",
@@ -593,39 +503,6 @@ namespace Client
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""59128212-ea41-48c3-86f2-6fe5c3337d99"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseWheel"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""5e6d1d45-b257-4bbb-a55d-565a1f377ca9"",
-                    ""path"": ""*/{ScrollVertical}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""MouseWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""ee35d6a2-ed86-44cc-a626-7516b4abdd0e"",
-                    ""path"": ""*/{ScrollVertical}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""MouseWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": """",
                     ""id"": ""c2a2ef1b-7b38-4f7c-aabe-258fb695fb5b"",
@@ -724,7 +601,6 @@ namespace Client
             m_MechaBattleInput_MouseLeftClick = m_MechaBattleInput.FindAction("MouseLeftClick", throwIfNotFound: true);
             m_MechaBattleInput_MouseRightClick = m_MechaBattleInput.FindAction("MouseRightClick", throwIfNotFound: true);
             m_MechaBattleInput_MouseMiddleClick = m_MechaBattleInput.FindAction("MouseMiddleClick", throwIfNotFound: true);
-            m_MechaBattleInput_MouseWheel = m_MechaBattleInput.FindAction("MouseWheel", throwIfNotFound: true);
             m_MechaBattleInput_Move = m_MechaBattleInput.FindAction("Move", throwIfNotFound: true);
             m_MechaBattleInput_Skill_0 = m_MechaBattleInput.FindAction("Skill_0", throwIfNotFound: true);
             m_MechaBattleInput_Skill_1 = m_MechaBattleInput.FindAction("Skill_1", throwIfNotFound: true);
@@ -735,7 +611,6 @@ namespace Client
             m_MechaBuildingInput_MouseLeftClick = m_MechaBuildingInput.FindAction("MouseLeftClick", throwIfNotFound: true);
             m_MechaBuildingInput_MouseRightClick = m_MechaBuildingInput.FindAction("MouseRightClick", throwIfNotFound: true);
             m_MechaBuildingInput_MouseMiddleClick = m_MechaBuildingInput.FindAction("MouseMiddleClick", throwIfNotFound: true);
-            m_MechaBuildingInput_MouseWheel = m_MechaBuildingInput.FindAction("MouseWheel", throwIfNotFound: true);
             m_MechaBuildingInput_RotateItem = m_MechaBuildingInput.FindAction("RotateItem", throwIfNotFound: true);
             m_MechaBuildingInput_ToggleWireLines = m_MechaBuildingInput.FindAction("ToggleWireLines", throwIfNotFound: true);
             m_MechaBuildingInput_ToggleBag = m_MechaBuildingInput.FindAction("ToggleBag", throwIfNotFound: true);
@@ -744,7 +619,6 @@ namespace Client
             m_Common_MouseLeftClick = m_Common.FindAction("MouseLeftClick", throwIfNotFound: true);
             m_Common_MouseRightClick = m_Common.FindAction("MouseRightClick", throwIfNotFound: true);
             m_Common_MouseMiddleClick = m_Common.FindAction("MouseMiddleClick", throwIfNotFound: true);
-            m_Common_MouseWheel = m_Common.FindAction("MouseWheel", throwIfNotFound: true);
             m_Common_Exit = m_Common.FindAction("Exit", throwIfNotFound: true);
             m_Common_Tab = m_Common.FindAction("Tab", throwIfNotFound: true);
             m_Common_Confirm = m_Common.FindAction("Confirm", throwIfNotFound: true);
@@ -801,7 +675,6 @@ namespace Client
         private readonly InputAction m_MechaBattleInput_MouseLeftClick;
         private readonly InputAction m_MechaBattleInput_MouseRightClick;
         private readonly InputAction m_MechaBattleInput_MouseMiddleClick;
-        private readonly InputAction m_MechaBattleInput_MouseWheel;
         private readonly InputAction m_MechaBattleInput_Move;
         private readonly InputAction m_MechaBattleInput_Skill_0;
         private readonly InputAction m_MechaBattleInput_Skill_1;
@@ -814,7 +687,6 @@ namespace Client
             public InputAction @MouseLeftClick => m_Wrapper.m_MechaBattleInput_MouseLeftClick;
             public InputAction @MouseRightClick => m_Wrapper.m_MechaBattleInput_MouseRightClick;
             public InputAction @MouseMiddleClick => m_Wrapper.m_MechaBattleInput_MouseMiddleClick;
-            public InputAction @MouseWheel => m_Wrapper.m_MechaBattleInput_MouseWheel;
             public InputAction @Move => m_Wrapper.m_MechaBattleInput_Move;
             public InputAction @Skill_0 => m_Wrapper.m_MechaBattleInput_Skill_0;
             public InputAction @Skill_1 => m_Wrapper.m_MechaBattleInput_Skill_1;
@@ -838,9 +710,6 @@ namespace Client
                     @MouseMiddleClick.started -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnMouseMiddleClick;
                     @MouseMiddleClick.performed -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnMouseMiddleClick;
                     @MouseMiddleClick.canceled -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnMouseMiddleClick;
-                    @MouseWheel.started -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnMouseWheel;
-                    @MouseWheel.performed -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnMouseWheel;
-                    @MouseWheel.canceled -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnMouseWheel;
                     @Move.started -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnMove;
                     @Move.performed -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnMove;
                     @Move.canceled -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnMove;
@@ -869,9 +738,6 @@ namespace Client
                     @MouseMiddleClick.started += instance.OnMouseMiddleClick;
                     @MouseMiddleClick.performed += instance.OnMouseMiddleClick;
                     @MouseMiddleClick.canceled += instance.OnMouseMiddleClick;
-                    @MouseWheel.started += instance.OnMouseWheel;
-                    @MouseWheel.performed += instance.OnMouseWheel;
-                    @MouseWheel.canceled += instance.OnMouseWheel;
                     @Move.started += instance.OnMove;
                     @Move.performed += instance.OnMove;
                     @Move.canceled += instance.OnMove;
@@ -898,7 +764,6 @@ namespace Client
         private readonly InputAction m_MechaBuildingInput_MouseLeftClick;
         private readonly InputAction m_MechaBuildingInput_MouseRightClick;
         private readonly InputAction m_MechaBuildingInput_MouseMiddleClick;
-        private readonly InputAction m_MechaBuildingInput_MouseWheel;
         private readonly InputAction m_MechaBuildingInput_RotateItem;
         private readonly InputAction m_MechaBuildingInput_ToggleWireLines;
         private readonly InputAction m_MechaBuildingInput_ToggleBag;
@@ -909,7 +774,6 @@ namespace Client
             public InputAction @MouseLeftClick => m_Wrapper.m_MechaBuildingInput_MouseLeftClick;
             public InputAction @MouseRightClick => m_Wrapper.m_MechaBuildingInput_MouseRightClick;
             public InputAction @MouseMiddleClick => m_Wrapper.m_MechaBuildingInput_MouseMiddleClick;
-            public InputAction @MouseWheel => m_Wrapper.m_MechaBuildingInput_MouseWheel;
             public InputAction @RotateItem => m_Wrapper.m_MechaBuildingInput_RotateItem;
             public InputAction @ToggleWireLines => m_Wrapper.m_MechaBuildingInput_ToggleWireLines;
             public InputAction @ToggleBag => m_Wrapper.m_MechaBuildingInput_ToggleBag;
@@ -931,9 +795,6 @@ namespace Client
                     @MouseMiddleClick.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseMiddleClick;
                     @MouseMiddleClick.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseMiddleClick;
                     @MouseMiddleClick.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseMiddleClick;
-                    @MouseWheel.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseWheel;
-                    @MouseWheel.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseWheel;
-                    @MouseWheel.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseWheel;
                     @RotateItem.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnRotateItem;
                     @RotateItem.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnRotateItem;
                     @RotateItem.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnRotateItem;
@@ -956,9 +817,6 @@ namespace Client
                     @MouseMiddleClick.started += instance.OnMouseMiddleClick;
                     @MouseMiddleClick.performed += instance.OnMouseMiddleClick;
                     @MouseMiddleClick.canceled += instance.OnMouseMiddleClick;
-                    @MouseWheel.started += instance.OnMouseWheel;
-                    @MouseWheel.performed += instance.OnMouseWheel;
-                    @MouseWheel.canceled += instance.OnMouseWheel;
                     @RotateItem.started += instance.OnRotateItem;
                     @RotateItem.performed += instance.OnRotateItem;
                     @RotateItem.canceled += instance.OnRotateItem;
@@ -979,7 +837,6 @@ namespace Client
         private readonly InputAction m_Common_MouseLeftClick;
         private readonly InputAction m_Common_MouseRightClick;
         private readonly InputAction m_Common_MouseMiddleClick;
-        private readonly InputAction m_Common_MouseWheel;
         private readonly InputAction m_Common_Exit;
         private readonly InputAction m_Common_Tab;
         private readonly InputAction m_Common_Confirm;
@@ -991,7 +848,6 @@ namespace Client
             public InputAction @MouseLeftClick => m_Wrapper.m_Common_MouseLeftClick;
             public InputAction @MouseRightClick => m_Wrapper.m_Common_MouseRightClick;
             public InputAction @MouseMiddleClick => m_Wrapper.m_Common_MouseMiddleClick;
-            public InputAction @MouseWheel => m_Wrapper.m_Common_MouseWheel;
             public InputAction @Exit => m_Wrapper.m_Common_Exit;
             public InputAction @Tab => m_Wrapper.m_Common_Tab;
             public InputAction @Confirm => m_Wrapper.m_Common_Confirm;
@@ -1014,9 +870,6 @@ namespace Client
                     @MouseMiddleClick.started -= m_Wrapper.m_CommonActionsCallbackInterface.OnMouseMiddleClick;
                     @MouseMiddleClick.performed -= m_Wrapper.m_CommonActionsCallbackInterface.OnMouseMiddleClick;
                     @MouseMiddleClick.canceled -= m_Wrapper.m_CommonActionsCallbackInterface.OnMouseMiddleClick;
-                    @MouseWheel.started -= m_Wrapper.m_CommonActionsCallbackInterface.OnMouseWheel;
-                    @MouseWheel.performed -= m_Wrapper.m_CommonActionsCallbackInterface.OnMouseWheel;
-                    @MouseWheel.canceled -= m_Wrapper.m_CommonActionsCallbackInterface.OnMouseWheel;
                     @Exit.started -= m_Wrapper.m_CommonActionsCallbackInterface.OnExit;
                     @Exit.performed -= m_Wrapper.m_CommonActionsCallbackInterface.OnExit;
                     @Exit.canceled -= m_Wrapper.m_CommonActionsCallbackInterface.OnExit;
@@ -1042,9 +895,6 @@ namespace Client
                     @MouseMiddleClick.started += instance.OnMouseMiddleClick;
                     @MouseMiddleClick.performed += instance.OnMouseMiddleClick;
                     @MouseMiddleClick.canceled += instance.OnMouseMiddleClick;
-                    @MouseWheel.started += instance.OnMouseWheel;
-                    @MouseWheel.performed += instance.OnMouseWheel;
-                    @MouseWheel.canceled += instance.OnMouseWheel;
                     @Exit.started += instance.OnExit;
                     @Exit.performed += instance.OnExit;
                     @Exit.canceled += instance.OnExit;
@@ -1084,7 +934,6 @@ namespace Client
             void OnMouseLeftClick(InputAction.CallbackContext context);
             void OnMouseRightClick(InputAction.CallbackContext context);
             void OnMouseMiddleClick(InputAction.CallbackContext context);
-            void OnMouseWheel(InputAction.CallbackContext context);
             void OnMove(InputAction.CallbackContext context);
             void OnSkill_0(InputAction.CallbackContext context);
             void OnSkill_1(InputAction.CallbackContext context);
@@ -1096,7 +945,6 @@ namespace Client
             void OnMouseLeftClick(InputAction.CallbackContext context);
             void OnMouseRightClick(InputAction.CallbackContext context);
             void OnMouseMiddleClick(InputAction.CallbackContext context);
-            void OnMouseWheel(InputAction.CallbackContext context);
             void OnRotateItem(InputAction.CallbackContext context);
             void OnToggleWireLines(InputAction.CallbackContext context);
             void OnToggleBag(InputAction.CallbackContext context);
@@ -1106,7 +954,6 @@ namespace Client
             void OnMouseLeftClick(InputAction.CallbackContext context);
             void OnMouseRightClick(InputAction.CallbackContext context);
             void OnMouseMiddleClick(InputAction.CallbackContext context);
-            void OnMouseWheel(InputAction.CallbackContext context);
             void OnExit(InputAction.CallbackContext context);
             void OnTab(InputAction.CallbackContext context);
             void OnConfirm(InputAction.CallbackContext context);

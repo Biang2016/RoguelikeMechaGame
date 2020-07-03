@@ -76,7 +76,7 @@ namespace Client
                 UIManager.Instance.ShowUIForms<BagPanel>();
                 BattleManager.Instance.PlayerMecha.MechaEditArea.Show();
                 BattleManager.Instance.PlayerMecha.SlotLightsShown = true;
-                GameManager.Instance.MainCameraFollow.FOW_Level = 1;
+                GameManager.Instance.MainCameraFollow.FOV_Level = 1;
                 BattleManager.Instance.PlayerMecha.GridShown = true;
                 GameManager.Instance.SetState(GameState.Building);
             }
@@ -106,7 +106,7 @@ namespace Client
                 }
 
                 GameManager.Instance.MainCameraFollow.SetTarget(BattleManager.Instance.PlayerMecha.transform);
-                GameManager.Instance.MainCameraFollow.FOW_Level = 2;
+                GameManager.Instance.MainCameraFollow.FOV_Level = 2;
                 GameManager.Instance.SetState(GameState.Fighting);
             }
         }

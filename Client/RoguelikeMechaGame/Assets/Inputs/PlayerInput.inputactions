@@ -30,14 +30,6 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
-                    "name": "MouseWheel",
-                    "type": "Value",
-                    "id": "30f26ba5-25b9-4961-8434-e848d1079d9f",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Move",
                     "type": "Value",
                     "id": "bd466e74-41ff-4ec2-9bc2-c86fdc792344",
@@ -212,39 +204,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "116f0e7f-e2f5-47ac-821c-b80d90febf24",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseWheel",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "366c5fb6-7394-43f5-851e-9b2e7da0df6a",
-                    "path": "*/{ScrollVertical}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "MouseWheel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "699044c3-5867-47b6-a65e-e3f0b4660350",
-                    "path": "*/{ScrollVertical}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "MouseWheel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "1badfae2-bf1a-445a-bfee-f4de44f3323c",
                     "path": "<Mouse>/middleButton",
@@ -374,14 +333,6 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
-                    "name": "MouseWheel",
-                    "type": "Value",
-                    "id": "e8549032-9186-43d2-8ef5-15806bb016ba",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "RotateItem",
                     "type": "Button",
                     "id": "097c04ba-5832-435d-8a3d-368f89c5f76b",
@@ -463,39 +414,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "33f41b30-e4c4-43c0-a780-315efe3fa882",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseWheel",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "2a7f0941-4842-434d-b70c-1e05b9abfbff",
-                    "path": "*/{ScrollVertical}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "MouseWheel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "ff3a0fc3-a537-4b7e-b773-4efaa1a67151",
-                    "path": "*/{ScrollVertical}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "MouseWheel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "8f46ccae-7a7e-4634-b2f9-1e1afb241b88",
                     "path": "<Mouse>/middleButton",
@@ -537,14 +455,6 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
-                    "name": "MouseWheel",
-                    "type": "Value",
-                    "id": "932e7ae4-0584-4519-8958-c553df9e905a",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Exit",
                     "type": "Button",
                     "id": "c221a3f9-4221-4da1-b188-bf04e006da04",
@@ -578,39 +488,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "1D Axis",
-                    "id": "59128212-ea41-48c3-86f2-6fe5c3337d99",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseWheel",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "5e6d1d45-b257-4bbb-a55d-565a1f377ca9",
-                    "path": "*/{ScrollVertical}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "MouseWheel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "ee35d6a2-ed86-44cc-a626-7516b4abdd0e",
-                    "path": "*/{ScrollVertical}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "MouseWheel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
                 {
                     "name": "",
                     "id": "c2a2ef1b-7b38-4f7c-aabe-258fb695fb5b",

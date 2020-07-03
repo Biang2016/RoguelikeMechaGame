@@ -10,13 +10,13 @@ namespace Client
         private Vector3 targetingPoint;
         private Vector3 Offset_Fighting;
         private Vector3 Offset_Building;
-        [SerializeField] private float MinFOW;
-        [SerializeField] private float MaxFOW;
+        [SerializeField] private float MinFOV;
+        [SerializeField] private float MaxFOV;
 
         void Awake()
         {
             RefreshTargetingPosition();
-            FOW_Level = 2;
+            FOV_Level = 2;
         }
 
         public void SetTarget(Transform _target)
@@ -32,22 +32,22 @@ namespace Client
             }
         }
 
-        private int _fow_Level = 0;
+        private int _fov_Level = 0;
 
-        internal int FOW_Level
+        internal int FOV_Level
         {
-            get { return _fow_Level; }
+            get { return _fov_Level; }
             set
             {
-                if (_fow_Level != value)
+                if (_fov_Level != value)
                 {
-                    _fow_Level = Mathf.Clamp(value, 0, 3);
-                    Camera.DOFieldOfView(FOWs[_fow_Level], 0.2f);
+                    _fov_Level = Mathf.Clamp(value, 0, 3);
+                    Camera.DOFieldOfView(FOVs[_fov_Level], 0.2f);
                 }
             }
         }
 
-        private float[] FOWs = new float[] {10, 15, 25, 35};
+        private float[] FOVs = new float[] {10, 15, 25, 35};
 
         private Vector3 offset_Manually;
 
@@ -79,14 +79,14 @@ namespace Client
             float movement = 5f;
             offset_Manually = ControlManager.Instance.Battle_Move.x * new Vector3(movement, 0, movement) + ControlManager.Instance.Battle_Move.y * new Vector3(-movement, 0, movement);
 
-            if (ControlManager.Instance.Battle_MouseWheel < 0)
+            if (ControlManager.Instance.Battle_MouseWheel.y < 0)
             {
-                FOW_Level++;
+                FOV_Level++;
             }
 
-            if (ControlManager.Instance.Battle_MouseWheel > 0)
+            if (ControlManager.Instance.Battle_MouseWheel.y > 0)
             {
-                FOW_Level--;
+                FOV_Level--;
             }
         }
 
