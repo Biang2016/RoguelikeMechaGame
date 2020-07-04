@@ -236,7 +236,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5570218008558262321}
-  - component: {fileID: 5570218008558262320}
   - component: {fileID: 429958884970942821}
   - component: {fileID: 2610974796736393842}
   - component: {fileID: 6405004443083676034}
@@ -263,19 +262,6 @@ Transform:
   m_Father: {fileID: 1154461616125127710}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5570218008558262320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5570218008558262326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b68fa5515aeb054084be41af220deab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DragAreaTypes: 2
 --- !u!33 &429958884970942821
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -334,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c7fe4194ed7624b912c82d115dd4c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DragAreaTypes: 2
+  DragAreaName: MechaEditArea
   MeshRenderer_Circle: {fileID: 2610974796736393842}
   MeshRenderer_Grid: {fileID: 265717878856900663}
   BoxCollider: {fileID: 7381615765215493332}

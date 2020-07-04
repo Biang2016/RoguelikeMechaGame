@@ -282,37 +282,5 @@ namespace GameCore
 
             return colorString;
         }
-
-        public static GridRect GetBoundingRectFromListGridPos(this List<GridPos> gridPositions)
-        {
-            int X_min = 999;
-            int X_max = -999;
-            int Z_min = 999;
-            int Z_max = -999;
-            foreach (GridPos gp in gridPositions)
-            {
-                if (gp.x < X_min)
-                {
-                    X_min = gp.x;
-                }
-
-                if (gp.x > X_max)
-                {
-                    X_max = gp.x;
-                }
-
-                if (gp.z < Z_min)
-                {
-                    Z_min = gp.z;
-                }
-
-                if (gp.z > Z_max)
-                {
-                    Z_max = gp.z;
-                }
-            }
-
-            return new GridRect(X_min, Z_min, X_max - X_min + 1, Z_max - Z_min + 1);
-        }
     }
 }

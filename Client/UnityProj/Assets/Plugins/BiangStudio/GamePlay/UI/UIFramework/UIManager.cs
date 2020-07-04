@@ -9,14 +9,16 @@ namespace BiangStudio.GamePlay.UI
         public Camera UICamera;
         public Canvas UICanvas;
 
-        public delegate GameObject InstantiateDelegate(GameObject prefab);
+        public delegate GameObject LoadUIPanelDelegate(string prefabName);
 
         public delegate void LogErrorDelegate(string log);
 
         public delegate bool ButtonDownDelegate();
 
-        public LogErrorDelegate LogErrorHandler;
-        private InstantiateDelegate InstantiateHandler;
+        private LogErrorDelegate LogErrorHandler;
+        private LoadUIPanelDelegate LoadUIPanelHandler;
+        public ButtonDownDelegate MouseLeftButtonDownHandler;
+        public ButtonDownDelegate MouseRightButtonDownHandler;
         public ButtonDownDelegate CloseUIFormKeyDownHandler;
         public ButtonDownDelegate ConfirmKeyDownHandler;
         public ButtonDownDelegate InputNavigateKeyDownHandler;
@@ -33,16 +35,25 @@ namespace BiangStudio.GamePlay.UI
         [SerializeField] private Transform UIFixedRoot = null; //固定显示窗体的根节点
         [SerializeField] private Transform UIPopUpRoot = null; //弹出窗体的根节点
 
-        public void Init(InstantiateDelegate instantiateGameObjectHandler, LogErrorDelegate logErrorHandler,
+        public void Init(LoadUIPanelDelegate loadUIPanelHandler, LogErrorDelegate logErrorHandler,
+            ButtonDownDelegate mouseLeftButtonDownHandler,
+            ButtonDownDelegate mouseRightButtonDownHandler,
             ButtonDownDelegate closeUIFormKeyDownHandler,
             ButtonDownDelegate confirmKeyDownHandler,
             ButtonDownDelegate inputNavigateKeyDownHandler)
         {
-            InstantiateHandler = instantiateGameObjectHandler;
+            LoadUIPanelHandler = loadUIPanelHandler;
             LogErrorHandler = logErrorHandler;
+            MouseLeftButtonDownHandler = mouseLeftButtonDownHandler;
+            MouseRightButtonDownHandler = mouseRightButtonDownHandler;
             CloseUIFormKeyDownHandler = closeUIFormKeyDownHandler;
             ConfirmKeyDownHandler = confirmKeyDownHandler;
             InputNavigateKeyDownHandler = inputNavigateKeyDownHandler;
+        }
+
+        internal static void LogError(string log)
+        {
+            Instance.LogErrorHandler?.Invoke("[BiangStudio.UI] " + log);
         }
 
         public BaseUIForm GetPeekUIForm()
@@ -100,7 +111,7 @@ namespace BiangStudio.GamePlay.UI
                     break;
             }
 
-            //Debug.Log("showUI  " + uiFormName);
+            //LogError("showUI  " + uiFormName);
             return baseUIForms;
         }
 
@@ -139,7 +150,7 @@ namespace BiangStudio.GamePlay.UI
                     break;
             }
 
-            //Debug.Log("closeUI  " + uiFormName);
+            //LogError("closeUI  " + uiFormName);
         }
 
         public T GetBaseUIForm<T>() where T : BaseUIForm
@@ -233,11 +244,11 @@ namespace BiangStudio.GamePlay.UI
         /// <param name="uiFormName">UI窗体名称</param>
         private BaseUIForm LoadUIForm(string uiFormName)
         {
-            GameObject UIPanel = InstantiateHandler(PrefabManager.Instance.GetPrefab(uiFormName));
+            GameObject UIPanel = LoadUIPanelHandler(uiFormName);
             BaseUIForm baseUiForm = UIPanel.GetComponent<BaseUIForm>();
             if (baseUiForm == null)
             {
-                Debug.Log("BaseUIForm==null! ,请先确认窗体预设对象上是否加载了BaseUIForm的子类脚本！ 参数 uiFormName=" + uiFormName);
+                LogError("BaseUIForm==null! ,请先确认窗体预设对象上是否加载了BaseUIForm的子类脚本！ 参数 uiFormName=" + uiFormName);
                 return null;
             }
 
@@ -295,7 +306,7 @@ namespace BiangStudio.GamePlay.UI
             }
             else
             {
-                Debug.Log("baseUIForm==null,Please Check, 参数 uiFormName=" + uiFormName);
+                LogError("baseUIForm==null,Please Check, 参数 uiFormName=" + uiFormName);
             }
         }
 

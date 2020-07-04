@@ -610,7 +610,7 @@ namespace Client
                 {
                     ""name"": """",
                     ""id"": ""5ae4b0b1-cf3f-49dd-b9bc-010914dccf00"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""path"": ""<Mouse>/scroll"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",

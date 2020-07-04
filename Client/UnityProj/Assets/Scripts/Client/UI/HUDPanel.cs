@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using BiangStudio.GamePlay.UI;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Client
 {

@@ -144,6 +144,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 1500443317}
   MainCameraFollow: {fileID: 916938913}
+--- !u!1 &4429083880332275475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3005836633245540815}
+  - component: {fileID: 8481769960839281818}
+  m_Layer: 0
+  m_Name: DebugConsole
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3005836633245540815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4429083880332275475}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5980882138566427480}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8481769960839281818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4429083880332275475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa8b7a13366d676438a9854727def866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLog: 1
+  ShakeToOpen: 1
+  ShakeAcceleration: 3
+  RestrictLogCount: 0
+  MaxLogs: 1000
+  Collapse: 1
 --- !u!1 &5093699690535289496
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +366,7 @@ Transform:
   - {fileID: 5980882138589961546}
   - {fileID: 1500443315}
   - {fileID: 5980882136729047176}
+  - {fileID: 3005836633245540815}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -332,6 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b75c61f8083561479e2fe5fd692447b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugConsole: {fileID: 8481769960839281818}
 --- !u!1 &5980882138589961541
 GameObject:
   m_ObjectHideFlags: 0

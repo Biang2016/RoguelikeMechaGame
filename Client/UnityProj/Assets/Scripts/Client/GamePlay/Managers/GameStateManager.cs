@@ -1,4 +1,5 @@
-﻿using BiangStudio.Singleton;
+﻿using BiangStudio.DragHover;
+using BiangStudio.Singleton;
 
 namespace Client
 {

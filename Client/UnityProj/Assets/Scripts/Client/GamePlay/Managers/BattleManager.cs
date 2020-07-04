@@ -5,7 +5,6 @@ using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay.UI;
 using BiangStudio.Singleton;
 using GameCore;
-using Random = UnityEngine.Random;
 
 namespace Client
 {
@@ -32,6 +31,31 @@ namespace Client
         public override void Start()
         {
             HUDPanel = UIManager.Instance.ShowUIForms<HUDPanel>();
+        }
+
+        public override void Update()
+        {
+            Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Battle_MousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerManager.Instance.LayerMask_ComponentHitBox))
+            {
+                if (hit.collider)
+                {
+                    MechaComponentHitBox hitBox = hit.collider.GetComponent<MechaComponentHitBox>();
+                    Mecha mecha = hitBox?.ParentHitBoxRoot?.MechaComponentBase?.ParentMecha;
+                    if (mecha && mecha.MechaInfo.MechaType == MechaType.Enemy)
+                    {
+                        HUDPanel.LoadEnemyMech(mecha);
+                    }
+                }
+                else
+                {
+                    HUDPanel.LoadEnemyMech(null);
+                }
+            }
+            else
+            {
+                HUDPanel.LoadEnemyMech(null);
+            }
         }
 
         public void StartGame()
@@ -73,7 +97,7 @@ namespace Client
                     }
                     else
                     {
-                        mci = new MechaComponentInfo((MechaComponentType) Random.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), new GridPosR(i, j, GridPosR.Orientation.Up), 50, 5);
+                        mci = new MechaComponentInfo((MechaComponentType) LevelManager.SRandom.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), new GridPosR(i, j, GridPosR.Orientation.Up), 50, 5);
                     }
 
                     enemyComponentInfos.Add(mci);
@@ -90,31 +114,6 @@ namespace Client
             foreach (Mecha em in EnemyMechas)
             {
                 em.SetShown(shown);
-            }
-        }
-
-        void Update()
-        {
-            Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Battle_MousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerManager.Instance.LayerMask_ComponentHitBox))
-            {
-                if (hit.collider)
-                {
-                    MechaComponentHitBox hitBox = hit.collider.GetComponent<MechaComponentHitBox>();
-                    Mecha mecha = hitBox?.ParentHitBoxRoot?.MechaComponentBase?.ParentMecha;
-                    if (mecha && mecha.MechaInfo.MechaType == MechaType.Enemy)
-                    {
-                        HUDPanel.LoadEnemyMech(mecha);
-                    }
-                }
-                else
-                {
-                    HUDPanel.LoadEnemyMech(null);
-                }
-            }
-            else
-            {
-                HUDPanel.LoadEnemyMech(null);
             }
         }
     }

@@ -22,6 +22,7 @@ namespace Client
         public ButtonState Building_MouseRight = new ButtonState() {ButtonName = "Building_MouseRight"};
         public ButtonState Building_MouseMiddle = new ButtonState() {ButtonName = "Building_MouseMiddle"};
 
+        private Vector2 Last_Building_MousePosition = Vector2.zero;
 
         public Vector2 Building_MousePosition
         {
@@ -29,11 +30,12 @@ namespace Client
             {
                 if (MechaBuildingInputActions.enabled)
                 {
+                    Last_Building_MousePosition = MousePosition;
                     return MousePosition;
                 }
                 else
                 {
-                    return Vector2.zero;
+                    return Last_Building_MousePosition;
                 }
             }
         }
@@ -67,17 +69,20 @@ namespace Client
 
         public Vector2 Battle_Move;
 
+        private Vector2 Last_Battle_MousePosition = Vector2.zero;
+
         public Vector2 Battle_MousePosition
         {
             get
             {
                 if (MechaBattleInputActions.enabled)
                 {
+                    Last_Battle_MousePosition = MousePosition;
                     return MousePosition;
                 }
                 else
                 {
-                    return Vector2.zero;
+                    return Last_Battle_MousePosition;
                 }
             }
         }
@@ -110,17 +115,20 @@ namespace Client
         public ButtonState Common_MouseRight = new ButtonState() {ButtonName = "Common_MouseRight"};
         public ButtonState Common_MouseMiddle = new ButtonState() {ButtonName = "Common_MouseMiddle"};
 
+        private Vector2 Last_Common_MousePosition = Vector2.zero;
+
         public Vector2 Common_MousePosition
         {
             get
             {
                 if (CommonInputActions.enabled)
                 {
+                    Last_Common_MousePosition = MousePosition;
                     return MousePosition;
                 }
                 else
                 {
-                    return Vector2.zero;
+                    return Last_Common_MousePosition;
                 }
             }
         }
@@ -147,8 +155,8 @@ namespace Client
 
         #endregion
 
-        public Vector2 MousePosition => Mouse.current.position.ReadValue();
-        public Vector2 MouseWheel => Mouse.current.scroll.ReadValue();
+        private Vector2 MousePosition => Mouse.current.position.ReadValue();
+        private Vector2 MouseWheel => Mouse.current.scroll.ReadValue();
 
         public override void Awake()
         {
@@ -191,7 +199,7 @@ namespace Client
 
         public override void Update()
         {
-            if (true)
+            if (false)
             {
                 foreach (ButtonState buttonState in ButtonStateList)
                 {
@@ -209,6 +217,30 @@ namespace Client
             foreach (ButtonState buttonState in ButtonStateList)
             {
                 buttonState.Reset();
+            }
+        }
+
+        public void EnableBattleInputActions(bool enable)
+        {
+            if (enable)
+            {
+                MechaBattleInputActions.Enable();
+            }
+            else
+            {
+                MechaBattleInputActions.Disable();
+            }
+        }
+
+        public void EnableBuildingInputActions(bool enable)
+        {
+            if (enable)
+            {
+                MechaBuildingInputActions.Enable();
+            }
+            else
+            {
+                MechaBuildingInputActions.Disable();
             }
         }
     }

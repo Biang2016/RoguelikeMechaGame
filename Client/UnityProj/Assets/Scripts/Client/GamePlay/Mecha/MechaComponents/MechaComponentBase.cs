@@ -2,9 +2,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using BiangStudio.CloneVariantUtils;
+using BiangStudio.CloneVariant;
+using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay;
+using BiangStudio.GridBag;
+using BiangStudio.ObjectPool;
 using GameCore;
 using Newtonsoft.Json;
 #if UNITY_EDITOR
@@ -79,7 +82,7 @@ namespace Client
                 MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
                 mcb.Initialize_Editor(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 10, 0));
                 mcbs.Add(mcb);
-                MechaComponentOccupiedGridPosDict.Add(mcType, CloneVariantUtils.List(mcb.MechaComponentGrids.GetOccupiedPositions()));
+                MechaComponentOccupiedGridPosDict.Add(mcType, mcb.MechaComponentGrids.GetOccupiedPositions().Clone());
             }
 
             string json = JsonConvert.SerializeObject(MechaComponentOccupiedGridPosDict, Formatting.Indented);
@@ -159,9 +162,9 @@ namespace Client
 
         private void RefreshOccupiedGridPositions()
         {
-            if (GameCore.ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(MechaComponentInfo.MechaComponentType, out List<GridPos> ops))
+            if (ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(MechaComponentInfo.MechaComponentType, out List<GridPos> ops))
             {
-                MechaComponentInfo.OccupiedGridPositions = GridPos.TransformOccupiedPositions(MechaComponentInfo.GridPos, ops);
+                MechaComponentInfo.OccupiedGridPositions = GridPos.TransformOccupiedPositions(MechaComponentInfo.GridPos, ops.Clone());
             }
         }
 
@@ -259,23 +262,23 @@ namespace Client
 
         #region IDraggable
 
-        public void DragComponent_OnMouseDown(Collider collider)
+        public void Draggable_OnMouseDown(string dragAreaName, Collider collider)
         {
         }
 
-        public void DragComponent_OnMousePressed(DragAreaTypes dragAreaTypes)
+        public void Draggable_OnMousePressed(string dragAreaName)
         {
             if (ControlManager.Instance.Building_RotateItem.Down)
             {
                 Rotate();
             }
 
-            switch (dragAreaTypes)
+            switch (DragManager.Instance.Current_DragAreaName)
             {
-                case DragAreaTypes.Bag:
+                case BiangStudio.GridBag.DragAreaDefines.Bag:
                 {
                     ReturnToBag(true, true);
-                    break;
+                    return;
                 }
             }
 
@@ -300,13 +303,13 @@ namespace Client
                 if (cancelDrag)
                 {
                     isReturningToBag = true;
-                    DragManager.Instance.CancelCurrentDrag();
+                    DragManager.Instance.CurrentDrag = null;
                 }
 
                 if (dragTheItem)
                 {
-                    DragManager.Instance.CurrentDrag = BagManager.Instance.BagPanel.GetBagItem(bii.GUID).gameObject.GetComponent<Draggable>();
-                    DragManager.Instance.CurrentDrag.SetOnDrag(true, null);
+                    DragManager.Instance.CurrentDrag = BagManager.Instance.BagPanel.GetBagItem(bii.GUID).gameObject.GetComponent<DraggableBagItem>();
+                    DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BagItem>());
                 }
 
                 ParentMecha?.RemoveMechaComponent(this);
@@ -316,33 +319,33 @@ namespace Client
             return suc;
         }
 
-        public void DragComponent_OnMouseUp(DragAreaTypes dragAreaTypes)
+        public void Draggable_OnMouseUp(string dragAreaTypes)
         {
             switch (dragAreaTypes)
             {
-                case DragAreaTypes.Bag:
+                case BiangStudio.GridBag.DragAreaDefines.Bag:
                 {
                     if (!isReturningToBag)
                     {
                         bool suc = ReturnToBag(false, false);
                         if (!suc)
                         {
-                            DragManager.Instance.CurrentDrag.ReturnOriginalPositionRotation();
+                            DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
                         }
                     }
 
                     break;
                 }
-                case DragAreaTypes.MechaEditorArea:
+                case DragAreaDefines.MechaEditorArea:
                 {
                     break;
                 }
-                case DragAreaTypes.None:
+                case BiangStudio.DragHover.DragAreaDefines.None:
                 {
                     bool suc = ReturnToBag(false, false);
                     if (!suc)
                     {
-                        DragManager.Instance.CurrentDrag.ReturnOriginalPositionRotation();
+                        DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
                     }
 
                     break;
@@ -350,17 +353,17 @@ namespace Client
             }
         }
 
-        public void DragComponent_SetStates(ref bool canDrag, ref DragAreaTypes dragFrom)
+        public void Draggable_SetStates(ref bool canDrag, ref string dragFrom)
         {
             canDrag = true;
-            dragFrom = DragAreaTypes.MechaEditorArea;
+            dragFrom = DragAreaDefines.MechaEditorArea;
         }
 
-        float IDraggable.DragComponent_DragMinDistance => 0f;
+        float IDraggable.Draggable_DragMinDistance => 0f;
 
-        float IDraggable.DragComponent_DragMaxDistance => 9999f;
+        float IDraggable.Draggable_DragMaxDistance => 9999f;
 
-        public void DragComponent_DragOutEffects()
+        public void Draggable_DragOutEffects()
         {
         }
 

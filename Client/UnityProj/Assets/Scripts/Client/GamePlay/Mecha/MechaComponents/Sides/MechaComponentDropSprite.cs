@@ -1,4 +1,5 @@
-﻿using BiangStudio.GamePlay;
+﻿using BiangStudio.GridBag;
+using BiangStudio.ObjectPool;
 using GameCore;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Client
         public void Initialize(MechaComponentInfo mechaComponentInfo, Vector3 position)
         {
             MechaComponentInfo = mechaComponentInfo.Clone();
-            Sprite sprite = BagManager.Instance.BagItemSpriteDict[mechaComponentInfo.BagItemSpriteKey];
+            Sprite sprite = BagManager.Instance.GetBagItemSprite(mechaComponentInfo.BagItemSpriteKey);
             SpriteRenderer.sprite = sprite;
             transform.position = position;
         }

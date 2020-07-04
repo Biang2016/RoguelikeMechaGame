@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using BiangStudio.GamePlay;
+using BiangStudio.ObjectPool;
 
 namespace Client
 {

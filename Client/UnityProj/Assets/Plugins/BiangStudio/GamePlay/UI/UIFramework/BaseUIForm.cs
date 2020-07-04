@@ -32,7 +32,9 @@ namespace BiangStudio.GamePlay.UI
 
             if (UIType.IsClickElsewhereClose)
             {
-                bool isClickElseWhere = (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) || Input.GetMouseButtonDown(1);
+                bool mouseLeftDown = UIManager.Instance.MouseLeftButtonDownHandler != null && UIManager.Instance.MouseLeftButtonDownHandler.Invoke();
+                bool mouseRightDown = UIManager.Instance.MouseRightButtonDownHandler != null && UIManager.Instance.MouseRightButtonDownHandler.Invoke();
+                bool isClickElseWhere = (mouseLeftDown && !EventSystem.current.IsPointerOverGameObject()) || mouseRightDown;
                 if (isClickElseWhere)
                 {
                     BaseUIForm peek = UIManager.Instance.GetPeekUIForm();

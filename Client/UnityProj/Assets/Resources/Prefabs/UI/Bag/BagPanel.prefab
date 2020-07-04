@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5894908770889329394}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -108,7 +108,7 @@ RectTransform:
   - {fileID: 6846549778914956298}
   - {fileID: 1744715677681809230}
   m_Father: {fileID: 5894908770889329394}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -123,6 +123,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671837821663407611}
   m_CullTransparentMesh: 0
+--- !u!1 &4296384274805801465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1555528165101525833}
+  - component: {fileID: 7406042205189484061}
+  - component: {fileID: 4071823157664621069}
+  m_Layer: 11
+  m_Name: DragArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1555528165101525833
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4296384274805801465}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5894908770889329394}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &7406042205189484061
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4296384274805801465}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 600, y: 800, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4071823157664621069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4296384274805801465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b68fa5515aeb054084be41af220deab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DragAreaName: Bag
 --- !u!1 &5878781087509367888
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +253,6 @@ GameObject:
   - component: {fileID: 5894908770889329394}
   - component: {fileID: 4194573756714326885}
   - component: {fileID: 515688265981725523}
-  - component: {fileID: 7570295007687148790}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -209,6 +271,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1555528165101525833}
   - {fileID: 5883837694488697669}
   - {fileID: 1125059906150776365}
   m_Father: {fileID: 2707196692012080598}
@@ -255,46 +318,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7570295007687148790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7779744346536289589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d4562ee7b724d46a4ab4b9176f542a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PointerEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 140084516278828573}
-        m_MethodName: OnMouseEnterBag
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  PointerExit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 140084516278828573}
-        m_MethodName: OnMouseLeaveBag
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &7854563622419864520
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +427,6 @@ GameObject:
   - component: {fileID: 2707196692012080598}
   - component: {fileID: 5387691443965475779}
   - component: {fileID: 140084516278828573}
-  - component: {fileID: 2215453519238467965}
   m_Layer: 5
   m_Name: BagPanel
   m_TagString: Untagged
@@ -455,43 +477,3 @@ MonoBehaviour:
   ItemContainerGridLayout: {fileID: 7917803274916129999}
   GridContainer: {fileID: 6846549778914956298}
   ItemContainer: {fileID: 1744715677681809230}
---- !u!114 &2215453519238467965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8349317807001677252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d4562ee7b724d46a4ab4b9176f542a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PointerEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 140084516278828573}
-        m_MethodName: OnMouseEnterBag
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  PointerExit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 140084516278828573}
-        m_MethodName: OnMouseLeaveBag
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2

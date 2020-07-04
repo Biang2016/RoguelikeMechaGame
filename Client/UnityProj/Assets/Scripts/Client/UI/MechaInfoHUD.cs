@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using BiangStudio.GamePlay;
+using BiangStudio.ObjectPool;
 using UnityEngine.UI;
 
 namespace Client

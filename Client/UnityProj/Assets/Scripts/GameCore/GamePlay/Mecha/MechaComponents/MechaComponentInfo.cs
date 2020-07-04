@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using BiangStudio.CloneVariantUtils;
+using BiangStudio.CloneVariant;
 using BiangStudio.GameDataFormat.Grid;
+using BiangStudio.GridBag;
 
 namespace GameCore
 {
@@ -29,14 +30,14 @@ namespace GameCore
             DropProbability = dropProbability;
             if (ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(mechaComponentType, out List<GridPos> ops))
             {
-                OccupiedGridPositions = CloneVariantUtils.List(ops);
+                OccupiedGridPositions = ops.Clone();
             }
         }
 
         public MechaComponentInfo Clone()
         {
             MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType, GridPos, TotalLife, DropProbability);
-            mci.OccupiedGridPositions = CloneVariantUtils.List(OccupiedGridPositions);
+            mci.OccupiedGridPositions = OccupiedGridPositions.Clone();
             return mci;
         }
     }
