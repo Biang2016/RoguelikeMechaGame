@@ -259,11 +259,12 @@ namespace Client
             ClientLevelManager.Instance.StartLevel();
 
             MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player);
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, new GridPosR(0, 0, GridPosR.Orientation.Up), 300, 0));
-
             MechaInfo enemyMechaInfo = new MechaInfo("Junk Mecha", MechaType.Enemy);
 
-            List<MechaComponentInfo> enemyComponentInfos = new List<MechaComponentInfo>();
+            BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
+            ClientBattleManager.Instance.StartBattle(battleInfo);
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, new GridPosR(0, 0, GridPosR.Orientation.Up), 300, 0));
+            battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
             for (int i = -4; i <= 4; i++)
             {
                 for (int j = -6; j <= 6; j++)
@@ -278,18 +279,9 @@ namespace Client
                         mci = new MechaComponentInfo((MechaComponentType) ClientLevelManager.SRandom.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), new GridPosR(i, j, GridPosR.Orientation.Up), 50, 5);
                     }
 
-                    enemyComponentInfos.Add(mci);
+                    enemyMechaInfo.AddMechaComponentInfo(mci);
                 }
             }
-
-            foreach (MechaComponentInfo mci in enemyComponentInfos)
-            {
-                enemyMechaInfo.AddMechaComponentInfo(mci);
-            }
-
-            BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
-            ClientBattleManager.Instance.StartBattle(battleInfo);
-            battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
 
             ClientBattleManager.EnemyMechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
         }
