@@ -17,7 +17,7 @@ namespace Client
                 oriQuaternion_WorldObject = transform.localRotation;
             }
 
-            caller.Draggable_OnMousePressed(current_DragAreaName);
+            caller.Draggable_OnMousePressed(current_DragArea);
         }
 
         public override void ResetToOriginalPositionRotation()

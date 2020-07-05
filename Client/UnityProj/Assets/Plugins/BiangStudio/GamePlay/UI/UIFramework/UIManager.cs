@@ -31,9 +31,9 @@ namespace BiangStudio.GamePlay.UI
         //定义“栈”集合,存储显示当前所有[反向切换]的窗体类型
         private Stack<BaseUIPanel> CurrentUIFormsStack = new Stack<BaseUIPanel>();
 
-        [SerializeField] private Transform UINormalRoot = null; //全屏幕显示窗体的根节点
-        [SerializeField] private Transform UIFixedRoot = null; //固定显示窗体的根节点
-        [SerializeField] private Transform UIPopUpRoot = null; //弹出窗体的根节点
+        public Transform UINormalRoot = null; //全屏幕显示窗体的根节点
+        public Transform UIFixedRoot = null; //固定显示窗体的根节点
+        public Transform UIPopUpRoot = null; //弹出窗体的根节点
 
         public void Init(LoadUIPanelDelegate loadUIPanelHandler, LogErrorDelegate logErrorHandler,
             ButtonDownDelegate mouseLeftButtonDownHandler,

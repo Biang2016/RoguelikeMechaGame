@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace BiangStudio.GridBackpack
+﻿namespace BiangStudio.ShapedInventory
 {
-    [Serializable]
-    public class BackpackGridInfo
+    public class InventoryGrid
     {
-        internal delegate void SetStateDelegate(States newValue);
+        public delegate void SetStateDelegate(States newValue);
 
-        internal SetStateDelegate SetStateHandler;
+        public SetStateDelegate SetStateHandler;
 
         public enum States
         {

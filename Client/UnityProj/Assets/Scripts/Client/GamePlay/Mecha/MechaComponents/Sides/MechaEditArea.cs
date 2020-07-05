@@ -5,7 +5,7 @@ using GameCore;
 
 namespace Client
 {
-    public class MechaEditArea : DragArea
+    public class MechaEditArea : DragAreaIndicator
     {
         [SerializeField] private MeshRenderer MeshRenderer_Circle;
         [SerializeField] private MeshRenderer MeshRenderer_Grid;

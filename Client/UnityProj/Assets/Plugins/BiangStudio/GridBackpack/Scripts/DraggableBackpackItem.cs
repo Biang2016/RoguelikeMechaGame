@@ -1,6 +1,5 @@
 ﻿using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
-using BiangStudio.GamePlay.UI;
 using UnityEngine;
 
 namespace BiangStudio.GridBackpack
@@ -20,22 +19,25 @@ namespace BiangStudio.GridBackpack
                 dragBeginPosition_UIObject = buildingMousePos;
             }
 
-            caller.Draggable_OnMousePressed(current_DragAreaName);
+            caller.Draggable_OnMousePressed(current_DragArea);
 
             float draggedDistance = (buildingMousePos - dragBeginPosition_UIObject).magnitude;
             if (draggedDistance < caller.Draggable_DragMinDistance)
             {
                 //不动
             }
-            else if (MyDragProcessor.GetCurrentDragAreaName() == DragAreaDefines.Backpack)
+            else if (MyDragProcessor.GetCurrentDragArea().Equals(BackpackItem.Backpack.DragArea))
             {
-                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BackpackManager.Instance.BackpackPanel.ItemContainer.transform as RectTransform, MyDragProcessor.GetDragMousePosition(),
-                    UIManager.Instance.UICamera, out Vector2 mousePos))
+                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    BackpackItem.Backpack.BackpackPanel.ItemContainer.transform as RectTransform,
+                    MyDragProcessor.GetDragMousePosition(),
+                    MyDragProcessor.GetCamera(),
+                    out Vector2 mousePos))
                 {
-                    mousePos.x += ((RectTransform) BackpackManager.Instance.BackpackPanel.ItemContainer).rect.width / 2f;
-                    mousePos.y -= ((RectTransform) BackpackManager.Instance.BackpackPanel.ItemContainer).rect.height / 2f;
-                    int grid_X = Mathf.FloorToInt((mousePos.x) / BackpackManager.Instance.BackpackItemGridSize);
-                    int grid_Z = Mathf.FloorToInt((-mousePos.y) / BackpackManager.Instance.BackpackItemGridSize);
+                    mousePos.x += ((RectTransform) BackpackItem.Backpack.BackpackPanel.ItemContainer).rect.width / 2f;
+                    mousePos.y -= ((RectTransform) BackpackItem.Backpack.BackpackPanel.ItemContainer).rect.height / 2f;
+                    int grid_X = Mathf.FloorToInt((mousePos.x) / BackpackItem.Backpack.GridSize);
+                    int grid_Z = Mathf.FloorToInt((-mousePos.y) / BackpackItem.Backpack.GridSize);
                     BackpackItem.MoveBaseOnHitBox(new GridPos(grid_X, grid_Z));
                 }
             }

@@ -13,8 +13,6 @@ namespace BiangStudio.DragHover
 
         public delegate Vector2 MousePositionDelegate();
 
-        internal delegate string DragAreaDelegate();
-
         private LogErrorDelegate LogErrorHandler;
         private DragKeyDelegate DragKeyDownHandler;
         private DragKeyDelegate DragKeyUpHandler;
@@ -25,7 +23,7 @@ namespace BiangStudio.DragHover
 
         private Draggable currentDrag;
         public bool ForbidDrag = false;
-        public string Current_DragAreaName;
+        public DragArea Current_DragArea;
 
         public Draggable CurrentDrag
         {
@@ -50,7 +48,7 @@ namespace BiangStudio.DragHover
 
         public override void Update()
         {
-            Current_DragAreaName = CheckCurrentDragArea();
+            Current_DragArea = CheckCurrentDragArea();
             if (ForbidDrag)
             {
                 CancelDrag();
@@ -93,12 +91,12 @@ namespace BiangStudio.DragHover
             }
         }
 
-        private string CheckCurrentDragArea()
+        private DragArea CheckCurrentDragArea()
         {
             foreach (IDragProcessor dragProcessor in DragProcessors)
             {
-                string dragArea = dragProcessor.GetCurrentDragAreaName();
-                if (dragArea != DragAreaDefines.None)
+                DragArea dragArea = dragProcessor.GetCurrentDragArea();
+                if (!dragArea.Equals(DragAreaDefines.None))
                 {
                     return dragArea;
                 }

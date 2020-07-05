@@ -8,6 +8,7 @@ using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay;
 using BiangStudio.GridBackpack;
 using BiangStudio.ObjectPool;
+using BiangStudio.ShapedInventory;
 using GameCore;
 using Newtonsoft.Json;
 #if UNITY_EDITOR
@@ -262,24 +263,21 @@ namespace Client
 
         #region IDraggable
 
-        public void Draggable_OnMouseDown(string dragAreaName, Collider collider)
+        public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
         {
         }
 
-        public void Draggable_OnMousePressed(string dragAreaName)
+        public void Draggable_OnMousePressed(DragArea dragArea)
         {
             if (ControlManager.Instance.Building_RotateItem.Down)
             {
                 Rotate();
             }
 
-            switch (DragManager.Instance.Current_DragAreaName)
+            if (DragManager.Instance.Current_DragArea.Equals(DragAreaDefines.BattleInventory))
             {
-                case BiangStudio.GridBackpack.DragAreaDefines.Backpack:
-                {
-                    ReturnToBackpack(true, true);
-                    return;
-                }
+                ReturnToBackpack(true, true);
+                return;
             }
 
             if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Self)
@@ -295,9 +293,9 @@ namespace Client
 
         public bool ReturnToBackpack(bool cancelDrag, bool dragTheItem)
         {
-            BackpackItemInfo bii = new BackpackItemInfo(MechaComponentInfo);
-            bii.BackpackItemContentInfo = MechaComponentInfo;
-            bool suc = BackpackManager.Instance.BackpackInfo.TryAddItem(bii);
+            InventoryItem ii = new InventoryItem(MechaComponentInfo);
+            ii.ItemContentInfo = MechaComponentInfo;
+            bool suc = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).TryAddItem(ii);
             if (suc)
             {
                 if (cancelDrag)
@@ -308,7 +306,7 @@ namespace Client
 
                 if (dragTheItem)
                 {
-                    DragManager.Instance.CurrentDrag = BackpackManager.Instance.BackpackPanel.GetBackpackItem(bii.GUID).gameObject.GetComponent<DraggableBackpackItem>();
+                    DragManager.Instance.CurrentDrag = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.GetBackpackItem(ii.GUID).gameObject.GetComponent<DraggableBackpackItem>();
                     DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BackpackItem>());
                 }
 
@@ -319,41 +317,40 @@ namespace Client
             return suc;
         }
 
-        public void Draggable_OnMouseUp(string dragAreaTypes)
+        public void Draggable_OnMouseUp(DragArea dragArea)
         {
-            switch (dragAreaTypes)
+            if (dragArea.Equals(DragAreaDefines.BattleInventory))
             {
-                case BiangStudio.GridBackpack.DragAreaDefines.Backpack:
-                {
-                    if (!isReturningToBackpack)
-                    {
-                        bool suc = ReturnToBackpack(false, false);
-                        if (!suc)
-                        {
-                            DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
-                        }
-                    }
-
-                    break;
-                }
-                case DragAreaDefines.MechaEditorArea:
-                {
-                    break;
-                }
-                case BiangStudio.DragHover.DragAreaDefines.None:
+                if (!isReturningToBackpack)
                 {
                     bool suc = ReturnToBackpack(false, false);
                     if (!suc)
                     {
                         DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
                     }
-
-                    break;
                 }
+
+                return;
+            }
+
+            if (dragArea.Equals(DragAreaDefines.MechaEditorArea))
+            {
+                return;
+            }
+
+            if (dragArea.Equals(BiangStudio.DragHover.DragAreaDefines.None))
+            {
+                bool suc = ReturnToBackpack(false, false);
+                if (!suc)
+                {
+                    DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
+                }
+
+                return;
             }
         }
 
-        public void Draggable_SetStates(ref bool canDrag, ref string dragFrom)
+        public void Draggable_SetStates(ref bool canDrag, ref DragArea dragFrom)
         {
             canDrag = true;
             dragFrom = DragAreaDefines.MechaEditorArea;

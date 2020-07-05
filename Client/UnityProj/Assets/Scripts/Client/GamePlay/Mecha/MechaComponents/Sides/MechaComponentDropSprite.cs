@@ -15,7 +15,7 @@ namespace Client
         public void Initialize(MechaComponentInfo mechaComponentInfo, Vector3 position)
         {
             MechaComponentInfo = mechaComponentInfo.Clone();
-            Sprite sprite = BackpackManager.Instance.GetBackpackItemSprite(mechaComponentInfo.BackpackItemSpriteKey);
+            Sprite sprite = BackpackManager.Instance.GetBackpackItemSprite(mechaComponentInfo.ItemSpriteKey);
             SpriteRenderer.sprite = sprite;
             transform.position = position;
         }

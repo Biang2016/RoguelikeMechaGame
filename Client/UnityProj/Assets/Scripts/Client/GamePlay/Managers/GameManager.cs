@@ -6,6 +6,7 @@ using BiangStudio.GamePlay;
 using BiangStudio.GamePlay.UI;
 using BiangStudio.GridBackpack;
 using BiangStudio.Log;
+using BiangStudio.ShapedInventory;
 using UnityEngine;
 using BiangStudio.Singleton;
 using GameCore;
@@ -96,37 +97,8 @@ namespace Client
                 ControlManager.Instance.EnableBuildingInputActions(!enable);
             };
 
-            BackpackManager.Init(
-                60,
-                LoadAllBackpackItemPics(),
-                toggleBackpackKeyDownHandler: () => ControlManager.Instance.Building_ToggleBackpack.Down,
-                rotateItemKeyDownHandler: () => ControlManager.Instance.Building_RotateItem.Down,
-                toggleDebugKeyDownHandler: () => ControlManager.Instance.Building_ToggleDebug.Down,
-                toggleBackpackCallback: ToggleBackpack,
-                dragItemOutBackpackCallback: (backpackItem) =>
-                {
-                    switch (backpackItem.Data.BackpackItemContentInfo)
-                    {
-                        case MechaComponentInfo mechaComponentInfo:
-                        {
-                            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mechaComponentInfo.Clone(), BattleManager.Instance.PlayerMecha);
-                            Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
-                            GridPos gp = GridUtils.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
-                            mcb.SetGridPosition(gp);
-                            BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
-                            DragManager.Instance.CurrentDrag = mcb.Draggable;
-                            mcb.Draggable.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<MechaComponentBase>());
-                            BackpackManager.Instance.BackpackInfo.RemoveItem(backpackItem.Data);
-                            backpackItem.PoolRecycle();
-                            break;
-                        }
-                    }
-                },
-                instantiateBackpackGridHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackGrid].AllocateGameObject<BackpackGrid>(parent),
-                instantiateBackpackItemHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItem].AllocateGameObject<BackpackItem>(parent),
-                instantiateBackpackItemGridHitBoxHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItemGridHitBox].AllocateGameObject<BackpackItemGridHitBox>(parent)
-            );
             BackpackManager.Awake();
+
             DragManager.Awake();
             DragExecuteManager.Init();
             DragExecuteManager.Awake();
@@ -150,7 +122,56 @@ namespace Client
             RoutineManager.Start();
             GameStateManager.Start();
 
-            BackpackManager.LoadBackpackInfo(new BackpackInfo(75));
+            Backpack myBackPack = new Backpack(
+                inventoryName: DragAreaDefines.BattleInventory.DragAreaName,
+                dragArea: DragAreaDefines.BattleInventory,
+                gridSize: 60,
+                rows: 10,
+                columns: 10,
+                unlockPartialGrids: true,
+                unlockedGridCount: 75,
+                toggleBackpackKeyDownHandler: () => ControlManager.Instance.Building_ToggleBackpack.Down,
+                rotateItemKeyDownHandler: () => ControlManager.Instance.Building_RotateItem.Down,
+                instantiateBackpackGridHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackGrid].AllocateGameObject<BackpackGrid>(parent),
+                instantiateBackpackItemHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItem].AllocateGameObject<BackpackItem>(parent),
+                instantiateBackpackItemGridHitBoxHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItemGridHitBox].AllocateGameObject<BackpackItemGridHitBox>(parent)
+            );
+
+            myBackPack.ToggleDebugKeyDownHandler = () => ControlManager.Instance.Building_ToggleDebug.Down;
+            myBackPack.ToggleBackpackCallback = ToggleBattleInventory;
+            myBackPack.ToggleDebugCallback = null;
+            myBackPack.DragItemOutBackpackCallback = (backpackItem) =>
+            {
+                switch (backpackItem.Data.ItemContentInfo)
+                {
+                    case MechaComponentInfo mechaComponentInfo:
+                    {
+                        MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mechaComponentInfo.Clone(), BattleManager.Instance.PlayerMecha);
+                        Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
+                        GridPos gp = GridUtils.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
+                        mcb.SetGridPosition(gp);
+                        BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
+                        DragManager.Instance.CurrentDrag = mcb.Draggable;
+                        mcb.Draggable.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<MechaComponentBase>());
+                        backpackItem.Backpack.RemoveItem(backpackItem.Data);
+                        backpackItem.PoolRecycle();
+                        break;
+                    }
+                }
+            };
+
+            BackpackPanel backpackPanel = Instantiate(PrefabManager.Instance.GetPrefab("BattleInventoryPanel"),UIManager.Instance.UINormalRoot).GetComponent<BackpackPanel>();
+            backpackPanel.gameObject.SetActive(false);
+            backpackPanel.Init(myBackPack);
+            BackpackManager.AddBackPack(myBackPack);
+
+            foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
+            {
+                MechaComponentType mcType = (MechaComponentType)Enum.Parse(typeof(MechaComponentType), s);
+                InventoryItem ii = new InventoryItem(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 100, 0));
+                myBackPack.TryAddItem(ii);
+            }
+
             BackpackManager.Start();
             DragManager.Start();
             DragExecuteManager.Start();
@@ -166,13 +187,6 @@ namespace Client
 #endif
 
             StartGame();
-
-            foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
-            {
-                MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-                BackpackItemInfo bii = new BackpackItemInfo(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 100, 0));
-                BackpackManager.BackpackInfo.TryAddItem(bii);
-            }
         }
 
         void Update()
@@ -245,8 +259,9 @@ namespace Client
         }
 
         // todo 做成AI原子
-        private void ToggleBackpack(bool open)
+        private void ToggleBattleInventory(bool open)
         {
+            BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.gameObject.SetActive(open);
             if (open)
             {
                 BattleManager.Instance.SetAllEnemyShown(false);

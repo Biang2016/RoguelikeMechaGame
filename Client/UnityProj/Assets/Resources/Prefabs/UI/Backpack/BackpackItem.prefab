@@ -63,7 +63,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 465c1ba3d5d384a4993afaf4ddb96ff1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 7180132716111535730}
   - component: {fileID: 6461644280705919517}
   m_Layer: 17
-  m_Name: BackpackItem
+  m_Name: BackpackItem_Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
         x: 0
         z: 0
   Image: {fileID: 4348618815623475802}
-  BackpackItemGridHitBoxes: {fileID: 4848988158495615229}
+  BackpackItemGridHitBoxRoot: {fileID: 4848988158495615229}
 --- !u!114 &6461644280705919517
 MonoBehaviour:
   m_ObjectHideFlags: 0

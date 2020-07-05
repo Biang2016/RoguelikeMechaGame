@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using BiangStudio.GameDataFormat.Grid;
-using BiangStudio.GridBackpack;
+using BiangStudio.ShapedInventory;
 
 namespace GameCore
 {
     [Serializable]
-    public class MechaComponentInfo : IBackpackItemContentInfo
+    public class MechaComponentInfo : IInventoryItemContentInfo
     {
         public MechaComponentType MechaComponentType;
         public GridPosR GridPos;
@@ -18,9 +18,9 @@ namespace GameCore
 
         public List<GridPos> OriginalOccupiedGridPositions => OccupiedGridPositions;
 
-        public string BackpackItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
+        public string ItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
 
-        public string BackpackItemName => "机甲组件." + MechaComponentType;
+        public string ItemName => "机甲组件." + MechaComponentType;
 
         public MechaComponentInfo(MechaComponentType mechaComponentType, GridPosR gridPos, int totalLife, int dropProbability)
         {

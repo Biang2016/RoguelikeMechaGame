@@ -1,38 +1,36 @@
 ﻿using System.Collections.Generic;
 using BiangStudio.GameDataFormat.Grid;
-using BiangStudio.GamePlay.UI;
+using BiangStudio.ShapedInventory;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BiangStudio.GridBackpack
 {
-    public class BackpackPanel : BaseUIPanel
+    public class BackpackPanel : MonoBehaviour
     {
-        private BackpackInfo Data;
+        private Backpack Backpack;
 
         [SerializeField] private GridLayoutGroup ItemContainerGridLayout;
-
         [SerializeField] private Transform GridContainer;
 
         public Transform ItemContainer;
 
-        private BackpackGrid[,] backpackGridMatrix = new BackpackGrid[10, 10]; // column, row
+        private BackpackGrid[,] backpackGridMatrix; // column, row
         private SortedDictionary<int, BackpackItem> backpackItems = new SortedDictionary<int, BackpackItem>();
 
         void Awake()
         {
-            UIType.InitUIType(
-                false,
-                true,
-                false,
-                UIFormTypes.Normal,
-                UIFormShowModes.Normal,
-                UIFormLucencyTypes.Penetrable);
+            //UIType.InitUIType(
+            //    false,
+            //    true,
+            //    false,
+            //    UIFormTypes.Normal,
+            //    UIFormShowModes.Normal,
+            //    UIFormLucencyTypes.Penetrable);
         }
 
         void Update()
         {
-            ItemContainerGridLayout.cellSize = Vector2.one * BackpackManager.Instance.BackpackItemGridSize;
         }
 
         void Reset()
@@ -45,28 +43,24 @@ namespace BiangStudio.GridBackpack
             backpackItems.Clear();
         }
 
-        public void Init(BackpackInfo backpackInfo)
+        public void Init(Backpack backPack)
         {
-            Data = backpackInfo;
-            for (int z = 0; z < 10; z++)
+            Backpack = backPack;
+            Backpack.BackpackPanel = this;
+            backpackGridMatrix = new BackpackGrid[Backpack.Columns, Backpack.Rows];
+            for (int row = 0; row < Backpack.Rows; row++)
             {
-                for (int x = 0; x < 10; x++)
+                for (int col = 0; col < Backpack.Columns; col++)
                 {
-                    BackpackGrid bg = (BackpackGrid) BackpackManager.Instance.InstantiateBackpackGridHandler(GridContainer);
-                    if (!bg)
-                    {
-                        BackpackManager.LogError("Instantiate BackpackGrid prefab failed.");
-                    }
-                    else
-                    {
-                        bg.Init(backpackInfo.BackpackGridMatrix[x, z], new GridPos(x, z));
-                        backpackGridMatrix[x, z] = bg;
-                    }
+                    BackpackGrid bg = Backpack.CreateBackpackGrid(GridContainer);
+                    bg.Init(Backpack.InventoryGridMatrix[col, row], new GridPos(col, row));
+                    backpackGridMatrix[col, row] = bg;
                 }
             }
 
-            Data.OnAddItemSucAction = OnAddItemSuc;
-            Data.OnRemoveItemSucAction = OnRemoveItemSuc;
+            Backpack.OnAddItemSucAction = OnAddItemSuc;
+            Backpack.OnRemoveItemSucAction = OnRemoveItemSuc;
+            backPack.RefreshBackpackGrid();
         }
 
         public BackpackItem GetBackpackItem(int guid)
@@ -75,25 +69,18 @@ namespace BiangStudio.GridBackpack
             return backpackItem;
         }
 
-        private void OnAddItemSuc(BackpackItemInfo bii)
+        private void OnAddItemSuc(InventoryItem ii)
         {
-            BackpackItem backpackItem = (BackpackItem) BackpackManager.Instance.InstantiateBackpackItemHandler(ItemContainer);
-            if (!backpackItem)
-            {
-                BackpackManager.LogError("Instantiate BackpackItem prefab failed.");
-            }
-            else
-            {
-                backpackItem.Initialize(bii);
-                backpackItems.Add(bii.GUID, backpackItem);
-            }
+            BackpackItem backpackItem = Backpack.CreateBackpackItem(ItemContainer);
+            backpackItem.Initialize(Backpack, ii);
+            backpackItems.Add(ii.GUID, backpackItem);
         }
 
-        private void OnRemoveItemSuc(BackpackItemInfo bii)
+        private void OnRemoveItemSuc(InventoryItem ii)
         {
-            BackpackItem bi = backpackItems[bii.GUID];
+            BackpackItem bi = backpackItems[ii.GUID];
             bi.PoolRecycle();
-            backpackItems.Remove(bii.GUID);
+            backpackItems.Remove(ii.GUID);
         }
     }
 }

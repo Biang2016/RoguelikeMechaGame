@@ -23,7 +23,7 @@ namespace Client
         public Dictionary<PrefabNames, int> PoolConfigs = new Dictionary<PrefabNames, int>
         {
             {PrefabNames.Mecha, 4},
-            {PrefabNames.BackpackItem, 4},
+            {PrefabNames.BackpackItem, 20},
             {PrefabNames.BackpackGrid, 50},
             {PrefabNames.BackpackItemGridHitBox, 50},
             {PrefabNames.MechaComponentDropSprite, 5},

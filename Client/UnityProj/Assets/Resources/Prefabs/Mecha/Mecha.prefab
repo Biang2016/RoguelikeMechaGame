@@ -320,7 +320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c7fe4194ed7624b912c82d115dd4c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DragAreaName: MechaEditArea
+  DragArea:
+    DragAreaName: MechaEditArea
   MeshRenderer_Circle: {fileID: 2610974796736393842}
   MeshRenderer_Grid: {fileID: 265717878856900663}
   BoxCollider: {fileID: 7381615765215493332}

@@ -1,5 +1,6 @@
 ﻿using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ObjectPool;
+using BiangStudio.ShapedInventory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,13 @@ namespace BiangStudio.GridBackpack
     /// </summary>
     public class BackpackGrid : PoolObject
     {
-        public BackpackGridInfo Data;
+        public override void PoolRecycle()
+        {
+            base.PoolRecycle();
+            Data = null;
+        }
+
+        public InventoryGrid Data;
 
         [SerializeField] private Image Image;
         [SerializeField] private Text GridPosText;
@@ -24,15 +31,15 @@ namespace BiangStudio.GridBackpack
 
         internal bool Locked => Data.Locked;
 
-        internal BackpackGridInfo.States State
+        internal InventoryGrid.States State
         {
             get => Data.State;
             set => Data.State = value;
         }
 
-        internal void Init(BackpackGridInfo bgi, GridPos gp)
+        internal void Init(InventoryGrid data, GridPos gp)
         {
-            Data = bgi;
+            Data = data;
             Data.SetStateHandler = OnSetState;
 #if UNITY_EDITOR
             GridPosText.text = gp.ToString();
@@ -41,31 +48,31 @@ namespace BiangStudio.GridBackpack
 #endif
         }
 
-        internal void OnSetState(BackpackGridInfo.States newValue)
+        internal void OnSetState(InventoryGrid.States newValue)
         {
             switch (newValue)
             {
-                case BackpackGridInfo.States.Locked:
+                case InventoryGrid.States.Locked:
                 {
                     Image.color = LockedColor;
                     break;
                 }
-                case BackpackGridInfo.States.Unavailable:
+                case InventoryGrid.States.Unavailable:
                 {
                     Image.color = UnavailableColor;
                     break;
                 }
-                case BackpackGridInfo.States.TempUnavailable:
+                case InventoryGrid.States.TempUnavailable:
                 {
                     Image.color = TempUnavailableColor;
                     break;
                 }
-                case BackpackGridInfo.States.Available:
+                case InventoryGrid.States.Available:
                 {
                     Image.color = AvailableColor;
                     break;
                 }
-                case BackpackGridInfo.States.Preview:
+                case InventoryGrid.States.Preview:
                 {
                     Image.color = PreviewColor;
                     break;

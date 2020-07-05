@@ -3,6 +3,7 @@ using BiangStudio.CloneVariant;
 using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ObjectPool;
+using BiangStudio.ShapedInventory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,11 +11,19 @@ namespace BiangStudio.GridBackpack
 {
     public class BackpackItem : PoolObject, IDraggable
     {
-        public BackpackItemInfo Data;
+        public override void PoolRecycle()
+        {
+            base.PoolRecycle();
+            Backpack = null;
+            Data = null;
+            OccupiedPositionsInBackpackPanel_Moving = null;
+        }
+
+        public Backpack Backpack;
+        public InventoryItem Data;
 
         [SerializeField] private Image Image;
-
-        [SerializeField] private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxes;
+        [SerializeField] private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
 
         private RectTransform RectTransform => (RectTransform) transform;
 
@@ -29,21 +38,22 @@ namespace BiangStudio.GridBackpack
 
         private Vector2 sizeRev;
 
-        public void Initialize(BackpackItemInfo data)
+        public void Initialize(Backpack backpack, InventoryItem data)
         {
+            Backpack = backpack;
             Data = data;
-            Image.sprite = BackpackManager.Instance.GetBackpackItemSprite(Data.BackpackItemContentInfo.BackpackItemSpriteKey);
+            //Image.sprite = BackpackManager.Instance.GetBackpackItemSprite(Data.ItemContentInfo.ItemSpriteKey);
             GridPos_Moving = Data.GridPos;
             OccupiedPositionsInBackpackPanel_Moving = Data.OccupiedGridPositions.Clone();
-            size = new Vector2(Data.BoundingRect.size.x * BackpackManager.Instance.BackpackItemGridSize, Data.BoundingRect.size.z * BackpackManager.Instance.BackpackItemGridSize);
+            size = new Vector2(Data.BoundingRect.size.x * Backpack.GridSize, Data.BoundingRect.size.z * Backpack.GridSize);
             sizeRev = new Vector2(size.y, size.x);
             RefreshView();
         }
 
         private void RefreshView()
         {
-            int UI_Pos_X = GridPos_Moving.x * BackpackManager.Instance.BackpackItemGridSize;
-            int UI_Pos_Z = -GridPos_Moving.z * BackpackManager.Instance.BackpackItemGridSize;
+            int UI_Pos_X = GridPos_Moving.x * Backpack.GridSize;
+            int UI_Pos_Z = -GridPos_Moving.z * Backpack.GridSize;
 
             bool isRotated = GridPos_Moving.orientation == GridPosR.Orientation.Right || GridPos_Moving.orientation == GridPosR.Orientation.Left;
             Image.rectTransform.sizeDelta = size;
@@ -59,20 +69,20 @@ namespace BiangStudio.GridBackpack
             }
 
             RectTransform.anchoredPosition = new Vector2(UI_Pos_X, UI_Pos_Z);
-            BackpackItemGridHitBoxes.Initialize(OccupiedPositionsInBackpackPanel_Moving, GridPos_Moving);
+            BackpackItemGridHitBoxRoot.Initialize(Backpack, OccupiedPositionsInBackpackPanel_Moving, GridPos_Moving);
         }
 
         #region IDraggable
 
         private GridPos lastPickedUpHitBoxGridPos;
 
-        public void Draggable_OnMouseDown(string dragAreaName, Collider collider)
+        public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
         {
-            BackpackItemGridHitBox hitBox = BackpackItemGridHitBoxes.FindHitBox(collider);
+            BackpackItemGridHitBox hitBox = BackpackItemGridHitBoxRoot.FindHitBox(collider);
             if (hitBox)
             {
                 lastPickedUpHitBoxGridPos = hitBox.LocalGridPos + (GridPos) GridPos_Moving;
-                BackpackManager.Instance.BackpackInfo.PickUpItem(Data);
+                Backpack.PickUpItem(Data);
             }
         }
 
@@ -88,7 +98,7 @@ namespace BiangStudio.GridBackpack
             GridPos diff = targetGPR - GridPos_Moving;
             if (diff.x != 0 || diff.z != 0)
             {
-                if (BackpackManager.Instance.BackpackInfo.CheckSpaceAvailable(OccupiedPositionsInBackpackPanel_Moving, diff))
+                if (Backpack.CheckSpaceAvailable(OccupiedPositionsInBackpackPanel_Moving, diff))
                 {
                     GridPos_Moving = targetGPR;
                     for (int i = 0; i < OccupiedPositionsInBackpackPanel_Moving.Count; i++)
@@ -102,18 +112,13 @@ namespace BiangStudio.GridBackpack
             }
         }
 
-        public void Draggable_OnMousePressed(string dragAreaTypes)
+        public void Draggable_OnMousePressed(DragArea dragArea)
         {
-            switch (dragAreaTypes)
+            if (dragArea.Equals(Backpack.DragArea))
             {
-                case DragAreaDefines.Backpack:
+                if (Backpack.RotateItemKeyDownHandler != null && Backpack.RotateItemKeyDownHandler.Invoke())
                 {
-                    if (BackpackManager.Instance.RotateItemKeyDownHandler != null && BackpackManager.Instance.RotateItemKeyDownHandler.Invoke())
-                    {
-                        Rotate();
-                    }
-
-                    break;
+                    Rotate();
                 }
             }
         }
@@ -134,7 +139,7 @@ namespace BiangStudio.GridBackpack
                     _newRealPositions.Add(newRealGrid);
                 }
 
-                if (BackpackManager.Instance.BackpackInfo.CheckSpaceAvailable(_newRealPositions, GridPos.Zero))
+                if (Backpack.CheckSpaceAvailable(_newRealPositions, GridPos.Zero))
                 {
                     GridPos_Moving.orientation = newOrientation;
                     OccupiedPositionsInBackpackPanel_Moving = _newRealPositions;
@@ -150,13 +155,13 @@ namespace BiangStudio.GridBackpack
             }
         }
 
-        public void Draggable_OnMouseUp(string dragAreaTypes)
+        public void Draggable_OnMouseUp(DragArea dragArea)
         {
-            if (dragAreaTypes == DragAreaDefines.Backpack)
+            if (dragArea.Equals(Backpack.DragArea))
             {
-                if (BackpackManager.Instance.BackpackInfo.CheckSpaceAvailable(OccupiedPositionsInBackpackPanel_Moving, GridPos.Zero))
+                if (Backpack.CheckSpaceAvailable(OccupiedPositionsInBackpackPanel_Moving, GridPos.Zero))
                 {
-                    BackpackManager.Instance.BackpackInfo.MoveItem(Data.OccupiedGridPositions, OccupiedPositionsInBackpackPanel_Moving);
+                    Backpack.MoveItem(Data.OccupiedGridPositions, OccupiedPositionsInBackpackPanel_Moving);
                     Data.GridPos = GridPos_Moving;
                     Data.OccupiedGridPositions = OccupiedPositionsInBackpackPanel_Moving.Clone();
                     RefreshView();
@@ -164,10 +169,10 @@ namespace BiangStudio.GridBackpack
             }
         }
 
-        public void Draggable_SetStates(ref bool canDrag, ref string dragFrom)
+        public void Draggable_SetStates(ref bool canDrag, ref DragArea dragFrom)
         {
             canDrag = true;
-            dragFrom = DragAreaDefines.Backpack;
+            dragFrom = Backpack.DragArea;
         }
 
         float IDraggable.Draggable_DragMinDistance => 0f;
@@ -176,7 +181,7 @@ namespace BiangStudio.GridBackpack
 
         public void Draggable_DragOutEffects()
         {
-            BackpackManager.Instance.DragItemOutBackpackCallback?.Invoke(this);
+            Backpack.DragItemOutBackpackCallback?.Invoke(this);
         }
 
         #endregion

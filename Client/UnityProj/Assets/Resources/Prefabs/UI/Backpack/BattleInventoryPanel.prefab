@@ -32,10 +32,10 @@ RectTransform:
   m_Father: {fileID: 5894908770889329394}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 100}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6601716274038007483
 CanvasRenderer:
@@ -185,7 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b68fa5515aeb054084be41af220deab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DragAreaName: Backpack
+  DragArea:
+    DragAreaName: BattleInventory
 --- !u!1 &5878781087509367888
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +429,7 @@ GameObject:
   - component: {fileID: 5387691443965475779}
   - component: {fileID: 140084516278828573}
   m_Layer: 5
-  m_Name: BackpackPanel
+  m_Name: BattleInventoryPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

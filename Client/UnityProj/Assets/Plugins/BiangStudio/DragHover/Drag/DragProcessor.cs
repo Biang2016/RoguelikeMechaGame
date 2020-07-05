@@ -6,16 +6,12 @@ namespace BiangStudio.DragHover
     public class DragProcessor<T> : IDragProcessor where T : MonoBehaviour
     {
         private Camera Camera;
+
         private int LayerMask;
         private float MaxRaycastDistance;
         private DragManager.MousePositionDelegate MousePositionHandler;
         private UnityAction<T, Collider, IDragProcessor> OnBeginDrag;
         private UnityAction<T, Collider, IDragProcessor> OnCancelDrag;
-
-        internal DragManager.DragAreaDelegate DragAreaDelegate;
-        internal DragManager.MousePositionDelegate DragMousePositionDelegate;
-
-        public bool ExecuteThisFrame = false;
 
         private Vector2 currentMousePosition
         {
@@ -40,9 +36,12 @@ namespace BiangStudio.DragHover
             OnBeginDrag = onBeginDrag;
             OnCancelDrag = onCancelDrag;
             MaxRaycastDistance = maxRaycastDistance;
-            DragAreaDelegate = GetCurrentDragAreaName;
-            DragMousePositionDelegate = GetDragMousePosition;
             DragManager.Instance.RegisterDragProcessor(this);
+        }
+
+        public Camera GetCamera()
+        {
+            return Camera;
         }
 
         public void ExecuteDrag()
@@ -67,7 +66,7 @@ namespace BiangStudio.DragHover
             return currentMousePosition;
         }
 
-        public string GetCurrentDragAreaName()
+        public DragArea GetCurrentDragArea()
         {
             Ray ray = Camera.ScreenPointToRay(currentMousePosition);
             RaycastHit[] hits = Physics.RaycastAll(ray, 1000f, DragManager.Instance.DragAreaLayerMask);
@@ -75,10 +74,10 @@ namespace BiangStudio.DragHover
             {
                 if (hit.collider)
                 {
-                    DragArea da = hit.collider.gameObject.GetComponentInParent<DragArea>();
-                    if (da)
+                    DragAreaIndicator dai = hit.collider.gameObject.GetComponentInParent<DragAreaIndicator>();
+                    if (dai)
                     {
-                        return da.DragAreaName;
+                        return dai.DragArea;
                     }
                 }
             }

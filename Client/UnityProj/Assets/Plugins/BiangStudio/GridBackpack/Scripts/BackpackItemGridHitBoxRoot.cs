@@ -6,11 +6,14 @@ namespace BiangStudio.GridBackpack
 {
     public class BackpackItemGridHitBoxRoot : MonoBehaviour
     {
+        public Backpack Backpack;
+
         [SerializeField] private Transform HitBoxContainer;
         private List<BackpackItemGridHitBox> backpackItemGridHitBoxes = new List<BackpackItemGridHitBox>();
 
-        internal void Initialize(List<GridPos> gridPositions, GridPos centerGP)
+        internal void Initialize(Backpack backpack, List<GridPos> gridPositions, GridPos centerGP)
         {
+            Backpack = backpack;
             foreach (BackpackItemGridHitBox b in backpackItemGridHitBoxes)
             {
                 b.PoolRecycle();
@@ -22,16 +25,9 @@ namespace BiangStudio.GridBackpack
             {
                 GridPos localGP = gp - centerGP;
 
-                BackpackItemGridHitBox hb = (BackpackItemGridHitBox) BackpackManager.Instance.InstantiateBackpackItemGridHitBoxHandler(HitBoxContainer);
-                if (!hb)
-                {
-                    BackpackManager.LogError("Instantiate BackpackItemGridHitBox prefab failed.");
-                }
-                else
-                {
-                    hb.Initialize(localGP, new GridRect(localGP.x, -localGP.z, BackpackManager.Instance.BackpackItemGridSize, BackpackManager.Instance.BackpackItemGridSize));
-                    backpackItemGridHitBoxes.Add(hb);
-                }
+                BackpackItemGridHitBox hb = Backpack.CreateBackpackItemGridHitBox(HitBoxContainer);
+                hb.Initialize(localGP, new GridRect(localGP.x, -localGP.z, Backpack.GridSize, Backpack.GridSize));
+                backpackItemGridHitBoxes.Add(hb);
             }
         }
 
