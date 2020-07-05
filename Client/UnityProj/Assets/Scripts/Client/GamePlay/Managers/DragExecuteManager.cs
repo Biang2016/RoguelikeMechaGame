@@ -1,7 +1,7 @@
 ﻿using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay.UI;
-using BiangStudio.GridBag;
+using BiangStudio.GridBackpack;
 using BiangStudio.Singleton;
 using Client;
 using GameCore;
@@ -11,13 +11,13 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
 {
     public void Init()
     {
-        DragProcessor<BagItem> dragProcessor_BagItem = new DragProcessor<BagItem>();
-        dragProcessor_BagItem.Init(
+        DragProcessor<BackpackItem> dragProcessor_BackpackItem = new DragProcessor<BackpackItem>();
+        dragProcessor_BackpackItem.Init(
             UIManager.Instance.UICamera,
-            LayerManager.Instance.LayerMask_BagItemHitBox,
+            LayerManager.Instance.LayerMask_BackpackItemHitBox,
             () => ControlManager.Instance.Building_MousePosition,
-            delegate(BagItem bi, Collider collider, IDragProcessor dragProcessor) { },
-            delegate(BagItem bi, Collider collider, IDragProcessor dragProcessor) { }
+            delegate(BackpackItem bi, Collider collider, IDragProcessor dragProcessor) { },
+            delegate(BackpackItem bi, Collider collider, IDragProcessor dragProcessor) { }
         );
 
         DragProcessor<MechaComponentDropSprite> dragProcessor_MechaComponentDropSprite = new DragProcessor<MechaComponentDropSprite>();

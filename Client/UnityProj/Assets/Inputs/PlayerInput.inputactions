@@ -341,6 +341,14 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
+                    "name": "ToggleBackpack",
+                    "type": "Button",
+                    "id": "9c4bb76c-4707-4e5c-a7f3-74e9d4fe4aa9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
                     "name": "ToggleWireLines",
                     "type": "Button",
                     "id": "ab7dc26b-d210-49a5-bc1e-93e822716dbc",
@@ -349,9 +357,9 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
-                    "name": "ToggleBag",
+                    "name": "ToggleDebug",
                     "type": "Button",
-                    "id": "9c4bb76c-4707-4e5c-a7f3-74e9d4fe4aa9",
+                    "id": "ff7e40b2-232a-4a3e-bd3c-5911d1a7078e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
@@ -382,23 +390,12 @@
                 },
                 {
                     "name": "",
-                    "id": "18410dfb-989a-4efe-b6ca-8529847e146b",
-                    "path": "<Keyboard>/g",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "ToggleWireLines",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f36765b4-70ff-4ede-b1f7-71db8bd78fd1",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "ToggleBag",
+                    "action": "ToggleBackpack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -421,6 +418,28 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "MouseMiddleClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da559815-77f3-4f03-aa50-6e7dfd6bc3e7",
+                    "path": "<Keyboard>/U",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ToggleDebug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18410dfb-989a-4efe-b6ca-8529847e146b",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ToggleWireLines",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

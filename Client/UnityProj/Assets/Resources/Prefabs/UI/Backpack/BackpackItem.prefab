@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1264700685036736067}
   - component: {fileID: 4348618815623475802}
   m_Layer: 5
-  m_Name: Image
+  m_Name: BackpackItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,9 +85,8 @@ GameObject:
   - component: {fileID: 3607725738807460286}
   - component: {fileID: 7180132716111535730}
   - component: {fileID: 6461644280705919517}
-  - component: {fileID: 4778536774600163163}
   m_Layer: 17
-  m_Name: BagItem
+  m_Name: BackpackItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +148,7 @@ MonoBehaviour:
         x: 0
         z: 0
   Image: {fileID: 4348618815623475802}
-  BagItemGridHitBoxes: {fileID: 4848988158495615229}
+  BackpackItemGridHitBoxes: {fileID: 4848988158495615229}
 --- !u!114 &6461644280705919517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,20 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549fa1e886579c8498d237b70dfb0cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BagItem: {fileID: 7180132716111535730}
---- !u!65 &4778536774600163163
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 962769552901066460}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  BackpackItem: {fileID: 7180132716111535730}
 --- !u!1 &3604793192171843364
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +173,7 @@ GameObject:
   - component: {fileID: 6041603280356037462}
   - component: {fileID: 4848988158495615229}
   m_Layer: 17
-  m_Name: HitBoxes
+  m_Name: GridHitBoxRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,4 +211,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitBoxContainer: {fileID: 6041603280356037462}
-  bagItemGridHitBoxes: []

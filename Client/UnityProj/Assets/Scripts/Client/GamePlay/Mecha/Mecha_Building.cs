@@ -183,7 +183,6 @@ namespace Client
                 }
                 else
                 {
-                    int a = connectedMatrix[z, x];
                     if (connectedMatrix[z, x] == 1)
                     {
                         connectedQueue.Enqueue(new GridPos(x, z));

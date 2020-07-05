@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6601716274038007483}
   - component: {fileID: 2341957636232965673}
   m_Layer: 5
-  m_Name: BagTitle
+  m_Name: BackpackTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bag
+  m_Text: Backpack
 --- !u!1 &1671837821663407611
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b68fa5515aeb054084be41af220deab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DragAreaName: Bag
+  DragAreaName: Backpack
 --- !u!1 &5878781087509367888
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 5387691443965475779}
   - component: {fileID: 140084516278828573}
   m_Layer: 5
-  m_Name: BagPanel
+  m_Name: BackpackPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

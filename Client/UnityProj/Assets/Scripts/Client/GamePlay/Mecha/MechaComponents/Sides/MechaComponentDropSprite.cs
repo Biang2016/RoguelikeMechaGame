@@ -1,4 +1,4 @@
-﻿using BiangStudio.GridBag;
+﻿using BiangStudio.GridBackpack;
 using BiangStudio.ObjectPool;
 using GameCore;
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace Client
         public void Initialize(MechaComponentInfo mechaComponentInfo, Vector3 position)
         {
             MechaComponentInfo = mechaComponentInfo.Clone();
-            Sprite sprite = BagManager.Instance.GetBagItemSprite(mechaComponentInfo.BagItemSpriteKey);
+            Sprite sprite = BackpackManager.Instance.GetBackpackItemSprite(mechaComponentInfo.BackpackItemSpriteKey);
             SpriteRenderer.sprite = sprite;
             transform.position = position;
         }
@@ -39,14 +39,14 @@ namespace Client
 
         private void OnTriggerStay(Collider c)
         {
-            if (Input.GetButtonDown("Bag"))
+            if (Input.GetButtonDown("Backpack"))
             {
                 //if (StayingMecha && StayingMecha.MechaInfo.MechaType == MechaType.Self)
                 //{
-                //    if (BagManager.Instance.AddMechaComponentToBag(MechaComponentInfo, out BagItem _))
+                //    if (BackpackManager.Instance.AddMechaComponentToBackpack(MechaComponentInfo, out BackpackItem _))
                 //    {
                 //        PoolRecycle();
-                //        BagManager.Instance.OpenBag();
+                //        BackpackManager.Instance.OpenBackpack();
                 //    }
                 //}
             }

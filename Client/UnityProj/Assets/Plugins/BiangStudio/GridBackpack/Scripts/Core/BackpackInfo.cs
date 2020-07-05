@@ -3,46 +3,46 @@ using System.Collections.Generic;
 using BiangStudio.GameDataFormat.Grid;
 using UnityEngine.Events;
 
-namespace BiangStudio.GridBag
+namespace BiangStudio.GridBackpack
 {
     [Serializable]
-    public class BagInfo
+    public class BackpackInfo
     {
-        public BagGridInfo[,] BagGridMatrix = new BagGridInfo[10, 10]; // column, row
+        public BackpackGridInfo[,] BackpackGridMatrix = new BackpackGridInfo[10, 10]; // column, row
 
-        public List<BagItemInfo> BagItemInfos = new List<BagItemInfo>();
+        public List<BackpackItemInfo> BackpackItemInfos = new List<BackpackItemInfo>();
 
-        private int bagGridNumber = 0;
+        private int backpackGridNumber = 0;
 
-        public int BagGridNumber
+        public int BackpackGridNumber
         {
-            get { return bagGridNumber; }
+            get { return backpackGridNumber; }
 
             set
             {
-                if (bagGridNumber != value)
+                if (backpackGridNumber != value)
                 {
-                    bagGridNumber = value;
-                    RefreshBagGrid();
+                    backpackGridNumber = value;
+                    RefreshBackpackGrid();
                 }
             }
         }
 
-        public BagInfo(int bagGridNumber)
+        public BackpackInfo(int backpackGridNumber)
         {
-            this.bagGridNumber = bagGridNumber;
+            this.backpackGridNumber = backpackGridNumber;
             for (int x = 0; x < 10; x++)
             {
                 for (int z = 0; z < 10; z++)
                 {
-                    BagGridInfo bgi = new BagGridInfo();
-                    bgi.State = BagGridInfo.States.Unavailable;
-                    BagGridMatrix[z, x] = bgi;
+                    BackpackGridInfo bgi = new BackpackGridInfo();
+                    bgi.State = BackpackGridInfo.States.Unavailable;
+                    BackpackGridMatrix[z, x] = bgi;
                 }
             }
         }
 
-        public void RefreshBagGrid()
+        public void RefreshBackpackGrid()
         {
             int count = 0;
             for (int x = 0; x < 10; x++)
@@ -50,12 +50,12 @@ namespace BiangStudio.GridBag
                 for (int z = 0; z < 10; z++)
                 {
                     count++;
-                    BagGridMatrix[z, x].State = count > bagGridNumber ? BagGridInfo.States.Locked : BagGridInfo.States.Available;
+                    BackpackGridMatrix[z, x].State = count > backpackGridNumber ? BackpackGridInfo.States.Locked : BackpackGridInfo.States.Available;
                 }
             }
         }
 
-        public bool TryAddItem(BagItemInfo bii)
+        public bool TryAddItem(BackpackItemInfo bii)
         {
             bool canPlaceDirectly = CheckSpaceAvailable(bii.OccupiedGridPositions, GridPos.Zero);
             if (canPlaceDirectly)
@@ -76,7 +76,7 @@ namespace BiangStudio.GridBag
             }
         }
 
-        private bool FindSpaceToPutItem(BagItemInfo bii, out GridPosR.Orientation orientation, out List<GridPos> realOccupiedGPs)
+        private bool FindSpaceToPutItem(BackpackItemInfo bii, out GridPosR.Orientation orientation, out List<GridPos> realOccupiedGPs)
         {
             orientation = GridPosR.Orientation.Up;
             foreach (string s in Enum.GetNames(typeof(GridPosR.Orientation)))
@@ -88,7 +88,7 @@ namespace BiangStudio.GridBag
             return false;
         }
 
-        private bool FindSpaceToPutRotatedItem(BagItemInfo bii, GridPosR.Orientation orientation, out List<GridPos> realOccupiedGPs)
+        private bool FindSpaceToPutRotatedItem(BackpackItemInfo bii, GridPosR.Orientation orientation, out List<GridPos> realOccupiedGPs)
         {
             GridRect space = bii.BoundingRect;
 
@@ -116,7 +116,7 @@ namespace BiangStudio.GridBag
                             break;
                         }
 
-                        if (!BagGridMatrix[col, row].Available)
+                        if (!BackpackGridMatrix[col, row].Available)
                         {
                             canHold = false;
                             break;
@@ -151,7 +151,7 @@ namespace BiangStudio.GridBag
                     return false;
                 }
 
-                if (!BagGridMatrix[addedGP.x, addedGP.z].Available)
+                if (!BackpackGridMatrix[addedGP.x, addedGP.z].Available)
                 {
                     return false;
                 }
@@ -160,18 +160,18 @@ namespace BiangStudio.GridBag
             return true;
         }
 
-        public UnityAction<BagItemInfo> OnAddItemSucAction;
+        public UnityAction<BackpackItemInfo> OnAddItemSucAction;
 
-        private void AddItem(BagItemInfo bii, GridPosR.Orientation orientation, List<GridPos> realOccupiedGPs)
+        private void AddItem(BackpackItemInfo bii, GridPosR.Orientation orientation, List<GridPos> realOccupiedGPs)
         {
             bii.OccupiedGridPositions = realOccupiedGPs;
             bii.GridPos.orientation = orientation;
             bii.RefreshSize();
-            BagItemInfos.Add(bii);
+            BackpackItemInfos.Add(bii);
             OnAddItemSucAction?.Invoke(bii);
             foreach (GridPos gp in realOccupiedGPs)
             {
-                BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Unavailable;
+                BackpackGridMatrix[gp.x, gp.z].State = BackpackGridInfo.States.Unavailable;
             }
         }
 
@@ -179,38 +179,38 @@ namespace BiangStudio.GridBag
         {
             foreach (GridPos gp in oldOccupiedGPs)
             {
-                BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Available;
+                BackpackGridMatrix[gp.x, gp.z].State = BackpackGridInfo.States.Available;
             }
 
             foreach (GridPos gp in newOccupiedGPs)
             {
-                BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Unavailable;
+                BackpackGridMatrix[gp.x, gp.z].State = BackpackGridInfo.States.Unavailable;
             }
         }
 
-        public UnityAction<BagItemInfo> OnRemoveItemSucAction;
+        public UnityAction<BackpackItemInfo> OnRemoveItemSucAction;
 
-        public void RemoveItem(BagItemInfo bii)
+        public void RemoveItem(BackpackItemInfo bii)
         {
-            if (BagItemInfos.Contains(bii))
+            if (BackpackItemInfos.Contains(bii))
             {
                 foreach (GridPos gp in bii.OccupiedGridPositions)
                 {
-                    BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.Available;
+                    BackpackGridMatrix[gp.x, gp.z].State = BackpackGridInfo.States.Available;
                 }
 
-                BagItemInfos.Remove(bii);
+                BackpackItemInfos.Remove(bii);
                 OnRemoveItemSucAction?.Invoke(bii);
             }
         }
 
-        public void PickUpItem(BagItemInfo bii)
+        public void PickUpItem(BackpackItemInfo bii)
         {
-            if (BagItemInfos.Contains(bii))
+            if (BackpackItemInfos.Contains(bii))
             {
                 foreach (GridPos gp in bii.OccupiedGridPositions)
                 {
-                    BagGridMatrix[gp.x, gp.z].State = BagGridInfo.States.TempUnavailable;
+                    BackpackGridMatrix[gp.x, gp.z].State = BackpackGridInfo.States.TempUnavailable;
                 }
             }
         }

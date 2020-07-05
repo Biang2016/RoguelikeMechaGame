@@ -4,7 +4,7 @@ using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay;
 using BiangStudio.GamePlay.UI;
-using BiangStudio.GridBag;
+using BiangStudio.GridBackpack;
 using BiangStudio.Log;
 using UnityEngine;
 using BiangStudio.Singleton;
@@ -45,7 +45,7 @@ namespace Client
 
         #region GamePlay
 
-        private BagManager BagManager => BagManager.Instance;
+        private BackpackManager BackpackManager => BackpackManager.Instance;
         private DragManager DragManager => DragManager.Instance;
         private DragExecuteManager DragExecuteManager => DragExecuteManager.Instance;
 
@@ -96,15 +96,16 @@ namespace Client
                 ControlManager.Instance.EnableBuildingInputActions(!enable);
             };
 
-            BagManager.Init(
+            BackpackManager.Init(
                 60,
-                LoadAllBagItemPics(),
-                toggleBagKeyDownHandler: () => ControlManager.Instance.Building_ToggleBag.Down,
+                LoadAllBackpackItemPics(),
+                toggleBackpackKeyDownHandler: () => ControlManager.Instance.Building_ToggleBackpack.Down,
                 rotateItemKeyDownHandler: () => ControlManager.Instance.Building_RotateItem.Down,
-                toggleBagCallback: ToggleBag,
-                dragItemOutBagCallback: (bagItem) =>
+                toggleDebugKeyDownHandler: () => ControlManager.Instance.Building_ToggleDebug.Down,
+                toggleBackpackCallback: ToggleBackpack,
+                dragItemOutBackpackCallback: (backpackItem) =>
                 {
-                    switch (bagItem.Data.BagItemContentInfo)
+                    switch (backpackItem.Data.BackpackItemContentInfo)
                     {
                         case MechaComponentInfo mechaComponentInfo:
                         {
@@ -115,17 +116,17 @@ namespace Client
                             BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
                             DragManager.Instance.CurrentDrag = mcb.Draggable;
                             mcb.Draggable.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<MechaComponentBase>());
-                            BagManager.Instance.BagInfo.RemoveItem(bagItem.Data);
-                            bagItem.PoolRecycle();
+                            BackpackManager.Instance.BackpackInfo.RemoveItem(backpackItem.Data);
+                            backpackItem.PoolRecycle();
                             break;
                         }
                     }
                 },
-                instantiateBagGridHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagGrid].AllocateGameObject<BagGrid>(parent),
-                instantiateBagItemHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItem].AllocateGameObject<BagItem>(parent),
-                instantiateBagItemGridHitBoxHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItemGridHitBox].AllocateGameObject<BagItemGridHitBox>(parent)
+                instantiateBackpackGridHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackGrid].AllocateGameObject<BackpackGrid>(parent),
+                instantiateBackpackItemHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItem].AllocateGameObject<BackpackItem>(parent),
+                instantiateBackpackItemGridHitBoxHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItemGridHitBox].AllocateGameObject<BackpackItemGridHitBox>(parent)
             );
-            BagManager.Awake();
+            BackpackManager.Awake();
             DragManager.Awake();
             DragExecuteManager.Init();
             DragExecuteManager.Awake();
@@ -149,8 +150,8 @@ namespace Client
             RoutineManager.Start();
             GameStateManager.Start();
 
-            BagManager.LoadBagInfo(new BagInfo(75));
-            BagManager.Start();
+            BackpackManager.LoadBackpackInfo(new BackpackInfo(75));
+            BackpackManager.Start();
             DragManager.Start();
             DragExecuteManager.Start();
 
@@ -169,8 +170,8 @@ namespace Client
             foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
             {
                 MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-                BagItemInfo bii = new BagItemInfo(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 100, 0));
-                BagManager.BagInfo.TryAddItem(bii);
+                BackpackItemInfo bii = new BackpackItemInfo(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 100, 0));
+                BackpackManager.BackpackInfo.TryAddItem(bii);
             }
         }
 
@@ -185,7 +186,7 @@ namespace Client
             RoutineManager.Update(Time.deltaTime, Time.frameCount);
             GameStateManager.Update();
 
-            BagManager.Update();
+            BackpackManager.Update();
             DragManager.Update();
             DragExecuteManager.Update();
 
@@ -206,7 +207,7 @@ namespace Client
             RoutineManager.LateUpdate();
             GameStateManager.LateUpdate();
 
-            BagManager.LateUpdate();
+            BackpackManager.LateUpdate();
             DragManager.LateUpdate();
             DragExecuteManager.LateUpdate();
 
@@ -227,7 +228,7 @@ namespace Client
             RoutineManager.FixedUpdate();
             GameStateManager.FixedUpdate();
 
-            BagManager.FixedUpdate();
+            BackpackManager.FixedUpdate();
             DragManager.FixedUpdate();
             DragExecuteManager.FixedUpdate();
 
@@ -244,7 +245,7 @@ namespace Client
         }
 
         // todo 做成AI原子
-        private void ToggleBag(bool open)
+        private void ToggleBackpack(bool open)
         {
             if (open)
             {
@@ -284,17 +285,17 @@ namespace Client
         /// <summary>
         /// Load all 2D sprites of mecha components
         /// </summary>
-        private Dictionary<string, Sprite> LoadAllBagItemPics()
+        private Dictionary<string, Sprite> LoadAllBackpackItemPics()
         {
-            Dictionary<string, Sprite> bagItemSpriteDict = new Dictionary<string, Sprite>();
+            Dictionary<string, Sprite> backpackItemSpriteDict = new Dictionary<string, Sprite>();
             foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
             {
                 MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-                Sprite sprite = Resources.Load<Sprite>("BagItemPics/" + s);
-                bagItemSpriteDict.Add(typeof(MechaComponentType).FullName + "." + mcType, sprite);
+                Sprite sprite = Resources.Load<Sprite>("BackpackItemPics/" + s);
+                backpackItemSpriteDict.Add(typeof(MechaComponentType).FullName + "." + mcType, sprite);
             }
 
-            return bagItemSpriteDict;
+            return backpackItemSpriteDict;
         }
     }
 }

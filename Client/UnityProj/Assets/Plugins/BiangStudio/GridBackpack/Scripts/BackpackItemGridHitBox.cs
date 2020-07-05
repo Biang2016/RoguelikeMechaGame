@@ -2,9 +2,9 @@ using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ObjectPool;
 using UnityEngine;
 
-namespace BiangStudio.GridBag
+namespace BiangStudio.GridBackpack
 {
-    public class BagItemGridHitBox : PoolObject
+    public class BackpackItemGridHitBox : PoolObject
     {
         public BoxCollider BoxCollider;
 

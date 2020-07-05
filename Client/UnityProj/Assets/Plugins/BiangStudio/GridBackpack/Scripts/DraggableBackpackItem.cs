@@ -3,11 +3,13 @@ using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay.UI;
 using UnityEngine;
 
-namespace BiangStudio.GridBag
+namespace BiangStudio.GridBackpack
 {
-    public class DraggableBagItem : Draggable
+    [RequireComponent(typeof(BackpackItem))]
+    [DisallowMultipleComponent]
+    public class DraggableBackpackItem : Draggable
     {
-        public BagItem BagItem;
+        public BackpackItem BackpackItem;
 
         protected override void OnDragging()
         {
@@ -25,19 +27,19 @@ namespace BiangStudio.GridBag
             {
                 //不动
             }
-            else if (MyDragProcessor.GetCurrentDragAreaName() == DragAreaDefines.Bag) 
+            else if (MyDragProcessor.GetCurrentDragAreaName() == DragAreaDefines.Backpack)
             {
-                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BagManager.Instance.BagPanel.ItemContainer.transform as RectTransform, MyDragProcessor.GetDragMousePosition(),
+                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(BackpackManager.Instance.BackpackPanel.ItemContainer.transform as RectTransform, MyDragProcessor.GetDragMousePosition(),
                     UIManager.Instance.UICamera, out Vector2 mousePos))
                 {
-                    mousePos.x += ((RectTransform)BagManager.Instance.BagPanel.ItemContainer).rect.width / 2f;
-                    mousePos.y -= ((RectTransform)BagManager.Instance.BagPanel.ItemContainer).rect.height / 2f;
-                    int grid_X = Mathf.FloorToInt((mousePos.x) / BagManager.Instance.BagItemGridSize);
-                    int grid_Z = Mathf.FloorToInt((-mousePos.y) / BagManager.Instance.BagItemGridSize);
-                    BagItem.MoveBaseOnHitBox(new GridPos(grid_X, grid_Z));
+                    mousePos.x += ((RectTransform) BackpackManager.Instance.BackpackPanel.ItemContainer).rect.width / 2f;
+                    mousePos.y -= ((RectTransform) BackpackManager.Instance.BackpackPanel.ItemContainer).rect.height / 2f;
+                    int grid_X = Mathf.FloorToInt((mousePos.x) / BackpackManager.Instance.BackpackItemGridSize);
+                    int grid_Z = Mathf.FloorToInt((-mousePos.y) / BackpackManager.Instance.BackpackItemGridSize);
+                    BackpackItem.MoveBaseOnHitBox(new GridPos(grid_X, grid_Z));
                 }
             }
-            else // drag out of the bag
+            else // drag out of the backpack
             {
                 caller.Draggable_DragOutEffects();
             }

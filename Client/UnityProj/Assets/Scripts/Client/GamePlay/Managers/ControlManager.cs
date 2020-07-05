@@ -56,8 +56,9 @@ namespace Client
         }
 
         public ButtonState Building_RotateItem = new ButtonState() {ButtonName = "Building_RotateItem"};
-        public ButtonState Building_ToggleBag = new ButtonState() {ButtonName = "Building_ToggleBag"};
+        public ButtonState Building_ToggleBackpack = new ButtonState() {ButtonName = "Building_ToggleBackpack"};
         public ButtonState Building_ToggleWireLines = new ButtonState() {ButtonName = "Building_ToggleWireLines"};
+        public ButtonState Building_ToggleDebug = new ButtonState() {ButtonName = "Building_ToggleDebug" };
 
         #endregion
 
@@ -170,8 +171,9 @@ namespace Client
             Building_MouseMiddle.GetStateCallbackFromContext(MechaBuildingInputActions.MouseMiddleClick);
 
             Building_RotateItem.GetStateCallbackFromContext(MechaBuildingInputActions.RotateItem);
-            Building_ToggleBag.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleBag);
+            Building_ToggleBackpack.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleBackpack);
             Building_ToggleWireLines.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleWireLines);
+            Building_ToggleDebug.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleDebug);
 
             Battle_MouseLeft.GetStateCallbackFromContext(MechaBattleInputActions.MouseLeftClick);
             Battle_MouseRight.GetStateCallbackFromContext(MechaBattleInputActions.MouseRightClick);

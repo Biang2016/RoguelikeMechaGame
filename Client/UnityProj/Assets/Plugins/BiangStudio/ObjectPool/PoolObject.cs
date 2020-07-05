@@ -9,7 +9,7 @@ namespace BiangStudio.ObjectPool
 
         internal bool IsRecycled = false;
 
-        public void SetObjectPool(GameObjectPool pool)
+        internal void SetObjectPool(GameObjectPool pool)
         {
             Pool = pool;
         }
@@ -28,7 +28,7 @@ namespace BiangStudio.ObjectPool
             StartCoroutine(Co_PoolRecycle(delay, usedTimes));
         }
 
-        IEnumerator Co_PoolRecycle(float delay, int timeMark)
+        private IEnumerator Co_PoolRecycle(float delay, int timeMark)
         {
             yield return new WaitForSeconds(delay);
             if (!IsRecycled && usedTimes == timeMark)

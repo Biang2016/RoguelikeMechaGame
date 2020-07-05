@@ -6,7 +6,7 @@ using BiangStudio.CloneVariant;
 using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay;
-using BiangStudio.GridBag;
+using BiangStudio.GridBackpack;
 using BiangStudio.ObjectPool;
 using GameCore;
 using Newtonsoft.Json;
@@ -54,7 +54,7 @@ namespace Client
             }
 
             lighteningFXs.Clear();
-            isReturningToBag = false;
+            isReturningToBackpack = false;
         }
 
         public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
@@ -275,9 +275,9 @@ namespace Client
 
             switch (DragManager.Instance.Current_DragAreaName)
             {
-                case BiangStudio.GridBag.DragAreaDefines.Bag:
+                case BiangStudio.GridBackpack.DragAreaDefines.Backpack:
                 {
-                    ReturnToBag(true, true);
+                    ReturnToBackpack(true, true);
                     return;
                 }
             }
@@ -291,25 +291,25 @@ namespace Client
             }
         }
 
-        private bool isReturningToBag = false;
+        private bool isReturningToBackpack = false;
 
-        public bool ReturnToBag(bool cancelDrag, bool dragTheItem)
+        public bool ReturnToBackpack(bool cancelDrag, bool dragTheItem)
         {
-            BagItemInfo bii = new BagItemInfo(MechaComponentInfo);
-            bii.BagItemContentInfo = MechaComponentInfo;
-            bool suc = BagManager.Instance.BagInfo.TryAddItem(bii);
+            BackpackItemInfo bii = new BackpackItemInfo(MechaComponentInfo);
+            bii.BackpackItemContentInfo = MechaComponentInfo;
+            bool suc = BackpackManager.Instance.BackpackInfo.TryAddItem(bii);
             if (suc)
             {
                 if (cancelDrag)
                 {
-                    isReturningToBag = true;
+                    isReturningToBackpack = true;
                     DragManager.Instance.CurrentDrag = null;
                 }
 
                 if (dragTheItem)
                 {
-                    DragManager.Instance.CurrentDrag = BagManager.Instance.BagPanel.GetBagItem(bii.GUID).gameObject.GetComponent<DraggableBagItem>();
-                    DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BagItem>());
+                    DragManager.Instance.CurrentDrag = BackpackManager.Instance.BackpackPanel.GetBackpackItem(bii.GUID).gameObject.GetComponent<DraggableBackpackItem>();
+                    DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BackpackItem>());
                 }
 
                 ParentMecha?.RemoveMechaComponent(this);
@@ -323,11 +323,11 @@ namespace Client
         {
             switch (dragAreaTypes)
             {
-                case BiangStudio.GridBag.DragAreaDefines.Bag:
+                case BiangStudio.GridBackpack.DragAreaDefines.Backpack:
                 {
-                    if (!isReturningToBag)
+                    if (!isReturningToBackpack)
                     {
-                        bool suc = ReturnToBag(false, false);
+                        bool suc = ReturnToBackpack(false, false);
                         if (!suc)
                         {
                             DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
@@ -342,7 +342,7 @@ namespace Client
                 }
                 case BiangStudio.DragHover.DragAreaDefines.None:
                 {
-                    bool suc = ReturnToBag(false, false);
+                    bool suc = ReturnToBackpack(false, false);
                     if (!suc)
                     {
                         DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();

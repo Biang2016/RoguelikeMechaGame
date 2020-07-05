@@ -356,6 +356,14 @@ namespace Client
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
+                    ""name"": ""ToggleBackpack"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c4bb76c-4707-4e5c-a7f3-74e9d4fe4aa9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
                     ""name"": ""ToggleWireLines"",
                     ""type"": ""Button"",
                     ""id"": ""ab7dc26b-d210-49a5-bc1e-93e822716dbc"",
@@ -364,9 +372,9 @@ namespace Client
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
-                    ""name"": ""ToggleBag"",
+                    ""name"": ""ToggleDebug"",
                     ""type"": ""Button"",
-                    ""id"": ""9c4bb76c-4707-4e5c-a7f3-74e9d4fe4aa9"",
+                    ""id"": ""ff7e40b2-232a-4a3e-bd3c-5911d1a7078e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
@@ -397,23 +405,12 @@ namespace Client
                 },
                 {
                     ""name"": """",
-                    ""id"": ""18410dfb-989a-4efe-b6ca-8529847e146b"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""ToggleWireLines"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""f36765b4-70ff-4ede-b1f7-71db8bd78fd1"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
-                    ""action"": ""ToggleBag"",
+                    ""action"": ""ToggleBackpack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -436,6 +433,28 @@ namespace Client
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""MouseMiddleClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da559815-77f3-4f03-aa50-6e7dfd6bc3e7"",
+                    ""path"": ""<Keyboard>/U"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""ToggleDebug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18410dfb-989a-4efe-b6ca-8529847e146b"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""ToggleWireLines"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -650,8 +669,9 @@ namespace Client
             m_MechaBuildingInput_MouseRightClick = m_MechaBuildingInput.FindAction("MouseRightClick", throwIfNotFound: true);
             m_MechaBuildingInput_MouseMiddleClick = m_MechaBuildingInput.FindAction("MouseMiddleClick", throwIfNotFound: true);
             m_MechaBuildingInput_RotateItem = m_MechaBuildingInput.FindAction("RotateItem", throwIfNotFound: true);
+            m_MechaBuildingInput_ToggleBackpack = m_MechaBuildingInput.FindAction("ToggleBackpack", throwIfNotFound: true);
             m_MechaBuildingInput_ToggleWireLines = m_MechaBuildingInput.FindAction("ToggleWireLines", throwIfNotFound: true);
-            m_MechaBuildingInput_ToggleBag = m_MechaBuildingInput.FindAction("ToggleBag", throwIfNotFound: true);
+            m_MechaBuildingInput_ToggleDebug = m_MechaBuildingInput.FindAction("ToggleDebug", throwIfNotFound: true);
             // Common
             m_Common = asset.FindActionMap("Common", throwIfNotFound: true);
             m_Common_MouseLeftClick = m_Common.FindAction("MouseLeftClick", throwIfNotFound: true);
@@ -805,8 +825,9 @@ namespace Client
         private readonly InputAction m_MechaBuildingInput_MouseRightClick;
         private readonly InputAction m_MechaBuildingInput_MouseMiddleClick;
         private readonly InputAction m_MechaBuildingInput_RotateItem;
+        private readonly InputAction m_MechaBuildingInput_ToggleBackpack;
         private readonly InputAction m_MechaBuildingInput_ToggleWireLines;
-        private readonly InputAction m_MechaBuildingInput_ToggleBag;
+        private readonly InputAction m_MechaBuildingInput_ToggleDebug;
         public struct MechaBuildingInputActions
         {
             private @PlayerInput m_Wrapper;
@@ -815,8 +836,9 @@ namespace Client
             public InputAction @MouseRightClick => m_Wrapper.m_MechaBuildingInput_MouseRightClick;
             public InputAction @MouseMiddleClick => m_Wrapper.m_MechaBuildingInput_MouseMiddleClick;
             public InputAction @RotateItem => m_Wrapper.m_MechaBuildingInput_RotateItem;
+            public InputAction @ToggleBackpack => m_Wrapper.m_MechaBuildingInput_ToggleBackpack;
             public InputAction @ToggleWireLines => m_Wrapper.m_MechaBuildingInput_ToggleWireLines;
-            public InputAction @ToggleBag => m_Wrapper.m_MechaBuildingInput_ToggleBag;
+            public InputAction @ToggleDebug => m_Wrapper.m_MechaBuildingInput_ToggleDebug;
             public InputActionMap Get() { return m_Wrapper.m_MechaBuildingInput; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -838,12 +860,15 @@ namespace Client
                     @RotateItem.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnRotateItem;
                     @RotateItem.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnRotateItem;
                     @RotateItem.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnRotateItem;
+                    @ToggleBackpack.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleBackpack;
+                    @ToggleBackpack.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleBackpack;
+                    @ToggleBackpack.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleBackpack;
                     @ToggleWireLines.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleWireLines;
                     @ToggleWireLines.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleWireLines;
                     @ToggleWireLines.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleWireLines;
-                    @ToggleBag.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleBag;
-                    @ToggleBag.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleBag;
-                    @ToggleBag.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleBag;
+                    @ToggleDebug.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleDebug;
+                    @ToggleDebug.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleDebug;
+                    @ToggleDebug.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleDebug;
                 }
                 m_Wrapper.m_MechaBuildingInputActionsCallbackInterface = instance;
                 if (instance != null)
@@ -860,12 +885,15 @@ namespace Client
                     @RotateItem.started += instance.OnRotateItem;
                     @RotateItem.performed += instance.OnRotateItem;
                     @RotateItem.canceled += instance.OnRotateItem;
+                    @ToggleBackpack.started += instance.OnToggleBackpack;
+                    @ToggleBackpack.performed += instance.OnToggleBackpack;
+                    @ToggleBackpack.canceled += instance.OnToggleBackpack;
                     @ToggleWireLines.started += instance.OnToggleWireLines;
                     @ToggleWireLines.performed += instance.OnToggleWireLines;
                     @ToggleWireLines.canceled += instance.OnToggleWireLines;
-                    @ToggleBag.started += instance.OnToggleBag;
-                    @ToggleBag.performed += instance.OnToggleBag;
-                    @ToggleBag.canceled += instance.OnToggleBag;
+                    @ToggleDebug.started += instance.OnToggleDebug;
+                    @ToggleDebug.performed += instance.OnToggleDebug;
+                    @ToggleDebug.canceled += instance.OnToggleDebug;
                 }
             }
         }
@@ -1002,8 +1030,9 @@ namespace Client
             void OnMouseRightClick(InputAction.CallbackContext context);
             void OnMouseMiddleClick(InputAction.CallbackContext context);
             void OnRotateItem(InputAction.CallbackContext context);
+            void OnToggleBackpack(InputAction.CallbackContext context);
             void OnToggleWireLines(InputAction.CallbackContext context);
-            void OnToggleBag(InputAction.CallbackContext context);
+            void OnToggleDebug(InputAction.CallbackContext context);
         }
         public interface ICommonActions
         {

@@ -1,7 +1,10 @@
 ﻿using BiangStudio.DragHover;
+using UnityEngine;
 
 namespace Client
 {
+    [RequireComponent(typeof(MechaComponentBase))]
+    [DisallowMultipleComponent]
     public class DraggableMechaComponent : Draggable
     {
         protected override void OnDragging()

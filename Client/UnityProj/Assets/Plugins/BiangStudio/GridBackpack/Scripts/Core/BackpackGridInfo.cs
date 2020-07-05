@@ -1,16 +1,13 @@
 ﻿using System;
 
-namespace BiangStudio.GridBag
+namespace BiangStudio.GridBackpack
 {
     [Serializable]
-    public class BagGridInfo
+    public class BackpackGridInfo
     {
-        public delegate void BanDelegate(bool newValue);
+        internal delegate void SetStateDelegate(States newValue);
 
-        public delegate void SetStateDelegate(States newValue);
-
-        public BanDelegate BanHandler;
-        public SetStateDelegate SetStateHandler;
+        internal SetStateDelegate SetStateHandler;
 
         public enum States
         {

@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using BiangStudio.GameDataFormat.Grid;
 
-namespace BiangStudio.GridBag
+namespace BiangStudio.GridBackpack
 {
     [Serializable]
-    public class BagItemInfo : IClone<BagItemInfo>
+    public class BackpackItemInfo : IClone<BackpackItemInfo>
     {
         private static int guidGenerator;
 
         public int GUID;
 
-        public IBagItemContentInfo BagItemContentInfo;
+        public IBackpackItemContentInfo BackpackItemContentInfo;
 
-        public string BagItemContentName
+        public string BackpackItemContentName
         {
             get
             {
-                if (BagItemContentInfo != null)
+                if (BackpackItemContentInfo != null)
                 {
-                    return BagItemContentInfo.BagItemName;
+                    return BackpackItemContentInfo.BackpackItemName;
                 }
                 else
                 {
@@ -35,13 +35,13 @@ namespace BiangStudio.GridBag
 
         public GridRect BoundingRect;
 
-        public BagItemInfo(IBagItemContentInfo bagItemContentInfo)
+        public BackpackItemInfo(IBackpackItemContentInfo backpackItemContentInfo)
         {
             GUID = guidGenerator;
             guidGenerator++;
 
-            BagItemContentInfo = bagItemContentInfo;
-            OccupiedGridPositions = BagItemContentInfo.OriginalOccupiedGridPositions.Clone();
+            BackpackItemContentInfo = backpackItemContentInfo;
+            OccupiedGridPositions = BackpackItemContentInfo.OriginalOccupiedGridPositions.Clone();
             RefreshSize();
         }
 
@@ -50,9 +50,9 @@ namespace BiangStudio.GridBag
             BoundingRect = OccupiedGridPositions.GetBoundingRectFromListGridPos();
         }
 
-        public BagItemInfo Clone()
+        public BackpackItemInfo Clone()
         {
-            BagItemInfo bii = new BagItemInfo(CloneVariantUtils.TryGetClone(BagItemContentInfo));
+            BackpackItemInfo bii = new BackpackItemInfo(CloneVariantUtils.TryGetClone(BackpackItemContentInfo));
             bii.GridPos = GridPos;
             bii.BoundingRect = BoundingRect;
             bii.OccupiedGridPositions = OccupiedGridPositions.Clone();
