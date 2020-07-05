@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Client
 {
-    public class HUDPanel : BaseUIForm
+    public class HUDPanel : BaseUIPanel
     {
         void Awake()
         {

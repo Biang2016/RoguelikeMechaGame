@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BiangStudio.GridBag
 {
-    public class BagItemGridHitBoxes : MonoBehaviour
+    public class BagItemGridHitBoxRoot : MonoBehaviour
     {
         [SerializeField] private Transform HitBoxContainer;
         public List<BagItemGridHitBox> bagItemGridHitBoxes = new List<BagItemGridHitBox>();

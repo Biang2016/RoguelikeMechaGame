@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BiangStudio.GridBag
 {
-    public class BagPanel : BaseUIForm
+    public class BagPanel : BaseUIPanel
     {
         private BagInfo Data;
 
@@ -28,12 +28,11 @@ namespace BiangStudio.GridBag
                 uiForms_Type: UIFormTypes.Normal,
                 uiForms_ShowMode: UIFormShowModes.Normal,
                 uiForm_LucencyType: UIFormLucencyTypes.Penetrable);
-
-            BagManager.Instance.BagItemGridSize = Mathf.RoundToInt(ItemContainerGridLayout.cellSize.x);
         }
 
         void Update()
         {
+            ItemContainerGridLayout.cellSize = Vector2.one * BagManager.Instance.BagItemGridSize;
         }
 
         void Reset()

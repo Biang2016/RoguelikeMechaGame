@@ -11,24 +11,27 @@ namespace BiangStudio.GridBag
     {
         public delegate bool KeyDownDelegate();
 
+        public delegate void LogErrorDelegate(string log);
+
+        public delegate MonoBehaviour InstantiatePrefabDelegate(Transform parent);
+
         private BagInfo bagInfo;
         public BagInfo BagInfo => bagInfo;
         public BagPanel BagPanel;
-        internal int BagItemGridSize;
 
-        public delegate void LogErrorDelegate(string log);
+        private int bagItemGridSize;
+        public int BagItemGridSize => bagItemGridSize;
 
-        private UnityAction<bool> OnToggleBag;
         private KeyDownDelegate ToggleBagKeyDownHandler;
         internal KeyDownDelegate RotateItemKeyDownHandler;
-        internal UnityAction<BagItem> DragItemOutBagAction;
-
-        public delegate MonoBehaviour InstantiatePrefabDelegate(Transform parent);
 
         private LogErrorDelegate LogErrorHandler;
         internal InstantiatePrefabDelegate InstantiateBagGridHandler;
         internal InstantiatePrefabDelegate InstantiateBagItemHandler;
         internal InstantiatePrefabDelegate InstantiateBagItemGridHitBoxHandler;
+
+        private UnityAction<bool> ToggleBagCallback;
+        internal UnityAction<BagItem> DragItemOutBagCallback;
 
         private Dictionary<string, Sprite> BagItemSpriteDict;
 
@@ -51,7 +54,7 @@ namespace BiangStudio.GridBag
                         BagPanel.CloseUIForm();
                     }
 
-                    OnToggleBag?.Invoke(value);
+                    ToggleBagCallback?.Invoke(value);
                     isOpen = value;
                 }
             }
@@ -60,25 +63,33 @@ namespace BiangStudio.GridBag
         /// <summary>
         /// Initialize the bag manager.
         /// </summary>
-        /// <param name="bagInfo"></param>
-        /// <param name="onToggleBag">This callback will be execute when the bag is opened or closed</param>
+        /// <param name="bagItemGridSize">the size (in pixel) of each grid of bag items in UI panels.</param>
+        /// <param name="bagItemSpriteDict">Key: bag item name, Value: bag item sprite</param>
         /// <param name="toggleBagKeyDownHandler">This handler should return a signal which toggles the bag(e.g. return Input.GetKeyDown(KeyCode.B);)</param>
         /// <param name="rotateItemKeyDownHandler">This handler should return a signal which rotates the bag item(e.g. return Input.GetKeyDown(KeyCode.R);)</param>
-        /// <param name="dragItemOutBagAction">This callback will be execute when the bag item is dragged out of the bag.</param>
-        public void Init(Dictionary<string, Sprite> bagItemSpriteDict, UnityAction<bool> onToggleBag,
+        /// <param name="toggleBagCallback">This callback will be execute when the bag is opened or closed</param>
+        /// <param name="dragItemOutBagCallback">This callback will be execute when the bag item is dragged out of the bag.</param>
+        /// <param name="instantiateBagGridHandler">This handler should instantiate a prefab with BagGrid component.</param>
+        /// <param name="instantiateBagItemHandler">This handler should instantiate a prefab with BagItem component.</param>
+        /// <param name="instantiateBagItemGridHitBoxHandler">This handler should instantiate a prefab with BagItemGridHitBox component.</param>
+        public void Init(
+            int bagItemGridSize,
+            Dictionary<string, Sprite> bagItemSpriteDict,
             KeyDownDelegate toggleBagKeyDownHandler,
             KeyDownDelegate rotateItemKeyDownHandler,
-            UnityAction<BagItem> dragItemOutBagAction,
+            UnityAction<bool> toggleBagCallback,
+            UnityAction<BagItem> dragItemOutBagCallback,
             InstantiatePrefabDelegate instantiateBagGridHandler,
             InstantiatePrefabDelegate instantiateBagItemHandler,
             InstantiatePrefabDelegate instantiateBagItemGridHitBoxHandler
         )
         {
+            this.bagItemGridSize = bagItemGridSize;
             BagItemSpriteDict = bagItemSpriteDict;
-            OnToggleBag = onToggleBag;
             ToggleBagKeyDownHandler = toggleBagKeyDownHandler;
             RotateItemKeyDownHandler = rotateItemKeyDownHandler;
-            DragItemOutBagAction = dragItemOutBagAction;
+            ToggleBagCallback = toggleBagCallback;
+            DragItemOutBagCallback = dragItemOutBagCallback;
             InstantiateBagGridHandler = instantiateBagGridHandler;
             InstantiateBagItemHandler = instantiateBagItemHandler;
             InstantiateBagItemGridHitBoxHandler = instantiateBagItemGridHitBoxHandler;

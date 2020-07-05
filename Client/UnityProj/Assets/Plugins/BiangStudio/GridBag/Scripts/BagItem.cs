@@ -14,7 +14,7 @@ namespace BiangStudio.GridBag
 
         [SerializeField] private Image Image;
 
-        [SerializeField] private BagItemGridHitBoxes BagItemGridHitBoxes;
+        [SerializeField] private BagItemGridHitBoxRoot BagItemGridHitBoxes;
 
         private RectTransform RectTransform => (RectTransform) transform;
 
@@ -179,7 +179,7 @@ namespace BiangStudio.GridBag
 
         public void Draggable_DragOutEffects()
         {
-            BagManager.Instance.DragItemOutBagAction?.Invoke(this);
+            BagManager.Instance.DragItemOutBagCallback?.Invoke(this);
         }
 
         #endregion

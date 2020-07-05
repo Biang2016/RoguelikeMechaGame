@@ -154,7 +154,7 @@ namespace Client
                 }
 
                 MechaComponentInfo.GridPos = gridPos;
-                GridPos.ApplyGridPosToLocalTrans(gridPos, transform, ConfigManager.GridSize);
+                GridPosR.ApplyGridPosToLocalTrans(gridPos, transform, ConfigManager.GridSize);
                 RefreshOccupiedGridPositions();
                 ParentMecha?.RefreshMechaMatrix();
             }

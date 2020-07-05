@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace BiangStudio.GamePlay.UI
 {
-    public class BaseUIForm : MonoBehaviour
+    public class BaseUIPanel : MonoBehaviour
     {
         public UIType UIType = new UIType();
 
@@ -21,7 +21,7 @@ namespace BiangStudio.GamePlay.UI
             {
                 if (UIManager.Instance.CloseUIFormKeyDownHandler != null && UIManager.Instance.CloseUIFormKeyDownHandler.Invoke())
                 {
-                    BaseUIForm peek = UIManager.Instance.GetPeekUIForm();
+                    BaseUIPanel peek = UIManager.Instance.GetPeekUIForm();
                     if (peek == null || peek == this)
                     {
                         closeFlag = true;
@@ -37,7 +37,7 @@ namespace BiangStudio.GamePlay.UI
                 bool isClickElseWhere = (mouseLeftDown && !EventSystem.current.IsPointerOverGameObject()) || mouseRightDown;
                 if (isClickElseWhere)
                 {
-                    BaseUIForm peek = UIManager.Instance.GetPeekUIForm();
+                    BaseUIPanel peek = UIManager.Instance.GetPeekUIForm();
                     if (peek == null || peek == this)
                     {
                         closeFlag = true;

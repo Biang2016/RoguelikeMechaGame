@@ -24,12 +24,12 @@ namespace BiangStudio.GamePlay.UI
         public ButtonDownDelegate InputNavigateKeyDownHandler;
 
         //缓存所有UI窗体
-        private Dictionary<string, BaseUIForm> AllUIFormDict = new Dictionary<string, BaseUIForm>();
+        private Dictionary<string, BaseUIPanel> AllUIFormDict = new Dictionary<string, BaseUIPanel>();
 
-        private Dictionary<string, BaseUIForm> CurrentShowUIFormDict = new Dictionary<string, BaseUIForm>();
+        private Dictionary<string, BaseUIPanel> CurrentShowUIFormDict = new Dictionary<string, BaseUIPanel>();
 
         //定义“栈”集合,存储显示当前所有[反向切换]的窗体类型
-        private Stack<BaseUIForm> CurrentUIFormsStack = new Stack<BaseUIForm>();
+        private Stack<BaseUIPanel> CurrentUIFormsStack = new Stack<BaseUIPanel>();
 
         [SerializeField] private Transform UINormalRoot = null; //全屏幕显示窗体的根节点
         [SerializeField] private Transform UIFixedRoot = null; //固定显示窗体的根节点
@@ -56,7 +56,7 @@ namespace BiangStudio.GamePlay.UI
             Instance.LogErrorHandler?.Invoke("[BiangStudio.UI] " + log);
         }
 
-        public BaseUIForm GetPeekUIForm()
+        public BaseUIPanel GetPeekUIForm()
         {
             if (CurrentUIFormsStack.Count > 0)
             {
@@ -68,9 +68,9 @@ namespace BiangStudio.GamePlay.UI
             }
         }
 
-        public bool IsPeekUIForm<T>() where T : BaseUIForm
+        public bool IsPeekUIForm<T>() where T : BaseUIPanel
         {
-            BaseUIForm peek = GetPeekUIForm();
+            BaseUIPanel peek = GetPeekUIForm();
             return peek != null && peek is T;
         }
 
@@ -80,21 +80,21 @@ namespace BiangStudio.GamePlay.UI
         /// 1: 根据UI窗体的名称，加载到“所有UI窗体”缓存集合中
         /// 2: 根据不同的UI窗体的“显示模式”，分别作不同的加载处理
         /// </summary>
-        public T ShowUIForms<T>() where T : BaseUIForm
+        public T ShowUIForms<T>() where T : BaseUIPanel
         {
             string uiFormNameStr = typeof(T).Name;
-            BaseUIForm uiForm = ShowUIForm(uiFormNameStr);
-            return (T) uiForm;
+            BaseUIPanel uiPanel = ShowUIForm(uiFormNameStr);
+            return (T) uiPanel;
         }
 
-        public BaseUIForm ShowUIForm(string uiFormName)
+        public BaseUIPanel ShowUIForm(string uiFormName)
         {
-            BaseUIForm baseUIForms = LoadFormsToAllUIFormsCache(uiFormName); //根据UI窗体的名称，加载到“所有UI窗体”缓存集合中
-            if (baseUIForms == null) return null;
-            if (baseUIForms.UIType.IsClearStack) ClearStackArray(); //是否清空“栈集合”中得数据
+            BaseUIPanel baseUiPanels = LoadFormsToAllUIFormsCache(uiFormName); //根据UI窗体的名称，加载到“所有UI窗体”缓存集合中
+            if (baseUiPanels == null) return null;
+            if (baseUiPanels.UIType.IsClearStack) ClearStackArray(); //是否清空“栈集合”中得数据
 
             //根据不同的UI窗体的显示模式，分别作不同的加载处理
-            switch (baseUIForms.UIType.UIForms_ShowMode)
+            switch (baseUiPanels.UIType.UIForms_ShowMode)
             {
                 case UIFormShowModes.Normal: //“普通显示”窗口模式
                     //把当前窗体加载到“当前窗体”集合中。
@@ -112,14 +112,14 @@ namespace BiangStudio.GamePlay.UI
             }
 
             //LogError("showUI  " + uiFormName);
-            return baseUIForms;
+            return baseUiPanels;
         }
 
         /// <summary>
         /// 关闭（返回上一个）窗体
         /// </summary>
         /// <param name="uiFormName"></param>
-        public void CloseUIForm<T>() where T : BaseUIForm
+        public void CloseUIForm<T>() where T : BaseUIPanel
         {
             string uiFormNameStr = typeof(T).ToString();
             CloseUIForm(uiFormNameStr);
@@ -127,7 +127,7 @@ namespace BiangStudio.GamePlay.UI
 
         public void CloseUIForm(string uiFormName)
         {
-            AllUIFormDict.TryGetValue(uiFormName, out BaseUIForm baseUIForm); //“所有UI窗体”集合中，如果没有记录，则直接返回
+            AllUIFormDict.TryGetValue(uiFormName, out BaseUIPanel baseUIForm); //“所有UI窗体”集合中，如果没有记录，则直接返回
             if (baseUIForm == null) return;
             //根据窗体不同的显示类型，分别作不同的关闭处理
             switch (baseUIForm.UIType.UIForms_ShowMode)
@@ -153,10 +153,10 @@ namespace BiangStudio.GamePlay.UI
             //LogError("closeUI  " + uiFormName);
         }
 
-        public T GetBaseUIForm<T>() where T : BaseUIForm
+        public T GetBaseUIForm<T>() where T : BaseUIPanel
         {
             string uiFormNameStr = typeof(T).ToString();
-            AllUIFormDict.TryGetValue(uiFormNameStr, out BaseUIForm baseUIForm);
+            AllUIFormDict.TryGetValue(uiFormNameStr, out BaseUIPanel baseUIForm);
             return (T) baseUIForm;
         }
 
@@ -220,9 +220,9 @@ namespace BiangStudio.GamePlay.UI
         /// </summary>
         /// <param name="uiFormsName">UI窗体（预设）的名称</param>
         /// <returns></returns>
-        private BaseUIForm LoadFormsToAllUIFormsCache(string uiFormsName)
+        private BaseUIPanel LoadFormsToAllUIFormsCache(string uiFormsName)
         {
-            AllUIFormDict.TryGetValue(uiFormsName, out BaseUIForm baseUIResult);
+            AllUIFormDict.TryGetValue(uiFormsName, out BaseUIPanel baseUIResult);
             if (baseUIResult == null)
             {
                 //加载指定名称的“UI窗体”
@@ -242,17 +242,17 @@ namespace BiangStudio.GamePlay.UI
         /// 
         /// </summary>
         /// <param name="uiFormName">UI窗体名称</param>
-        private BaseUIForm LoadUIForm(string uiFormName)
+        private BaseUIPanel LoadUIForm(string uiFormName)
         {
             GameObject UIPanel = LoadUIPanelHandler(uiFormName);
-            BaseUIForm baseUiForm = UIPanel.GetComponent<BaseUIForm>();
-            if (baseUiForm == null)
+            BaseUIPanel baseUiPanel = UIPanel.GetComponent<BaseUIPanel>();
+            if (baseUiPanel == null)
             {
-                LogError("BaseUIForm==null! ,请先确认窗体预设对象上是否加载了BaseUIForm的子类脚本！ 参数 uiFormName=" + uiFormName);
+                LogError("BaseUIPanel==null! ,请先确认窗体预设对象上是否加载了BaseUIForm的子类脚本！ 参数 uiFormName=" + uiFormName);
                 return null;
             }
 
-            switch (baseUiForm.UIType.UIForms_Type)
+            switch (baseUiPanel.UIType.UIForms_Type)
             {
                 case UIFormTypes.Normal: //普通窗体节点
                     UIPanel.transform.SetParent(UINormalRoot, false);
@@ -266,8 +266,8 @@ namespace BiangStudio.GamePlay.UI
             }
 
             UIPanel.SetActive(false);
-            AllUIFormDict.Add(uiFormName, baseUiForm);
-            return baseUiForm;
+            AllUIFormDict.Add(uiFormName, baseUiPanel);
+            return baseUiPanel;
         }
 
         /// <summary>
@@ -276,8 +276,8 @@ namespace BiangStudio.GamePlay.UI
         /// <param name="uiFormName">窗体预设的名称</param>
         private void LoadUIToCurrentCache(string uiFormName)
         {
-            CurrentShowUIFormDict.TryGetValue(uiFormName, out BaseUIForm baseUiForm);
-            AllUIFormDict.TryGetValue(uiFormName, out BaseUIForm baseUIFormFromAllCache);
+            CurrentShowUIFormDict.TryGetValue(uiFormName, out BaseUIPanel baseUiForm);
+            AllUIFormDict.TryGetValue(uiFormName, out BaseUIPanel baseUIFormFromAllCache);
             if (baseUiForm != null) return;
             if (baseUIFormFromAllCache != null)
             {
@@ -294,11 +294,11 @@ namespace BiangStudio.GamePlay.UI
         {
             if (CurrentUIFormsStack.Count > 0)
             {
-                BaseUIForm topUIForm = CurrentUIFormsStack.Peek();
-                topUIForm.Freeze();
+                BaseUIPanel topUiPanel = CurrentUIFormsStack.Peek();
+                topUiPanel.Freeze();
             }
 
-            AllUIFormDict.TryGetValue(uiFormName, out BaseUIForm baseUIForm);
+            AllUIFormDict.TryGetValue(uiFormName, out BaseUIPanel baseUIForm);
             if (baseUIForm != null)
             {
                 baseUIForm.Display();
@@ -316,7 +316,7 @@ namespace BiangStudio.GamePlay.UI
         /// <param name="strUIFormName"></param>
         private void ExitUIForms(string strUIFormName)
         {
-            CurrentShowUIFormDict.TryGetValue(strUIFormName, out BaseUIForm baseUIForm);
+            CurrentShowUIFormDict.TryGetValue(strUIFormName, out BaseUIPanel baseUIForm);
             if (baseUIForm == null) return;
             baseUIForm.Hide();
             CurrentShowUIFormDict.Remove(strUIFormName);
@@ -327,15 +327,15 @@ namespace BiangStudio.GamePlay.UI
         {
             if (CurrentUIFormsStack.Count >= 2)
             {
-                BaseUIForm topUIForms = CurrentUIFormsStack.Pop();
-                topUIForms.Hide();
-                BaseUIForm nextUIForms = CurrentUIFormsStack.Peek();
-                nextUIForms.Display();
+                BaseUIPanel topUiPanels = CurrentUIFormsStack.Pop();
+                topUiPanels.Hide();
+                BaseUIPanel nextUiPanels = CurrentUIFormsStack.Peek();
+                nextUiPanels.Display();
             }
             else if (CurrentUIFormsStack.Count == 1)
             {
-                BaseUIForm topUIForms = CurrentUIFormsStack.Pop();
-                topUIForms.Hide();
+                BaseUIPanel topUiPanels = CurrentUIFormsStack.Pop();
+                topUiPanels.Hide();
             }
         }
 
@@ -346,18 +346,18 @@ namespace BiangStudio.GamePlay.UI
         private void EnterUIFormsAndHideOther(string strUIName)
         {
             if (string.IsNullOrEmpty(strUIName)) return;
-            CurrentShowUIFormDict.TryGetValue(strUIName, out BaseUIForm baseUIForm);
-            AllUIFormDict.TryGetValue(strUIName, out BaseUIForm baseUIFormFromALL);
+            CurrentShowUIFormDict.TryGetValue(strUIName, out BaseUIPanel baseUIForm);
+            AllUIFormDict.TryGetValue(strUIName, out BaseUIPanel baseUIFormFromALL);
 
             if (baseUIForm != null) return;
 
-            foreach (BaseUIForm baseUI in CurrentShowUIFormDict.Values)
+            foreach (BaseUIPanel baseUI in CurrentShowUIFormDict.Values)
             {
                 if (baseUI.UIType.UIForms_Type == UIFormTypes.Fixed) continue;
                 baseUI.Hide();
             }
 
-            foreach (BaseUIForm staUI in CurrentUIFormsStack)
+            foreach (BaseUIPanel staUI in CurrentUIFormsStack)
             {
                 staUI.Hide();
             }
@@ -377,18 +377,18 @@ namespace BiangStudio.GamePlay.UI
         {
             if (string.IsNullOrEmpty(uiFormName)) return;
 
-            CurrentShowUIFormDict.TryGetValue(uiFormName, out BaseUIForm baseUIForm);
-            AllUIFormDict.TryGetValue(uiFormName, out BaseUIForm baseUIFormFromALL);
+            CurrentShowUIFormDict.TryGetValue(uiFormName, out BaseUIPanel baseUIForm);
+            AllUIFormDict.TryGetValue(uiFormName, out BaseUIPanel baseUIFormFromALL);
             if (baseUIForm != null) return;
 
-            foreach (BaseUIForm baseUI in CurrentShowUIFormDict.Values)
+            foreach (BaseUIPanel baseUI in CurrentShowUIFormDict.Values)
             {
                 if (baseUI.UIType.UIForms_Type == UIFormTypes.Fixed) continue;
                 baseUI.Hide();
             }
 
             CurrentUIFormsStack.Push(baseUIFormFromALL);
-            foreach (BaseUIForm staUI in CurrentUIFormsStack)
+            foreach (BaseUIPanel staUI in CurrentUIFormsStack)
             {
                 if (staUI != baseUIFormFromALL) staUI.Hide();
             }
@@ -404,7 +404,7 @@ namespace BiangStudio.GamePlay.UI
         private void ExitUIFormsAndDisplayOther(string uiFormName)
         {
             if (string.IsNullOrEmpty(uiFormName)) return;
-            CurrentShowUIFormDict.TryGetValue(uiFormName, out BaseUIForm baseUIForm);
+            CurrentShowUIFormDict.TryGetValue(uiFormName, out BaseUIPanel baseUIForm);
 
             if (baseUIForm == null) return;
 
@@ -412,7 +412,7 @@ namespace BiangStudio.GamePlay.UI
             CurrentShowUIFormDict.Remove(uiFormName);
 
             bool showAll = true;
-            foreach (BaseUIForm baseUI in CurrentShowUIFormDict.Values)
+            foreach (BaseUIPanel baseUI in CurrentShowUIFormDict.Values)
             {
                 if (baseUI.UIType.UIForms_ShowMode == UIFormShowModes.HideOther)
                 {
@@ -424,14 +424,14 @@ namespace BiangStudio.GamePlay.UI
 
             if (showAll)
             {
-                foreach (BaseUIForm baseUI in CurrentShowUIFormDict.Values)
+                foreach (BaseUIPanel baseUI in CurrentShowUIFormDict.Values)
                 {
                     if (baseUI.UIType.UIForms_Type == UIFormTypes.Fixed) continue;
                     baseUI.Display();
                 }
             }
 
-            foreach (BaseUIForm staUI in CurrentUIFormsStack)
+            foreach (BaseUIPanel staUI in CurrentUIFormsStack)
             {
                 if (staUI != baseUIForm) staUI.Display();
             }
@@ -444,7 +444,7 @@ namespace BiangStudio.GamePlay.UI
         private void ExitUIFormsAndDisplayOtherAndReturn(string uiFormName)
         {
             if (string.IsNullOrEmpty(uiFormName)) return;
-            CurrentShowUIFormDict.TryGetValue(uiFormName, out BaseUIForm baseUIForm);
+            CurrentShowUIFormDict.TryGetValue(uiFormName, out BaseUIPanel baseUIForm);
 
             if (baseUIForm == null) return;
 
@@ -452,13 +452,13 @@ namespace BiangStudio.GamePlay.UI
             CurrentShowUIFormDict.Remove(uiFormName);
             if (CurrentUIFormsStack.Count > 0) CurrentUIFormsStack.Pop();
 
-            foreach (BaseUIForm baseUI in CurrentShowUIFormDict.Values)
+            foreach (BaseUIPanel baseUI in CurrentShowUIFormDict.Values)
             {
                 if (baseUI.UIType.UIForms_Type == UIFormTypes.Fixed) continue;
                 baseUI.Display();
             }
 
-            foreach (BaseUIForm staUI in CurrentUIFormsStack)
+            foreach (BaseUIPanel staUI in CurrentUIFormsStack)
             {
                 staUI.Display();
             }

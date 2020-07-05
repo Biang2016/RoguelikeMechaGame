@@ -47,6 +47,7 @@ namespace Client
             if (MechaInfo.MechaType == MechaType.Self)
             {
                 Update_Building();
+                Update_Fighting();
             }
         }
 

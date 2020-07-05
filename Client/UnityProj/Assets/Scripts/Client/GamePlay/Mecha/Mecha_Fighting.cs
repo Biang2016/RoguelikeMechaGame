@@ -14,29 +14,18 @@ namespace Client
 
         public float Speed = 3f;
 
-        void FixedUpdate_Fighting()
+        void Update_Fighting()
         {
             if (GameStateManager.Instance.GetState() == GameState.Fighting)
             {
-                float movement = 0.7f * Time.deltaTime * Speed;
-                if (ControlManager.Instance.Battle_Move.x < 0)
-                {
-                    transform.Translate(-movement, 0, -movement, Space.World);
-                }
-                else if (ControlManager.Instance.Battle_Move.x > 0)
-                {
-                    transform.Translate(movement, 0, movement, Space.World);
-                }
-
-                if (ControlManager.Instance.Battle_Move.y < 0)
-                {
-                    transform.Translate(movement, 0, -movement, Space.World);
-                }
-                else if (ControlManager.Instance.Battle_Move.y > 0)
-                {
-                    transform.Translate(-movement, 0, movement, Space.World);
-                }
+                Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
+                speed = Quaternion.Euler(0f, 0f, 45f) * speed;
+                transform.Translate(speed.x, 0, speed.y, Space.World);
             }
+        }
+
+        void FixedUpdate_Fighting()
+        {
         }
 
         void LateUpdate_Fighting()

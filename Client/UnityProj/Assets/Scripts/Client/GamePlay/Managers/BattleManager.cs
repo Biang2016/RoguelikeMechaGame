@@ -21,7 +21,7 @@ namespace Client
         public void Init(Transform mechaContainerRoot, Transform mechaComponentDropSpriteContainerRoot)
         {
             MechaContainerRoot = mechaContainerRoot;
-            MechaContainerRoot = mechaComponentDropSpriteContainerRoot;
+            MechaComponentDropSpriteContainerRoot = mechaComponentDropSpriteContainerRoot;
         }
 
         public override void Awake()

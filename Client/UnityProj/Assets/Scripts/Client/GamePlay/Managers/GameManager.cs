@@ -97,11 +97,12 @@ namespace Client
             };
 
             BagManager.Init(
+                60,
                 LoadAllBagItemPics(),
-                ToggleBag,
                 toggleBagKeyDownHandler: () => ControlManager.Instance.Building_ToggleBag.Down,
                 rotateItemKeyDownHandler: () => ControlManager.Instance.Building_RotateItem.Down,
-                dragItemOutBagAction: (bagItem) =>
+                toggleBagCallback: ToggleBag,
+                dragItemOutBagCallback: (bagItem) =>
                 {
                     switch (bagItem.Data.BagItemContentInfo)
                     {
@@ -120,9 +121,9 @@ namespace Client
                         }
                     }
                 },
-                instantiateBagGridHandler: (transform) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagGrid].AllocateGameObject<BagGrid>(transform),
-                instantiateBagItemHandler: (transform) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItem].AllocateGameObject<BagItem>(transform),
-                instantiateBagItemGridHitBoxHandler: (transform) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItemGridHitBox].AllocateGameObject<BagItemGridHitBox>(transform)
+                instantiateBagGridHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagGrid].AllocateGameObject<BagGrid>(parent),
+                instantiateBagItemHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItem].AllocateGameObject<BagItem>(parent),
+                instantiateBagItemGridHitBoxHandler: (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BagItemGridHitBox].AllocateGameObject<BagItemGridHitBox>(parent)
             );
             BagManager.Awake();
             DragManager.Awake();

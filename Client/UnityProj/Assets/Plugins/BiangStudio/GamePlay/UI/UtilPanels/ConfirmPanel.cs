@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BiangStudio.GamePlay.UI
 {
-    public class ConfirmPanel : BaseUIForm
+    public class ConfirmPanel : BaseUIPanel
     {
         [SerializeField] private Text DescText;
         [SerializeField] private Text LeftButtonText;

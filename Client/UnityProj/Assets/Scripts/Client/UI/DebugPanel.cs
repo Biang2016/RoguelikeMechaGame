@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Client
 {
-    public class DebugPanel : BaseUIForm
+    public class DebugPanel : BaseUIPanel
     {
         void Awake()
         {
