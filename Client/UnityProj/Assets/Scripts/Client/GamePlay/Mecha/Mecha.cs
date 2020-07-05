@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BiangStudio.ObjectPool;
 using GameCore;
 using UnityEngine.Events;
@@ -10,41 +9,59 @@ namespace Client
     {
         public MechaInfo MechaInfo;
 
-        private List<MechaComponentBase> mechaComponents = new List<MechaComponentBase>();
+        public SortedDictionary<int, MechaComponentBase> MechaComponents = new SortedDictionary<int, MechaComponentBase>();
 
-        private MechaComponentBase[,] mechaComponentMatrix = new MechaComponentBase[ConfigManager.EDIT_AREA_FULL_SIZE, ConfigManager.EDIT_AREA_FULL_SIZE]; //[z,x]
+        public UnityAction<Mecha> OnRemoveMechaSuc;
 
         public override void PoolRecycle()
         {
             base.PoolRecycle();
-            foreach (MechaComponentBase mcb in mechaComponents)
+            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponents)
             {
-                mcb.PoolRecycle();
+                kv.Value.PoolRecycle();
             }
 
-            mechaComponents.Clear();
+            MechaComponents.Clear();
+            OnRemoveMechaSuc = null;
         }
 
         public void Initialize(MechaInfo mechaInfo)
         {
-            mechaComponentMatrix = new MechaComponentBase[ConfigManager.EDIT_AREA_FULL_SIZE, ConfigManager.EDIT_AREA_FULL_SIZE];
+            Clean();
+
             MechaInfo = mechaInfo;
+            MechaInfo.OnAddMechaComponentInfoSuc = (mci) => AddMechaComponent(mci);
+            MechaInfo.OnRemoveMechaInfoSuc += (mi) => OnRemoveMechaSuc?.Invoke(this);
+
+            MechaEditorContainer = new MechaEditorContainer(
+                DragAreaDefines.MechaEditorArea.ToString(),
+                DragAreaDefines.MechaEditorArea,
+                ConfigManager.GridSize,
+                ConfigManager.EDIT_AREA_FULL_SIZE,
+                ConfigManager.EDIT_AREA_FULL_SIZE,
+                false,
+                0,
+                () => ControlManager.Instance.Building_RotateItem.Down);
+            MechaEditorContainer.OnAddItemSucAction = (item) => MechaInfo.AddMechaComponentInfo(((MechaComponentInfo) item.ItemContentInfo).Clone());
+            MechaEditorContainer.OnRemoveItemSucAction = (item) => ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo();
+
             RefreshMechaMatrix();
-            foreach (MechaComponentInfo mci in mechaInfo.MechaComponentInfos)
+            foreach (KeyValuePair<int, MechaComponentInfo> kv in mechaInfo.MechaComponentInfos)
             {
-                AddMechaComponent(mci);
+                AddMechaComponent(kv.Value);
             }
 
             Initialize_Building(mechaInfo);
             Initialize_Fighting(mechaInfo);
+        }
 
-            M_TotalLife = 0;
-            M_LeftLife = 1;
+        public void Clean()
+        {
         }
 
         void Update()
         {
-            if (MechaInfo.MechaType == MechaType.Self)
+            if (MechaInfo.MechaType == MechaType.Player)
             {
                 Update_Building();
                 Update_Fighting();
@@ -53,17 +70,17 @@ namespace Client
 
         void FixedUpdate()
         {
-            if (MechaInfo.MechaType == MechaType.Self)
+            if (MechaInfo.MechaType == MechaType.Player)
             {
                 FixedUpdate_Fighting();
             }
 
-            UpdateLifeChange();
+            MechaInfo.UpdateLifeChange();
         }
 
         void LateUpdate()
         {
-            if (MechaInfo.MechaType == MechaType.Self)
+            if (MechaInfo.MechaType == MechaType.Player)
             {
                 if (GameStateManager.Instance.GetState() == GameState.Fighting)
                 {
@@ -79,9 +96,9 @@ namespace Client
 
         public void SetShown(bool shown)
         {
-            foreach (MechaComponentBase mcb in mechaComponents)
+            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponents)
             {
-                mcb.SetShown(shown);
+                kv.Value.SetShown(shown);
             }
         }
 
@@ -89,7 +106,7 @@ namespace Client
         {
             if (MechaInfo.MechaType == MechaType.Enemy)
             {
-                BattleManager.Instance.EnemyMechas.Remove(this);
+                OnRemoveMechaSuc?.Invoke(this);
                 PoolRecycle(0.5f);
             }
             else
@@ -97,108 +114,5 @@ namespace Client
                 // TODO Endgame
             }
         }
-
-        #region Life & Power
-
-        private void UpdateLifeChange()
-        {
-            int totalLife = 0;
-            int leftLife = 0;
-            foreach (MechaComponentBase mcb in mechaComponents)
-            {
-                totalLife += mcb.M_TotalLife;
-                leftLife += mcb.M_LeftLife;
-            }
-
-            M_TotalLife = Mathf.Max(M_TotalLife, totalLife);
-            M_LeftLife = leftLife;
-        }
-
-        public UnityAction RefreshHUDPanelCoreLifeSliderCount;
-
-        public List<MechaComponentBase> GetCoreLifeChangeDelegates()
-        {
-            List<MechaComponentBase> res = new List<MechaComponentBase>();
-            foreach (MechaComponentBase mcb in mechaComponents)
-            {
-                if (mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
-                {
-                    res.Add(mcb);
-                }
-            }
-
-            return res;
-        }
-
-        internal UnityAction<int, int> OnLifeChange;
-
-        private int _leftLife;
-
-        public int M_LeftLife
-        {
-            get { return _leftLife; }
-            set
-            {
-                if (value < 0)
-                {
-                    value = 0;
-                }
-
-                if (_leftLife != value)
-                {
-                    _leftLife = value;
-                    OnLifeChange?.Invoke(_leftLife, M_TotalLife);
-                }
-            }
-        }
-
-        private int _totalLife;
-
-        public int M_TotalLife
-        {
-            get { return _totalLife; }
-            set
-            {
-                if (_totalLife != value)
-                {
-                    _totalLife = value;
-                    OnLifeChange?.Invoke(M_LeftLife, _totalLife);
-                }
-            }
-        }
-
-        internal UnityAction<int, int> OnPowerChange;
-
-        private int _leftPower;
-
-        public int M_LeftPower
-        {
-            get { return _leftPower; }
-            set
-            {
-                if (_leftPower != value)
-                {
-                    _leftPower = value;
-                    OnPowerChange?.Invoke(_leftPower, M_TotalPower);
-                }
-            }
-        }
-
-        private int _totalPower;
-
-        public int M_TotalPower
-        {
-            get { return _totalPower; }
-            set
-            {
-                if (_totalPower != value)
-                {
-                    _totalPower = value;
-                    OnPowerChange?.Invoke(M_LeftPower, _totalPower);
-                }
-            }
-        }
-
-        #endregion
     }
 }

@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using BiangStudio.DragHover;
+﻿using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
+using UnityEngine;
 
 namespace Client
 {
@@ -51,7 +51,7 @@ namespace Client
                             float rotateAngle = Vector3.SignedAngle(startVec, endVec, transform.up);
                             if (Mathf.Abs(rotateAngle) > 3)
                             {
-                                BattleManager.Instance.PlayerMecha.transform.Rotate(0, rotateAngle, 0);
+                                ClientBattleManager.Instance.PlayerMecha.transform.Rotate(0, rotateAngle, 0);
                                 mouseDownPos_Right = pos;
                             }
                         }
@@ -83,11 +83,11 @@ namespace Client
                         if (GetMousePosOnThisArea(out Vector3 pos))
                         {
                             Vector3 delta = pos - mouseDownPos_Left;
-                            Vector3 delta_local = BattleManager.Instance.PlayerMecha.transform.InverseTransformVector(delta);
+                            Vector3 delta_local = ClientBattleManager.Instance.PlayerMecha.transform.InverseTransformVector(delta);
                             GridPos delta_local_GP = GridPos.GetGridPosByPoint(delta_local + Vector3.one * ConfigManager.GridSize / 2f, 1);
                             if (delta_local_GP.x != 0 || delta_local_GP.z != 0)
                             {
-                                BattleManager.Instance.PlayerMecha.MoveCenter(delta_local_GP);
+                                ClientBattleManager.Instance.PlayerMecha.MoveCenter(delta_local_GP);
                                 mouseDownPos_Left = pos;
                             }
                         }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Client
 {

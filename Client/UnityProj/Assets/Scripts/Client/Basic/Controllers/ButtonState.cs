@@ -33,7 +33,7 @@ namespace Client
             ControlManager.Instance.ButtonStateList.Add(state);
             action.performed += context =>
             {
-                ButtonControl bc = (ButtonControl)context.control;
+                ButtonControl bc = (ButtonControl) context.control;
                 state.Down = !state.LastPressed;
                 state.Pressed = bc.isPressed;
                 state.Up = bc.wasReleasedThisFrame;

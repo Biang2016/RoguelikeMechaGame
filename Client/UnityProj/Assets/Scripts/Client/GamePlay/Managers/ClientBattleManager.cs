@@ -1,22 +1,20 @@
-﻿using System;
-using UnityEngine;
-using System.Collections.Generic;
-using BiangStudio.GameDataFormat.Grid;
+﻿using System.Collections.Generic;
 using BiangStudio.GamePlay.UI;
 using BiangStudio.Singleton;
 using GameCore;
+using UnityEngine;
 
 namespace Client
 {
-    public class BattleManager : TSingletonBaseManager<BattleManager>
+    public class ClientBattleManager : TSingletonBaseManager<ClientBattleManager>
     {
-        public Transform MechaContainerRoot;
-        public Transform MechaComponentDropSpriteContainerRoot;
+        public BattleInfo BattleInfo;
+        internal Mecha PlayerMecha;
+        internal SortedDictionary<int, Mecha> EnemyMechaDict = new SortedDictionary<int, Mecha>();
 
         private HUDPanel HUDPanel;
-
-        internal Mecha PlayerMecha;
-        internal List<Mecha> EnemyMechas = new List<Mecha>();
+        public Transform MechaContainerRoot;
+        public Transform MechaComponentDropSpriteContainerRoot;
 
         public void Init(Transform mechaContainerRoot, Transform mechaComponentDropSpriteContainerRoot)
         {
@@ -58,62 +56,58 @@ namespace Client
             }
         }
 
-        public void StartGame()
+        public void Clean()
         {
             PlayerMecha?.PoolRecycle();
             PlayerMecha = null;
-            foreach (Mecha em in EnemyMechas)
+            foreach (KeyValuePair<int, Mecha> kv in EnemyMechaDict)
             {
-                em.PoolRecycle();
+                kv.Value.PoolRecycle();
             }
 
-            EnemyMechas.Clear();
+            EnemyMechaDict.Clear();
+            BattleInfo = null;
+        }
+
+        public void StartBattle(BattleInfo battleInfo)
+        {
+            Clean();
+            BattleInfo = battleInfo;
+            BattleInfo.OnAddEnemyMechaInfoSuc = AddMecha;
 
             PlayerMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainerRoot);
-            PlayerMecha.Initialize(new MechaInfo("Solar 0", MechaType.Self, new List<MechaComponentInfo>
+            PlayerMecha.Initialize(battleInfo.PlayerMechaInfo);
+
+            foreach (KeyValuePair<int, MechaInfo> kv in battleInfo.EnemyMechaInfoDict)
             {
-                new MechaComponentInfo(MechaComponentType.Core, new GridPosR(0, 0, GridPosR.Orientation.Up), 300, 0),
-            }));
+            }
 
             CameraManager.Instance.MainCameraFollow.SetTarget(PlayerMecha.transform);
             GameStateManager.Instance.SetState(GameState.Fighting);
 
             HUDPanel.Initialize();
-            PlayerMecha.RefreshHUDPanelCoreLifeSliderCount();
+            PlayerMecha.MechaInfo.RefreshHUDPanelCoreLifeSliderCount();
         }
 
-        public void AddEnemy()
+        private void AddMecha(MechaInfo mechaInfo)
         {
-            Mecha EnemyMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainerRoot);
-            List<MechaComponentInfo> enemyComponentInfos = new List<MechaComponentInfo>();
-            for (int i = -4; i <= 4; i++)
-            {
-                for (int j = -6; j <= 6; j++)
-                {
-                    MechaComponentInfo mci;
-                    if (i == 0 && j == 0)
-                    {
-                        mci = new MechaComponentInfo(MechaComponentType.Core, new GridPosR(i, j, GridPosR.Orientation.Up), 500, 0);
-                    }
-                    else
-                    {
-                        mci = new MechaComponentInfo((MechaComponentType) LevelManager.SRandom.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), new GridPosR(i, j, GridPosR.Orientation.Up), 50, 5);
-                    }
+            Mecha mecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainerRoot);
+            mecha.Initialize(mechaInfo);
+            mecha.OnRemoveMechaSuc = RemoveMecha;
+            EnemyMechaDict.Add(mecha.MechaInfo.GUID, mecha);
+        }
 
-                    enemyComponentInfos.Add(mci);
-                }
-            }
-
-            EnemyMecha.Initialize(new MechaInfo("Junk Mecha", MechaType.Enemy, enemyComponentInfos));
-            EnemyMecha.transform.position = new Vector3(10, 0, 10);
-            EnemyMechas.Add(EnemyMecha);
+        private void RemoveMecha(Mecha mecha)
+        {
+            EnemyMechaDict.Remove(mecha.MechaInfo.GUID);
+            mecha.PoolRecycle();
         }
 
         public void SetAllEnemyShown(bool shown)
         {
-            foreach (Mecha em in EnemyMechas)
+            foreach (KeyValuePair<int, Mecha> kv in EnemyMechaDict)
             {
-                em.SetShown(shown);
+                kv.Value.SetShown(shown);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BiangStudio.GamePlay.UI;
+﻿using BiangStudio.GamePlay.UI;
 using UnityEngine;
 
 namespace Client
@@ -9,12 +8,12 @@ namespace Client
         void Awake()
         {
             UIType.InitUIType(
-                isClearStack: false,
-                isESCClose: true,
-                isClickElsewhereClose: false,
-                uiForms_Type: UIFormTypes.Normal,
-                uiForms_ShowMode: UIFormShowModes.Normal,
-                uiForm_LucencyType: UIFormLucencyTypes.Penetrable);
+                false,
+                true,
+                false,
+                UIFormTypes.Normal,
+                UIFormShowModes.Normal,
+                UIFormLucencyTypes.Penetrable);
         }
 
         [SerializeField] private MechaInfoHUD PlayerMechaInfoHUD;
@@ -22,7 +21,7 @@ namespace Client
 
         public void Initialize()
         {
-            PlayerMechaInfoHUD.Initialize(BattleManager.Instance.PlayerMecha);
+            PlayerMechaInfoHUD.Initialize(ClientBattleManager.Instance.PlayerMecha);
         }
 
         public void LoadEnemyMech(Mecha enemyMecha)

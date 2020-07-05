@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Client
 {
@@ -12,7 +10,7 @@ namespace Client
         private void Awake()
         {
             ParticleSystem system = GetComponent<ParticleSystem>();
-            var main = system.main;
+            ParticleSystem.MainModule main = system.main;
             timeLeft = main.startLifetimeMultiplier + main.duration;
             Destroy(gameObject, timeLeft);
         }

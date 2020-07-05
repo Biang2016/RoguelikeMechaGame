@@ -60,7 +60,7 @@ namespace BiangStudio.GridBackpack
 
             Backpack.OnAddItemSucAction = OnAddItemSuc;
             Backpack.OnRemoveItemSucAction = OnRemoveItemSuc;
-            backPack.RefreshBackpackGrid();
+            backPack.RefreshInventoryGrids();
         }
 
         public BackpackItem GetBackpackItem(int guid)

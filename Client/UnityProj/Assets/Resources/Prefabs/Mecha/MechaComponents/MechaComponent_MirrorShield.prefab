@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49fa4720db8b824b90b5b44406f8ad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Models: {fileID: 7716897934555374000}
   MechaComponentInfo:
+    GUID: 0
     MechaComponentType: 0
     GridPos:
       x: 0
@@ -60,7 +60,22 @@ MonoBehaviour:
     DropProbability: 0
     TotalLife: 0
   MechaComponentGrids: {fileID: 4618707353109224937}
+  ModelRoot: {fileID: 7716897934555374000}
   MechaHitBoxRoot: {fileID: 1995381407424360452}
+  InventoryItem:
+    GUID: 0
+    GridPos:
+      x: 0
+      z: 0
+      orientation: 0
+    OccupiedGridPositions: []
+    BoundingRect:
+      position:
+        x: 0
+        z: 0
+      size:
+        x: 0
+        z: 0
 --- !u!114 &8787363159894584536
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-namespace Client
+﻿namespace Client
 {
     public class MechaComponent_PowerUp : MechaComponentBase
     {

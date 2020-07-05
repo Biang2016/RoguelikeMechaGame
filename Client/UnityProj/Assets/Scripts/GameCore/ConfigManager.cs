@@ -36,5 +36,11 @@ namespace GameCore
             sr.Close();
             MechaComponentOccupiedGridPosDict = JsonConvert.DeserializeObject<SortedDictionary<MechaComponentType, List<GridPos>>>(content);
         }
+
+        public enum GUID_Separator
+        {
+            MechaInfo = 3000,
+            MechaComponentInfo = 2000,
+        }
     }
 }

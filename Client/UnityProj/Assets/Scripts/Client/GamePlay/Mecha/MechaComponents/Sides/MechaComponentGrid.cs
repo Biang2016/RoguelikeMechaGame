@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
+using UnityEngine;
 
 namespace Client
 {
@@ -12,6 +11,8 @@ namespace Client
         [SerializeField] private MeshRenderer BorderIndicator;
         [SerializeField] private MeshRenderer ForbidIndicator;
         [SerializeField] private MeshRenderer IsolatedIndicator;
+
+        public bool IsConflicted = false;
 
         public SortedDictionary<GridPosR.Orientation, MechaComponentSlot> Slots = new SortedDictionary<GridPosR.Orientation, MechaComponentSlot>
         {
@@ -57,7 +58,7 @@ namespace Client
 
         public void SetForbidIndicatorShown(bool shown)
         {
-            ForbidIndicator.enabled = shown;
+            ForbidIndicator.enabled = IsConflicted && shown;
         }
 
         public void SetIsolatedIndicatorShown(bool shown)

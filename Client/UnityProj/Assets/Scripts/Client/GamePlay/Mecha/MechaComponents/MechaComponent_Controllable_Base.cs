@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using GameCore;
+﻿using GameCore;
 
 namespace Client
 {
@@ -11,7 +9,7 @@ namespace Client
             base.Update();
             if (GameStateManager.Instance.GetState() == GameState.Fighting)
             {
-                if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Self)
+                if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Player)
                 {
                     ControlPerFrame();
                 }

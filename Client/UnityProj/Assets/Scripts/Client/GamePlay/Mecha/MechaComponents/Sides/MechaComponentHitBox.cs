@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Client
@@ -26,7 +25,7 @@ namespace Client
                 Projectile p = collision.gameObject.GetComponent<Projectile>();
                 if (p && p.ProjectileInfo.MechaType != ParentHitBoxRoot.MechaComponentBase.MechaType)
                 {
-                    ParentHitBoxRoot.MechaComponentBase.Damage(p.ProjectileInfo.FinalDamage);
+                    ParentHitBoxRoot.MechaComponentBase.MechaComponentInfo.Damage(p.ProjectileInfo.FinalDamage);
                     return;
                 }
             }

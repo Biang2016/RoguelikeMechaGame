@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using BiangStudio.Singleton;
+using UnityEngine;
 
 namespace Client
 {
@@ -19,7 +19,7 @@ namespace Client
             projectile.transform.position = from;
             projectile.transform.LookAt(from + dir);
             projectile.Initialize(projectileInfo);
-            LevelManager.Instance.CurrentLevel.StartCoroutine(Co_ShootProjectile(projectile));
+            ClientLevelManager.Instance.CurrentLevel.StartCoroutine(Co_ShootProjectile(projectile));
             return projectile;
         }
 

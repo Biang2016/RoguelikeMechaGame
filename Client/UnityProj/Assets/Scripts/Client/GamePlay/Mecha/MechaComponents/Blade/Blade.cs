@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Client
@@ -27,7 +26,7 @@ namespace Client
                     bladeAttackTick = 0;
                     foreach (MechaComponentHitBox hb in HittingHitBoxes)
                     {
-                        hb.ParentHitBoxRoot.MechaComponentBase.Damage(BladeInfo.FinalDamage);
+                        hb.ParentHitBoxRoot.MechaComponentBase.MechaComponentInfo.Damage(BladeInfo.FinalDamage);
                     }
                 }
             }
@@ -51,7 +50,7 @@ namespace Client
             if (GameStateManager.Instance.GetState() == GameState.Fighting)
             {
                 MechaComponentHitBox hb = c.gameObject.GetComponent<MechaComponentHitBox>();
-                if (hb && hb.ParentHitBoxRoot.MechaComponentBase.CheckAlive() && hb.ParentHitBoxRoot.MechaComponentBase.MechaType != BladeInfo.MechaType)
+                if (hb && hb.ParentHitBoxRoot.MechaComponentBase.MechaComponentInfo.CheckAlive() && hb.ParentHitBoxRoot.MechaComponentBase.MechaType != BladeInfo.MechaType)
                 {
                     HittingHitBoxes.Remove(hb);
                     return;

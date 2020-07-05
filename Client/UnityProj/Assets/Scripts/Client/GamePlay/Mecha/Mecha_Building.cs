@@ -1,79 +1,100 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BiangStudio.GameDataFormat.Grid;
+using BiangStudio.ShapedInventory;
 using GameCore;
+using UnityEngine;
 
 namespace Client
 {
     public partial class Mecha
     {
-        [SerializeField]
-        private Transform MechaComponentContainer;
-
+        [SerializeField] private Transform MechaComponentContainer;
+        public MechaEditorContainer MechaEditorContainer;
         public MechaEditArea MechaEditArea;
 
         private void Initialize_Building(MechaInfo mechaInfo)
         {
-            MechaEditArea.gameObject.SetActive(mechaInfo.MechaType == MechaType.Self);
+            MechaEditArea.gameObject.SetActive(mechaInfo.MechaType == MechaType.Player);
             MechaEditArea.Hide();
             GridShown = false;
             SlotLightsShown = false;
         }
 
-        public void AddMechaComponent(MechaComponentInfo mci)
+        private MechaComponentBase AddMechaComponent(MechaComponentInfo mci)
         {
             MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mci, this);
-            AddMechaComponent(mcb);
-        }
+            mcb.OnRemoveMechaComponentBaseSuc = RemoveMechaComponent;
+            MechaComponents.Add(mci.GUID, mcb);
+            InventoryItem item = new InventoryItem(mcb.MechaComponentInfo);
+            item.OnIsolatedHandler = mcb.MechaComponentGrids.SetIsolatedIndicatorShown;
+            item.OnConflictedHandler = mcb.MechaComponentGrids.SetGridConflicted;
+            item.OnResetConflictHandler = mcb.MechaComponentGrids.ResetAllGridConflict;
+            item.AmIRootItemInIsolationCalculationHandler = () => mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core;
+            MechaEditorContainer.TryAddItem(item);
 
-        public void AddMechaComponent(MechaComponentBase mcb)
-        {
-            mechaComponents.Add(mcb);
-            if (MechaInfo.MechaType == MechaType.Self && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
+            if (MechaInfo.MechaType == MechaType.Player && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
             {
-                RefreshHUDPanelCoreLifeSliderCount?.Invoke();
+                MechaInfo.RefreshHUDPanelCoreLifeSliderCount?.Invoke();
             }
 
             mcb.transform.SetParent(MechaComponentContainer);
             mcb.MechaComponentGrids.SetGridShown(GridShown);
             mcb.MechaComponentGrids.SetSlotLightsShown(SlotLightsShown);
-            mcb.MechaComponentGrids.TurnOffAllForbidIndicator();
+            mcb.MechaComponentGrids.ResetAllGridConflict();
             mcb.MechaComponentGrids.SetIsolatedIndicatorShown(false);
             RefreshMechaMatrix();
+            return mcb;
         }
 
-        public void RemoveMechaComponent(MechaComponentBase mcb)
+        private void RemoveMechaComponent(MechaComponentBase mcb)
         {
-            if (mechaComponents.Contains(mcb))
+            mcb.OnRemoveMechaComponentBaseSuc = null;
+
+            MechaEditorContainer.RemoveItem(mcb.InventoryItem);
+
+            if (MechaComponents.ContainsKey(mcb.MechaComponentInfo.GUID))
             {
-                mechaComponents.Remove(mcb);
-                if (MechaInfo.MechaType == MechaType.Self && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
+                MechaComponents.Remove(mcb.MechaComponentInfo.GUID);
+                if (MechaInfo.MechaType == MechaType.Player && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
                 {
-                    RefreshHUDPanelCoreLifeSliderCount?.Invoke();
+                    MechaInfo.RefreshHUDPanelCoreLifeSliderCount?.Invoke();
                 }
 
-                RefreshMechaMatrix(out List<MechaComponentBase> _, out List<MechaComponentBase> isolatedComponents);
+                MechaEditorContainer.RefreshConflictAndIsolation(out List<InventoryItem> _, out List<InventoryItem> isolatedItems);
                 if (MechaInfo.MechaType == MechaType.Enemy)
                 {
-                    foreach (MechaComponentBase m in isolatedComponents)
+                    foreach (InventoryItem item in isolatedItems)
                     {
-                        int ran = Random.Range(0, 100);
-                        bool drop = ran < m.MechaComponentInfo.DropProbability;
-                        if (drop)
+                        MechaComponentInfo mci = (MechaComponentInfo) item.ItemContentInfo;
+                        MechaComponentBase m = null;
+                        foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponents)
                         {
-                            MechaComponentDropSprite mcds = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.MechaComponentDropSprite]
-                                .AllocateGameObject<MechaComponentDropSprite>(BattleManager.Instance.MechaComponentDropSpriteContainerRoot);
-                            mcds.Initialize(m.MechaComponentInfo, m.transform.position);
+                            if (mcb.MechaComponentInfo == mci)
+                            {
+                                m = kv.Value;
+                                break;
+                            }
                         }
 
-                        mechaComponents.Remove(m);
-                        mcb.MechaComponentGrids.SetIsolatedIndicatorShown(true);
-                        m.PoolRecycle(1f);
+                        if (m != null)
+                        {
+                            int ran = Random.Range(0, 100);
+                            bool drop = ran < mci.DropProbability;
+                            if (drop)
+                            {
+                                MechaComponentDropSprite mcds = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.MechaComponentDropSprite]
+                                    .AllocateGameObject<MechaComponentDropSprite>(ClientBattleManager.Instance.MechaComponentDropSpriteContainerRoot);
+                                mcds.Initialize(mci, m.transform.position);
+                            }
+
+                            mcb.MechaComponentGrids.SetIsolatedIndicatorShown(true);
+                            RemoveMechaComponent(m);
+                            m.PoolRecycle(1f);
+                        }
                     }
                 }
 
-                if (mechaComponents.Count == 0)
+                if (MechaComponents.Count == 0)
                 {
                     Die();
                 }
@@ -82,165 +103,12 @@ namespace Client
 
         public void RefreshMechaMatrix()
         {
-            RefreshMechaMatrix(out List<MechaComponentBase> _, out List<MechaComponentBase> _);
+            MechaEditorContainer.RefreshConflictAndIsolation(out List<InventoryItem> _, out List<InventoryItem> _);
         }
 
-        public void RefreshMechaMatrix(out List<MechaComponentBase> conflictComponents, out List<MechaComponentBase> isolatedComponents)
+        public void RefreshMechaMatrix(out List<InventoryItem> conflictItems, out List<InventoryItem> isolatedItems)
         {
-            foreach (MechaComponentBase mcb in mechaComponents)
-            {
-                mcb.MechaComponentGrids.SetIsolatedIndicatorShown(false);
-                mcb.MechaComponentGrids.TurnOffAllForbidIndicator();
-            }
-
-            List<GridPos> coreGPs = new List<GridPos>();
-            List<MechaComponentBase> notConflictComponents = new List<MechaComponentBase>();
-
-            // Find conflict components
-            List<GridPos> conflictGridPositions = new List<GridPos>();
-            conflictComponents = new List<MechaComponentBase>();
-
-            for (int z = 0; z < mechaComponentMatrix.GetLength(0); z++)
-            {
-                for (int x = 0; x < mechaComponentMatrix.GetLength(1); x++)
-                {
-                    mechaComponentMatrix[z, x] = null;
-                }
-            }
-
-            foreach (MechaComponentBase mcb in mechaComponents)
-            {
-                bool isCore = mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core;
-                bool hasConflict = false;
-                foreach (GridPos gp in mcb.MechaComponentInfo.OccupiedGridPositions)
-                {
-                    GridPos gp_matrix = gp.ConvertGridPosToMatrixIndex();
-
-                    if (gp_matrix.x < 0 || gp_matrix.x >= mechaComponentMatrix.GetLength(1)
-                                        || gp_matrix.z < 0 || gp_matrix.z >= mechaComponentMatrix.GetLength(0))
-                    {
-                        hasConflict = true;
-                        conflictGridPositions.Add(gp_matrix);
-                    }
-                    else
-                    {
-                        if (mechaComponentMatrix[gp_matrix.z, gp_matrix.x] != null)
-                        {
-                            hasConflict = true;
-                            conflictGridPositions.Add(gp_matrix);
-                        }
-                        else
-                        {
-                            mechaComponentMatrix[gp_matrix.z, gp_matrix.x] = mcb;
-                            if (isCore) coreGPs.Add(gp_matrix);
-                        }
-                    }
-                }
-
-                if (hasConflict)
-                {
-                    conflictComponents.Add(mcb);
-                }
-                else
-                {
-                    notConflictComponents.Add(mcb);
-                }
-            }
-
-            foreach (GridPos gp in conflictGridPositions)
-            {
-                AddForbidComponentIndicator(gp);
-            }
-
-            // Find isolated components
-            List<GridPos> isolatedGridPositions = new List<GridPos>();
-            isolatedComponents = new List<MechaComponentBase>();
-
-            int[,] connectedMatrix = new int[ConfigManager.EDIT_AREA_FULL_SIZE, ConfigManager.EDIT_AREA_FULL_SIZE];
-
-            foreach (MechaComponentBase mcb in notConflictComponents)
-            {
-                foreach (GridPos gp in mcb.MechaComponentInfo.OccupiedGridPositions)
-                {
-                    GridPos gp_matrix = gp.ConvertGridPosToMatrixIndex();
-                    connectedMatrix[gp_matrix.z, gp_matrix.x] = 1;
-                }
-            }
-
-            Queue<GridPos> connectedQueue = new Queue<GridPos>();
-
-            foreach (GridPos coreGP in coreGPs)
-            {
-                connectedMatrix[coreGP.z, coreGP.x] = 2;
-                connectedQueue.Enqueue(coreGP);
-            }
-
-            void connectPos(int z, int x)
-            {
-                if (x < 0 || x >= mechaComponentMatrix.GetLength(1) || z < 0 || z >= mechaComponentMatrix.GetLength(0))
-                {
-                    return;
-                }
-                else
-                {
-                    if (connectedMatrix[z, x] == 1)
-                    {
-                        connectedQueue.Enqueue(new GridPos(x, z));
-                        connectedMatrix[z, x] = 2;
-                    }
-                }
-            }
-
-            while (connectedQueue.Count > 0)
-            {
-                GridPos gp = connectedQueue.Dequeue();
-                connectPos(gp.z + 1, gp.x);
-                connectPos(gp.z - 1, gp.x);
-                connectPos(gp.z, gp.x - 1);
-                connectPos(gp.z, gp.x + 1);
-            }
-
-            for (int z = 0; z < connectedMatrix.GetLength(0); z++)
-            {
-                for (int x = 0; x < connectedMatrix.GetLength(1); x++)
-                {
-                    if (connectedMatrix[z, x] == 1)
-                    {
-                        isolatedGridPositions.Add((new GridPos(x, z)));
-                        MechaComponentBase isolatedComponent = mechaComponentMatrix[z, x];
-                        if (!isolatedComponents.Contains(isolatedComponent))
-                        {
-                            isolatedComponents.Add(isolatedComponent);
-                        }
-                    }
-                }
-            }
-
-            foreach (GridPos gp in isolatedGridPositions)
-            {
-                AddIsolatedComponentIndicator(gp);
-            }
-        }
-
-        private void AddForbidComponentIndicator(GridPos gp_matrix)
-        {
-            MechaComponentBase mcb = mechaComponentMatrix[gp_matrix.z, gp_matrix.x];
-            if (mcb)
-            {
-                GridPos gp = gp_matrix.ConvertMatrixIndexToGridPos();
-                GridPos gp_local_noRotate = gp - (GridPos) mcb.MechaComponentInfo.GridPos;
-                GridPos gp_local_rotate = GridPos.RotateGridPos(gp_local_noRotate, (GridPosR.Orientation) ((4 - (int) mcb.MechaComponentInfo.GridPos.orientation) % 4));
-                mcb.MechaComponentGrids.SetForbidIndicatorShown(true, gp_local_rotate);
-            }
-        }
-
-        private void AddIsolatedComponentIndicator(GridPos gp_matrix)
-        {
-            MechaComponentBase mcb = mechaComponentMatrix[gp_matrix.z, gp_matrix.x];
-            if (mcb)
-            {
-                mcb.MechaComponentGrids.SetIsolatedIndicatorShown(true);
-            }
+            MechaEditorContainer.RefreshConflictAndIsolation(out conflictItems, out isolatedItems);
         }
 
         void Update_Building()
@@ -258,9 +126,9 @@ namespace Client
 
         public void MoveCenter(GridPos delta_local_GP)
         {
-            foreach (MechaComponentBase mcb in mechaComponents)
+            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponents)
             {
-                foreach (GridPos gp in mcb.MechaComponentInfo.OccupiedGridPositions)
+                foreach (GridPos gp in kv.Value.MechaComponentInfo.OccupiedGridPositions)
                 {
                     GridPos newGP = gp + delta_local_GP;
                     if (newGP.x > ConfigManager.EDIT_AREA_HALF_SIZE || newGP.x < -ConfigManager.EDIT_AREA_HALF_SIZE)
@@ -277,12 +145,12 @@ namespace Client
                 }
             }
 
-            foreach (MechaComponentBase mcb in mechaComponents)
+            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponents)
             {
-                mcb.transform.parent = MechaComponentContainer;
-                GridPosR newGP = mcb.MechaComponentInfo.GridPos + (GridPosR) delta_local_GP;
-                newGP.orientation = mcb.MechaComponentInfo.GridPos.orientation;
-                mcb.SetGridPosition(newGP);
+                kv.Value.transform.parent = MechaComponentContainer;
+                GridPosR newGP = kv.Value.MechaComponentInfo.GridPos + (GridPosR) delta_local_GP;
+                newGP.orientation = kv.Value.MechaComponentInfo.GridPos.orientation;
+                kv.Value.SetGridPosition(newGP);
             }
 
             RefreshMechaMatrix();
@@ -297,9 +165,9 @@ namespace Client
             {
                 if (_slotLightsShown != value)
                 {
-                    foreach (MechaComponentBase mcb in mechaComponents)
+                    foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponents)
                     {
-                        mcb.MechaComponentGrids.SetSlotLightsShown(value);
+                        kv.Value.MechaComponentGrids.SetSlotLightsShown(value);
                     }
                 }
 
@@ -316,9 +184,9 @@ namespace Client
             {
                 if (_gridShown != value)
                 {
-                    foreach (MechaComponentBase mcb in mechaComponents)
+                    foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponents)
                     {
-                        mcb.MechaComponentGrids.SetGridShown(value);
+                        kv.Value.MechaComponentGrids.SetGridShown(value);
                     }
                 }
 

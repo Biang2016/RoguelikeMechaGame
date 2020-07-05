@@ -28,10 +28,12 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
             delegate(MechaComponentDropSprite mcds, Collider collider, IDragProcessor dragProcessor)
             {
                 Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
-                MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mcds.MechaComponentInfo.Clone(), BattleManager.Instance.PlayerMecha);
-                GridPos gp = GridUtils.GetGridPosByMousePos(BattleManager.Instance.PlayerMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
+
+                MechaComponentInfo mci = mcds.MechaComponentInfo.Clone();
+                ClientBattleManager.Instance.PlayerMecha.MechaInfo.AddMechaComponentInfo(mci);
+                MechaComponentBase mcb = ClientBattleManager.Instance.PlayerMecha.MechaComponents[mci.GUID];
+                GridPos gp = GridUtils.GetGridPosByMousePos(ClientBattleManager.Instance.PlayerMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
                 mcb.SetGridPosition(gp);
-                BattleManager.Instance.PlayerMecha.AddMechaComponent(mcb);
                 DragManager.Instance.CurrentDrag = mcb.GetComponent<Draggable>();
                 DragManager.Instance.CurrentDrag.SetOnDrag(true, collider, dragProcessor);
                 mcds.PoolRecycle();

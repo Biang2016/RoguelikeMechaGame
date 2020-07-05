@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using GameCore;
+﻿using GameCore;
+using UnityEngine;
 
 namespace Client
 {
@@ -10,7 +9,7 @@ namespace Client
 
         void Start()
         {
-            Shooter.Initialize(new ShooterInfo(MechaType.Self, 0.1f, 50f, new ProjectileInfo(MechaType.Self, ProjectileType.Projectile_Butter, GameCore.ConfigManager.MissileSpeed, GameCore.ConfigManager.MissileDamage)));
+            Shooter.Initialize(new ShooterInfo(MechaType.Player, 0.1f, 50f, new ProjectileInfo(MechaType.Player, ProjectileType.Projectile_Butter, GameCore.ConfigManager.MissileSpeed, GameCore.ConfigManager.MissileDamage)));
         }
 
         protected override void Update()

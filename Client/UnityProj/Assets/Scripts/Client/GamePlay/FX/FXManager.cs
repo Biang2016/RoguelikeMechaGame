@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BiangStudio.Singleton;
+﻿using BiangStudio.Singleton;
 using UnityEngine;
 
 namespace Client
@@ -21,8 +19,6 @@ namespace Client
             fx.Play();
             return fx;
         }
-
-      
     }
 
     public enum FX_Type

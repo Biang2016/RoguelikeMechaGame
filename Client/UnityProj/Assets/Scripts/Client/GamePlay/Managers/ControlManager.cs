@@ -1,9 +1,7 @@
-﻿using System;
-using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BiangStudio.Singleton;
+using UnityEngine;
 using UnityEngine.InputSystem;
-using Debug = UnityEngine.Debug;
 
 namespace Client
 {
@@ -58,7 +56,7 @@ namespace Client
         public ButtonState Building_RotateItem = new ButtonState() {ButtonName = "Building_RotateItem"};
         public ButtonState Building_ToggleBackpack = new ButtonState() {ButtonName = "Building_ToggleBackpack"};
         public ButtonState Building_ToggleWireLines = new ButtonState() {ButtonName = "Building_ToggleWireLines"};
-        public ButtonState Building_ToggleDebug = new ButtonState() {ButtonName = "Building_ToggleDebug" };
+        public ButtonState Building_ToggleDebug = new ButtonState() {ButtonName = "Building_ToggleDebug"};
 
         #endregion
 

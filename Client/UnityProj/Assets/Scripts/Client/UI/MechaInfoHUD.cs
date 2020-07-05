@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BiangStudio.ObjectPool;
+using GameCore;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Client
@@ -26,9 +27,9 @@ namespace Client
         {
             if (targetMecha)
             {
-                targetMecha.RefreshHUDPanelCoreLifeSliderCount = null;
-                targetMecha.OnLifeChange = null;
-                targetMecha.OnPowerChange = null;
+                targetMecha.MechaInfo.RefreshHUDPanelCoreLifeSliderCount = null;
+                targetMecha.MechaInfo.OnLifeChange = null;
+                targetMecha.MechaInfo.OnPowerChange = null;
                 targetMecha = null;
             }
 
@@ -58,17 +59,17 @@ namespace Client
                     SliderContainer.gameObject.SetActive(true);
                     targetMecha = mecha;
                     LifeSlider = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.HUDSlider].AllocateGameObject<HUDSlider>(SliderContainer);
-                    LifeSlider.Initialize(2, LifeSliderColor, out targetMecha.OnLifeChange);
+                    LifeSlider.Initialize(2, LifeSliderColor, out mecha.MechaInfo.OnLifeChange);
                     PowerSlider = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.HUDSlider].AllocateGameObject<HUDSlider>(SliderContainer);
-                    PowerSlider.Initialize(2, PowerSliderColor, out targetMecha.OnPowerChange);
+                    PowerSlider.Initialize(2, PowerSliderColor, out mecha.MechaInfo.OnPowerChange);
 
                     MechaNameText.text = mecha.MechaInfo.MechaName;
 
-                    LifeSlider.SetValue(mecha.M_LeftLife, mecha.M_TotalLife);
-                    PowerSlider.SetValue(mecha.M_LeftPower, mecha.M_TotalPower);
+                    LifeSlider.SetValue(mecha.MechaInfo.M_LeftLife, mecha.MechaInfo.M_TotalLife);
+                    PowerSlider.SetValue(mecha.MechaInfo.M_LeftPower, mecha.MechaInfo.M_TotalPower);
 
-                    targetMecha.RefreshHUDPanelCoreLifeSliderCount = RefreshCoreLifeSliders;
-                    targetMecha.RefreshHUDPanelCoreLifeSliderCount();
+                    targetMecha.MechaInfo.RefreshHUDPanelCoreLifeSliderCount = RefreshCoreLifeSliders;
+                    targetMecha.MechaInfo.RefreshHUDPanelCoreLifeSliderCount();
                 }
             }
         }
@@ -79,9 +80,9 @@ namespace Client
 
         public void RefreshCoreLifeSliders()
         {
-            if (BattleManager.Instance.PlayerMecha)
+            if (ClientBattleManager.Instance.PlayerMecha)
             {
-                List<MechaComponentBase> mcbs = targetMecha.GetCoreLifeChangeDelegates();
+                List<MechaComponentInfo> mcis = targetMecha.MechaInfo.GetCoreLifeChangeDelegates();
 
                 foreach (HUDSlider coreHudSlider in Core_HUDSliders)
                 {
@@ -90,18 +91,18 @@ namespace Client
 
                 Core_HUDSliders.Clear();
 
-                foreach (MechaComponentBase mcb in mcbs)
+                foreach (MechaComponentInfo mci in mcis)
                 {
-                    AddCoreLifeSlider(mcb);
+                    AddCoreLifeSlider(mci);
                 }
             }
         }
 
-        private void AddCoreLifeSlider(MechaComponentBase mcb)
+        private void AddCoreLifeSlider(MechaComponentInfo mci)
         {
             HUDSlider hudSlider = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.HUDSlider].AllocateGameObject<HUDSlider>(CoreLifeSliderContainer);
-            hudSlider.Initialize(1f, CoreLifeSliderColor, out mcb.OnLifeChange);
-            hudSlider.SetValue(mcb.M_LeftLife, mcb.M_TotalLife);
+            hudSlider.Initialize(1f, CoreLifeSliderColor, out mci.OnLifeChange);
+            hudSlider.SetValue(mci.M_LeftLife, mci.M_TotalLife);
             Core_HUDSliders.Add(hudSlider);
         }
     }

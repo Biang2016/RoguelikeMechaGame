@@ -1,10 +1,10 @@
 ﻿using BiangStudio.GameDataFormat;
-using UnityEngine;
 using BiangStudio.Singleton;
+using UnityEngine;
 
 namespace Client
 {
-    public class LevelManager : TSingletonBaseManager<LevelManager>
+    public class ClientLevelManager : TSingletonBaseManager<ClientLevelManager>
     {
         public static SRandom SRandom
         {

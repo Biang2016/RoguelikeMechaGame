@@ -9,12 +9,30 @@ namespace BiangStudio.ShapedInventory
     [Serializable]
     public class InventoryItem : IClone<InventoryItem>
     {
+        public delegate void OnIsolatedDelegate(bool isolated);
+
+        public delegate void OnConflictedDelegate(GridPos gridPos);
+
+        public delegate void OnResetConflictDelegate();
+        public delegate bool AmIRootItemInIsolationCalculationDelegate();
+
         private static int guidGenerator;
 
-        [HideInInspector]
-        public int GUID;
+        [HideInInspector] public int GUID;
 
         public IInventoryItemContentInfo ItemContentInfo;
+
+        public Inventory Inventory;
+
+        public GridPosR GridPos;
+        public List<GridPos> OccupiedGridPositions;
+
+        [HideInInspector] public GridRect BoundingRect;
+
+        public OnIsolatedDelegate OnIsolatedHandler;
+        public OnConflictedDelegate OnConflictedHandler;
+        public OnResetConflictDelegate OnResetConflictHandler;
+        public AmIRootItemInIsolationCalculationDelegate AmIRootItemInIsolationCalculationHandler;
 
         public string ItemContentName
         {
@@ -30,13 +48,6 @@ namespace BiangStudio.ShapedInventory
                 }
             }
         }
-
-        public GridPosR GridPos;
-
-        public List<GridPos> OccupiedGridPositions = new List<GridPos>();
-
-        [HideInInspector]
-        public GridRect BoundingRect;
 
         public InventoryItem(IInventoryItemContentInfo itemContentInfo)
         {

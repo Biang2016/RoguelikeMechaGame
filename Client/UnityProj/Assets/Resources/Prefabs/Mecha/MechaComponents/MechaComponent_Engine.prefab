@@ -60,8 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13348bf5a8d2ec3498113edda4cfd5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Models: {fileID: 7716897934555374000}
   MechaComponentInfo:
+    GUID: 0
     MechaComponentType: 0
     GridPos:
       x: 0
@@ -71,7 +71,22 @@ MonoBehaviour:
     DropProbability: 0
     TotalLife: 0
   MechaComponentGrids: {fileID: 4618707353109224937}
+  ModelRoot: {fileID: 7716897934555374000}
   MechaHitBoxRoot: {fileID: 1995381407424360452}
+  InventoryItem:
+    GUID: 0
+    GridPos:
+      x: 0
+      z: 0
+      orientation: 0
+    OccupiedGridPositions: []
+    BoundingRect:
+      position:
+        x: 0
+        z: 0
+      size:
+        x: 0
+        z: 0
 --- !u!114 &-4159767088752695195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,7 +255,7 @@ PrefabInstance:
     - target: {fileID: 3815810835871158874, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5309277208809338386, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
@@ -310,7 +325,7 @@ PrefabInstance:
     - target: {fileID: 8379077277720560284, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6505c5b1f033442c4bf82c6641ecccf0, type: 3}

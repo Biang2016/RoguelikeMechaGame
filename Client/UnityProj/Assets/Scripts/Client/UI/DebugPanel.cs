@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using BiangStudio.GamePlay.UI;
+﻿using BiangStudio.GamePlay.UI;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Client
@@ -9,12 +9,12 @@ namespace Client
         void Awake()
         {
             UIType.InitUIType(
-                isClearStack: false,
-                isESCClose: false,
-                isClickElsewhereClose: false,
-                uiForms_Type: UIFormTypes.Fixed,
-                uiForms_ShowMode: UIFormShowModes.Normal,
-                uiForm_LucencyType: UIFormLucencyTypes.Penetrable);
+                false,
+                false,
+                false,
+                UIFormTypes.Fixed,
+                UIFormShowModes.Normal,
+                UIFormLucencyTypes.Penetrable);
         }
 
         public Text fpsText;
@@ -25,11 +25,6 @@ namespace Client
             deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
             float fps = 1.0f / deltaTime;
             fpsText.text = Mathf.Ceil(fps).ToString();
-        }
-
-        public void AddEnemy()
-        {
-            BattleManager.Instance.AddEnemy();
         }
     }
 }

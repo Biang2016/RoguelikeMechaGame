@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BiangStudio.GameDataFormat.Grid;
+using UnityEngine;
 
 namespace Client
 {
@@ -43,23 +43,11 @@ namespace Client
             }
         }
 
-        public void TurnOffAllForbidIndicator()
+        public void SetConflictIndicatorShown(bool shown)
         {
             foreach (MechaComponentGrid grid in mechaComponentGrids)
             {
-                grid.SetForbidIndicatorShown(false);
-            }
-        }
-
-        public void SetForbidIndicatorShown(bool shown, GridPos gridPos)
-        {
-            foreach (MechaComponentGrid grid in mechaComponentGrids)
-            {
-                GridPos gp = grid.GetGridPos();
-                if (gp.x == gridPos.x && gp.z == gridPos.z)
-                {
-                    grid.SetForbidIndicatorShown(shown);
-                }
+                grid.SetForbidIndicatorShown(shown);
             }
         }
 
@@ -68,6 +56,26 @@ namespace Client
             foreach (MechaComponentGrid grid in mechaComponentGrids)
             {
                 grid.SetIsolatedIndicatorShown(shown);
+            }
+        }
+
+        public void SetGridConflicted(GridPos gridPos)
+        {
+            foreach (MechaComponentGrid grid in mechaComponentGrids)
+            {
+                GridPos gp = grid.GetGridPos();
+                if (gp.x == gridPos.x && gp.z == gridPos.z)
+                {
+                    grid.IsConflicted = true;
+                }
+            }
+        }
+
+        public void ResetAllGridConflict()
+        {
+            foreach (MechaComponentGrid grid in mechaComponentGrids)
+            {
+                grid.IsConflicted = false;
             }
         }
     }

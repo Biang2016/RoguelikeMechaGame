@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using BiangStudio.CloneVariant;
@@ -11,24 +10,43 @@ using BiangStudio.ObjectPool;
 using BiangStudio.ShapedInventory;
 using GameCore;
 using Newtonsoft.Json;
+using UnityEngine;
+using UnityEngine.Events;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
-using UnityEngine.Events;
 
 namespace Client
 {
     [ExecuteInEditMode]
     public abstract class MechaComponentBase : PoolObject, IDraggable
     {
+        public MechaComponentInfo MechaComponentInfo;
+        public InventoryItem InventoryItem;
+
         internal Mecha ParentMecha = null;
 
-        [SerializeField] private GameObject Models;
+        public MechaComponentGridRoot MechaComponentGrids;
+        public GameObject ModelRoot;
+        public MechaComponentHitBoxRoot MechaHitBoxRoot;
 
         internal Draggable Draggable;
+        private bool isReturningToBackpack = false;
 
         internal MechaType MechaType => ParentMecha ? ParentMecha.MechaInfo.MechaType : MechaType.None;
-        public MechaComponentInfo MechaComponentInfo;
+
+        public UnityAction<MechaComponentBase> OnRemoveMechaComponentBaseSuc;
+
+        public override void PoolRecycle()
+        {
+            MechaComponentInfo = null;
+            ParentMecha = null;
+            MechaHitBoxRoot.SetInBattle(false);
+            isReturningToBackpack = false;
+            OnRemoveMechaComponentBaseSuc = null;
+            base.PoolRecycle();
+        }
 
         void Awake()
         {
@@ -44,20 +62,6 @@ namespace Client
             }
         }
 
-        public override void PoolRecycle()
-        {
-            ParentMecha = null;
-            MechaHitBoxRoot.SetInBattle(false);
-            base.PoolRecycle();
-            foreach (FX lighteningFX in lighteningFXs)
-            {
-                lighteningFX.PoolRecycle();
-            }
-
-            lighteningFXs.Clear();
-            isReturningToBackpack = false;
-        }
-
         public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
             MechaComponentBase mcb = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentType]
@@ -66,6 +70,22 @@ namespace Client
             return mcb;
         }
 
+        private void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
+        {
+            mechaComponentInfo.OnDied = () => PoolRecycle(0.2f);
+            mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) => OnRemoveMechaComponentBaseSuc?.Invoke(this);
+
+            MechaComponentInfo = mechaComponentInfo;
+            GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, ConfigManager.GridSize);
+            RefreshOccupiedGridPositions();
+            ParentMecha = parentMecha;
+            MechaHitBoxRoot.SetInBattle(true);
+            Child_Initialize();
+        }
+
+        protected virtual void Child_Initialize()
+        {
+        }
 #if UNITY_EDITOR
 
         [MenuItem("Tools/序列化模组占位")]
@@ -103,23 +123,6 @@ namespace Client
             GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, ConfigManager.GridSize);
         }
 #endif
-
-        private void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
-        {
-            IsDead = false;
-            MechaComponentInfo = mechaComponentInfo;
-            GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, ConfigManager.GridSize);
-            RefreshOccupiedGridPositions();
-            ParentMecha = parentMecha;
-            M_TotalLife = mechaComponentInfo.TotalLife;
-            M_LeftLife = mechaComponentInfo.TotalLife;
-            MechaHitBoxRoot.SetInBattle(true);
-            Child_Initialize();
-        }
-
-        protected virtual void Child_Initialize()
-        {
-        }
 
         public void SetGridPosition(GridPosR gridPos)
         {
@@ -169,9 +172,6 @@ namespace Client
             }
         }
 
-        public MechaComponentGridRoot MechaComponentGrids;
-        public MechaComponentHitBoxRoot MechaHitBoxRoot;
-
         private void Rotate()
         {
             GridPosR newGP = new GridPosR(MechaComponentInfo.GridPos.x, MechaComponentInfo.GridPos.z, GridPosR.RotateOrientationClockwise90(MechaComponentInfo.GridPos.orientation));
@@ -180,86 +180,8 @@ namespace Client
 
         public void SetShown(bool shown)
         {
-            Models.SetActive(shown);
+            ModelRoot.SetActive(shown);
         }
-
-        #region Life
-
-        internal bool IsDead = false;
-
-        internal UnityAction<int, int> OnLifeChange;
-
-        private int _leftLife;
-
-        public int M_LeftLife
-        {
-            get { return _leftLife; }
-            set
-            {
-                if (value < 0)
-                {
-                    value = 0;
-                }
-
-                if (_leftLife != value)
-                {
-                    _leftLife = value;
-                    OnLifeChange?.Invoke(_leftLife, M_TotalLife);
-                }
-            }
-        }
-
-        private int _totalLife;
-
-        public int M_TotalLife
-        {
-            get { return _totalLife; }
-            set
-            {
-                if (_totalLife != value)
-                {
-                    _totalLife = value;
-                    OnLifeChange?.Invoke(M_LeftLife, _totalLife);
-                }
-            }
-        }
-
-        public bool CheckAlive()
-        {
-            return M_LeftLife > 0;
-        }
-
-        private List<FX> lighteningFXs = new List<FX>();
-
-        public void Damage(int damage)
-        {
-            if (_leftLife > M_TotalLife * 0.5f && _leftLife - damage <= M_TotalLife * 0.5f)
-            {
-                foreach (MechaComponentHitBox hb in MechaHitBoxRoot.HitBoxes)
-                {
-                    FX lighteningFX = FXManager.Instance.PlayFX(FX_Type.FX_BlockDamagedLightening, hb.transform.position);
-                    lighteningFXs.Add(lighteningFX);
-                }
-            }
-
-            M_LeftLife -= damage;
-            FXManager.Instance.PlayFX(FX_Type.FX_BlockDamageHit, transform.position + Vector3.up * 0.5f);
-
-            if (!IsDead && !CheckAlive())
-            {
-                IsDead = true;
-                OnDied();
-                PoolRecycle(0.2f);
-            }
-        }
-
-        private void OnDied()
-        {
-            FXManager.Instance.PlayFX(FX_Type.FX_BlockExplode, transform.position);
-            ParentMecha?.RemoveMechaComponent(this);
-        }
-
-        #endregion
 
         #region IDraggable
 
@@ -280,7 +202,7 @@ namespace Client
                 return;
             }
 
-            if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Self)
+            if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Player)
             {
                 Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
                 GridPosR gridPos = GridUtils.GetGridPosByMousePos(ParentMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
@@ -289,7 +211,6 @@ namespace Client
             }
         }
 
-        private bool isReturningToBackpack = false;
 
         public bool ReturnToBackpack(bool cancelDrag, bool dragTheItem)
         {
@@ -310,7 +231,7 @@ namespace Client
                     DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BackpackItem>());
                 }
 
-                ParentMecha?.RemoveMechaComponent(this);
+                OnRemoveMechaComponentBaseSuc?.Invoke(this);
                 PoolRecycle();
             }
 

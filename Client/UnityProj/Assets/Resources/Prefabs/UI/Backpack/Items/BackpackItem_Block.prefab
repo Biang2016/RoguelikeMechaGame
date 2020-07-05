@@ -146,7 +146,8 @@ MonoBehaviour:
       size:
         x: 0
         z: 0
-  BackpackItemSprite: {fileID: 0}
+  Image: {fileID: 0}
+  BackpackItemGridHitBoxRoot: {fileID: 4848988158495615229}
 --- !u!1 &3604793192171843364
 GameObject:
   m_ObjectHideFlags: 0

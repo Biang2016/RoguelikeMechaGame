@@ -194,7 +194,7 @@ namespace Client
                         yield return new WaitForSeconds(0.5f);
                     }
 
-                    BGMFadeIn(bgmNames[index], fadeInDuration, volume: volume);
+                    BGMFadeIn(bgmNames[index], fadeInDuration, volume);
                 }
             }
         }

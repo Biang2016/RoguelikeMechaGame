@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using BiangStudio.GameDataFormat.Grid;
+﻿using BiangStudio.GameDataFormat.Grid;
 using GameCore;
+using UnityEngine;
 
 namespace Client
 {

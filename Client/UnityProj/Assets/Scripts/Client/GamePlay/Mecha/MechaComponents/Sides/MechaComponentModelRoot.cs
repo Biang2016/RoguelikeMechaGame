@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Client
+﻿namespace Client
 {
     public class MechaComponentModelRoot : ForbidLocalMoveRoot
     {
