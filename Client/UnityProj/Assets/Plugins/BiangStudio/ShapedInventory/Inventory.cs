@@ -18,8 +18,8 @@ namespace BiangStudio.ShapedInventory
 
         public delegate GridPos CoordinateTransformationDelegate(GridPos gp);
 
-        private CoordinateTransformationDelegate CoordinateTransformationHandler_FromPosToMatrixIndex;
-        private CoordinateTransformationDelegate CoordinateTransformationHandler_FromMatrixIndexToPos;
+        public CoordinateTransformationDelegate CoordinateTransformationHandler_FromPosToMatrixIndex { get; private set; }
+        public CoordinateTransformationDelegate CoordinateTransformationHandler_FromMatrixIndexToPos { get; private set; }
 
         public delegate MonoBehaviour InstantiatePrefabDelegate(Transform parent);
 
@@ -133,10 +133,10 @@ namespace BiangStudio.ShapedInventory
 
         public bool TryAddItem(InventoryItem item)
         {
-            bool canPlaceDirectly = CheckSpaceAvailable(item.OccupiedGridPositions, GridPos.Zero);
+            bool canPlaceDirectly = CheckSpaceAvailable(item.OccupiedGridPositions_Matrix, GridPos.Zero);
             if (canPlaceDirectly)
             {
-                AddItem(item, item.GridPos.orientation, item.OccupiedGridPositions);
+                AddItem(item, item.GridPos_Matrix.orientation, item.OccupiedGridPositions_Matrix);
                 return true;
             }
 
@@ -181,9 +181,9 @@ namespace BiangStudio.ShapedInventory
                 for (int x = 0 - xStart_temp; x <= Rows - (heightWidthSwap ? space.size.z : space.size.x) - xStart_temp; x++)
                 {
                     bool canHold = true;
-                    foreach (GridPos gp in item.OccupiedGridPositions)
+                    foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                     {
-                        GridPos rot_gp = GridPos.RotateGridPos(gp, orientation);
+                        GridPos rot_gp = GridPos.RotateGridPos(gp_matrix, orientation);
                         int col = x + rot_gp.x;
                         int row = z + rot_gp.z;
                         if (col < 0 || col >= Columns || row < 0 || row >= Rows)
@@ -203,9 +203,9 @@ namespace BiangStudio.ShapedInventory
 
                     if (canHold)
                     {
-                        item.GridPos.x = x + space.position.x;
-                        item.GridPos.z = z + space.position.z;
-                        item.GridPos.orientation = orientation;
+                        item.GridPos_Matrix.x = x + space.position.x;
+                        item.GridPos_Matrix.z = z + space.position.z;
+                        item.GridPos_Matrix.orientation = orientation;
                         return true;
                     }
 
@@ -240,8 +240,8 @@ namespace BiangStudio.ShapedInventory
 
         private void AddItem(InventoryItem item, GridPosR.Orientation orientation, List<GridPos> realOccupiedGPs)
         {
-            item.OccupiedGridPositions = realOccupiedGPs;
-            item.GridPos.orientation = orientation;
+            item.OccupiedGridPositions_Matrix = realOccupiedGPs;
+            item.GridPos_Matrix.orientation = orientation;
             item.RefreshSize();
             InventoryItems.Add(item);
             OnAddItemSucAction?.Invoke(item);
@@ -270,9 +270,9 @@ namespace BiangStudio.ShapedInventory
         {
             if (InventoryItems.Contains(item))
             {
-                foreach (GridPos gp in item.OccupiedGridPositions)
+                foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
-                    InventoryGridMatrix[gp.x, gp.z].State = InventoryGrid.States.Available;
+                    InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Available;
                 }
 
                 InventoryItems.Remove(item);
@@ -284,9 +284,9 @@ namespace BiangStudio.ShapedInventory
         {
             if (InventoryItems.Contains(item))
             {
-                foreach (GridPos gp in item.OccupiedGridPositions)
+                foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
-                    InventoryGridMatrix[gp.x, gp.z].State = InventoryGrid.States.TempUnavailable;
+                    InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.TempUnavailable;
                 }
             }
         }
@@ -318,10 +318,8 @@ namespace BiangStudio.ShapedInventory
             {
                 bool isRootItem = item.AmIRootItemInIsolationCalculationHandler != null && item.AmIRootItemInIsolationCalculationHandler.Invoke();
                 bool hasConflict = false;
-                foreach (GridPos gp in item.OccupiedGridPositions)
+                foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
-                    GridPos gp_matrix = CoordinateTransformationHandler_FromPosToMatrixIndex.Invoke(gp);
-
                     if (gp_matrix.x < 0 || gp_matrix.x >= Rows
                                         || gp_matrix.z < 0 || gp_matrix.z >= Columns)
                     {
@@ -366,9 +364,8 @@ namespace BiangStudio.ShapedInventory
 
             foreach (InventoryItem item in notConflictItems)
             {
-                foreach (GridPos gp in item.OccupiedGridPositions)
+                foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
-                    GridPos gp_matrix = CoordinateTransformationHandler_FromPosToMatrixIndex.Invoke(gp);
                     connectedMatrix[gp_matrix.z, gp_matrix.x] = 1;
                 }
             }
@@ -434,8 +431,8 @@ namespace BiangStudio.ShapedInventory
             if (item != null)
             {
                 GridPos gp = CoordinateTransformationHandler_FromMatrixIndexToPos.Invoke(gp_matrix);
-                GridPos gp_local_noRotate = gp - (GridPos) item.GridPos;
-                GridPos gp_local_rotate = GridPos.RotateGridPos(gp_local_noRotate, (GridPosR.Orientation) ((4 - (int) item.GridPos.orientation) % 4));
+                GridPos gp_local_noRotate = gp - (GridPos) item.GridPos_Matrix;
+                GridPos gp_local_rotate = GridPos.RotateGridPos(gp_local_noRotate, (GridPosR.Orientation) ((4 - (int) item.GridPos_Matrix.orientation) % 4));
                 item.OnConflictedHandler.Invoke(gp_local_rotate);
             }
         }

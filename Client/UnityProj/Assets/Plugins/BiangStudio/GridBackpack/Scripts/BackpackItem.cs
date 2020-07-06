@@ -15,12 +15,12 @@ namespace BiangStudio.GridBackpack
         {
             base.PoolRecycle();
             Backpack = null;
-            Data = null;
+            InventoryItem = null;
             OccupiedPositionsInBackpackPanel_Moving = null;
         }
 
         public Backpack Backpack;
-        public InventoryItem Data;
+        public InventoryItem InventoryItem;
 
         [SerializeField] private Image Image;
         [SerializeField] private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
@@ -38,14 +38,14 @@ namespace BiangStudio.GridBackpack
 
         private Vector2 sizeRev;
 
-        public void Initialize(Backpack backpack, InventoryItem data)
+        public void Initialize(Backpack backpack, InventoryItem inventoryItem)
         {
             Backpack = backpack;
-            Data = data;
+            InventoryItem = inventoryItem;
             //Image.sprite = BackpackManager.Instance.GetBackpackItemSprite(Data.ItemContentInfo.ItemSpriteKey);
-            GridPos_Moving = Data.GridPos;
-            OccupiedPositionsInBackpackPanel_Moving = Data.OccupiedGridPositions.Clone();
-            size = new Vector2(Data.BoundingRect.size.x * Backpack.GridSize, Data.BoundingRect.size.z * Backpack.GridSize);
+            GridPos_Moving = InventoryItem.GridPos_Matrix;
+            OccupiedPositionsInBackpackPanel_Moving = InventoryItem.OccupiedGridPositions_Matrix.Clone();
+            size = new Vector2(InventoryItem.BoundingRect.size.x * Backpack.GridSize, InventoryItem.BoundingRect.size.z * Backpack.GridSize);
             sizeRev = new Vector2(size.y, size.x);
             RefreshView();
         }
@@ -82,7 +82,7 @@ namespace BiangStudio.GridBackpack
             if (hitBox)
             {
                 lastPickedUpHitBoxGridPos = hitBox.LocalGridPos + (GridPos) GridPos_Moving;
-                Backpack.PickUpItem(Data);
+                Backpack.PickUpItem(InventoryItem);
             }
         }
 
@@ -161,9 +161,9 @@ namespace BiangStudio.GridBackpack
             {
                 if (Backpack.CheckSpaceAvailable(OccupiedPositionsInBackpackPanel_Moving, GridPos.Zero))
                 {
-                    Backpack.MoveItem(Data.OccupiedGridPositions, OccupiedPositionsInBackpackPanel_Moving);
-                    Data.GridPos = GridPos_Moving;
-                    Data.OccupiedGridPositions = OccupiedPositionsInBackpackPanel_Moving.Clone();
+                    Backpack.MoveItem(InventoryItem.OccupiedGridPositions_Matrix, OccupiedPositionsInBackpackPanel_Moving);
+                    InventoryItem.GridPos_Matrix = GridPos_Moving;
+                    InventoryItem.OccupiedGridPositions_Matrix = OccupiedPositionsInBackpackPanel_Moving.Clone();
                     RefreshView();
                 }
             }

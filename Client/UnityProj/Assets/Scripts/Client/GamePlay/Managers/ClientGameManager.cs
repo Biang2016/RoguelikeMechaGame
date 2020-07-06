@@ -142,7 +142,7 @@ namespace Client
             myBackPack.ToggleDebugCallback = null;
             myBackPack.DragItemOutBackpackCallback = (backpackItem) =>
             {
-                switch (backpackItem.Data.ItemContentInfo)
+                switch (backpackItem.InventoryItem.ItemContentInfo)
                 {
                     case MechaComponentInfo mechaComponentInfo:
                     {
@@ -155,7 +155,7 @@ namespace Client
                         mcb.SetGridPosition(gp);
                         DragManager.Instance.CurrentDrag = mcb.Draggable;
                         mcb.Draggable.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<MechaComponentBase>());
-                        backpackItem.Backpack.RemoveItem(backpackItem.Data);
+                        backpackItem.Backpack.RemoveItem(backpackItem.InventoryItem);
                         backpackItem.PoolRecycle();
                         break;
                     }
@@ -170,7 +170,7 @@ namespace Client
             foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
             {
                 MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-                InventoryItem ii = new InventoryItem(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 100, 0));
+                InventoryItem ii = new InventoryItem(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 100, 0), myBackPack);
                 myBackPack.TryAddItem(ii);
             }
 

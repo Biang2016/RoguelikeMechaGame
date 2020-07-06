@@ -25,11 +25,12 @@ namespace Client
             MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mci, this);
             mcb.OnRemoveMechaComponentBaseSuc = RemoveMechaComponent;
             MechaComponents.Add(mci.GUID, mcb);
-            InventoryItem item = new InventoryItem(mcb.MechaComponentInfo);
+            InventoryItem item = new InventoryItem(mcb.MechaComponentInfo, MechaEditorContainer);
+            mcb.SetInventoryItem(item);
             item.OnIsolatedHandler = mcb.MechaComponentGrids.SetIsolatedIndicatorShown;
             item.OnConflictedHandler = mcb.MechaComponentGrids.SetGridConflicted;
             item.OnResetConflictHandler = mcb.MechaComponentGrids.ResetAllGridConflict;
-            item.AmIRootItemInIsolationCalculationHandler = () => mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core;
+            item.AmIRootItemInIsolationCalculationHandler = () => ((MechaComponentInfo) item.ItemContentInfo).MechaComponentType == MechaComponentType.Core;
             MechaEditorContainer.TryAddItem(item);
 
             if (MechaInfo.MechaType == MechaType.Player && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)

@@ -11,7 +11,7 @@ namespace GameCore
     public class MechaComponentInfo : IInventoryItemContentInfo
     {
         public int GUID;
-        private static int guidGenerator = (int)ConfigManager.GUID_Separator.MechaComponentInfo;
+        private static int guidGenerator = (int) ConfigManager.GUID_Separator.MechaComponentInfo;
 
         private int GetGUID()
         {
@@ -19,9 +19,9 @@ namespace GameCore
         }
 
         public MechaComponentType MechaComponentType;
-        public GridPosR GridPos;
-        public List<GridPos> OccupiedGridPositions = new List<GridPos>();
-        public List<GridPos> OriginalOccupiedGridPositions => OccupiedGridPositions;
+
+        private List<GridPos> originalOccupiedGridPositions;
+        public List<GridPos> OriginalOccupiedGridPositions => originalOccupiedGridPositions;
 
         public UnityAction<MechaComponentInfo> OnRemoveMechaComponentInfoSuc;
 
@@ -29,24 +29,22 @@ namespace GameCore
 
         public string ItemName => "机甲组件." + MechaComponentType;
 
-        public MechaComponentInfo(MechaComponentType mechaComponentType, GridPosR gridPos, int totalLife, int dropProbability)
+        public MechaComponentInfo(MechaComponentType mechaComponentType,  int totalLife, int dropProbability)
         {
             GUID = GetGUID();
             MechaComponentType = mechaComponentType;
-            GridPos = gridPos;
             TotalLife = totalLife;
             M_LeftLife = totalLife;
             DropProbability = dropProbability;
             if (ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(mechaComponentType, out List<GridPos> ops))
             {
-                OccupiedGridPositions = ops.Clone();
+                originalOccupiedGridPositions = ops.Clone();
             }
         }
 
         public MechaComponentInfo Clone()
         {
-            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType, GridPos, TotalLife, DropProbability);
-            mci.OccupiedGridPositions = OccupiedGridPositions.Clone();
+            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType,  TotalLife, DropProbability);
             return mci;
         }
 

@@ -76,7 +76,7 @@ namespace Client
             mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) => OnRemoveMechaComponentBaseSuc?.Invoke(this);
 
             MechaComponentInfo = mechaComponentInfo;
-            GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, ConfigManager.GridSize);
+            GridPos.ApplyGridPosToLocalTrans(InventoryItem.Inventory.CoordinateTransformationHandler_FromMatrixIndexToPos(InventoryItem.GridPos_Matrix), transform, ConfigManager.GridSize);
             RefreshOccupiedGridPositions();
             ParentMecha = parentMecha;
             MechaHitBoxRoot.SetInBattle(true);
@@ -101,7 +101,7 @@ namespace Client
 
                 GameObject prefab = PrefabManager.Instance.GetPrefab("MechaComponent_" + mcType);
                 MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
-                mcb.Initialize_Editor(new MechaComponentInfo(mcType, new GridPosR(0, 0, GridPosR.Orientation.Up), 10, 0));
+                mcb.Initialize_Editor(new MechaComponentInfo(mcType, 10, 0));
                 mcbs.Add(mcb);
                 MechaComponentOccupiedGridPosDict.Add(mcType, mcb.MechaComponentGrids.GetOccupiedPositions().Clone());
             }
@@ -120,56 +120,20 @@ namespace Client
         private void Initialize_Editor(MechaComponentInfo mechaComponentInfo)
         {
             MechaComponentInfo = mechaComponentInfo;
-            GridPos.ApplyGridPosToLocalTrans(mechaComponentInfo.GridPos, transform, ConfigManager.GridSize);
+            GridPos.ApplyGridPosToLocalTrans(GridPos.Zero, transform, ConfigManager.GridSize);
         }
 #endif
 
-        public void SetGridPosition(GridPosR gridPos)
+        public void SetInventoryItem(InventoryItem inventoryItem)
         {
-            if (!gridPos.Equals(MechaComponentInfo.GridPos))
-            {
-                foreach (GridPos gp in MechaComponentInfo.OccupiedGridPositions)
-                {
-                    GridPos gp_rot = GridPos.RotateGridPos(gp - (GridPos) MechaComponentInfo.GridPos, (GridPosR.Orientation) ((gridPos.orientation - MechaComponentInfo.GridPos.orientation + 4) % 4));
-                    GridPosR newGP = gridPos + (GridPosR) gp_rot;
-                    if (newGP.x > ConfigManager.EDIT_AREA_HALF_SIZE)
-                    {
-                        SetGridPosition(new GridPosR(gridPos.x - 1, gridPos.z, gridPos.orientation));
-                        return;
-                    }
-
-                    if (newGP.x < -ConfigManager.EDIT_AREA_HALF_SIZE)
-                    {
-                        SetGridPosition(new GridPosR(gridPos.x + 1, gridPos.z, gridPos.orientation));
-                        return;
-                    }
-
-                    if (newGP.z > ConfigManager.EDIT_AREA_HALF_SIZE)
-                    {
-                        SetGridPosition(new GridPosR(gridPos.x, gridPos.z - 1, gridPos.orientation));
-                        return;
-                    }
-
-                    if (newGP.z < -ConfigManager.EDIT_AREA_HALF_SIZE)
-                    {
-                        SetGridPosition(new GridPosR(gridPos.x, gridPos.z + 1, gridPos.orientation));
-                        return;
-                    }
-                }
-
-                MechaComponentInfo.GridPos = gridPos;
-                GridPosR.ApplyGridPosToLocalTrans(gridPos, transform, ConfigManager.GridSize);
-                RefreshOccupiedGridPositions();
-                ParentMecha?.RefreshMechaMatrix();
-            }
+            InventoryItem = inventoryItem;
+            InventoryItem.OnSetGridPosHandler = SetGridPos;
         }
 
-        private void RefreshOccupiedGridPositions()
+        private void SetGridPos(GridPosR gridPos)
         {
-            if (ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(MechaComponentInfo.MechaComponentType, out List<GridPos> ops))
-            {
-                MechaComponentInfo.OccupiedGridPositions = GridPos.TransformOccupiedPositions(MechaComponentInfo.GridPos, ops.Clone());
-            }
+            GridPosR.ApplyGridPosToLocalTrans(gridPos, transform, ConfigManager.GridSize);
+            ParentMecha?.RefreshMechaMatrix();
         }
 
         private void Rotate()
@@ -211,12 +175,12 @@ namespace Client
             }
         }
 
-
         public bool ReturnToBackpack(bool cancelDrag, bool dragTheItem)
         {
-            InventoryItem ii = new InventoryItem(MechaComponentInfo);
+            Inventory iv = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
+            InventoryItem ii = new InventoryItem(MechaComponentInfo, iv);
             ii.ItemContentInfo = MechaComponentInfo;
-            bool suc = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).TryAddItem(ii);
+            bool suc = iv.TryAddItem(ii);
             if (suc)
             {
                 if (cancelDrag)

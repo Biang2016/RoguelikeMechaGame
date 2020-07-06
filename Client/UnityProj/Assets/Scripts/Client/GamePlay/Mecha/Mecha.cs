@@ -42,8 +42,9 @@ namespace Client
                 false,
                 0,
                 () => ControlManager.Instance.Building_RotateItem.Down);
-            MechaEditorContainer.OnAddItemSucAction = (item) => MechaInfo.AddMechaComponentInfo(((MechaComponentInfo) item.ItemContentInfo).Clone());
+            //MechaEditorContainer.OnAddItemSucAction = (item) => MechaInfo.AddMechaComponentInfo(((MechaComponentInfo) item.ItemContentInfo).Clone());
             MechaEditorContainer.OnRemoveItemSucAction = (item) => ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo();
+            MechaEditorContainer.RefreshInventoryGrids();
 
             RefreshMechaMatrix();
             foreach (KeyValuePair<int, MechaComponentInfo> kv in mechaInfo.MechaComponentInfos)

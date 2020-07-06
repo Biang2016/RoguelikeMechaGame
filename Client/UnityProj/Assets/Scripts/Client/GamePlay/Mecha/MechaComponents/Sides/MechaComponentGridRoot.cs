@@ -10,6 +10,11 @@ namespace Client
     {
         private List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
 
+        void Awake()
+        {
+            mechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
+        }
+
 #if UNITY_EDITOR
         public List<GridPos> GetOccupiedPositions()
         {
