@@ -130,9 +130,9 @@ namespace Client
             InventoryItem.OnSetGridPosHandler = SetGridPos;
         }
 
-        private void SetGridPos(GridPosR gridPos)
+        private void SetGridPos(GridPosR gridPos_World)
         {
-            GridPosR.ApplyGridPosToLocalTrans(gridPos, transform, ConfigManager.GridSize);
+            GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize);
             ParentMecha?.RefreshMechaMatrix();
         }
 
@@ -160,7 +160,7 @@ namespace Client
                 Rotate();
             }
 
-            if (DragManager.Instance.Current_DragArea.Equals(DragAreaDefines.BattleInventory))
+            if (dragArea.Equals(DragAreaDefines.BattleInventory))
             {
                 ReturnToBackpack(true, true);
                 return;
@@ -169,9 +169,10 @@ namespace Client
             if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Player)
             {
                 Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
-                GridPosR gridPos = GridUtils.GetGridPosByMousePos(ParentMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
-                gridPos.orientation = MechaComponentInfo.GridPos.orientation;
-                SetGridPosition(gridPos);
+                GridPos gridPos = GridUtils.GetGridPosByMousePos(ParentMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
+                GridPosR gp_matrix = InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gridPos);
+                gp_matrix.orientation = InventoryItem.GridPos_Matrix.orientation;
+                InventoryItem.SetGridPosition(gp_matrix);
             }
         }
 
@@ -191,7 +192,8 @@ namespace Client
 
                 if (dragTheItem)
                 {
-                    DragManager.Instance.CurrentDrag = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.GetBackpackItem(ii.GUID).gameObject.GetComponent<DraggableBackpackItem>();
+                    DragManager.Instance.CurrentDrag = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.GetBackpackItem(ii.GUID).gameObject
+                        .GetComponent<DraggableBackpackItem>();
                     DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BackpackItem>());
                 }
 

@@ -22,8 +22,8 @@ namespace Client
 
         public override void ResetToOriginalPositionRotation()
         {
-            transform.localPosition = oriPosition_WorldObject;
-            transform.localRotation = oriQuaternion_WorldObject;
+            transform.localPosition = oriPosition;
+            transform.localRotation = oriQuaternion;
         }
     }
 }

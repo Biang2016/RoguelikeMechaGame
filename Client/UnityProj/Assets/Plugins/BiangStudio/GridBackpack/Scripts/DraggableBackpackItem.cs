@@ -13,12 +13,14 @@ namespace BiangStudio.GridBackpack
         protected override void OnDragging()
         {
             base.OnDragging();
-            Vector3 buildingMousePos = MyDragProcessor.GetDragMousePosition();
+            RectTransform rectTransform = (RectTransform) BackpackItem.transform;
+            RectTransform panelRectTransform = (RectTransform)BackpackItem.Backpack.BackpackPanel.ItemContainer;
             if (wasDragStartThisFrame)
             {
-                dragBeginPosition_UIObject = buildingMousePos;
+                dragBeginPosition_UIObject = rectTransform.anchoredPosition;
             }
 
+            Vector3 buildingMousePos = MyDragProcessor.GetDragMousePosition();
             caller.Draggable_OnMousePressed(current_DragArea);
 
             float draggedDistance = (buildingMousePos - dragBeginPosition_UIObject).magnitude;
@@ -29,15 +31,15 @@ namespace BiangStudio.GridBackpack
             else if (MyDragProcessor.GetCurrentDragArea().Equals(BackpackItem.Backpack.DragArea))
             {
                 if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    BackpackItem.Backpack.BackpackPanel.ItemContainer.transform as RectTransform,
-                    MyDragProcessor.GetDragMousePosition(),
+                    panelRectTransform,
+                    buildingMousePos,
                     MyDragProcessor.GetCamera(),
-                    out Vector2 mousePos))
+                    out Vector2 anchoredPos))
                 {
-                    mousePos.x += ((RectTransform) BackpackItem.Backpack.BackpackPanel.ItemContainer).rect.width / 2f;
-                    mousePos.y -= ((RectTransform) BackpackItem.Backpack.BackpackPanel.ItemContainer).rect.height / 2f;
-                    int grid_X = Mathf.FloorToInt((mousePos.x) / BackpackItem.Backpack.GridSize);
-                    int grid_Z = Mathf.FloorToInt((-mousePos.y) / BackpackItem.Backpack.GridSize);
+                    anchoredPos.x += panelRectTransform.rect.width / 2f;
+                    anchoredPos.y -= panelRectTransform.rect.height / 2f;
+                    int grid_X = Mathf.FloorToInt((anchoredPos.x) / BackpackItem.Backpack.GridSize);
+                    int grid_Z = Mathf.FloorToInt((-anchoredPos.y) / BackpackItem.Backpack.GridSize);
                     BackpackItem.MoveBaseOnHitBox(new GridPos(grid_X, grid_Z));
                 }
             }
@@ -49,8 +51,7 @@ namespace BiangStudio.GridBackpack
 
         public override void ResetToOriginalPositionRotation()
         {
-            transform.localPosition = oriPosition_WorldObject;
-            transform.localRotation = oriQuaternion_WorldObject;
+            transform.localPosition = dragBeginPosition_UIObject;
         }
     }
 }

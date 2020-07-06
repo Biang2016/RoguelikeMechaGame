@@ -263,7 +263,7 @@ namespace Client
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
             ClientBattleManager.Instance.StartBattle(battleInfo);
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, new GridPosR(0, 0, GridPosR.Orientation.Up), 300, 0));
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core,  300, 0));
             battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
             for (int i = -4; i <= 4; i++)
             {
@@ -272,11 +272,11 @@ namespace Client
                     MechaComponentInfo mci;
                     if (i == 0 && j == 0)
                     {
-                        mci = new MechaComponentInfo(MechaComponentType.Core, new GridPosR(i, j, GridPosR.Orientation.Up), 500, 0);
+                        mci = new MechaComponentInfo(MechaComponentType.Core,  500, 0);
                     }
                     else
                     {
-                        mci = new MechaComponentInfo((MechaComponentType) ClientLevelManager.SRandom.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), new GridPosR(i, j, GridPosR.Orientation.Up), 50, 5);
+                        mci = new MechaComponentInfo((MechaComponentType) ClientLevelManager.SRandom.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length),  50, 5);
                     }
 
                     enemyMechaInfo.AddMechaComponentInfo(mci);

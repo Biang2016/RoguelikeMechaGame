@@ -21,17 +21,19 @@ namespace BiangStudio.ShapedInventory
 
         private static int guidGenerator;
 
-        [HideInInspector] public int GUID;
+        [HideInInspector]
+        public int GUID;
 
         public IInventoryItemContentInfo ItemContentInfo;
 
         public Inventory Inventory;
 
-        public GridPosR GridPos_Matrix { get; private set; }
-        public GridPosR GridPos_World { get; private set; }
+        public GridPosR GridPos_Matrix;
+        public GridPosR GridPos_World;
         public List<GridPos> OccupiedGridPositions_Matrix; // x: col, z: row
 
-        [HideInInspector] public GridRect BoundingRect;
+        [HideInInspector]
+        public GridRect BoundingRect;
 
         public OnSetGridPosDelegate OnSetGridPosHandler;
         public OnIsolatedDelegate OnIsolatedHandler;
@@ -108,7 +110,7 @@ namespace BiangStudio.ShapedInventory
                 GridPos_Matrix = gp_matrix;
                 GridPos_World = Inventory.CoordinateTransformationHandler_FromMatrixIndexToPos(GridPos_Matrix);
                 OnSetGridPosHandler?.Invoke(GridPos_World);
-         }
+            }
         }
 
         public void RefreshSize()

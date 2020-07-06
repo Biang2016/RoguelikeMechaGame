@@ -50,6 +50,12 @@ namespace BiangStudio.GridBackpack
             RefreshView();
         }
 
+        public void SetInventoryItem(InventoryItem inventoryItem)
+        {
+            InventoryItem = inventoryItem;
+            InventoryItem.OnSetGridPosHandler = SetGridPos;
+        }
+
         private void RefreshView()
         {
             int UI_Pos_X = GridPos_Moving.x * Backpack.GridSize;
@@ -93,7 +99,7 @@ namespace BiangStudio.GridBackpack
             SetGridPosition(targetGPR);
         }
 
-        private void SetGridPosition(GridPosR targetGPR)
+        private void SetGridPos(GridPosR targetGPR)
         {
             GridPos diff = targetGPR - GridPos_Moving;
             if (diff.x != 0 || diff.z != 0)
@@ -112,6 +118,13 @@ namespace BiangStudio.GridBackpack
             }
         }
 
+        private void SetGridPos(GridPosR gridPos_World)
+        {
+
+
+            // todo 显示合法位置虚框
+        }
+
         public void Draggable_OnMousePressed(DragArea dragArea)
         {
             if (dragArea.Equals(Backpack.DragArea))
@@ -121,6 +134,8 @@ namespace BiangStudio.GridBackpack
                     Rotate();
                 }
             }
+
+            if(dragArea.Equals())
         }
 
         private void Rotate()
