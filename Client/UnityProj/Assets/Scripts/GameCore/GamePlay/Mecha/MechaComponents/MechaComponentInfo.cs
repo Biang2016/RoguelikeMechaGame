@@ -23,13 +23,15 @@ namespace GameCore
         private List<GridPos> originalOccupiedGridPositions;
         public List<GridPos> OriginalOccupiedGridPositions => originalOccupiedGridPositions;
 
+        public InventoryItem InventoryItem;
+
         public UnityAction<MechaComponentInfo> OnRemoveMechaComponentInfoSuc;
 
         public string ItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
 
         public string ItemName => "机甲组件." + MechaComponentType;
 
-        public MechaComponentInfo(MechaComponentType mechaComponentType,  int totalLife, int dropProbability)
+        public MechaComponentInfo(MechaComponentType mechaComponentType, int totalLife, int dropProbability)
         {
             GUID = GetGUID();
             MechaComponentType = mechaComponentType;
@@ -44,13 +46,18 @@ namespace GameCore
 
         public MechaComponentInfo Clone()
         {
-            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType,  TotalLife, DropProbability);
+            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType, TotalLife, DropProbability);
             return mci;
         }
 
         public void RemoveMechaComponentInfo()
         {
             OnRemoveMechaComponentInfoSuc?.Invoke(this);
+        }
+
+        public void SetInventoryItem(InventoryItem inventoryItem)
+        {
+            InventoryItem = inventoryItem;
         }
 
         #region Life

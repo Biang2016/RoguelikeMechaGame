@@ -12,6 +12,7 @@ using GameCore;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
+using DragAreaDefines = GameCore.DragAreaDefines;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -23,7 +24,6 @@ namespace Client
     public abstract class MechaComponentBase : PoolObject, IDraggable
     {
         public MechaComponentInfo MechaComponentInfo;
-        public InventoryItem InventoryItem;
 
         internal Mecha ParentMecha = null;
 
@@ -40,6 +40,7 @@ namespace Client
 
         public override void PoolRecycle()
         {
+            MechaComponentGrids.SetIsolatedIndicatorShown(true);
             MechaComponentInfo = null;
             ParentMecha = null;
             MechaHitBoxRoot.SetInBattle(false);
@@ -73,10 +74,21 @@ namespace Client
         private void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
             mechaComponentInfo.OnDied = () => PoolRecycle(0.2f);
-            mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) => OnRemoveMechaComponentBaseSuc?.Invoke(this);
+            mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) =>
+            {
+                OnRemoveMechaComponentBaseSuc?.Invoke(this);
+                PoolRecycle(1f);
+            };
+
+            {
+                mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) => { GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize); };
+                mechaComponentInfo.InventoryItem.OnIsolatedHandler = MechaComponentGrids.SetIsolatedIndicatorShown;
+                mechaComponentInfo.InventoryItem.OnConflictedHandler = MechaComponentGrids.SetGridConflicted;
+                mechaComponentInfo.InventoryItem.OnResetConflictHandler = MechaComponentGrids.ResetAllGridConflict;
+            }
 
             MechaComponentInfo = mechaComponentInfo;
-            GridPos.ApplyGridPosToLocalTrans(InventoryItem.GridPos_World, transform, ConfigManager.GridSize);
+            GridPos.ApplyGridPosToLocalTrans(MechaComponentInfo.InventoryItem.GridPos_World, transform, ConfigManager.GridSize);
             ParentMecha = parentMecha;
             MechaHitBoxRoot.SetInBattle(true);
             Child_Initialize();
@@ -124,16 +136,6 @@ namespace Client
         }
 #endif
 
-        public void SetInventoryItem(InventoryItem inventoryItem)
-        {
-            InventoryItem = inventoryItem;
-            InventoryItem.OnSetGridPosHandler = (gridPos_World) =>
-            {
-                GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize);
-                ParentMecha?.RefreshMechaMatrix();
-            };
-        }
-
         public void SetShown(bool shown)
         {
             ModelRoot.SetActive(shown);
@@ -149,7 +151,7 @@ namespace Client
         {
             if (ControlManager.Instance.Building_RotateItem.Down)
             {
-                Rotate();
+                MechaComponentInfo.InventoryItem.Rotate();
             }
 
             if (dragArea.Equals(DragAreaDefines.BattleInventory))
@@ -162,18 +164,18 @@ namespace Client
             {
                 Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
                 GridPos gridPos = GridUtils.GetGridPosByMousePos(ParentMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
-                GridPosR gp_matrix = InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gridPos);
-                gp_matrix.orientation = InventoryItem.GridPos_Matrix.orientation;
-                InventoryItem.SetGridPosition(gp_matrix);
+                GridPosR gp_matrix = MechaComponentInfo.InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gridPos);
+                gp_matrix.orientation = MechaComponentInfo.InventoryItem.GridPos_Matrix.orientation;
+                MechaComponentInfo.InventoryItem.SetGridPosition(gp_matrix);
             }
         }
 
         public bool ReturnToBackpack(bool cancelDrag, bool dragTheItem)
         {
-            Inventory iv = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
-            InventoryItem ii = new InventoryItem(MechaComponentInfo, iv);
+            Backpack bp = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
+            InventoryItem ii = new InventoryItem(MechaComponentInfo, bp, GridPosR.Zero);
             ii.ItemContentInfo = MechaComponentInfo;
-            bool suc = iv.TryAddItem(ii);
+            bool suc = bp.TryAddItem(ii);
             if (suc)
             {
                 if (cancelDrag)
@@ -184,8 +186,8 @@ namespace Client
 
                 if (dragTheItem)
                 {
-                    DragManager.Instance.CurrentDrag = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.GetBackpackItem(ii.GUID).gameObject
-                        .GetComponent<DraggableBackpackItem>();
+                    DragManager.Instance.CurrentDrag = bp.BackpackPanel.GetBackpackItem(ii.GUID).gameObject
+                        .GetComponent<Draggable>();
                     DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BackpackItem>());
                 }
 
@@ -205,7 +207,7 @@ namespace Client
                     bool suc = ReturnToBackpack(false, false);
                     if (!suc)
                     {
-                        DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
+                        //DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
                     }
                 }
 
@@ -222,7 +224,7 @@ namespace Client
                 bool suc = ReturnToBackpack(false, false);
                 if (!suc)
                 {
-                    DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
+                    //DragManager.Instance.CurrentDrag.ResetToOriginalPositionRotation();
                 }
 
                 return;

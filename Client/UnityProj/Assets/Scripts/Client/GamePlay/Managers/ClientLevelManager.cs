@@ -1,34 +1,19 @@
 ﻿using BiangStudio.GameDataFormat;
 using BiangStudio.Singleton;
+using GameCore;
 using UnityEngine;
 
 namespace Client
 {
     public class ClientLevelManager : TSingletonBaseManager<ClientLevelManager>
     {
-        public static SRandom SRandom
-        {
-            get
-            {
-                if (Instance.CurrentLevel == null)
-                {
-                    Debug.LogError("未初始化关卡前禁止调用关卡随机数");
-                    return null;
-                }
-                else
-                {
-                    return Instance.CurrentLevel.SRandom;
-                }
-            }
-        }
+        public ClientLevel ClientLevel;
 
-        public Level CurrentLevel;
-
-        public void Init(uint randomSeed)
+        public void Init()
         {
-            GameObject levelGO = new GameObject($"Level_{randomSeed}");
-            CurrentLevel = levelGO.AddComponent<Level>();
-            CurrentLevel.Init(randomSeed);
+            GameObject levelGO = new GameObject($"Level_{LevelManager.Instance.CurrentLevel.RandomSeed}");
+            ClientLevel = levelGO.AddComponent<ClientLevel>();
+            ClientLevel.Init(LevelManager.Instance.CurrentLevel);
         }
 
         public override void Awake()

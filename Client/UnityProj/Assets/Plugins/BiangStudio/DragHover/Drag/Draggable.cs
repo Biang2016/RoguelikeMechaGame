@@ -2,14 +2,12 @@
 
 namespace BiangStudio.DragHover
 {
-    public abstract class Draggable : MonoBehaviour
+    public class Draggable : MonoBehaviour
     {
         protected IDraggable caller;
         private bool isDragging = false;
         protected bool canDrag;
         protected DragArea dragFrom_DragArea;
-        protected Vector3 oriPosition;
-        protected Quaternion oriQuaternion;
 
         public IDragProcessor MyDragProcessor;
 
@@ -68,7 +66,5 @@ namespace BiangStudio.DragHover
                 }
             }
         }
-
-        public abstract void ResetToOriginalPositionRotation();
     }
 }

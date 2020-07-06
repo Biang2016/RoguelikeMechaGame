@@ -87,7 +87,7 @@ namespace Client
                             GridPos delta_local_GP = GridPos.GetGridPosByPoint(delta_local + Vector3.one * ConfigManager.GridSize / 2f, 1);
                             if (delta_local_GP.x != 0 || delta_local_GP.z != 0)
                             {
-                                ClientBattleManager.Instance.PlayerMecha.MoveCenter(delta_local_GP);
+                                ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorContainer.MoveAllItemTogether(delta_local_GP);
                                 mouseDownPos_Left = pos;
                             }
                         }

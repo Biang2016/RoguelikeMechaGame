@@ -21,19 +21,25 @@ namespace BiangStudio.ShapedInventory
 
         private static int guidGenerator;
 
-        [HideInInspector]
-        public int GUID;
+        [HideInInspector] public int GUID;
 
         public IInventoryItemContentInfo ItemContentInfo;
 
         public Inventory Inventory;
 
         public GridPosR GridPos_Matrix;
-        public GridPosR GridPos_World;
-        public List<GridPos> OccupiedGridPositions_Matrix; // x: col, z: row
 
-        [HideInInspector]
-        public GridRect BoundingRect;
+        public GridPosR GridPos_World => Inventory.CoordinateTransformationHandler_FromMatrixIndexToPos(GridPos_Matrix);
+
+        public List<GridPos> OccupiedGridPositions_Matrix
+        {
+            get
+            {
+                return GridPosR.TransformOccupiedPositions(GridPos_Matrix, ItemContentInfo.OriginalOccupiedGridPositions);
+            }
+        }
+
+        [HideInInspector] public GridRect BoundingRect => OccupiedGridPositions_Matrix.GetBoundingRectFromListGridPos();
 
         public OnSetGridPosDelegate OnSetGridPosHandler;
         public OnIsolatedDelegate OnIsolatedHandler;
@@ -56,22 +62,14 @@ namespace BiangStudio.ShapedInventory
             }
         }
 
-        public InventoryItem(IInventoryItemContentInfo itemContentInfo, Inventory inventory)
+        public InventoryItem(IInventoryItemContentInfo itemContentInfo, Inventory inventory, GridPosR gp_matrix)
         {
             GUID = guidGenerator;
             guidGenerator++;
 
+            GridPos_Matrix = gp_matrix;
             Inventory = inventory;
             ItemContentInfo = itemContentInfo;
-
-            OccupiedGridPositions_Matrix = new List<GridPos>();
-            foreach (GridPos gp in ItemContentInfo.OriginalOccupiedGridPositions)
-            {
-                GridPos gp_matrix = Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gp);
-                OccupiedGridPositions_Matrix.Add(gp_matrix);
-            }
-
-            RefreshSize();
         }
 
         public void SetGridPosition(GridPosR gp_matrix)
@@ -82,7 +80,7 @@ namespace BiangStudio.ShapedInventory
                 {
                     GridPos gp_rot = GridPos.RotateGridPos(gp - (GridPos) GridPos_Matrix, (GridPosR.Orientation) ((gp_matrix.orientation - GridPos_Matrix.orientation + 4) % 4));
                     GridPosR newGP = gp_matrix + (GridPosR) gp_rot;
-                    if (newGP.x > Inventory.Columns)
+                    if (newGP.x >= Inventory.Columns)
                     {
                         SetGridPosition(new GridPosR(gp_matrix.x - 1, gp_matrix.z, gp_matrix.orientation));
                         return;
@@ -94,7 +92,7 @@ namespace BiangStudio.ShapedInventory
                         return;
                     }
 
-                    if (newGP.z > Inventory.Rows)
+                    if (newGP.z >= Inventory.Rows)
                     {
                         SetGridPosition(new GridPosR(gp_matrix.x, gp_matrix.z - 1, gp_matrix.orientation));
                         return;
@@ -108,27 +106,18 @@ namespace BiangStudio.ShapedInventory
                 }
 
                 GridPos_Matrix = gp_matrix;
-                GridPos_World = Inventory.CoordinateTransformationHandler_FromMatrixIndexToPos(GridPos_Matrix);
                 OnSetGridPosHandler?.Invoke(GridPos_World);
             }
         }
 
         public void Rotate()
         {
-
-        }
-
-        public void RefreshSize()
-        {
-            BoundingRect = OccupiedGridPositions_Matrix.GetBoundingRectFromListGridPos();
         }
 
         public InventoryItem Clone()
         {
-            InventoryItem ii = new InventoryItem(CloneVariantUtils.TryGetClone(ItemContentInfo), Inventory);
+            InventoryItem ii = new InventoryItem(CloneVariantUtils.TryGetClone(ItemContentInfo), Inventory, GridPos_Matrix);
             ii.GridPos_Matrix = GridPos_Matrix;
-            ii.BoundingRect = BoundingRect;
-            ii.OccupiedGridPositions_Matrix = OccupiedGridPositions_Matrix.Clone();
             return ii;
         }
     }

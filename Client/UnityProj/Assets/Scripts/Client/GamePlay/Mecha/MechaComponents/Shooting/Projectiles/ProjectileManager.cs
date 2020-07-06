@@ -19,7 +19,7 @@ namespace Client
             projectile.transform.position = from;
             projectile.transform.LookAt(from + dir);
             projectile.Initialize(projectileInfo);
-            ClientLevelManager.Instance.CurrentLevel.StartCoroutine(Co_ShootProjectile(projectile));
+            ClientLevelManager.Instance.ClientLevel.StartCoroutine(Co_ShootProjectile(projectile));
             return projectile;
         }
 

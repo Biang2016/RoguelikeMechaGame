@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -84,9 +85,9 @@ GameObject:
   - component: {fileID: 5752145989991758656}
   - component: {fileID: 3607725738807460286}
   - component: {fileID: 7180132716111535730}
-  - component: {fileID: 6461644280705919517}
+  - component: {fileID: 8203846030680788437}
   m_Layer: 17
-  m_Name: BackpackItem_Block
+  m_Name: BackpackItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,13 +134,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae18180431e07249a9edefb9c9ab0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data:
+  InventoryItem:
     GUID: 0
-    GridPos:
+    GridPos_Matrix:
       x: 0
       z: 0
       orientation: 0
-    OccupiedGridPositions: []
+    GridPos_World:
+      x: 0
+      z: 0
+      orientation: 0
+    OccupiedGridPositions_Matrix: []
     BoundingRect:
       position:
         x: 0
@@ -149,7 +154,7 @@ MonoBehaviour:
         z: 0
   Image: {fileID: 4348618815623475802}
   BackpackItemGridHitBoxRoot: {fileID: 4848988158495615229}
---- !u!114 &6461644280705919517
+--- !u!114 &8203846030680788437
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,10 +163,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 962769552901066460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 549fa1e886579c8498d237b70dfb0cdf, type: 3}
+  m_Script: {fileID: 11500000, guid: 30c822fa077e76b4c987bbda9acdaa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackpackItem: {fileID: 7180132716111535730}
 --- !u!1 &3604793192171843364
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,8 @@
 ﻿using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ShapedInventory;
-using GameCore;
 
-namespace Client
+namespace GameCore
 {
     public class MechaEditorContainer : Inventory
     {

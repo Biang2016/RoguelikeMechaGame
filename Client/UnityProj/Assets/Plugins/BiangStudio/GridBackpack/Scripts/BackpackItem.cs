@@ -21,6 +21,7 @@ namespace BiangStudio.GridBackpack
 
         public Backpack Backpack;
         public InventoryItem InventoryItem;
+        private Draggable Draggable;
 
         [SerializeField] private Image Image;
         [SerializeField] private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
@@ -37,6 +38,11 @@ namespace BiangStudio.GridBackpack
         private Vector2 size;
 
         private Vector2 sizeRev;
+
+        private void Awake()
+        {
+            Draggable = GetComponent<Draggable>();
+        }
 
         public void Initialize(Backpack backpack, InventoryItem inventoryItem)
         {
@@ -81,6 +87,7 @@ namespace BiangStudio.GridBackpack
         #region IDraggable
 
         private GridPos lastPickedUpHitBoxGridPos;
+        private Vector2 dragBeginPosition_UIObject;
 
         public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
         {
@@ -90,13 +97,15 @@ namespace BiangStudio.GridBackpack
                 lastPickedUpHitBoxGridPos = hitBox.LocalGridPos + (GridPos) GridPos_Moving;
                 Backpack.PickUpItem(InventoryItem);
             }
+
+            dragBeginPosition_UIObject = ((RectTransform) transform).anchoredPosition;
         }
 
         public void MoveBaseOnHitBox(GridPos hitBoxTargetPos)
         {
             GridPosR targetGPR = hitBoxTargetPos - lastPickedUpHitBoxGridPos + (GridPos) GridPos_Moving;
             targetGPR.orientation = GridPos_Moving.orientation;
-            SetGridPosition(targetGPR);
+            InventoryItem.SetGridPosition(targetGPR);
         }
 
         private void SetVirtualGridPos(GridPosR targetGPR)
@@ -120,8 +129,6 @@ namespace BiangStudio.GridBackpack
 
         private void SetGridPos(GridPosR gridPos_World)
         {
-
-
             // todo 显示合法位置虚框
         }
 
@@ -133,6 +140,34 @@ namespace BiangStudio.GridBackpack
                 {
                     Rotate();
                 }
+            }
+
+            RectTransform panelRectTransform = (RectTransform) Backpack.BackpackPanel.ItemContainer;
+            Vector2 buildingMousePos = Draggable.MyDragProcessor.GetDragMousePosition();
+
+            float draggedDistance = (buildingMousePos - dragBeginPosition_UIObject).magnitude;
+            if (draggedDistance < this.Draggable_DragMinDistance)
+            {
+                //不动
+            }
+            else if (Draggable.MyDragProcessor.GetCurrentDragArea().Equals(Backpack.DragArea))
+            {
+                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    panelRectTransform,
+                    buildingMousePos,
+                    Draggable.MyDragProcessor.GetCamera(),
+                    out Vector2 anchoredPos))
+                {
+                    anchoredPos.x += panelRectTransform.rect.width / 2f;
+                    anchoredPos.y -= panelRectTransform.rect.height / 2f;
+                    int grid_X = Mathf.FloorToInt((anchoredPos.x) / Backpack.GridSize);
+                    int grid_Z = Mathf.FloorToInt((-anchoredPos.y) / Backpack.GridSize);
+                    MoveBaseOnHitBox(new GridPos(grid_X, grid_Z));
+                }
+            }
+            else // drag out of the backpack
+            {
+                Draggable_DragOutEffects();
             }
         }
 
@@ -176,7 +211,6 @@ namespace BiangStudio.GridBackpack
                 {
                     Backpack.MoveItem(InventoryItem.OccupiedGridPositions_Matrix, OccupiedPositionsInBackpackPanel_Moving);
                     InventoryItem.GridPos_Matrix = GridPos_Moving;
-                    InventoryItem.OccupiedGridPositions_Matrix = OccupiedPositionsInBackpackPanel_Moving.Clone();
                     RefreshView();
                 }
             }
@@ -188,9 +222,9 @@ namespace BiangStudio.GridBackpack
             dragFrom = Backpack.DragArea;
         }
 
-        float IDraggable.Draggable_DragMinDistance => 0f;
+        public float Draggable_DragMinDistance => 0f;
 
-        float IDraggable.Draggable_DragMaxDistance => 99f;
+        public float Draggable_DragMaxDistance => 99f;
 
         public void Draggable_DragOutEffects()
         {

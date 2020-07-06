@@ -9,19 +9,19 @@ namespace Client
     {
         public MechaInfo MechaInfo;
 
-        public SortedDictionary<int, MechaComponentBase> MechaComponents = new SortedDictionary<int, MechaComponentBase>();
+        public SortedDictionary<int, MechaComponentBase> MechaComponentDict = new SortedDictionary<int, MechaComponentBase>();
 
         public UnityAction<Mecha> OnRemoveMechaSuc;
 
         public override void PoolRecycle()
         {
             base.PoolRecycle();
-            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponents)
+            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
             {
                 kv.Value.PoolRecycle();
             }
 
-            MechaComponents.Clear();
+            MechaComponentDict.Clear();
             OnRemoveMechaSuc = null;
         }
 
@@ -32,8 +32,14 @@ namespace Client
             MechaInfo = mechaInfo;
             MechaInfo.OnAddMechaComponentInfoSuc = (mci) => AddMechaComponent(mci);
             MechaInfo.OnRemoveMechaInfoSuc += (mi) => OnRemoveMechaSuc?.Invoke(this);
+            MechaInfo.OnDropMechaComponent = (mci) =>
+            {
+                MechaComponentDropSprite mcds = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.MechaComponentDropSprite]
+                    .AllocateGameObject<MechaComponentDropSprite>(ClientBattleManager.Instance.MechaComponentDropSpriteContainerRoot);
+                mcds.Initialize(mci, MechaComponentDict[mci.GUID].transform.position);
+            };
 
-            MechaEditorContainer = new MechaEditorContainer(
+            MechaInfo.MechaEditorContainer = new MechaEditorContainer(
                 DragAreaDefines.MechaEditorArea.ToString(),
                 DragAreaDefines.MechaEditorArea,
                 ConfigManager.GridSize,
@@ -42,11 +48,10 @@ namespace Client
                 false,
                 0,
                 () => ControlManager.Instance.Building_RotateItem.Down);
-            //MechaEditorContainer.OnAddItemSucAction = (item) => MechaInfo.AddMechaComponentInfo(((MechaComponentInfo) item.ItemContentInfo).Clone());
-            MechaEditorContainer.OnRemoveItemSucAction = (item) => ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo();
-            MechaEditorContainer.RefreshInventoryGrids();
+            MechaInfo.MechaEditorContainer.OnRemoveItemSucAction = (item) => ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo();
+            MechaInfo.MechaEditorContainer.RefreshInventoryGrids();
+            MechaInfo.MechaEditorContainer.RefreshConflictAndIsolation();
 
-            RefreshMechaMatrix();
             foreach (KeyValuePair<int, MechaComponentInfo> kv in mechaInfo.MechaComponentInfos)
             {
                 AddMechaComponent(kv.Value);
@@ -97,7 +102,7 @@ namespace Client
 
         public void SetShown(bool shown)
         {
-            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponents)
+            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
             {
                 kv.Value.SetShown(shown);
             }

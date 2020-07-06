@@ -1,6 +1,6 @@
 ﻿using BiangStudio.DragHover;
 
-namespace Client
+namespace GameCore
 {
     public class DragAreaDefines : BiangStudio.DragHover.DragAreaDefines
     {

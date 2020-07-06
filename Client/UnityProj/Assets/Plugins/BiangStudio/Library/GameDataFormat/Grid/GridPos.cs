@@ -79,6 +79,13 @@ namespace BiangStudio.GameDataFormat.Grid
             return resGP;
         }
 
+        public static GridPos TransformOccupiedPosition(GridPosR localGridPos, GridPos ori_OccupiedPosition)
+        {
+            GridPos temp_rot = GridPos.RotateGridPos(ori_OccupiedPosition, localGridPos.orientation);
+            GridPos final = temp_rot + (GridPos) localGridPos;
+            return final;
+        }
+
         public bool Equals(GridPosR gp)
         {
             return gp.x == x && gp.z == z && gp.orientation == orientation;
@@ -97,6 +104,16 @@ namespace BiangStudio.GameDataFormat.Grid
         public static GridPosR operator +(GridPosR a, GridPosR b)
         {
             return new GridPosR(a.x + b.x, a.z + b.z, a.orientation);
+        }
+
+        public static GridPosR operator +(GridPosR a, GridPos b)
+        {
+            return new GridPosR(a.x + b.x, a.z + b.z, a.orientation);
+        }
+
+        public static GridPosR operator +(GridPos a, GridPosR b)
+        {
+            return new GridPosR(a.x + b.x, a.z + b.z, b.orientation);
         }
 
         public static GridPosR operator *(GridPosR a, int b)
@@ -246,7 +263,6 @@ namespace BiangStudio.GameDataFormat.Grid
         {
             return new GridPosR(gp.x, gp.z, GridPosR.Orientation.Up);
         }
-
 
         public override string ToString()
         {

@@ -51,23 +51,19 @@ MonoBehaviour:
   MechaComponentInfo:
     GUID: 0
     MechaComponentType: 0
-    GridPos:
-      x: 0
-      z: 0
-      orientation: 0
-    OccupiedGridPositions: []
     DropProbability: 0
     TotalLife: 0
-  MechaComponentGrids: {fileID: 4618707353109224937}
-  ModelRoot: {fileID: 7716897934555374000}
-  MechaHitBoxRoot: {fileID: 1995381407424360452}
   InventoryItem:
     GUID: 0
-    GridPos:
+    GridPos_Matrix:
       x: 0
       z: 0
       orientation: 0
-    OccupiedGridPositions: []
+    GridPos_World:
+      x: 0
+      z: 0
+      orientation: 0
+    OccupiedGridPositions_Matrix: []
     BoundingRect:
       position:
         x: 0
@@ -75,6 +71,9 @@ MonoBehaviour:
       size:
         x: 0
         z: 0
+  MechaComponentGrids: {fileID: 4618707353109224937}
+  ModelRoot: {fileID: 7716897934555374000}
+  MechaHitBoxRoot: {fileID: 1995381407424360452}
 --- !u!114 &8787363159894584536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,7 +95,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2936411875950737291}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42a60e1005994a84cadb7f98ca933ec4, type: 3}
+  m_Script: {fileID: 11500000, guid: 30c822fa077e76b4c987bbda9acdaa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5334135718026847132
