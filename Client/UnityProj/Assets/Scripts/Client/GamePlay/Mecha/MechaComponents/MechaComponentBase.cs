@@ -76,8 +76,7 @@ namespace Client
             mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) => OnRemoveMechaComponentBaseSuc?.Invoke(this);
 
             MechaComponentInfo = mechaComponentInfo;
-            GridPos.ApplyGridPosToLocalTrans(InventoryItem.Inventory.CoordinateTransformationHandler_FromMatrixIndexToPos(InventoryItem.GridPos_Matrix), transform, ConfigManager.GridSize);
-            RefreshOccupiedGridPositions();
+            GridPos.ApplyGridPosToLocalTrans(InventoryItem.GridPos_World, transform, ConfigManager.GridSize);
             ParentMecha = parentMecha;
             MechaHitBoxRoot.SetInBattle(true);
             Child_Initialize();
@@ -86,6 +85,7 @@ namespace Client
         protected virtual void Child_Initialize()
         {
         }
+
 #if UNITY_EDITOR
 
         [MenuItem("Tools/序列化模组占位")]
@@ -127,19 +127,11 @@ namespace Client
         public void SetInventoryItem(InventoryItem inventoryItem)
         {
             InventoryItem = inventoryItem;
-            InventoryItem.OnSetGridPosHandler = SetGridPos;
-        }
-
-        private void SetGridPos(GridPosR gridPos_World)
-        {
-            GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize);
-            ParentMecha?.RefreshMechaMatrix();
-        }
-
-        private void Rotate()
-        {
-            GridPosR newGP = new GridPosR(MechaComponentInfo.GridPos.x, MechaComponentInfo.GridPos.z, GridPosR.RotateOrientationClockwise90(MechaComponentInfo.GridPos.orientation));
-            SetGridPosition(newGP);
+            InventoryItem.OnSetGridPosHandler = (gridPos_World) =>
+            {
+                GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize);
+                ParentMecha?.RefreshMechaMatrix();
+            };
         }
 
         public void SetShown(bool shown)

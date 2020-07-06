@@ -99,7 +99,7 @@ namespace BiangStudio.GridBackpack
             SetGridPosition(targetGPR);
         }
 
-        private void SetGridPos(GridPosR targetGPR)
+        private void SetVirtualGridPos(GridPosR targetGPR)
         {
             GridPos diff = targetGPR - GridPos_Moving;
             if (diff.x != 0 || diff.z != 0)
@@ -134,8 +134,6 @@ namespace BiangStudio.GridBackpack
                     Rotate();
                 }
             }
-
-            if(dragArea.Equals())
         }
 
         private void Rotate()

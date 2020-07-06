@@ -113,6 +113,11 @@ namespace BiangStudio.ShapedInventory
             }
         }
 
+        public void Rotate()
+        {
+
+        }
+
         public void RefreshSize()
         {
             BoundingRect = OccupiedGridPositions_Matrix.GetBoundingRectFromListGridPos();
