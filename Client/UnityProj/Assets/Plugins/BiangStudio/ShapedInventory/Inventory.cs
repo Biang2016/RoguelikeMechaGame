@@ -16,7 +16,7 @@ namespace BiangStudio.ShapedInventory
 
         public delegate void LogErrorDelegate(string log);
 
-        public delegate GridPos CoordinateTransformationDelegate(GridPos gp);
+        public delegate GridPosR CoordinateTransformationDelegate(GridPosR gp);
 
         public CoordinateTransformationDelegate CoordinateTransformationHandler_FromPosToMatrixIndex { get; private set; }
         public CoordinateTransformationDelegate CoordinateTransformationHandler_FromMatrixIndexToPos { get; private set; }

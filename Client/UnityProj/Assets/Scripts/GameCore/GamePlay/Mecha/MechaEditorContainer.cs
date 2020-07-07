@@ -16,8 +16,8 @@ namespace GameCore
             int unlockedGridCount,
             KeyDownDelegate rotateItemKeyDownHandler
         ) : base(inventoryName, dragArea, gridSize, rows, columns, unlockedPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
-            (gridPos) => new GridPos(gridPos.z + ConfigManager.EDIT_AREA_HALF_SIZE, gridPos.x + ConfigManager.EDIT_AREA_HALF_SIZE),
-            (gp_matrix) => new GridPos(gp_matrix.z - ConfigManager.EDIT_AREA_HALF_SIZE, gp_matrix.x - ConfigManager.EDIT_AREA_HALF_SIZE),
+            (gridPos) => new GridPosR(gridPos.z + ConfigManager.EDIT_AREA_HALF_SIZE, gridPos.x + ConfigManager.EDIT_AREA_HALF_SIZE, gridPos.orientation),
+            (gp_matrix) => new GridPosR(gp_matrix.z - ConfigManager.EDIT_AREA_HALF_SIZE, gp_matrix.x - ConfigManager.EDIT_AREA_HALF_SIZE, gp_matrix.orientation),
             (gridPos) => new GridPos(gridPos.z, gridPos.x),
             (gp_matrix) => new GridPos(gp_matrix.z, gp_matrix.x)
         )

@@ -12,6 +12,7 @@ namespace BiangStudio.DragHover
         public delegate bool DragKeyDelegate();
 
         public delegate Vector2 GetScreenMousePositionDelegate();
+
         public delegate Vector3 ScreenMousePositionToWorldDelegate(Vector2 mousePos);
 
         private LogErrorDelegate LogErrorHandler;
@@ -75,11 +76,11 @@ namespace BiangStudio.DragHover
 
         private void CheckDragStartOrEnd()
         {
-            if (DragKeyDownHandler != null && DragKeyDownHandler.Invoke())
+            foreach (DragProcessor dragProcessor in DragProcessors)
             {
-                foreach (DragProcessor dragProcessor in DragProcessors)
+                dragProcessor.Update();
+                if (DragKeyDownHandler != null && DragKeyDownHandler.Invoke())
                 {
-                    dragProcessor.Update();
                     if (!CurrentDrag)
                     {
                         dragProcessor.ExecuteDrag();

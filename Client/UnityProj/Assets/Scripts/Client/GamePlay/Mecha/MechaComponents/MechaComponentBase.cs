@@ -83,7 +83,10 @@ namespace Client
             };
 
             {
-                mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) => { GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize); };
+                mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) =>
+                {
+                    GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize);
+                };
                 mechaComponentInfo.InventoryItem.OnIsolatedHandler = MechaComponentGrids.SetIsolatedIndicatorShown;
                 mechaComponentInfo.InventoryItem.OnConflictedHandler = MechaComponentGrids.SetGridConflicted;
                 mechaComponentInfo.InventoryItem.OnResetConflictHandler = MechaComponentGrids.ResetAllGridConflict;
@@ -145,8 +148,11 @@ namespace Client
 
         #region IDraggable
 
+        private Vector3 dragStartLocalPos;
+
         public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
         {
+            dragStartLocalPos = transform.localPosition;
         }
 
         public void Draggable_OnMousePressed(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
@@ -170,14 +176,11 @@ namespace Client
                 }
                 else if (dragArea.Equals(Inventory.DragArea))
                 {
-                    Vector3 local_diff = transform.InverseTransformVector(deltaFromLastFrame);
-                    GridPos gp_matrix_diff = new GridPos();
-
-                    gp_matrix_diff.x = Mathf.FloorToInt(local_diff.x / Inventory.GridSize) * Inventory.GridSize;
-                    gp_matrix_diff.z = Mathf.FloorToInt(local_diff.z / Inventory.GridSize) * Inventory.GridSize;
-
-                    GridPosR gp_matrix_new = new GridPosR(gp_matrix_diff.x + InventoryItem.GridPos_Matrix.x, gp_matrix_diff.z + InventoryItem.GridPos_Matrix.z, InventoryItem.GridPos_Matrix.orientation);
-                    MechaComponentInfo.InventoryItem.SetGridPosition(gp_matrix_new);
+                    Vector3 currentLocalPos = dragStartLocalPos + transform.parent.InverseTransformVector(diffFromStart) ;
+                    GridPosR gp_world = GridPos.GetGridPosByPoint(currentLocalPos, Inventory.GridSize);
+                    gp_world.orientation = InventoryItem.GridPos_Matrix.orientation;
+                    GridPosR gp_matrix = Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gp_world);
+                    MechaComponentInfo.InventoryItem.SetGridPosition(gp_matrix);
                 }
                 else // drag out of the backpack
                 {

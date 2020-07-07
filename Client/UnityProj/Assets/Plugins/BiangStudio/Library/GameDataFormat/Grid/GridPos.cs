@@ -172,8 +172,8 @@ namespace BiangStudio.GameDataFormat.Grid
 
         public static GridPos GetGridPosByPoint(Vector3 position, int gridSize)
         {
-            int x = Mathf.FloorToInt(position.x / gridSize) * gridSize;
-            int z = Mathf.FloorToInt(position.z / gridSize) * gridSize;
+            int x = Mathf.RoundToInt(position.x / gridSize) * gridSize;
+            int z = Mathf.RoundToInt(position.z / gridSize) * gridSize;
             return new GridPos(x, z);
         }
 
