@@ -5,11 +5,16 @@ namespace BiangStudio.GameDataFormat.Grid
 {
     public static class GridUtils
     {
-        public static GridPos GetGridPosByMousePos(Transform parentTransform, Ray ray, Vector3 planeNormal, int gridSize)
+        public static Vector3 GetPosByMousePos(Transform parentTransform, Ray ray, Vector3 planeNormal, int gridSize)
         {
             Vector3 intersect = CommonUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, planeNormal, parentTransform.position);
-
             Vector3 rot_intersect = parentTransform.InverseTransformPoint(intersect);
+            return rot_intersect;
+        }
+
+        public static GridPos GetGridPosByMousePos(Transform parentTransform, Ray ray, Vector3 planeNormal, int gridSize)
+        {
+            Vector3 rot_intersect = GetPosByMousePos(parentTransform, ray, planeNormal, gridSize);
             GridPos local_GP = GridPos.GetGridPosByPoint(rot_intersect + Vector3.one * gridSize / 2f, 1);
 
             int x = Mathf.FloorToInt(local_GP.x / gridSize) * gridSize;

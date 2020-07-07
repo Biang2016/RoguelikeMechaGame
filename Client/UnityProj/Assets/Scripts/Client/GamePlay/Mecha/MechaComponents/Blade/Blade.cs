@@ -37,7 +37,7 @@ namespace Client
             if (GameStateManager.Instance.GetState() == GameState.Fighting)
             {
                 MechaComponentHitBox hb = c.gameObject.GetComponent<MechaComponentHitBox>();
-                if (hb && hb.ParentHitBoxRoot.MechaComponentBase.MechaType != BladeInfo.MechaType)
+                if (hb && hb.Mecha.MechaInfo.MechaType != BladeInfo.MechaType)
                 {
                     HittingHitBoxes.Add(hb);
                     return;
@@ -50,7 +50,7 @@ namespace Client
             if (GameStateManager.Instance.GetState() == GameState.Fighting)
             {
                 MechaComponentHitBox hb = c.gameObject.GetComponent<MechaComponentHitBox>();
-                if (hb && hb.ParentHitBoxRoot.MechaComponentBase.MechaComponentInfo.CheckAlive() && hb.ParentHitBoxRoot.MechaComponentBase.MechaType != BladeInfo.MechaType)
+                if (hb && hb.ParentHitBoxRoot.MechaComponentBase.MechaComponentInfo.CheckAlive() && hb.Mecha.MechaInfo.MechaType != BladeInfo.MechaType)
                 {
                     HittingHitBoxes.Remove(hb);
                     return;

@@ -20,6 +20,8 @@ namespace BiangStudio.ShapedInventory
 
         public CoordinateTransformationDelegate CoordinateTransformationHandler_FromPosToMatrixIndex { get; private set; }
         public CoordinateTransformationDelegate CoordinateTransformationHandler_FromMatrixIndexToPos { get; private set; }
+        public CoordinateTransformationDelegate CoordinateTransformationHandler_FromPosToMatrixIndex_Diff { get; private set; }
+        public CoordinateTransformationDelegate CoordinateTransformationHandler_FromMatrixIndexToPos_Diff { get; private set; }
 
         public delegate MonoBehaviour InstantiatePrefabDelegate(Transform parent);
 
@@ -84,7 +86,9 @@ namespace BiangStudio.ShapedInventory
             int unlockedGridCount,
             KeyDownDelegate rotateItemKeyDownHandler,
             CoordinateTransformationDelegate coordinateTransformationHandler_FromPosToMatrixIndex,
-            CoordinateTransformationDelegate coordinateTransformationHandler_FromMatrixIndexToPos
+            CoordinateTransformationDelegate coordinateTransformationHandler_FromMatrixIndexToPos,
+            CoordinateTransformationDelegate coordinateTransformationHandler_FromPosToMatrixIndex_Diff,
+            CoordinateTransformationDelegate coordinateTransformationHandler_FromMatrixIndexToPos_Diff
         )
         {
             InventoryName = inventoryName;
@@ -98,6 +102,8 @@ namespace BiangStudio.ShapedInventory
             RotateItemKeyDownHandler = rotateItemKeyDownHandler;
             CoordinateTransformationHandler_FromPosToMatrixIndex = coordinateTransformationHandler_FromPosToMatrixIndex;
             CoordinateTransformationHandler_FromMatrixIndexToPos = coordinateTransformationHandler_FromMatrixIndexToPos;
+            CoordinateTransformationHandler_FromPosToMatrixIndex_Diff = coordinateTransformationHandler_FromPosToMatrixIndex_Diff;
+            CoordinateTransformationHandler_FromMatrixIndexToPos_Diff = coordinateTransformationHandler_FromMatrixIndexToPos_Diff;
 
             InventoryGridMatrix = new InventoryGrid[Columns, Rows];
             for (int row = 0; row < Rows; row++)
@@ -447,7 +453,7 @@ namespace BiangStudio.ShapedInventory
 
         public void MoveAllItemTogether(GridPos delta_local_GP)
         {
-            GridPos delta_matrix = CoordinateTransformationHandler_FromPosToMatrixIndex(delta_local_GP);
+            GridPos delta_matrix = CoordinateTransformationHandler_FromPosToMatrixIndex_Diff(delta_local_GP);
             foreach (InventoryItem item in InventoryItems)
             {
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)

@@ -39,10 +39,9 @@ namespace Client
                 if (hit.collider)
                 {
                     MechaComponentHitBox hitBox = hit.collider.GetComponent<MechaComponentHitBox>();
-                    Mecha mecha = hitBox?.ParentHitBoxRoot?.MechaComponentBase?.ParentMecha;
-                    if (mecha && mecha.MechaInfo.MechaType == MechaType.Enemy)
+                    if (hitBox.Mecha.MechaInfo.MechaType == MechaType.Enemy)
                     {
-                        HUDPanel.LoadEnemyMech(mecha);
+                        HUDPanel.LoadEnemyMech(hitBox.Mecha);
                     }
                 }
                 else

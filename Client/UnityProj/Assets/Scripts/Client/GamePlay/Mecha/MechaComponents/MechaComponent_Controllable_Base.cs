@@ -9,7 +9,7 @@ namespace Client
             base.Update();
             if (GameStateManager.Instance.GetState() == GameState.Fighting)
             {
-                if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Player)
+                if (Mecha && Mecha.MechaInfo.MechaType == MechaType.Player)
                 {
                     ControlPerFrame();
                 }

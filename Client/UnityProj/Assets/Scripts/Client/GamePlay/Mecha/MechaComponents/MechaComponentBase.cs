@@ -25,7 +25,9 @@ namespace Client
     {
         public MechaComponentInfo MechaComponentInfo;
 
-        internal Mecha ParentMecha = null;
+        internal Mecha Mecha = null;
+        internal Inventory Inventory => MechaComponentInfo.InventoryItem.Inventory;
+        internal InventoryItem InventoryItem => MechaComponentInfo.InventoryItem;
 
         public MechaComponentGridRoot MechaComponentGrids;
         public GameObject ModelRoot;
@@ -34,7 +36,7 @@ namespace Client
         internal Draggable Draggable;
         private bool isReturningToBackpack = false;
 
-        internal MechaType MechaType => ParentMecha ? ParentMecha.MechaInfo.MechaType : MechaType.None;
+        internal MechaType MechaType => Mecha ? Mecha.MechaInfo.MechaType : MechaType.None;
 
         public UnityAction<MechaComponentBase> OnRemoveMechaComponentBaseSuc;
 
@@ -42,7 +44,7 @@ namespace Client
         {
             MechaComponentGrids.SetIsolatedIndicatorShown(true);
             MechaComponentInfo = null;
-            ParentMecha = null;
+            Mecha = null;
             MechaHitBoxRoot.SetInBattle(false);
             isReturningToBackpack = false;
             OnRemoveMechaComponentBaseSuc = null;
@@ -89,7 +91,7 @@ namespace Client
 
             MechaComponentInfo = mechaComponentInfo;
             GridPos.ApplyGridPosToLocalTrans(MechaComponentInfo.InventoryItem.GridPos_World, transform, ConfigManager.GridSize);
-            ParentMecha = parentMecha;
+            Mecha = parentMecha;
             MechaHitBoxRoot.SetInBattle(true);
             Child_Initialize();
         }
@@ -143,13 +145,31 @@ namespace Client
 
         #region IDraggable
 
+        private GridPos lastPickedUpHitBoxGridPos;
+        private Vector3 dragBeginPosition;
+
         public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
         {
+            MechaComponentHitBox hitBox = MechaHitBoxRoot.FindHitBox(collider);
+            if (hitBox)
+            {
+                lastPickedUpHitBoxGridPos = hitBox.LocalGridPos + (GridPos) MechaComponentInfo.InventoryItem.GridPos_World;
+            }
+
+            dragBeginPosition = transform.position;
+        }
+
+        public void MoveBaseOnHitBox(GridPos hitBoxTargetPos)
+        {
+            GridPosR targetGP = hitBoxTargetPos - lastPickedUpHitBoxGridPos + (GridPos) InventoryItem.GridPos_World;
+            GridPosR targetGP_matrix = MechaComponentInfo.InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(targetGP);
+            targetGP_matrix.orientation = InventoryItem.GridPos_Matrix.orientation;
+            InventoryItem.SetGridPosition(targetGP_matrix);
         }
 
         public void Draggable_OnMousePressed(DragArea dragArea)
         {
-            if (ControlManager.Instance.Building_RotateItem.Down)
+            if (Inventory.RotateItemKeyDownHandler != null && Inventory.RotateItemKeyDownHandler.Invoke())
             {
                 MechaComponentInfo.InventoryItem.Rotate();
             }
@@ -160,13 +180,48 @@ namespace Client
                 return;
             }
 
-            if (ParentMecha && ParentMecha.MechaInfo.MechaType == MechaType.Player)
+
+            GridPosR gp_matrix = MechaComponentInfo.InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gridPos);
+            gp_matrix.orientation = MechaComponentInfo.InventoryItem.GridPos_Matrix.orientation;
+            MechaComponentInfo.InventoryItem.SetGridPosition(gp_matrix);
+
+            if (Mecha && Mecha.MechaInfo.MechaType == MechaType.Player)
             {
-                Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
-                GridPos gridPos = GridUtils.GetGridPosByMousePos(ParentMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
-                GridPosR gp_matrix = MechaComponentInfo.InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gridPos);
-                gp_matrix.orientation = MechaComponentInfo.InventoryItem.GridPos_Matrix.orientation;
-                MechaComponentInfo.InventoryItem.SetGridPosition(gp_matrix);
+                Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(Draggable.MyDragProcessor.GetDragMousePosition());
+                Vector3 mousePosInWorld = GridUtils.GetPosByMousePos(Mecha.transform, ray, Vector3.up, Inventory.GridSize);
+
+                float draggedDistance = (mousePosInWorld - dragBeginPosition).magnitude;
+                if (draggedDistance < Draggable_DragMinDistance)
+                {
+                    //不动
+                }
+                else if (Draggable.MyDragProcessor.GetCurrentDragArea().Equals(Inventory.DragArea))
+                {
+                    Vector3 mcbPos = mousePosInWorld - dragBeginPosition + transform.position;
+                    Vector3 local_GP = transform.InverseTransformPoint(mcbPos);
+                    int x = Mathf.FloorToInt(local_GP.x / Inventory.GridSize) * Inventory.GridSize;
+                    int z = Mathf.FloorToInt(local_GP.z / Inventory.GridSize) * Inventory.GridSize;
+
+                    GridPosR gp_matrix = MechaComponentInfo.InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gridPos);
+
+
+                    if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                        panelRectTransform,
+                        buildingMousePos,
+                        Draggable.MyDragProcessor.GetCamera(),
+                        out Vector2 anchoredPos))
+                    {
+                        anchoredPos.x += panelRectTransform.rect.width / 2f;
+                        anchoredPos.y -= panelRectTransform.rect.height / 2f;
+                        int grid_X = Mathf.FloorToInt((anchoredPos.x) / Backpack.GridSize);
+                        int grid_Z = Mathf.FloorToInt((-anchoredPos.y) / Backpack.GridSize);
+                        MoveBaseOnHitBox(new GridPos(grid_X, grid_Z));
+                    }
+                }
+                else // drag out of the backpack
+                {
+                    Draggable_DragOutEffects();
+                }
             }
         }
 
@@ -237,9 +292,9 @@ namespace Client
             dragFrom = DragAreaDefines.MechaEditorArea;
         }
 
-        float IDraggable.Draggable_DragMinDistance => 0f;
+        public float Draggable_DragMinDistance => 0f;
 
-        float IDraggable.Draggable_DragMaxDistance => 9999f;
+        public float Draggable_DragMaxDistance => 9999f;
 
         public void Draggable_DragOutEffects()
         {

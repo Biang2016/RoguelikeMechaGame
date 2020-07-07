@@ -1,3 +1,4 @@
+using BiangStudio.GameDataFormat.Grid;
 using UnityEngine;
 
 namespace Client
@@ -5,9 +6,12 @@ namespace Client
     public class MechaComponentHitBox : MonoBehaviour
     {
         internal MechaComponentHitBoxRoot ParentHitBoxRoot;
+        internal Mecha Mecha => ParentHitBoxRoot.MechaComponentBase.Mecha;
+        internal BoxCollider BoxCollider;
 
         private void Awake()
         {
+            BoxCollider = GetComponentInParent<BoxCollider>();
             ParentHitBoxRoot = GetComponentInParent<MechaComponentHitBoxRoot>();
         }
 
@@ -16,6 +20,13 @@ namespace Client
         public void SetInBattle(bool inBattle)
         {
             InBattle = inBattle;
+        }
+
+        public GridPos LocalGridPos;
+
+        public void Initialize(GridPos localGP)
+        {
+            LocalGridPos = localGP;
         }
 
         private void OnCollisionEnter(Collision collision)

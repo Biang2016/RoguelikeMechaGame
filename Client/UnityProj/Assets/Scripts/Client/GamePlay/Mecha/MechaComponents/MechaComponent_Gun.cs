@@ -9,7 +9,7 @@ namespace Client
         protected override void Child_Initialize()
         {
             base.Child_Initialize();
-            if (ParentMecha) Shooter.Initialize(new ShooterInfo(ParentMecha.MechaInfo.MechaType, 0.1f, 50f, new ProjectileInfo(ParentMecha.MechaInfo.MechaType, ProjectileType.Projectile_ArrowsFly, GameCore.ConfigManager.GunSpeed, GameCore.ConfigManager.GunDamage)));
+            if (Mecha) Shooter.Initialize(new ShooterInfo(Mecha.MechaInfo.MechaType, 0.1f, 50f, new ProjectileInfo(Mecha.MechaInfo.MechaType, ProjectileType.Projectile_ArrowsFly, GameCore.ConfigManager.GunSpeed, GameCore.ConfigManager.GunDamage)));
         }
 
         protected override void Update()

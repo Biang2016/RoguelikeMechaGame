@@ -29,7 +29,7 @@ public class AssetHelper : UnityEditor.AssetModificationProcessor
         component.transform.rotation = Quaternion.identity;
         MechaComponentGridRoot grids = component.MechaComponentGrids;
         GridPos center = grids.GetOccupiedPositions().GetBoundingRectFromListGridPos().center;
-        foreach (MechaComponentHitBox hb in component.GetComponentsInChildren<MechaComponentHitBox>())
+        foreach (MechaComponentHitBox hb in component.MechaHitBoxRoot.HitBoxes)
         {
             hb.transform.Translate(new Vector3(-center.x * ConfigManager.GridSize, 0, -center.z * ConfigManager.GridSize));
         }

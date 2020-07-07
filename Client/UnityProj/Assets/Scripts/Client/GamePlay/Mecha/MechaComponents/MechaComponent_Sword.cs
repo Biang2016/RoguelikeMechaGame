@@ -7,7 +7,7 @@
         protected override void Child_Initialize()
         {
             base.Child_Initialize();
-            if (ParentMecha) Blade.Initialize(new BladeInfo(ParentMecha.MechaInfo.MechaType, 0.1f, 30));
+            if (Mecha) Blade.Initialize(new BladeInfo(Mecha.MechaInfo.MechaType, 0.1f, 30));
         }
     }
 }

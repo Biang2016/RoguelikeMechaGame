@@ -80,7 +80,10 @@ public class Backpack : Inventory
         InstantiatePrefabDelegate instantiateBackpackItemHandler,
         InstantiatePrefabDelegate instantiateBackpackItemGridHitBoxHandler
     ) : base(inventoryName, dragArea, gridSize, rows, columns, unlockPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
-        (gridPos) => gridPos, (gridPos) => gridPos)
+        (gridPos) => gridPos,
+        (gridPos) => gridPos,
+        (gridPos) => gridPos,
+        (gridPos) => gridPos)
     {
         ToggleBackpackKeyDownHandler = toggleBackpackKeyDownHandler;
         InstantiateBackpackGridHandler = instantiateBackpackGridHandler;
