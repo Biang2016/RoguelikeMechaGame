@@ -160,24 +160,31 @@ namespace BiangStudio.GameDataFormat.Grid
             this.z = z;
         }
 
-        public static GridPos GetGridPosByLocalTrans(Transform transform, int gridSize)
+        public static GridPos GetGridPosByLocalTransXZ(Transform transform, int gridSize)
         {
-            return GetGridPosByPoint(transform.localPosition, gridSize);
+            return GetGridPosByPointXZ(transform.localPosition, gridSize);
         }
 
-        public static GridPos GetGridPosByTrans(Transform transform, int gridSize)
+        public static GridPos GetGridPosByTransXZ(Transform transform, int gridSize)
         {
-            return GetGridPosByPoint(transform.position, gridSize);
+            return GetGridPosByPointXZ(transform.position, gridSize);
         }
 
-        public static GridPos GetGridPosByPoint(Vector3 position, int gridSize)
+        public static GridPos GetGridPosByPointXZ(Vector3 position, int gridSize)
         {
-            int x = Mathf.RoundToInt(position.x / gridSize) * gridSize;
-            int z = Mathf.RoundToInt(position.z / gridSize) * gridSize;
+            int x = Mathf.RoundToInt(position.x / gridSize);
+            int z = Mathf.RoundToInt(position.z / gridSize);
             return new GridPos(x, z);
         }
 
-        public static void ApplyGridPosToLocalTrans(GridPos gridPos, Transform transform, int gridSize)
+        public static GridPos GetGridPosByPointXY(Vector3 position, int gridSize)
+        {
+            int x = Mathf.RoundToInt(position.x / gridSize);
+            int y = Mathf.RoundToInt(position.y / gridSize);
+            return new GridPos(x, y);
+        }
+
+        public static void ApplyGridPosToLocalTransXZ(GridPos gridPos, Transform transform, int gridSize)
         {
             float x = gridPos.x * gridSize;
             float z = gridPos.z * gridSize;

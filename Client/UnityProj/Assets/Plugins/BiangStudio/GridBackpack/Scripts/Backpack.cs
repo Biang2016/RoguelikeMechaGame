@@ -1,5 +1,6 @@
 ﻿using System;
 using BiangStudio.DragHover;
+using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GridBackpack;
 using BiangStudio.ShapedInventory;
 using UnityEngine;
@@ -80,10 +81,10 @@ public class Backpack : Inventory
         InstantiatePrefabDelegate instantiateBackpackItemHandler,
         InstantiatePrefabDelegate instantiateBackpackItemGridHitBoxHandler
     ) : base(inventoryName, dragArea, gridSize, rows, columns, unlockPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
-        (gridPos) => gridPos,
-        (gridPos) => gridPos,
-        (gridPos) => gridPos,
-        (gridPos) => gridPos)
+        (gridPos) => new GridPosR(gridPos.x, -gridPos.z),
+        (gridPos_matrix) => new GridPosR(gridPos_matrix.x, -gridPos_matrix.z),
+        (gridPos) => new GridPosR(gridPos.x, -gridPos.z),
+        (gridPos_matrix) => new GridPosR(gridPos_matrix.x, -gridPos_matrix.z))
     {
         ToggleBackpackKeyDownHandler = toggleBackpackKeyDownHandler;
         InstantiateBackpackGridHandler = instantiateBackpackGridHandler;

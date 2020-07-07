@@ -10,7 +10,7 @@ namespace Client
         void LateUpdate()
         {
             Vector3 localPosition = transform.localPosition;
-            GridPos gp = GridPos.GetGridPosByLocalTrans(transform, ConfigManager.GridSize);
+            GridPos gp = GridPos.GetGridPosByLocalTransXZ(transform, ConfigManager.GridSize);
             transform.localPosition = new Vector3(gp.x, localPosition.y, gp.z);
         }
     }

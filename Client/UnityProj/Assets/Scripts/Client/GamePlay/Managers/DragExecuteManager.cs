@@ -6,6 +6,7 @@ using BiangStudio.Singleton;
 using Client;
 using GameCore;
 using UnityEngine;
+using DragAreaDefines = GameCore.DragAreaDefines;
 
 public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
 {
@@ -16,7 +17,7 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
             UIManager.Instance.UICamera,
             LayerManager.Instance.LayerMask_BackpackItemHitBox,
             () => ControlManager.Instance.Building_MousePosition,
-            (mousePos) => mousePos,
+            ScreenMousePositionToWorld_BackpackDragArea,
             delegate(BackpackItem bi, Collider collider, DragProcessor dragProcessor) { },
             delegate(BackpackItem bi, Collider collider, DragProcessor dragProcessor) { }
         );
@@ -62,6 +63,16 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
     private Vector3 ScreenMousePositionToWorld_MechaEditorContainer(Vector2 mousePos)
     {
         if (ClientBattleManager.Instance.PlayerMecha.MechaEditArea.GetMousePosOnThisArea(mousePos, out Vector3 worldPos))
+        {
+            return worldPos;
+        }
+
+        return Vector3.zero;
+    }
+
+    private Vector3 ScreenMousePositionToWorld_BackpackDragArea(Vector2 mousePos)
+    {
+        if (BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(mousePos, out Vector3 worldPos))
         {
             return worldPos;
         }

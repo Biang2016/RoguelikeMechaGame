@@ -8,10 +8,11 @@ namespace BiangStudio.GridBackpack
 {
     public class BackpackPanel : MonoBehaviour
     {
-        private Backpack Backpack;
+        public Backpack Backpack;
 
         [SerializeField] private GridLayoutGroup ItemContainerGridLayout;
         [SerializeField] private Transform GridContainer;
+        public BackpackDragArea BackpackDragArea;
 
         public Transform ItemContainer;
 
@@ -46,6 +47,7 @@ namespace BiangStudio.GridBackpack
         public void Init(Backpack backPack)
         {
             Backpack = backPack;
+            BackpackDragArea.Init(backPack);
             Backpack.BackpackPanel = this;
             backpackGridMatrix = new BackpackGrid[Backpack.Columns, Backpack.Rows];
             for (int row = 0; row < Backpack.Rows; row++)

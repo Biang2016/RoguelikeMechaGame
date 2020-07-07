@@ -26,6 +26,8 @@ namespace Client
         public MechaComponentInfo MechaComponentInfo;
 
         internal Mecha Mecha = null;
+        internal MechaInfo MechaInfo => Mecha.MechaInfo;
+
         internal Inventory Inventory => MechaComponentInfo.InventoryItem.Inventory;
         internal InventoryItem InventoryItem => MechaComponentInfo.InventoryItem;
 
@@ -83,17 +85,14 @@ namespace Client
             };
 
             {
-                mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) =>
-                {
-                    GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize);
-                };
+                mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) => { GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize); };
                 mechaComponentInfo.InventoryItem.OnIsolatedHandler = MechaComponentGrids.SetIsolatedIndicatorShown;
                 mechaComponentInfo.InventoryItem.OnConflictedHandler = MechaComponentGrids.SetGridConflicted;
                 mechaComponentInfo.InventoryItem.OnResetConflictHandler = MechaComponentGrids.ResetAllGridConflict;
             }
 
             MechaComponentInfo = mechaComponentInfo;
-            GridPos.ApplyGridPosToLocalTrans(MechaComponentInfo.InventoryItem.GridPos_World, transform, ConfigManager.GridSize);
+            GridPos.ApplyGridPosToLocalTransXZ(MechaComponentInfo.InventoryItem.GridPos_World, transform, ConfigManager.GridSize);
             Mecha = parentMecha;
             MechaHitBoxRoot.SetInBattle(true);
             Child_Initialize();
@@ -137,7 +136,7 @@ namespace Client
         private void Initialize_Editor(MechaComponentInfo mechaComponentInfo)
         {
             MechaComponentInfo = mechaComponentInfo;
-            GridPos.ApplyGridPosToLocalTrans(GridPos.Zero, transform, ConfigManager.GridSize);
+            GridPos.ApplyGridPosToLocalTransXZ(GridPos.Zero, transform, ConfigManager.GridSize);
         }
 #endif
 
@@ -157,34 +156,33 @@ namespace Client
 
         public void Draggable_OnMousePressed(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
         {
-            if (Inventory.RotateItemKeyDownHandler != null && Inventory.RotateItemKeyDownHandler.Invoke())
-            {
-                MechaComponentInfo.InventoryItem.Rotate();
-            }
-
             if (dragArea.Equals(DragAreaDefines.BattleInventory))
             {
                 ReturnToBackpack(true, true);
                 return;
             }
 
-            if (Mecha && Mecha.MechaInfo.MechaType == MechaType.Player)
+            if (dragArea.Equals(Inventory.DragArea))
             {
-                if (diffFromStart.magnitude <= Draggable_DragMinDistance)
+                if (Mecha && Mecha.MechaInfo.MechaType == MechaType.Player)
                 {
-                    //不动
-                }
-                else if (dragArea.Equals(Inventory.DragArea))
-                {
-                    Vector3 currentLocalPos = dragStartLocalPos + transform.parent.InverseTransformVector(diffFromStart) ;
-                    GridPosR gp_world = GridPos.GetGridPosByPoint(currentLocalPos, Inventory.GridSize);
-                    gp_world.orientation = InventoryItem.GridPos_Matrix.orientation;
-                    GridPosR gp_matrix = Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gp_world);
-                    MechaComponentInfo.InventoryItem.SetGridPosition(gp_matrix);
-                }
-                else // drag out of the backpack
-                {
-                    Draggable_DragOutEffects();
+                    if (Inventory.RotateItemKeyDownHandler != null && Inventory.RotateItemKeyDownHandler.Invoke())
+                    {
+                        MechaComponentInfo.InventoryItem.Rotate();
+                    }
+
+                    if (diffFromStart.magnitude <= Draggable_DragMinDistance)
+                    {
+                        //不动
+                    }
+                    else
+                    {
+                        Vector3 currentLocalPos = dragStartLocalPos + transform.parent.InverseTransformVector(diffFromStart);
+                        GridPosR gp_world = GridPos.GetGridPosByPointXZ(currentLocalPos, Inventory.GridSize);
+                        gp_world.orientation = InventoryItem.GridPos_Matrix.orientation;
+                        GridPosR gp_matrix = Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gp_world);
+                        MechaComponentInfo.InventoryItem.SetGridPosition(gp_matrix);
+                    }
                 }
             }
         }
@@ -259,10 +257,6 @@ namespace Client
         public float Draggable_DragMinDistance => 0f;
 
         public float Draggable_DragMaxDistance => 9999f;
-
-        public void Draggable_DragOutEffects()
-        {
-        }
 
         #endregion
     }

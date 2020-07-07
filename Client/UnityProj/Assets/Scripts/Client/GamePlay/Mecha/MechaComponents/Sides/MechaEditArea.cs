@@ -5,12 +5,20 @@ using UnityEngine;
 
 namespace Client
 {
+    [RequireComponent(typeof(BoxCollider))]
     public class MechaEditArea : DragAreaIndicator
     {
-        [SerializeField] private MeshRenderer MeshRenderer_Circle;
-        [SerializeField] private MeshRenderer MeshRenderer_Grid;
-        [SerializeField] private BoxCollider BoxCollider;
-        [SerializeField] private GameObject PivotIndicator;
+        [SerializeField]
+        private MeshRenderer MeshRenderer_Circle;
+
+        [SerializeField]
+        private MeshRenderer MeshRenderer_Grid;
+
+        [SerializeField]
+        private BoxCollider BoxCollider;
+
+        [SerializeField]
+        private GameObject PivotIndicator;
 
         void Start()
         {
@@ -84,7 +92,7 @@ namespace Client
                         {
                             Vector3 delta = pos - mouseDownPos_Left;
                             Vector3 delta_local = ClientBattleManager.Instance.PlayerMecha.transform.InverseTransformVector(delta);
-                            GridPos delta_local_GP = GridPos.GetGridPosByPoint(delta_local + Vector3.one * ConfigManager.GridSize / 2f, 1);
+                            GridPos delta_local_GP = GridPos.GetGridPosByPointXZ(delta_local, 1);
                             if (delta_local_GP.x != 0 || delta_local_GP.z != 0)
                             {
                                 ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorContainer.MoveAllItemTogether(delta_local_GP);

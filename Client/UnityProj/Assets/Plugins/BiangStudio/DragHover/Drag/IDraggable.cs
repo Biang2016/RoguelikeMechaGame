@@ -30,6 +30,5 @@ namespace BiangStudio.DragHover
         void Draggable_SetStates(ref bool canDrag, ref DragArea dragFrom);
         float Draggable_DragMinDistance { get; }
         float Draggable_DragMaxDistance { get; }
-        void Draggable_DragOutEffects();
     }
 }

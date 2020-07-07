@@ -68,7 +68,7 @@ namespace Client
 
         public GridPos GetGridPos()
         {
-            return GridPos.GetGridPosByLocalTrans(transform, ConfigManager.GridSize);
+            return GridPos.GetGridPosByLocalTransXZ(transform, ConfigManager.GridSize);
         }
     }
 }

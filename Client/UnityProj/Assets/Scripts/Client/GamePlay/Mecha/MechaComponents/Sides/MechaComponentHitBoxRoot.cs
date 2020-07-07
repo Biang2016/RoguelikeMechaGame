@@ -19,7 +19,7 @@ namespace Client
             HitBoxes = GetComponentsInChildren<MechaComponentHitBox>().ToList();
             foreach (MechaComponentHitBox hitBox in HitBoxes)
             {
-                hitBox.LocalGridPos = GridPos.GetGridPosByLocalTrans(hitBox.transform, ConfigManager.GridSize);
+                hitBox.LocalGridPos = GridPos.GetGridPosByLocalTransXZ(hitBox.transform, ConfigManager.GridSize);
             }
         }
 

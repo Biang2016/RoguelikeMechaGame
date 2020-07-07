@@ -15,7 +15,7 @@ namespace BiangStudio.GameDataFormat.Grid
         public static GridPos GetGridPosByMousePos(Transform parentTransform, Ray ray, Vector3 planeNormal, int gridSize)
         {
             Vector3 rot_intersect = GetPosByMousePos(parentTransform, ray, planeNormal, gridSize);
-            GridPos local_GP = GridPos.GetGridPosByPoint(rot_intersect + Vector3.one * gridSize / 2f, 1);
+            GridPos local_GP = GridPos.GetGridPosByPointXZ(rot_intersect + Vector3.one * gridSize / 2f, 1);
 
             int x = Mathf.FloorToInt(local_GP.x / gridSize) * gridSize;
             int z = Mathf.FloorToInt(local_GP.z / gridSize) * gridSize;

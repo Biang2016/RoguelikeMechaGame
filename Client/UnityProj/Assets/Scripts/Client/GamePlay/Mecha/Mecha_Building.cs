@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using BiangStudio.GameDataFormat.Grid;
-using BiangStudio.ShapedInventory;
 using GameCore;
 using UnityEngine;
 
@@ -15,6 +13,7 @@ namespace Client
         {
             MechaEditArea.gameObject.SetActive(mechaInfo.MechaType == MechaType.Player);
             MechaEditArea.Hide();
+            MechaEditArea.DragArea.DragAreaName = mechaInfo.MechaEditorContainer.DragArea.DragAreaName;
             GridShown = false;
             SlotLightsShown = false;
         }

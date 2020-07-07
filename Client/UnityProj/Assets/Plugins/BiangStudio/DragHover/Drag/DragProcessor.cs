@@ -6,6 +6,7 @@ namespace BiangStudio.DragHover
     {
         public Camera Camera;
         protected int LayerMask;
+        public int M_LayerMask => LayerMask;
         protected float MaxRaycastDistance;
         protected DragManager.GetScreenMousePositionDelegate GetScreenMousePositionHandler;
         protected DragManager.ScreenMousePositionToWorldDelegate ScreenMousePositionToWorldHandler;

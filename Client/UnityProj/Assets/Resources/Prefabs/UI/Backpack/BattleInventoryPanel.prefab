@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -133,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1555528165101525833}
   - component: {fileID: 7406042205189484061}
-  - component: {fileID: 4071823157664621069}
+  - component: {fileID: 2070147183841678506}
   m_Layer: 11
   m_Name: DragArea
   m_TagString: Untagged
@@ -173,7 +174,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 600, y: 800, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4071823157664621069
+--- !u!114 &2070147183841678506
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,11 +183,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4296384274805801465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b68fa5515aeb054084be41af220deab, type: 3}
+  m_Script: {fileID: 11500000, guid: 34b17b283518f774ebabfc98ef0cf62b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DragArea:
-    DragAreaName: BattleInventory
+    DragAreaName: 
+  BoxCollider: {fileID: 0}
 --- !u!1 &5878781087509367888
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +308,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.75686276}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -380,6 +383,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.392}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -477,4 +481,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemContainerGridLayout: {fileID: 7917803274916129999}
   GridContainer: {fileID: 6846549778914956298}
+  BackpackDragArea: {fileID: 2070147183841678506}
   ItemContainer: {fileID: 1744715677681809230}
