@@ -476,6 +476,7 @@ namespace BiangStudio.ShapedInventory
             foreach (InventoryItem item in InventoryItems)
             {
                 GridPosR newGridPos_Matrix = item.GridPos_Matrix + delta_matrix;
+                Debug.Log("MoveItemToGP:" + newGridPos_Matrix);
                 item.SetGridPosition(newGridPos_Matrix);
             }
 

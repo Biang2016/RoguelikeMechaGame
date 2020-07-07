@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BiangStudio.GameDataFormat.Grid;
+using BiangStudio.ShapedInventory;
 using UnityEngine;
 
 namespace BiangStudio.GridBackpack
@@ -11,7 +12,7 @@ namespace BiangStudio.GridBackpack
         [SerializeField] private Transform HitBoxContainer;
         private List<BackpackItemGridHitBox> backpackItemGridHitBoxes = new List<BackpackItemGridHitBox>();
 
-        internal void Initialize(Backpack backpack, List<GridPos> gridPositions, GridPos centerGP)
+        internal void Initialize(Backpack backpack, InventoryItem item)
         {
             Backpack = backpack;
             foreach (BackpackItemGridHitBox b in backpackItemGridHitBoxes)
@@ -21,12 +22,12 @@ namespace BiangStudio.GridBackpack
 
             backpackItemGridHitBoxes.Clear();
 
-            foreach (GridPos gp in gridPositions)
+            foreach (GridPos gp in item.OccupiedGridPositions_Matrix)
             {
-                GridPos localGP = gp - centerGP;
-
+                GridPos local = GridPos.GetLocalGridPosByCenter(item.GridPos_Matrix, gp);
+                GridPos localGP = gp - item.BoundingRect.position;
                 BackpackItemGridHitBox hb = Backpack.CreateBackpackItemGridHitBox(HitBoxContainer);
-                hb.Initialize(localGP, new GridRect(localGP.x, -localGP.z, Backpack.GridSize, Backpack.GridSize));
+                hb.Initialize(local, new GridRect(localGP.x, -localGP.z, Backpack.GridSize, Backpack.GridSize));
                 backpackItemGridHitBoxes.Add(hb);
             }
         }

@@ -140,18 +140,6 @@ MonoBehaviour:
       x: 0
       z: 0
       orientation: 0
-    GridPos_World:
-      x: 0
-      z: 0
-      orientation: 0
-    OccupiedGridPositions_Matrix: []
-    BoundingRect:
-      position:
-        x: 0
-        z: 0
-      size:
-        x: 0
-        z: 0
   Image: {fileID: 4348618815623475802}
   BackpackItemGridHitBoxRoot: {fileID: 4848988158495615229}
 --- !u!114 &8203846030680788437
@@ -166,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c822fa077e76b4c987bbda9acdaa78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartDragPos: {x: 0, y: 0, z: 0}
 --- !u!1 &3604793192171843364
 GameObject:
   m_ObjectHideFlags: 0

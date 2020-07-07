@@ -111,6 +111,11 @@ namespace BiangStudio.GameDataFormat.Grid
             return new GridPosR(a.x + b.x, a.z + b.z, a.orientation);
         }
 
+        public static GridPosR operator -(GridPosR a, GridPos b)
+        {
+            return new GridPosR(a.x - b.x, a.z - b.z, a.orientation);
+        }
+
         public static GridPosR operator +(GridPos a, GridPosR b)
         {
             return new GridPosR(a.x + b.x, a.z + b.z, b.orientation);
@@ -214,6 +219,13 @@ namespace BiangStudio.GameDataFormat.Grid
             }
 
             return new GridPos(0, 0);
+        }
+
+        public static GridPos GetLocalGridPosByCenter(GridPosR center, GridPos gp_global)
+        {
+            GridPos diff = gp_global - (GridPos) center;
+            GridPos localGP = RotateGridPos(diff, (GridPosR.Orientation) (4 - (int) center.orientation));
+            return localGP;
         }
 
         public static List<GridPos> TransformOccupiedPositions(GridPos localGridPos, List<GridPos> ori_OccupiedPositions)

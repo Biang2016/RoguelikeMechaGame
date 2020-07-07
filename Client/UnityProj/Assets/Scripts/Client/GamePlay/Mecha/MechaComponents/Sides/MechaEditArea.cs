@@ -2,23 +2,20 @@
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
 using UnityEngine;
+using DragAreaDefines = GameCore.DragAreaDefines;
 
 namespace Client
 {
     [RequireComponent(typeof(BoxCollider))]
     public class MechaEditArea : DragAreaIndicator
     {
-        [SerializeField]
-        private MeshRenderer MeshRenderer_Circle;
+        [SerializeField] private MeshRenderer MeshRenderer_Circle;
 
-        [SerializeField]
-        private MeshRenderer MeshRenderer_Grid;
+        [SerializeField] private MeshRenderer MeshRenderer_Grid;
 
-        [SerializeField]
-        private BoxCollider BoxCollider;
+        [SerializeField] private BoxCollider BoxCollider;
 
-        [SerializeField]
-        private GameObject PivotIndicator;
+        [SerializeField] private GameObject PivotIndicator;
 
         void Start()
         {
@@ -37,7 +34,7 @@ namespace Client
         {
             if (GameStateManager.Instance.GetState() == GameState.Building)
             {
-                if (DragManager.Instance.CurrentDrag == null)
+                if (DragManager.Instance.CurrentDrag == null && DragManager.Instance.Current_DragArea.Equals(DragAreaDefines.MechaEditorArea))
                 {
                     // Mouse Right button drag for rotate view
                     if (ControlManager.Instance.Building_MouseRight.Down)

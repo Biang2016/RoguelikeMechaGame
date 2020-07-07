@@ -8,8 +8,7 @@ namespace BiangStudio.GridBackpack
         private Backpack Backpack;
         private DragProcessor DragProcessor;
 
-        [SerializeField]
-        private BoxCollider BoxCollider;
+        [SerializeField] private BoxCollider BoxCollider;
 
         public void Init(Backpack backpack)
         {
@@ -22,7 +21,7 @@ namespace BiangStudio.GridBackpack
         {
             pos = Vector3.zero;
             Ray ray = DragManager.Instance.GetDragProcessor<BackpackItem>().Camera.ScreenPointToRay(mousePos);
-            Physics.Raycast(ray, out RaycastHit hit, 1000f, DragProcessor.M_LayerMask);
+            Physics.Raycast(ray, out RaycastHit hit, 1000f, 1 << BoxCollider.gameObject.layer);
             if (hit.collider)
             {
                 if (hit.collider == BoxCollider)

@@ -16,7 +16,7 @@ namespace BiangStudio.GridBackpack
             base.PoolRecycle();
             Backpack = null;
             InventoryItem = null;
-            OccupiedPositionsInBackpackPanel_Moving = null;
+            dragHitBox = null;
         }
 
         public Backpack Backpack;
@@ -24,16 +24,11 @@ namespace BiangStudio.GridBackpack
         private Draggable Draggable;
         private RectTransform PanelRectTransform => (RectTransform) Backpack.BackpackPanel.ItemContainer;
 
-        [SerializeField]
-        private Image Image;
+        [SerializeField] private Image Image;
 
-        [SerializeField]
-        private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
+        [SerializeField] private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
 
         private RectTransform RectTransform => (RectTransform) transform;
-
-        private GridPosR GridPos_Moving;
-        private List<GridPos> OccupiedPositionsInBackpackPanel_Moving;
 
         private Vector2 size;
         private Vector2 sizeRev;
@@ -46,75 +41,49 @@ namespace BiangStudio.GridBackpack
         public void Initialize(Backpack backpack, InventoryItem inventoryItem)
         {
             Backpack = backpack;
-            InventoryItem = inventoryItem;
             //Image.sprite = BackpackManager.Instance.GetBackpackItemSprite(Data.ItemContentInfo.ItemSpriteKey);
-            GridPos_Moving = InventoryItem.GridPos_Matrix;
-            OccupiedPositionsInBackpackPanel_Moving = InventoryItem.OccupiedGridPositions_Matrix.Clone();
+            SetInventoryItem(inventoryItem);
             size = new Vector2(InventoryItem.BoundingRect.size.x * Backpack.GridSize, InventoryItem.BoundingRect.size.z * Backpack.GridSize);
             sizeRev = new Vector2(size.y, size.x);
-            RefreshView();
+            PutDown();
         }
 
         public void SetInventoryItem(InventoryItem inventoryItem)
         {
             InventoryItem = inventoryItem;
-            InventoryItem.OnSetGridPosHandler = SetGridPos;
-        }
-
-        private void RefreshView()
-        {
-            int UI_Pos_X = GridPos_Moving.x * Backpack.GridSize;
-            int UI_Pos_Z = -GridPos_Moving.z * Backpack.GridSize;
-
-            bool isRotated = GridPos_Moving.orientation == GridPosR.Orientation.Right || GridPos_Moving.orientation == GridPosR.Orientation.Left;
-            Image.rectTransform.sizeDelta = size;
-            Image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f * (int) GridPos_Moving.orientation);
-
-            if (isRotated)
-            {
-                RectTransform.sizeDelta = sizeRev;
-            }
-            else
-            {
-                RectTransform.sizeDelta = size;
-            }
-
-            RectTransform.anchoredPosition = new Vector2(UI_Pos_X, UI_Pos_Z);
-            BackpackItemGridHitBoxRoot.Initialize(Backpack, OccupiedPositionsInBackpackPanel_Moving, GridPos_Moving);
+            InventoryItem.OnSetGridPosHandler = SetVirtualGridPos;
         }
 
         #region IDraggable
 
         private Vector3 dragStartLocalPos;
+        private GridPosR dragStartGridPos_Matrix;
+        private BackpackItemGridHitBox dragHitBox;
+        private List<GridPos> dragStartOccupiedPositions = new List<GridPos>();
 
         public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
         {
+            PickUp();
+            dragHitBox = collider.GetComponentInParent<BackpackItemGridHitBox>();
+        }
+
+        private void PickUp()
+        {
             dragStartLocalPos = RectTransform.anchoredPosition;
+            dragStartOccupiedPositions = InventoryItem.OccupiedGridPositions_Matrix.Clone();
+            dragStartGridPos_Matrix = InventoryItem.GridPos_Matrix;
+            InventoryItem.Inventory.PickUpItem(InventoryItem);
         }
 
-        private void SetVirtualGridPos(GridPosR targetGPR)
+        private void SetVirtualGridPos(GridPosR gridPos_World)
         {
-            GridPos diff = targetGPR - GridPos_Moving;
-            if (diff.x != 0 || diff.z != 0)
+            Backpack.BackpackPanel.BackpackItemVirtualOccupationRoot.Clear();
+            foreach (GridPos gp_matrix in InventoryItem.OccupiedGridPositions_Matrix)
             {
-                if (Backpack.CheckSpaceAvailable(OccupiedPositionsInBackpackPanel_Moving, diff))
-                {
-                    GridPos_Moving = targetGPR;
-                    for (int i = 0; i < OccupiedPositionsInBackpackPanel_Moving.Count; i++)
-                    {
-                        OccupiedPositionsInBackpackPanel_Moving[i] += diff;
-                    }
-
-                    // lastPickedUpHitBoxGridPos += diff;
-                    RefreshView();
-                }
+                BackpackVirtualOccupationQuad quad = Backpack.CreateBackpackItemVirtualOccupationQuad(Backpack.BackpackPanel.BackpackItemVirtualOccupationRoot.transform);
+                quad.Init(InventoryItem.Inventory.GridSize, gp_matrix, InventoryItem.Inventory);
+                Backpack.BackpackPanel.BackpackItemVirtualOccupationRoot.backpackVirtualOccupationQuads.Add(quad);
             }
-        }
-
-        private void SetGridPos(GridPosR gridPos_World)
-        {
-            // todo 显示合法位置虚框
-
         }
 
         public void Draggable_OnMousePressed(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
@@ -132,75 +101,63 @@ namespace BiangStudio.GridBackpack
                 }
                 else
                 {
-                    Debug.Log(diffFromStart);
-                    Vector3 currentLocalPos = dragStartLocalPos + RectTransform.parent.InverseTransformVector(diffFromStart);
-                    GridPosR gp_world = GridPos.GetGridPosByPointXY(currentLocalPos, Backpack.GridSize);
-                    gp_world.orientation = InventoryItem.GridPos_Matrix.orientation;
-                    GridPosR gp_matrix = Backpack.CoordinateTransformationHandler_FromPosToMatrixIndex(gp_world);
+                    Vector3 diffLocal = RectTransform.parent.InverseTransformVector(diffFromStart);
+                    Vector3 currentLocalPos = dragStartLocalPos + diffLocal;
+                    GridPosR diff_world = GridPos.GetGridPosByPointXY(diffLocal, Backpack.GridSize);
+                    diff_world.orientation = InventoryItem.GridPos_Matrix.orientation;
+                    GridPosR diff_matrix = Backpack.CoordinateTransformationHandler_FromPosToMatrixIndex(diff_world);
+                    GridPosR gp_matrix = dragStartGridPos_Matrix + diff_matrix;
+                    gp_matrix.orientation = InventoryItem.GridPos_Matrix.orientation;
                     InventoryItem.SetGridPosition(gp_matrix);
-                    // if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    //     PanelRectTransform,
-                    //     Draggable.MyDragProcessor.CurrentMousePosition_World,
-                    //     Draggable.MyDragProcessor.Camera,
-                    //     out Vector2 anchoredPos))
-                    // {
-                    //     anchoredPos.x += PanelRectTransform.rect.width / 2f;
-                    //     anchoredPos.y -= PanelRectTransform.rect.height / 2f;
-                    //     int grid_X = Mathf.FloorToInt((anchoredPos.x) / Backpack.GridSize);
-                    //     int grid_Z = Mathf.FloorToInt((-anchoredPos.y) / Backpack.GridSize);
-                    //     MoveBaseOnHitBox(new GridPos(grid_X, grid_Z));
-                    // }
+
+                    RectTransform.anchoredPosition = currentLocalPos;
                 }
             }
             else
             {
+                Backpack.BackpackPanel.BackpackItemVirtualOccupationRoot.Clear();
                 Backpack.DragItemOutBackpackCallback?.Invoke(this);
             }
         }
 
         private void Rotate()
         {
-            // int checkTime = 0;
-            // GridPosR.Orientation newOrientation = GridPos_Moving.orientation;
-            // List<GridPos> newRealPositions = OccupiedPositionsInBackpackPanel_Moving.Clone();
-            // while (checkTime < 4)
-            // {
-            //     newOrientation = GridPosR.RotateOrientationClockwise90(newOrientation);
-            //     List<GridPos> _newRealPositions = new List<GridPos>();
-            //     foreach (GridPos gp in newRealPositions)
-            //     {
-            //         GridPos newLocalGrid = GridPos.RotateGridPos(gp - lastPickedUpHitBoxGridPos, (GridPosR.Orientation) ((newOrientation - GridPos_Moving.orientation + 4) % 4));
-            //         GridPos newRealGrid = newLocalGrid + lastPickedUpHitBoxGridPos;
-            //         _newRealPositions.Add(newRealGrid);
-            //     }
-            //
-            //     if (Backpack.CheckSpaceAvailable(_newRealPositions, GridPos.Zero))
-            //     {
-            //         GridPos_Moving.orientation = newOrientation;
-            //         OccupiedPositionsInBackpackPanel_Moving = _newRealPositions;
-            //         GridPos_Moving.x = _newRealPositions.GetBoundingRectFromListGridPos().x_min;
-            //         GridPos_Moving.z = _newRealPositions.GetBoundingRectFromListGridPos().z_min;
-            //         RefreshView();
-            //         return;
-            //     }
-            //     else
-            //     {
-            //         checkTime++;
-            //     }
-            // }
+            InventoryItem.GridPos_Matrix.orientation = GridPosR.RotateOrientationClockwise90(InventoryItem.GridPos_Matrix.orientation);
+            InventoryItem.SetGridPosition(InventoryItem.GridPos_Matrix);
+            PutDown();
         }
 
         public void Draggable_OnMouseUp(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
         {
+            Backpack.BackpackPanel.BackpackItemVirtualOccupationRoot.Clear();
             if (dragArea.Equals(Backpack.DragArea))
             {
-                if (Backpack.CheckSpaceAvailable(OccupiedPositionsInBackpackPanel_Moving, GridPos.Zero))
+                if (Backpack.CheckSpaceAvailable(InventoryItem.OccupiedGridPositions_Matrix, GridPos.Zero))
                 {
-                    Backpack.MoveItem(InventoryItem.OccupiedGridPositions_Matrix, OccupiedPositionsInBackpackPanel_Moving);
-                    InventoryItem.GridPos_Matrix = GridPos_Moving;
-                    RefreshView();
+                    Backpack.MoveItem(dragStartOccupiedPositions, InventoryItem.OccupiedGridPositions_Matrix);
                 }
+                else
+                {
+                    InventoryItem.GridPos_Matrix = dragStartGridPos_Matrix;
+                }
+
+                PutDown();
             }
+        }
+
+        private void PutDown()
+        {
+            int UI_Pos_X = InventoryItem.BoundingRect.x_min * Backpack.GridSize;
+            int UI_Pos_Z = -InventoryItem.BoundingRect.z_min * Backpack.GridSize;
+
+            bool isRotated = InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Right || InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Left;
+            Image.rectTransform.sizeDelta = size;
+            Image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f * (int) InventoryItem.GridPos_Matrix.orientation);
+
+            RectTransform.sizeDelta = isRotated ? sizeRev : size;
+
+            RectTransform.anchoredPosition = new Vector2(UI_Pos_X, UI_Pos_Z);
+            BackpackItemGridHitBoxRoot.Initialize(Backpack, InventoryItem);
         }
 
         public void Draggable_SetStates(ref bool canDrag, ref DragArea dragFrom)

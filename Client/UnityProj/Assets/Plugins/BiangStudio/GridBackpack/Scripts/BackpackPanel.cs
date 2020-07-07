@@ -12,6 +12,8 @@ namespace BiangStudio.GridBackpack
 
         [SerializeField] private GridLayoutGroup ItemContainerGridLayout;
         [SerializeField] private Transform GridContainer;
+        internal BackpackItemVirtualOccupationRoot BackpackItemVirtualOccupationRoot;
+
         public BackpackDragArea BackpackDragArea;
 
         public Transform ItemContainer;
@@ -21,6 +23,7 @@ namespace BiangStudio.GridBackpack
 
         void Awake()
         {
+            BackpackItemVirtualOccupationRoot = GetComponentInChildren<BackpackItemVirtualOccupationRoot>();
             //UIType.InitUIType(
             //    false,
             //    true,

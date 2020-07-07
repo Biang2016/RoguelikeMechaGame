@@ -14,6 +14,7 @@ public class Backpack : Inventory
 
     private InstantiatePrefabDelegate InstantiateBackpackGridHandler;
     private InstantiatePrefabDelegate InstantiateBackpackItemHandler;
+    private InstantiatePrefabDelegate InstantiateBackpackItemVirtualOccupationQuadHandler;
     private InstantiatePrefabDelegate InstantiateBackpackItemGridHitBoxHandler;
 
     /// <summary>
@@ -79,6 +80,7 @@ public class Backpack : Inventory
         KeyDownDelegate rotateItemKeyDownHandler,
         InstantiatePrefabDelegate instantiateBackpackGridHandler,
         InstantiatePrefabDelegate instantiateBackpackItemHandler,
+        InstantiatePrefabDelegate instantiateBackpackItemVirtualOccupationQuadHandler,
         InstantiatePrefabDelegate instantiateBackpackItemGridHitBoxHandler
     ) : base(inventoryName, dragArea, gridSize, rows, columns, unlockPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
         (gridPos) => new GridPosR(gridPos.x, -gridPos.z),
@@ -89,6 +91,7 @@ public class Backpack : Inventory
         ToggleBackpackKeyDownHandler = toggleBackpackKeyDownHandler;
         InstantiateBackpackGridHandler = instantiateBackpackGridHandler;
         InstantiateBackpackItemHandler = instantiateBackpackItemHandler;
+        InstantiateBackpackItemVirtualOccupationQuadHandler = instantiateBackpackItemVirtualOccupationQuadHandler;
         InstantiateBackpackItemGridHitBoxHandler = instantiateBackpackItemGridHitBoxHandler;
     }
 
@@ -137,6 +140,28 @@ public class Backpack : Inventory
                 try
                 {
                     BackpackItem res = (BackpackItem) mono;
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    LogError(e.ToString());
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public BackpackVirtualOccupationQuad CreateBackpackItemVirtualOccupationQuad(Transform transform)
+    {
+        if (InstantiateBackpackItemVirtualOccupationQuadHandler != null)
+        {
+            MonoBehaviour mono = InstantiateBackpackItemVirtualOccupationQuadHandler?.Invoke(transform);
+            if (mono != null)
+            {
+                try
+                {
+                    BackpackVirtualOccupationQuad res = (BackpackVirtualOccupationQuad) mono;
                     return res;
                 }
                 catch (Exception e)
