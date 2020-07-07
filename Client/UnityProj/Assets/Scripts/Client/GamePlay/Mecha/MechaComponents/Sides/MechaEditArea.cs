@@ -35,7 +35,7 @@ namespace Client
                     if (ControlManager.Instance.Building_MouseRight.Down)
                     {
                         onMouseDrag_Right = true;
-                        if (GetMousePosOnThisArea(out Vector3 pos))
+                        if (GetMousePosOnThisArea(ControlManager.Instance.Building_MousePosition, out Vector3 pos))
                         {
                             mouseDownPos_Right = pos;
                         }
@@ -43,7 +43,7 @@ namespace Client
 
                     if (onMouseDrag_Right && ControlManager.Instance.Building_MouseRight.Pressed)
                     {
-                        if (GetMousePosOnThisArea(out Vector3 pos))
+                        if (GetMousePosOnThisArea(ControlManager.Instance.Building_MousePosition, out Vector3 pos))
                         {
                             Vector3 startVec = mouseDownPos_Right - transform.position;
                             Vector3 endVec = pos - transform.position;
@@ -72,7 +72,7 @@ namespace Client
                     if (ControlManager.Instance.Battle_MouseLeft.Down)
                     {
                         onMouseDrag_Left = true;
-                        if (GetMousePosOnThisArea(out Vector3 pos))
+                        if (GetMousePosOnThisArea(ControlManager.Instance.Building_MousePosition, out Vector3 pos))
                         {
                             mouseDownPos_Left = pos;
                         }
@@ -80,7 +80,7 @@ namespace Client
 
                     if (onMouseDrag_Left && ControlManager.Instance.Battle_MouseLeft.Pressed)
                     {
-                        if (GetMousePosOnThisArea(out Vector3 pos))
+                        if (GetMousePosOnThisArea(ControlManager.Instance.Building_MousePosition, out Vector3 pos))
                         {
                             Vector3 delta = pos - mouseDownPos_Left;
                             Vector3 delta_local = ClientBattleManager.Instance.PlayerMecha.transform.InverseTransformVector(delta);
@@ -107,10 +107,10 @@ namespace Client
             }
         }
 
-        private bool GetMousePosOnThisArea(out Vector3 pos)
+        public bool GetMousePosOnThisArea(Vector2 mousePos, out Vector3 pos)
         {
             pos = Vector3.zero;
-            Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
+            Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(mousePos);
             Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerManager.Instance.LayerMask_DragAreas);
             if (hit.collider)
             {

@@ -11,7 +11,7 @@ namespace BiangStudio.DragHover
 
         public Vector3 StartDragPos;
 
-        public IDragProcessor MyDragProcessor;
+        public DragProcessor MyDragProcessor;
 
         void Awake()
         {
@@ -27,11 +27,11 @@ namespace BiangStudio.DragHover
             if (!canDrag) return;
             if (isDragging)
             {
-                caller.Draggable_OnMousePressed(DragManager.Instance.Current_DragArea, collider.bounds.center - StartDragPos);
+                caller.Draggable_OnMousePressed(DragManager.Instance.Current_DragArea, MyDragProcessor.CurrentMousePosition_World - StartDragPos, MyDragProcessor.DeltaMousePosition_World);
             }
         }
 
-        public void SetOnDrag(bool drag, Collider collider, IDragProcessor dragProcessor)
+        public void SetOnDrag(bool drag, Collider collider, DragProcessor dragProcessor)
         {
             if (isDragging != drag)
             {
@@ -41,7 +41,7 @@ namespace BiangStudio.DragHover
                     caller.Draggable_SetStates(ref canDrag, ref dragFrom_DragArea);
                     if (canDrag)
                     {
-                        StartDragPos = collider.bounds.center;
+                        StartDragPos = MyDragProcessor.CurrentMousePosition_World;
                         caller.Draggable_OnMouseDown(dragFrom_DragArea, collider);
                         isDragging = true;
                     }
@@ -55,7 +55,7 @@ namespace BiangStudio.DragHover
                 {
                     if (canDrag)
                     {
-                        caller.Draggable_OnMouseUp(DragManager.Instance.Current_DragArea, collider.bounds.center - StartDragPos);
+                        caller.Draggable_OnMouseUp(DragManager.Instance.Current_DragArea, MyDragProcessor.CurrentMousePosition_World - StartDragPos, MyDragProcessor.DeltaMousePosition_World);
                         DragManager.Instance.CurrentDrag = null;
                     }
                     else

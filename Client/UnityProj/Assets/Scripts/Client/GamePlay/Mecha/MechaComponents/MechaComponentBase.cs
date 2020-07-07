@@ -121,7 +121,7 @@ namespace Client
             }
 
             string json = JsonConvert.SerializeObject(MechaComponentOccupiedGridPosDict, Formatting.Indented);
-            StreamWriter sw = new StreamWriter(GameCore.ConfigManager.BlockOccupiedGridPosJsonFilePath);
+            StreamWriter sw = new StreamWriter(ConfigManager.BlockOccupiedGridPosJsonFilePath);
             sw.Write(json);
             sw.Close();
 
@@ -145,29 +145,11 @@ namespace Client
 
         #region IDraggable
 
-        private GridPos lastPickedUpHitBoxGridPos;
-        private Vector3 dragBeginPosition;
-
         public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
         {
-            MechaComponentHitBox hitBox = MechaHitBoxRoot.FindHitBox(collider);
-            if (hitBox)
-            {
-                lastPickedUpHitBoxGridPos = hitBox.LocalGridPos + (GridPos) MechaComponentInfo.InventoryItem.GridPos_World;
-            }
-
-            dragBeginPosition = transform.position;
         }
 
-        public void MoveBaseOnHitBox(GridPos hitBoxTargetPos)
-        {
-            GridPosR targetGP = hitBoxTargetPos - lastPickedUpHitBoxGridPos + (GridPos) InventoryItem.GridPos_World;
-            GridPosR targetGP_matrix = MechaComponentInfo.InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(targetGP);
-            targetGP_matrix.orientation = InventoryItem.GridPos_Matrix.orientation;
-            InventoryItem.SetGridPosition(targetGP_matrix);
-        }
-
-        public void Draggable_OnMousePressed(DragArea dragArea)
+        public void Draggable_OnMousePressed(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
         {
             if (Inventory.RotateItemKeyDownHandler != null && Inventory.RotateItemKeyDownHandler.Invoke())
             {
@@ -180,43 +162,22 @@ namespace Client
                 return;
             }
 
-
-            GridPosR gp_matrix = MechaComponentInfo.InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gridPos);
-            gp_matrix.orientation = MechaComponentInfo.InventoryItem.GridPos_Matrix.orientation;
-            MechaComponentInfo.InventoryItem.SetGridPosition(gp_matrix);
-
             if (Mecha && Mecha.MechaInfo.MechaType == MechaType.Player)
             {
-                Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(Draggable.MyDragProcessor.GetDragMousePosition());
-                Vector3 mousePosInWorld = GridUtils.GetPosByMousePos(Mecha.transform, ray, Vector3.up, Inventory.GridSize);
-
-                float draggedDistance = (mousePosInWorld - dragBeginPosition).magnitude;
-                if (draggedDistance < Draggable_DragMinDistance)
+                if (diffFromStart.magnitude <= Draggable_DragMinDistance)
                 {
                     //不动
                 }
-                else if (Draggable.MyDragProcessor.GetCurrentDragArea().Equals(Inventory.DragArea))
+                else if (dragArea.Equals(Inventory.DragArea))
                 {
-                    Vector3 mcbPos = mousePosInWorld - dragBeginPosition + transform.position;
-                    Vector3 local_GP = transform.InverseTransformPoint(mcbPos);
-                    int x = Mathf.FloorToInt(local_GP.x / Inventory.GridSize) * Inventory.GridSize;
-                    int z = Mathf.FloorToInt(local_GP.z / Inventory.GridSize) * Inventory.GridSize;
+                    Vector3 local_diff = transform.InverseTransformVector(deltaFromLastFrame);
+                    GridPos gp_matrix_diff = new GridPos();
 
-                    GridPosR gp_matrix = MechaComponentInfo.InventoryItem.Inventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gridPos);
+                    gp_matrix_diff.x = Mathf.FloorToInt(local_diff.x / Inventory.GridSize) * Inventory.GridSize;
+                    gp_matrix_diff.z = Mathf.FloorToInt(local_diff.z / Inventory.GridSize) * Inventory.GridSize;
 
-
-                    if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                        panelRectTransform,
-                        buildingMousePos,
-                        Draggable.MyDragProcessor.GetCamera(),
-                        out Vector2 anchoredPos))
-                    {
-                        anchoredPos.x += panelRectTransform.rect.width / 2f;
-                        anchoredPos.y -= panelRectTransform.rect.height / 2f;
-                        int grid_X = Mathf.FloorToInt((anchoredPos.x) / Backpack.GridSize);
-                        int grid_Z = Mathf.FloorToInt((-anchoredPos.y) / Backpack.GridSize);
-                        MoveBaseOnHitBox(new GridPos(grid_X, grid_Z));
-                    }
+                    GridPosR gp_matrix_new = new GridPosR(gp_matrix_diff.x + InventoryItem.GridPos_Matrix.x, gp_matrix_diff.z + InventoryItem.GridPos_Matrix.z, InventoryItem.GridPos_Matrix.orientation);
+                    MechaComponentInfo.InventoryItem.SetGridPosition(gp_matrix_new);
                 }
                 else // drag out of the backpack
                 {
@@ -253,7 +214,7 @@ namespace Client
             return suc;
         }
 
-        public void Draggable_OnMouseUp(DragArea dragArea)
+        public void Draggable_OnMouseUp(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
         {
             if (dragArea.Equals(DragAreaDefines.BattleInventory))
             {

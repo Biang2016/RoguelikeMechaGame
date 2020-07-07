@@ -16,8 +16,9 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
             UIManager.Instance.UICamera,
             LayerManager.Instance.LayerMask_BackpackItemHitBox,
             () => ControlManager.Instance.Building_MousePosition,
-            delegate(BackpackItem bi, Collider collider, IDragProcessor dragProcessor) { },
-            delegate(BackpackItem bi, Collider collider, IDragProcessor dragProcessor) { }
+            (mousePos) => mousePos,
+            delegate(BackpackItem bi, Collider collider, DragProcessor dragProcessor) { },
+            delegate(BackpackItem bi, Collider collider, DragProcessor dragProcessor) { }
         );
 
         DragProcessor<MechaComponentDropSprite> dragProcessor_MechaComponentDropSprite = new DragProcessor<MechaComponentDropSprite>();
@@ -25,7 +26,8 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
             CameraManager.Instance.MainCamera,
             LayerManager.Instance.LayerMask_ItemDropped,
             () => ControlManager.Instance.Building_MousePosition,
-            delegate(MechaComponentDropSprite mcds, Collider collider, IDragProcessor dragProcessor)
+            ScreenMousePositionToWorld_MechaEditorContainer,
+            delegate(MechaComponentDropSprite mcds, Collider collider, DragProcessor dragProcessor)
             {
                 Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
 
@@ -38,7 +40,7 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
                 DragManager.Instance.CurrentDrag.SetOnDrag(true, collider, dragProcessor);
                 mcds.PoolRecycle();
             },
-            delegate(MechaComponentDropSprite mcds, Collider collider, IDragProcessor dragProcessor) { }
+            delegate(MechaComponentDropSprite mcds, Collider collider, DragProcessor dragProcessor) { }
         );
 
         DragManager.Instance.Init(
@@ -51,8 +53,19 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
             CameraManager.Instance.MainCamera,
             LayerManager.Instance.LayerMask_ComponentHitBox,
             () => ControlManager.Instance.Building_MousePosition,
-            delegate(MechaComponentBase mcb, Collider collider, IDragProcessor dragProcessor) { },
-            delegate(MechaComponentBase mcb, Collider collider, IDragProcessor dragProcessor) { }
+            ScreenMousePositionToWorld_MechaEditorContainer,
+            delegate(MechaComponentBase mcb, Collider collider, DragProcessor dragProcessor) { },
+            delegate(MechaComponentBase mcb, Collider collider, DragProcessor dragProcessor) { }
         );
+    }
+
+    private Vector3 ScreenMousePositionToWorld_MechaEditorContainer(Vector2 mousePos)
+    {
+        if (ClientBattleManager.Instance.PlayerMecha.MechaEditArea.GetMousePosOnThisArea(mousePos, out Vector3 worldPos))
+        {
+            return worldPos;
+        }
+
+        return Vector3.zero;
     }
 }

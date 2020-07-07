@@ -11,7 +11,8 @@ namespace BiangStudio.DragHover
 
         public delegate bool DragKeyDelegate();
 
-        public delegate Vector2 MousePositionDelegate();
+        public delegate Vector2 GetScreenMousePositionDelegate();
+        public delegate Vector3 ScreenMousePositionToWorldDelegate(Vector2 mousePos);
 
         private LogErrorDelegate LogErrorHandler;
         private DragKeyDelegate DragKeyDownHandler;
@@ -19,7 +20,7 @@ namespace BiangStudio.DragHover
         internal int DragAreaLayerMask;
 
         internal UnityAction OnCancelDrag;
-        private List<IDragProcessor> DragProcessors = new List<IDragProcessor>();
+        private List<DragProcessor> DragProcessors = new List<DragProcessor>();
 
         private Draggable currentDrag;
         public bool ForbidDrag = false;
@@ -59,7 +60,7 @@ namespace BiangStudio.DragHover
             }
         }
 
-        internal void RegisterDragProcessor(IDragProcessor dragProcessor)
+        internal void RegisterDragProcessor(DragProcessor dragProcessor)
         {
             if (!DragProcessors.Contains(dragProcessor))
             {
@@ -67,7 +68,7 @@ namespace BiangStudio.DragHover
             }
         }
 
-        internal void UnregisterDragProcessor(IDragProcessor dragProcessor)
+        internal void UnregisterDragProcessor(DragProcessor dragProcessor)
         {
             DragProcessors.Remove(dragProcessor);
         }
@@ -76,8 +77,9 @@ namespace BiangStudio.DragHover
         {
             if (DragKeyDownHandler != null && DragKeyDownHandler.Invoke())
             {
-                foreach (IDragProcessor dragProcessor in DragProcessors)
+                foreach (DragProcessor dragProcessor in DragProcessors)
                 {
+                    dragProcessor.Update();
                     if (!CurrentDrag)
                     {
                         dragProcessor.ExecuteDrag();
@@ -93,7 +95,7 @@ namespace BiangStudio.DragHover
 
         private DragArea CheckCurrentDragArea()
         {
-            foreach (IDragProcessor dragProcessor in DragProcessors)
+            foreach (DragProcessor dragProcessor in DragProcessors)
             {
                 DragArea dragArea = dragProcessor.GetCurrentDragArea();
                 if (!dragArea.Equals(DragAreaDefines.None))
@@ -118,7 +120,7 @@ namespace BiangStudio.DragHover
 
         public DragProcessor<T> GetDragProcessor<T>() where T : MonoBehaviour
         {
-            foreach (IDragProcessor dragProcessor in DragProcessors)
+            foreach (DragProcessor dragProcessor in DragProcessors)
             {
                 if (dragProcessor is DragProcessor<T> dp)
                 {

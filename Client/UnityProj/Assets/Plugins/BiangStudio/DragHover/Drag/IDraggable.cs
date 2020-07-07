@@ -14,15 +14,17 @@ namespace BiangStudio.DragHover
         /// 传达鼠标左键按住拖动时的鼠标位置信息
         /// </summary>
         /// <param name="dragAreaName">移动到了哪个区域</param>
-        /// <param name="diffFromStart">拖拽向量</param>
-        void Draggable_OnMousePressed(DragArea dragAreaName, Vector3 diffFromStart);
+        /// <param name="diffFromStart">拖拽向量全量</param>
+        /// <param name="deltaFromLastFrame">拖拽向量增量</param>
+        void Draggable_OnMousePressed(DragArea dragAreaName, Vector3 diffFromStart, Vector3 deltaFromLastFrame);
 
         /// <summary>
         /// 传达鼠标左键松开时的鼠标位置信息
         /// </summary>
         /// <param name="dragAreaName">移动到了哪个区域</param>
         /// <param name="diffFromStart">拖拽向量</param>
-        void Draggable_OnMouseUp(DragArea dragAreaName, Vector3 diffFromStart);
+        /// <param name="deltaFromLastFrame">拖拽向量增量</param>
+        void Draggable_OnMouseUp(DragArea dragAreaName, Vector3 diffFromStart, Vector3 deltaFromLastFrame);
 
         void Draggable_SetStates(ref bool canDrag, ref DragArea dragFrom);
         float Draggable_DragMinDistance { get; }

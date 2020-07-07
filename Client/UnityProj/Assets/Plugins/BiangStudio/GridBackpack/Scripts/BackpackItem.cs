@@ -132,7 +132,7 @@ namespace BiangStudio.GridBackpack
             // todo 显示合法位置虚框
         }
 
-        public void Draggable_OnMousePressed(DragArea dragArea)
+        public void Draggable_OnMousePressed(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
         {
             if (dragArea.Equals(Backpack.DragArea))
             {
@@ -143,10 +143,8 @@ namespace BiangStudio.GridBackpack
             }
 
             RectTransform panelRectTransform = (RectTransform) Backpack.BackpackPanel.ItemContainer;
-            Vector2 buildingMousePos = Draggable.MyDragProcessor.GetDragMousePosition();
 
-            float draggedDistance = (buildingMousePos - dragBeginPosition_UIObject).magnitude;
-            if (draggedDistance < this.Draggable_DragMinDistance)
+            if (diffFromStart.magnitude <= Draggable_DragMinDistance)
             {
                 //不动
             }
@@ -154,8 +152,8 @@ namespace BiangStudio.GridBackpack
             {
                 if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
                     panelRectTransform,
-                    buildingMousePos,
-                    Draggable.MyDragProcessor.GetCamera(),
+                    Draggable.MyDragProcessor.CurrentMousePosition_World,
+                    Draggable.MyDragProcessor.Camera,
                     out Vector2 anchoredPos))
                 {
                     anchoredPos.x += panelRectTransform.rect.width / 2f;
@@ -203,7 +201,7 @@ namespace BiangStudio.GridBackpack
             }
         }
 
-        public void Draggable_OnMouseUp(DragArea dragArea)
+        public void Draggable_OnMouseUp(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
         {
             if (dragArea.Equals(Backpack.DragArea))
             {

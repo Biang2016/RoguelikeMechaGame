@@ -1,74 +1,68 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 namespace BiangStudio.DragHover
 {
-    public class DragProcessor<T> : IDragProcessor where T : MonoBehaviour
+    public abstract class DragProcessor
     {
-        private Camera Camera;
+        public Camera Camera;
+        protected int LayerMask;
+        protected float MaxRaycastDistance;
+        protected DragManager.GetScreenMousePositionDelegate GetScreenMousePositionHandler;
+        protected DragManager.ScreenMousePositionToWorldDelegate ScreenMousePositionToWorldHandler;
 
-        private int LayerMask;
-        private float MaxRaycastDistance;
-        private DragManager.MousePositionDelegate MousePositionHandler;
-        private UnityAction<T, Collider, IDragProcessor> OnBeginDrag;
-        private UnityAction<T, Collider, IDragProcessor> OnCancelDrag;
+        public Vector2 DeltaMousePosition_Screen => CurrentMousePosition_Screen - LastMousePosition_Screen;
+        public Vector2 LastMousePosition_Screen;
+        public Vector2 CurrentMousePosition_Screen;
+        public Vector2 DeltaMousePosition_World => CurrentMousePosition_World - LastMousePosition_World;
+        public Vector3 LastMousePosition_World;
+        public Vector3 CurrentMousePosition_World;
 
-        private Vector2 currentMousePosition
+        public void Update()
         {
-            get
+            LastMousePosition_Screen = CurrentMousePosition_Screen;
+            if (GetScreenMousePositionHandler != null)
             {
-                if (MousePositionHandler != null)
-                {
-                    return MousePositionHandler.Invoke();
-                }
-                else
-                {
-                    return Vector2.zero;
-                }
+                CurrentMousePosition_Screen = GetScreenMousePositionHandler.Invoke();
+            }
+            else
+            {
+                LastMousePosition_Screen = Vector2.zero;
+                CurrentMousePosition_Screen = Vector2.zero;
+            }
+
+            LastMousePosition_World = CurrentMousePosition_World;
+            if (ScreenMousePositionToWorldHandler != null)
+            {
+                CurrentMousePosition_World = ScreenMousePositionToWorldHandler.Invoke(CurrentMousePosition_Screen);
+            }
+            else
+            {
+                LastMousePosition_World = Vector2.zero;
+                CurrentMousePosition_World = Vector2.zero;
             }
         }
 
-        public void Init(Camera camera, int layerMask, DragManager.MousePositionDelegate mousePositionHandler, UnityAction<T, Collider, IDragProcessor> onBeginDrag, UnityAction<T, Collider, IDragProcessor> onCancelDrag, float maxRaycastDistance = 1000f)
+        public virtual void ExecuteDrag()
+        {
+        }
+
+        public void Init(
+            Camera camera,
+            int layerMask,
+            DragManager.GetScreenMousePositionDelegate getScreenMousePositionHandler,
+            DragManager.ScreenMousePositionToWorldDelegate screenMousePositionToWorldHandler,
+            float maxRaycastDistance = 1000f)
         {
             Camera = camera;
             LayerMask = layerMask;
-            MousePositionHandler = mousePositionHandler;
-            OnBeginDrag = onBeginDrag;
-            OnCancelDrag = onCancelDrag;
+            GetScreenMousePositionHandler = getScreenMousePositionHandler;
+            ScreenMousePositionToWorldHandler = screenMousePositionToWorldHandler;
             MaxRaycastDistance = maxRaycastDistance;
-            DragManager.Instance.RegisterDragProcessor(this);
-        }
-
-        public Camera GetCamera()
-        {
-            return Camera;
-        }
-
-        public void ExecuteDrag()
-        {
-            Ray ray = Camera.ScreenPointToRay(currentMousePosition);
-            Physics.Raycast(ray, out RaycastHit hit, MaxRaycastDistance, LayerMask);
-            if (hit.collider)
-            {
-                T dragItem = hit.collider.gameObject.GetComponentInParent<T>();
-                if (dragItem)
-                {
-                    DragManager.Instance.OnCancelDrag = () => OnCancelDrag?.Invoke(dragItem, hit.collider, this);
-                    DragManager.Instance.CurrentDrag = dragItem.gameObject.GetComponent<Draggable>();
-                    DragManager.Instance.CurrentDrag.SetOnDrag(true, hit.collider, this);
-                    OnBeginDrag?.Invoke(dragItem, hit.collider, this);
-                }
-            }
-        }
-
-        public Vector2 GetDragMousePosition()
-        {
-            return currentMousePosition;
         }
 
         public DragArea GetCurrentDragArea()
         {
-            Ray ray = Camera.ScreenPointToRay(currentMousePosition);
+            Ray ray = Camera.ScreenPointToRay(CurrentMousePosition_Screen);
             RaycastHit[] hits = Physics.RaycastAll(ray, 1000f, DragManager.Instance.DragAreaLayerMask);
             foreach (RaycastHit hit in hits)
             {
