@@ -56,7 +56,7 @@ namespace BiangStudio.GridBackpack
 
         #region IDraggable
 
-        private Vector3 dragStartLocalPos;
+        private Vector2 dragStartLocalPos;
         private GridPosR dragStartGridPos_Matrix;
         private BackpackItemGridHitBox dragHitBox;
         private List<GridPos> dragStartOccupiedPositions = new List<GridPos>();
@@ -101,15 +101,14 @@ namespace BiangStudio.GridBackpack
                 }
                 else
                 {
-                    Vector3 diffLocal = RectTransform.parent.InverseTransformVector(diffFromStart);
-                    Vector3 currentLocalPos = dragStartLocalPos + diffLocal;
+                    Vector2 diffLocal = RectTransform.parent.InverseTransformVector(diffFromStart);
+                    Vector2 currentLocalPos = dragStartLocalPos + diffLocal;
                     GridPosR diff_world = GridPos.GetGridPosByPointXY(diffLocal, Backpack.GridSize);
                     diff_world.orientation = InventoryItem.GridPos_Matrix.orientation;
                     GridPosR diff_matrix = Backpack.CoordinateTransformationHandler_FromPosToMatrixIndex(diff_world);
                     GridPosR gp_matrix = dragStartGridPos_Matrix + diff_matrix;
                     gp_matrix.orientation = InventoryItem.GridPos_Matrix.orientation;
                     InventoryItem.SetGridPosition(gp_matrix);
-
                     RectTransform.anchoredPosition = currentLocalPos;
                 }
             }
@@ -124,6 +123,7 @@ namespace BiangStudio.GridBackpack
         {
             InventoryItem.GridPos_Matrix.orientation = GridPosR.RotateOrientationClockwise90(InventoryItem.GridPos_Matrix.orientation);
             InventoryItem.SetGridPosition(InventoryItem.GridPos_Matrix);
+            dragStartLocalPos += new Vector2(InventoryItem.BoundingRect.x_min * Backpack.GridSize, -InventoryItem.BoundingRect.z_min * Backpack.GridSize) - RectTransform.anchoredPosition;
             PutDown();
         }
 
