@@ -23,5 +23,15 @@ namespace Client
                 }
             }
         }
+
+        public void Clear()
+        {
+            foreach (MechaEditorAreaGrid grid in MechaEditorAreaGrids)
+            {
+                grid.PoolRecycle();
+            }
+
+            MechaEditorAreaGrids.Clear();
+        }
     }
 }

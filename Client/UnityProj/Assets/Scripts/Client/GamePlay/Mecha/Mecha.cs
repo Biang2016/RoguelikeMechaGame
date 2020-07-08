@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ObjectPool;
 using GameCore;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Client
@@ -8,21 +10,16 @@ namespace Client
     public partial class Mecha : PoolObject
     {
         public MechaInfo MechaInfo;
+        public UnityAction<Mecha> OnRemoveMechaSuc;
+        [SerializeField] private Transform MechaComponentContainer;
+        public MechaEditArea MechaEditArea;
 
         public SortedDictionary<int, MechaComponentBase> MechaComponentDict = new SortedDictionary<int, MechaComponentBase>();
 
-        public UnityAction<Mecha> OnRemoveMechaSuc;
-
         public override void PoolRecycle()
         {
+            Clean();
             base.PoolRecycle();
-            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
-            {
-                kv.Value.PoolRecycle();
-            }
-
-            MechaComponentDict.Clear();
-            OnRemoveMechaSuc = null;
         }
 
         public void Initialize(MechaInfo mechaInfo)
@@ -30,7 +27,7 @@ namespace Client
             Clean();
 
             MechaInfo = mechaInfo;
-            MechaInfo.OnAddMechaComponentInfoSuc = (mci) => AddMechaComponent(mci);
+            MechaInfo.OnAddMechaComponentInfoSuc = (mci, gp_matrix) => AddMechaComponent(mci);
             MechaInfo.OnRemoveMechaInfoSuc += (mi) => OnRemoveMechaSuc?.Invoke(this);
             MechaInfo.OnDropMechaComponent = (mci) =>
             {
@@ -39,7 +36,7 @@ namespace Client
                 mcds.Initialize(mci, MechaComponentDict[mci.GUID].transform.position);
             };
 
-            MechaInfo.MechaEditorContainer = new MechaEditorContainer(
+            MechaInfo.MechaEditorInventory = new MechaEditorInventory(
                 DragAreaDefines.MechaEditorArea.ToString(),
                 DragAreaDefines.MechaEditorArea,
                 ConfigManager.GridSize,
@@ -48,21 +45,33 @@ namespace Client
                 false,
                 0,
                 () => ControlManager.Instance.Building_RotateItem.Down);
-            MechaInfo.MechaEditorContainer.OnRemoveItemSucAction = (item) => ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo();
-            MechaInfo.MechaEditorContainer.RefreshInventoryGrids();
-            MechaInfo.MechaEditorContainer.RefreshConflictAndIsolation();
+            MechaInfo.MechaEditorInventory.OnRemoveItemSucAction = (item) => ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo();
+            MechaInfo.MechaEditorInventory.RefreshInventoryGrids();
+            MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation();
 
             foreach (KeyValuePair<int, MechaComponentInfo> kv in mechaInfo.MechaComponentInfos)
             {
                 AddMechaComponent(kv.Value);
             }
 
-            Initialize_Building(mechaInfo);
+            MechaEditArea.Init(mechaInfo);
+
+            GridShown = false;
+            SlotLightsShown = false;
             Initialize_Fighting(mechaInfo);
         }
 
         public void Clean()
         {
+            MechaEditArea.Clear();
+            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
+            {
+                kv.Value.PoolRecycle();
+            }
+
+            MechaComponentDict.Clear();
+            OnRemoveMechaSuc = null;
+            MechaInfo = null;
         }
 
         void Update()
@@ -95,7 +104,6 @@ namespace Client
 
                 if (GameStateManager.Instance.GetState() == GameState.Building)
                 {
-                    LateUpdate_Building();
                 }
             }
         }
@@ -118,6 +126,91 @@ namespace Client
             else
             {
                 // TODO Endgame
+            }
+        }
+
+        private MechaComponentBase AddMechaComponent(MechaComponentInfo mci)
+        {
+            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mci, this);
+            mcb.OnRemoveMechaComponentBaseSuc = RemoveMechaComponent;
+            MechaComponentDict.Add(mci.GUID, mcb);
+
+            if (MechaInfo.MechaType == MechaType.Player && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
+            {
+                MechaInfo.RefreshHUDPanelCoreLifeSliderCount?.Invoke();
+            }
+
+            mcb.transform.SetParent(MechaComponentContainer);
+            mcb.MechaComponentGrids.SetGridShown(GridShown);
+            mcb.MechaComponentGrids.SetSlotLightsShown(SlotLightsShown);
+            mcb.MechaComponentGrids.ResetAllGridConflict();
+            mcb.MechaComponentGrids.SetIsolatedIndicatorShown(false);
+            return mcb;
+        }
+
+        private void RemoveMechaComponent(MechaComponentBase mcb)
+        {
+            mcb.OnRemoveMechaComponentBaseSuc = null;
+
+            if (MechaComponentDict.ContainsKey(mcb.MechaComponentInfo.GUID))
+            {
+                MechaComponentDict.Remove(mcb.MechaComponentInfo.GUID);
+                if (MechaInfo.MechaType == MechaType.Player && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
+                {
+                    MechaInfo.RefreshHUDPanelCoreLifeSliderCount?.Invoke();
+                }
+
+                if (MechaComponentDict.Count == 0)
+                {
+                    Die();
+                }
+            }
+        }
+
+        void Update_Building()
+        {
+            if (ControlManager.Instance.Building_ToggleWireLines.Down)
+            {
+                SlotLightsShown = !SlotLightsShown;
+                GridShown = !GridShown;
+            }
+        }
+
+        private bool _slotLightsShown = true;
+
+        public bool SlotLightsShown
+        {
+            get { return _slotLightsShown; }
+            set
+            {
+                if (_slotLightsShown != value)
+                {
+                    foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
+                    {
+                        kv.Value.MechaComponentGrids.SetSlotLightsShown(value);
+                    }
+                }
+
+                _slotLightsShown = value;
+            }
+        }
+
+        private bool _gridShown = true;
+
+        public bool GridShown
+        {
+            get { return _gridShown; }
+            set
+            {
+                if (_gridShown != value)
+                {
+                    foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
+                    {
+                        kv.Value.MechaComponentGrids.SetGridShown(value);
+                    }
+                }
+
+                _gridShown = value;
             }
         }
     }

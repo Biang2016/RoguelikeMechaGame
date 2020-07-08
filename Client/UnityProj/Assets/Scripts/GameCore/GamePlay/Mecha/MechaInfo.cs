@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using BiangStudio.CloneVariant;
-using BiangStudio.DragHover;
-using BiangStudio.GameDataFormat;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ShapedInventory;
 using UnityEngine;
 using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
 namespace GameCore
 {
@@ -27,11 +24,13 @@ namespace GameCore
         public MechaType MechaType;
         public SortedDictionary<int, MechaComponentInfo> MechaComponentInfos = new SortedDictionary<int, MechaComponentInfo>();
 
-        public UnityAction<MechaComponentInfo> OnAddMechaComponentInfoSuc;
+        public UnityAction<MechaComponentInfo, GridPosR> OnAddMechaComponentInfoSuc;
         public UnityAction<MechaInfo> OnRemoveMechaInfoSuc;
         public UnityAction<MechaComponentInfo> OnDropMechaComponent;
 
-        public MechaEditorContainer MechaEditorContainer;
+        public MechaEditorInventory MechaEditorInventory;
+
+        public bool IsPlayer => MechaType == MechaType.Player;
 
         public MechaInfo(string mechaName, MechaType mechaType)
         {
@@ -55,18 +54,18 @@ namespace GameCore
         {
             mci.OnRemoveMechaComponentInfoSuc += RemoveMechaComponentInfo;
             MechaComponentInfos.Add(mci.GUID, mci);
-            InventoryItem item = new InventoryItem(mci, MechaEditorContainer, gp_matrix);
+            InventoryItem item = new InventoryItem(mci, MechaEditorInventory, gp_matrix);
             item.AmIRootItemInIsolationCalculationHandler = () => ((MechaComponentInfo) item.ItemContentInfo).MechaComponentType == MechaComponentType.Core;
             mci.SetInventoryItem(item);
-            OnAddMechaComponentInfoSuc?.Invoke(mci);
-            MechaEditorContainer.TryAddItem(item);
-            MechaEditorContainer.RefreshConflictAndIsolation();
+            OnAddMechaComponentInfoSuc?.Invoke(mci, gp_matrix);
+            MechaEditorInventory.TryAddItem(item);
+            MechaEditorInventory.RefreshConflictAndIsolation();
         }
 
         private void RemoveMechaComponentInfo(MechaComponentInfo mci)
         {
-            MechaEditorContainer.RemoveItem(mci.InventoryItem);
-            MechaEditorContainer.RefreshConflictAndIsolation(out List<InventoryItem> _, out List<InventoryItem> isolatedItems);
+            MechaEditorInventory.RemoveItem(mci.InventoryItem);
+            MechaEditorInventory.RefreshConflictAndIsolation(out List<InventoryItem> _, out List<InventoryItem> isolatedItems);
             if (MechaType == MechaType.Enemy)
             {
                 foreach (InventoryItem item in isolatedItems)

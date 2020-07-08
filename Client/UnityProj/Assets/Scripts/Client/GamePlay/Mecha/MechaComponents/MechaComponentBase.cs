@@ -203,8 +203,7 @@ namespace Client
 
                 if (dragTheItem)
                 {
-                    DragManager.Instance.CurrentDrag = bp.BackpackPanel.GetBackpackItem(ii.GUID).gameObject
-                        .GetComponent<Draggable>();
+                    DragManager.Instance.CurrentDrag = bp.BackpackPanel.GetBackpackItem(ii.GUID).gameObject.GetComponent<Draggable>();
                     DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BackpackItem>());
                 }
 

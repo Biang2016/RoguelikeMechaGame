@@ -16,7 +16,6 @@ namespace BiangStudio.GridBackpack
             base.PoolRecycle();
             Backpack = null;
             InventoryItem = null;
-            dragHitBox = null;
         }
 
         public Backpack Backpack;
@@ -58,13 +57,11 @@ namespace BiangStudio.GridBackpack
 
         private Vector2 dragStartLocalPos;
         private GridPosR dragStartGridPos_Matrix;
-        private BackpackItemGridHitBox dragHitBox;
         private List<GridPos> dragStartOccupiedPositions_Matrix = new List<GridPos>();
 
         public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
         {
             PickUp();
-            dragHitBox = collider.GetComponentInParent<BackpackItemGridHitBox>();
         }
 
         private void PickUp()

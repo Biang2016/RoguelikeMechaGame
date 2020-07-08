@@ -4,9 +4,9 @@ using BiangStudio.ShapedInventory;
 
 namespace GameCore
 {
-    public class MechaEditorContainer : Inventory
+    public class MechaEditorInventory : Inventory
     {
-        public MechaEditorContainer(
+        public MechaEditorInventory(
             string inventoryName,
             DragArea dragArea,
             int gridSize,

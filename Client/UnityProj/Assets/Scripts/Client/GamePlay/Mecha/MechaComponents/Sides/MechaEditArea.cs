@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BiangStudio.DragHover;
+﻿using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
 using UnityEngine;
@@ -19,7 +18,27 @@ namespace Client
         void Start()
         {
             SetShown(false);
-            MechaEditorAreaGridRoot.Init();
+        }
+
+        public void Init(MechaInfo mechaInfo)
+        {
+            Clear();
+            gameObject.SetActive(mechaInfo.IsPlayer);
+            SetShown(false);
+            if (mechaInfo.IsPlayer)
+            {
+                DragArea.DragAreaName = mechaInfo.MechaEditorInventory.DragArea.DragAreaName;
+                MechaEditorAreaGridRoot.Init();
+            }
+            else
+            {
+                DragArea.DragAreaName = BiangStudio.DragHover.DragAreaDefines.None.DragAreaName;
+            }
+        }
+
+        public void Clear()
+        {
+            MechaEditorAreaGridRoot.Clear();
         }
 
         private bool onMouseDrag_Right = false;
@@ -89,7 +108,7 @@ namespace Client
                             GridPos delta_local_GP = GridPos.GetGridPosByPointXZ(delta_local, 1);
                             if (delta_local_GP.x != 0 || delta_local_GP.z != 0)
                             {
-                                ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorContainer.MoveAllItemTogether(delta_local_GP);
+                                ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorInventory.MoveAllItemTogether(delta_local_GP);
                                 mouseDownPos_Left = pos;
                             }
                         }

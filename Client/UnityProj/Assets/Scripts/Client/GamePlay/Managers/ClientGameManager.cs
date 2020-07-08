@@ -150,12 +150,13 @@ namespace Client
                 {
                     case MechaComponentInfo mechaComponentInfo:
                     {
-                        MechaComponentInfo mci = mechaComponentInfo.Clone();
-                        ClientBattleManager.Instance.PlayerMecha.MechaInfo.AddMechaComponentInfo(mci, GridPosR.Zero);
-                        MechaComponentBase mcb = ClientBattleManager.Instance.PlayerMecha.MechaComponentDict[mci.GUID];
                         Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
                         GridPos gp = GridUtils.GetGridPosByMousePos(ClientBattleManager.Instance.PlayerMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
-                        mci.InventoryItem.SetGridPosition(gp);
+                        MechaComponentInfo mci = mechaComponentInfo.Clone();
+                        ClientBattleManager.Instance.PlayerMecha.MechaInfo.AddMechaComponentInfo(mci, gp);
+                        MechaComponentBase mcb = ClientBattleManager.Instance.PlayerMecha.MechaComponentDict[mci.GUID];
+                        GridPosR gpr = new GridPosR(gp.z + ConfigManager.EDIT_AREA_HALF_SIZE, gp.x + ConfigManager.EDIT_AREA_HALF_SIZE);
+                        mci.InventoryItem.SetGridPosition(gpr);
                         DragManager.Instance.CurrentDrag = mcb.Draggable;
                         mcb.Draggable.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<MechaComponentBase>());
                         return true;
@@ -267,26 +268,26 @@ namespace Client
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
             ClientBattleManager.Instance.StartBattle(battleInfo);
             playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, 300, 0), new GridPosR(9, 9));
-            // battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
-            // for (int i = -5; i <= 5; i++)
-            // {
-            //     for (int j = -8; j <= 8; j++)
-            //     {
-            //         MechaComponentInfo mci;
-            //         if (i == 0 && j == 0)
-            //         {
-            //             mci = new MechaComponentInfo(MechaComponentType.Core, 500, 0);
-            //         }
-            //         else
-            //         {
-            //             mci = new MechaComponentInfo((MechaComponentType) LevelManager.SRandom.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), 50, 5);
-            //         }
-            //
-            //         enemyMechaInfo.AddMechaComponentInfo(mci, new GridPosR(i, j, GridPosR.Orientation.Up));
-            //     }
-            // }
+            battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
+            for (int i = -5; i <= 5; i++)
+            {
+                for (int j = -8; j <= 8; j++)
+                {
+                    MechaComponentInfo mci;
+                    if (i == 0 && j == 0)
+                    {
+                        mci = new MechaComponentInfo(MechaComponentType.Core, 500, 0);
+                    }
+                    else
+                    {
+                        mci = new MechaComponentInfo((MechaComponentType) LevelManager.SRandom.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), 50, 5);
+                    }
 
-            // ClientBattleManager.EnemyMechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
+                    enemyMechaInfo.AddMechaComponentInfo(mci, new GridPosR(i, j, GridPosR.Orientation.Up));
+                }
+            }
+
+            ClientBattleManager.EnemyMechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
         }
 
         // todo 做成AI原子
@@ -308,7 +309,7 @@ namespace Client
                 ClientBattleManager.Instance.PlayerMecha.MechaEditArea.SetShown(false);
                 ClientBattleManager.Instance.PlayerMecha.SlotLightsShown = false;
                 ClientBattleManager.Instance.PlayerMecha.GridShown = false;
-                ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorContainer.RefreshConflictAndIsolation(out List<InventoryItem> conflictItem, out List<InventoryItem> isolatedItem);
+                ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation(out List<InventoryItem> conflictItem, out List<InventoryItem> isolatedItem);
 
                 foreach (InventoryItem mcb in conflictItem)
                 {

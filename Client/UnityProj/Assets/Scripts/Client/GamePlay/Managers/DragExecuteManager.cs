@@ -51,7 +51,7 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
                     return false;
                 }
             },
-            ScreenMousePositionToWorld_MechaEditorContainer,
+            ScreenMousePositionToWorld_MechaEditorInventory,
             delegate(MechaComponentDropSprite mcds, Collider collider, DragProcessor dragProcessor)
             {
                 Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
@@ -91,13 +91,13 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
                 }
             }
             ,
-            ScreenMousePositionToWorld_MechaEditorContainer,
+            ScreenMousePositionToWorld_MechaEditorInventory,
             delegate(MechaComponentBase mcb, Collider collider, DragProcessor dragProcessor) { },
             delegate(MechaComponentBase mcb, Collider collider, DragProcessor dragProcessor) { }
         );
     }
 
-    private bool ScreenMousePositionToWorld_MechaEditorContainer(Vector2 mousePos, out Vector3 worldPos)
+    private bool ScreenMousePositionToWorld_MechaEditorInventory(Vector2 mousePos, out Vector3 worldPos)
     {
         if (ClientBattleManager.Instance.PlayerMecha.MechaEditArea.GetMousePosOnThisArea(mousePos, out worldPos))
         {
