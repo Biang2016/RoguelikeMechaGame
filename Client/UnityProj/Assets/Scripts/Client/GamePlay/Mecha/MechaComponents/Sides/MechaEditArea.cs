@@ -1,4 +1,5 @@
-﻿using BiangStudio.DragHover;
+﻿using System.Collections.Generic;
+using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
 using UnityEngine;
@@ -9,20 +10,16 @@ namespace Client
     [RequireComponent(typeof(BoxCollider))]
     public class MechaEditArea : DragAreaIndicator
     {
-        [SerializeField] private MeshRenderer MeshRenderer_Circle;
-
+        [SerializeField] private MeshRenderer MeshRenderer_Range;
         [SerializeField] private MeshRenderer MeshRenderer_Grid;
-
         [SerializeField] private BoxCollider BoxCollider;
-
         [SerializeField] private GameObject PivotIndicator;
+        [SerializeField] private MechaEditorAreaGridRoot MechaEditorAreaGridRoot;
 
         void Start()
         {
-            MeshRenderer_Circle.enabled = false;
-            MeshRenderer_Grid.enabled = false;
-            BoxCollider.enabled = false;
-            PivotIndicator.SetActive(false);
+            SetShown(false);
+            MechaEditorAreaGridRoot.Init();
         }
 
         private bool onMouseDrag_Right = false;
@@ -133,20 +130,13 @@ namespace Client
             return false;
         }
 
-        public void Show()
+        public void SetShown(bool shown)
         {
-            MeshRenderer_Circle.enabled = true;
-            MeshRenderer_Grid.enabled = true;
-            BoxCollider.enabled = true;
-            PivotIndicator.SetActive(true);
-        }
-
-        public void Hide()
-        {
-            MeshRenderer_Circle.enabled = false;
-            MeshRenderer_Grid.enabled = false;
-            BoxCollider.enabled = false;
-            PivotIndicator.SetActive(false);
+            MeshRenderer_Range.enabled = shown;
+            MeshRenderer_Grid.enabled = shown;
+            BoxCollider.enabled = shown;
+            PivotIndicator.SetActive(shown);
+            MechaEditorAreaGridRoot.gameObject.SetActive(shown);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Client
             BackpackItemGridHitBox,
             BackpackVirtualOccupationQuad,
             MechaComponentDropSprite,
+            MechaEditorAreaGrid,
             HUDSlider,
         }
 
@@ -29,6 +30,7 @@ namespace Client
             {PrefabNames.BackpackItemGridHitBox, 50},
             {PrefabNames.BackpackVirtualOccupationQuad, 10},
             {PrefabNames.MechaComponentDropSprite, 5},
+            {PrefabNames.MechaEditorAreaGrid, 5},
             {PrefabNames.HUDSlider, 3},
         };
 

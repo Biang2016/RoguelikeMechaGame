@@ -44,3 +44,6 @@ TagManager:
   - name: FX
     uniqueID: 1814495953
     locked: 0
+  - name: Debug
+    uniqueID: 2735402123
+    locked: 0

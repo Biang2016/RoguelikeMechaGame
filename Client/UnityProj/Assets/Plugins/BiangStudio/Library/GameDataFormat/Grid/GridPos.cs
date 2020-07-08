@@ -133,12 +133,12 @@ namespace BiangStudio.GameDataFormat.Grid
 
         public override string ToString()
         {
-            return $"({x},{z},{orientation})";
+            return $"({x}, {z}, {orientation})";
         }
 
         public string ToShortString()
         {
-            return $"({x},{z})";
+            return $"({x}, {z})";
         }
 
         public enum Orientation

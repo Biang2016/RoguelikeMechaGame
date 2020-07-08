@@ -27,10 +27,12 @@ public class Backpack : Inventory
     /// </summary>
     public UnityAction<bool> ToggleDebugCallback;
 
+    public delegate bool DragItemOutBackpackDelegate(BackpackItem item);
+
     /// <summary>
     /// This callback will be execute when the backpack item is dragged out of the backpack.
     /// </summary>
-    public UnityAction<BackpackItem> DragItemOutBackpackCallback;
+    public DragItemOutBackpackDelegate DragItemOutBackpackCallback;
 
     private bool isOpen = false;
 

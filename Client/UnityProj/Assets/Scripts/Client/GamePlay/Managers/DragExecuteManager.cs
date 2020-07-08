@@ -16,7 +16,19 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
         dragProcessor_BackpackItem.Init(
             UIManager.Instance.UICamera,
             LayerManager.Instance.LayerMask_BackpackItemHitBox,
-            () => ControlManager.Instance.Building_MousePosition,
+            (out Vector2 mouseScreenPos) =>
+            {
+                if (ControlManager.Instance.BuildingInputActionEnabled)
+                {
+                    mouseScreenPos = ControlManager.Instance.Building_MousePosition;
+                    return true;
+                }
+                else
+                {
+                    mouseScreenPos = Vector2.zero;
+                    return false;
+                }
+            },
             ScreenMousePositionToWorld_BackpackDragArea,
             delegate(BackpackItem bi, Collider collider, DragProcessor dragProcessor) { },
             delegate(BackpackItem bi, Collider collider, DragProcessor dragProcessor) { }
@@ -26,7 +38,19 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
         dragProcessor_MechaComponentDropSprite.Init(
             CameraManager.Instance.MainCamera,
             LayerManager.Instance.LayerMask_ItemDropped,
-            () => ControlManager.Instance.Building_MousePosition,
+            (out Vector2 mouseScreenPos) =>
+            {
+                if (ControlManager.Instance.BuildingInputActionEnabled)
+                {
+                    mouseScreenPos = ControlManager.Instance.Building_MousePosition;
+                    return true;
+                }
+                else
+                {
+                    mouseScreenPos = Vector2.zero;
+                    return false;
+                }
+            },
             ScreenMousePositionToWorld_MechaEditorContainer,
             delegate(MechaComponentDropSprite mcds, Collider collider, DragProcessor dragProcessor)
             {
@@ -53,30 +77,47 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
         dragProcessor_MechaComponentBase.Init(
             CameraManager.Instance.MainCamera,
             LayerManager.Instance.LayerMask_ComponentHitBox,
-            () => ControlManager.Instance.Building_MousePosition,
+            (out Vector2 mouseScreenPos) =>
+            {
+                if (ControlManager.Instance.BuildingInputActionEnabled)
+                {
+                    mouseScreenPos = ControlManager.Instance.Building_MousePosition;
+                    return true;
+                }
+                else
+                {
+                    mouseScreenPos = Vector2.zero;
+                    return false;
+                }
+            }
+            ,
             ScreenMousePositionToWorld_MechaEditorContainer,
             delegate(MechaComponentBase mcb, Collider collider, DragProcessor dragProcessor) { },
             delegate(MechaComponentBase mcb, Collider collider, DragProcessor dragProcessor) { }
         );
     }
 
-    private Vector3 ScreenMousePositionToWorld_MechaEditorContainer(Vector2 mousePos)
+    private bool ScreenMousePositionToWorld_MechaEditorContainer(Vector2 mousePos, out Vector3 worldPos)
     {
-        if (ClientBattleManager.Instance.PlayerMecha.MechaEditArea.GetMousePosOnThisArea(mousePos, out Vector3 worldPos))
+        if (ClientBattleManager.Instance.PlayerMecha.MechaEditArea.GetMousePosOnThisArea(mousePos, out worldPos))
         {
-            return worldPos;
+            return true;
         }
-
-        return Vector3.zero;
+        else
+        {
+            return false;
+        }
     }
 
-    private Vector3 ScreenMousePositionToWorld_BackpackDragArea(Vector2 mousePos)
+    private bool ScreenMousePositionToWorld_BackpackDragArea(Vector2 mousePos, out Vector3 worldPos)
     {
-        if (BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(mousePos, out Vector3 worldPos))
+        if (BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(mousePos, out worldPos))
         {
-            return worldPos;
+            return true;
         }
-
-        return Vector3.zero;
+        else
+        {
+            return false;
+        }
     }
 }

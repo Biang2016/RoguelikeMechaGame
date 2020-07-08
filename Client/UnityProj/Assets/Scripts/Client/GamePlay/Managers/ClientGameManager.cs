@@ -152,18 +152,17 @@ namespace Client
                     {
                         MechaComponentInfo mci = mechaComponentInfo.Clone();
                         ClientBattleManager.Instance.PlayerMecha.MechaInfo.AddMechaComponentInfo(mci, GridPosR.Zero);
-
                         MechaComponentBase mcb = ClientBattleManager.Instance.PlayerMecha.MechaComponentDict[mci.GUID];
                         Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
                         GridPos gp = GridUtils.GetGridPosByMousePos(ClientBattleManager.Instance.PlayerMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
                         mci.InventoryItem.SetGridPosition(gp);
                         DragManager.Instance.CurrentDrag = mcb.Draggable;
                         mcb.Draggable.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<MechaComponentBase>());
-                        backpackItem.Backpack.RemoveItem(backpackItem.InventoryItem);
-                        backpackItem.PoolRecycle();
-                        break;
+                        return true;
                     }
                 }
+
+                return false;
             };
 
             BackpackPanel backpackPanel = Instantiate(PrefabManager.Instance.GetPrefab("BattleInventoryPanel"), UIManager.Instance.UINormalRoot).GetComponent<BackpackPanel>();
@@ -297,7 +296,7 @@ namespace Client
             if (open)
             {
                 ClientBattleManager.Instance.SetAllEnemyShown(false);
-                ClientBattleManager.Instance.PlayerMecha.MechaEditArea.Show();
+                ClientBattleManager.Instance.PlayerMecha.MechaEditArea.SetShown(true);
                 ClientBattleManager.Instance.PlayerMecha.SlotLightsShown = true;
                 CameraManager.Instance.MainCameraFollow.FOV_Level = 1;
                 ClientBattleManager.Instance.PlayerMecha.GridShown = true;
@@ -306,7 +305,7 @@ namespace Client
             else
             {
                 ClientBattleManager.Instance.SetAllEnemyShown(true);
-                ClientBattleManager.Instance.PlayerMecha.MechaEditArea.Hide();
+                ClientBattleManager.Instance.PlayerMecha.MechaEditArea.SetShown(false);
                 ClientBattleManager.Instance.PlayerMecha.SlotLightsShown = false;
                 ClientBattleManager.Instance.PlayerMecha.GridShown = false;
                 ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorContainer.RefreshConflictAndIsolation(out List<InventoryItem> conflictItem, out List<InventoryItem> isolatedItem);

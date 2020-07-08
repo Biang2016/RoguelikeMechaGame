@@ -245,11 +245,6 @@ namespace BiangStudio.ShapedInventory
             OnAddItemSucAction?.Invoke(item);
             foreach (GridPos gp in item.OccupiedGridPositions_Matrix)
             {
-                if (gp.x < 0 || gp.x > Columns || gp.z < 0 | gp.z > Rows)
-                {
-                    int a = 0;
-                }
-
                 InventoryGridMatrix[gp.x, gp.z].State = InventoryGrid.States.Unavailable;
             }
         }
@@ -476,7 +471,6 @@ namespace BiangStudio.ShapedInventory
             foreach (InventoryItem item in InventoryItems)
             {
                 GridPosR newGridPos_Matrix = item.GridPos_Matrix + delta_matrix;
-                Debug.Log("MoveItemToGP:" + newGridPos_Matrix);
                 item.SetGridPosition(newGridPos_Matrix);
             }
 

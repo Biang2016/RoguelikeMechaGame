@@ -12,7 +12,7 @@ namespace Client
         private void Initialize_Building(MechaInfo mechaInfo)
         {
             MechaEditArea.gameObject.SetActive(mechaInfo.MechaType == MechaType.Player);
-            MechaEditArea.Hide();
+            MechaEditArea.SetShown(false);
             MechaEditArea.DragArea.DragAreaName = mechaInfo.MechaEditorContainer.DragArea.DragAreaName;
             GridShown = false;
             SlotLightsShown = false;

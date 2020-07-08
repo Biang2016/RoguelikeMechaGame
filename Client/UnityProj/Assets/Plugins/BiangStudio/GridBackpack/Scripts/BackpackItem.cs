@@ -59,7 +59,7 @@ namespace BiangStudio.GridBackpack
         private Vector2 dragStartLocalPos;
         private GridPosR dragStartGridPos_Matrix;
         private BackpackItemGridHitBox dragHitBox;
-        private List<GridPos> dragStartOccupiedPositions = new List<GridPos>();
+        private List<GridPos> dragStartOccupiedPositions_Matrix = new List<GridPos>();
 
         public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
         {
@@ -70,7 +70,7 @@ namespace BiangStudio.GridBackpack
         private void PickUp()
         {
             dragStartLocalPos = RectTransform.anchoredPosition;
-            dragStartOccupiedPositions = InventoryItem.OccupiedGridPositions_Matrix.Clone();
+            dragStartOccupiedPositions_Matrix = InventoryItem.OccupiedGridPositions_Matrix.Clone();
             dragStartGridPos_Matrix = InventoryItem.GridPos_Matrix;
             InventoryItem.Inventory.PickUpItem(InventoryItem);
         }
@@ -114,8 +114,16 @@ namespace BiangStudio.GridBackpack
             }
             else
             {
-                Backpack.BackpackPanel.BackpackItemVirtualOccupationRoot.Clear();
-                Backpack.DragItemOutBackpackCallback?.Invoke(this);
+                if (Backpack.DragItemOutBackpackCallback != null)
+                {
+                    Backpack.BackpackPanel.BackpackItemVirtualOccupationRoot.Clear();
+                    if (Backpack.DragItemOutBackpackCallback.Invoke(this))
+                    {
+                        InventoryItem.GridPos_Matrix = dragStartGridPos_Matrix;
+                        Backpack.RemoveItem(InventoryItem);
+                        PoolRecycle();
+                    }
+                }
             }
         }
 
@@ -134,7 +142,7 @@ namespace BiangStudio.GridBackpack
             {
                 if (Backpack.CheckSpaceAvailable(InventoryItem.OccupiedGridPositions_Matrix, GridPos.Zero))
                 {
-                    Backpack.MoveItem(dragStartOccupiedPositions, InventoryItem.OccupiedGridPositions_Matrix);
+                    Backpack.MoveItem(dragStartOccupiedPositions_Matrix, InventoryItem.OccupiedGridPositions_Matrix);
                 }
                 else
                 {

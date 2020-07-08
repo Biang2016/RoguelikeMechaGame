@@ -23,23 +23,19 @@ namespace BiangStudio.DragHover
             LastMousePosition_Screen = CurrentMousePosition_Screen;
             if (GetScreenMousePositionHandler != null)
             {
-                CurrentMousePosition_Screen = GetScreenMousePositionHandler.Invoke();
-            }
-            else
-            {
-                LastMousePosition_Screen = Vector2.zero;
-                CurrentMousePosition_Screen = Vector2.zero;
+                if (GetScreenMousePositionHandler.Invoke(out Vector2 newScreenPos))
+                {
+                    CurrentMousePosition_Screen = newScreenPos;
+                }
             }
 
             LastMousePosition_World = CurrentMousePosition_World;
             if (ScreenMousePositionToWorldHandler != null)
             {
-                CurrentMousePosition_World = ScreenMousePositionToWorldHandler.Invoke(CurrentMousePosition_Screen);
-            }
-            else
-            {
-                LastMousePosition_World = Vector2.zero;
-                CurrentMousePosition_World = Vector2.zero;
+                if (ScreenMousePositionToWorldHandler.Invoke(CurrentMousePosition_Screen, out Vector3 newWorldPos))
+                {
+                    CurrentMousePosition_World = newWorldPos;
+                }
             }
         }
 

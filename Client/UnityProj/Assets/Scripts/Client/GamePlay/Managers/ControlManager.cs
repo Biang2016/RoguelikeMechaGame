@@ -16,6 +16,8 @@ namespace Client
 
         #region Building
 
+        public bool BuildingInputActionEnabled => MechaBuildingInputActions.enabled;
+
         public ButtonState Building_MouseLeft = new ButtonState() {ButtonName = "Building_MouseLeft"};
         public ButtonState Building_MouseRight = new ButtonState() {ButtonName = "Building_MouseRight"};
         public ButtonState Building_MouseMiddle = new ButtonState() {ButtonName = "Building_MouseMiddle"};
@@ -61,6 +63,8 @@ namespace Client
         #endregion
 
         #region Battle
+
+        public bool BattleInputActionEnabled => MechaBattleInputActions.enabled;
 
         public ButtonState Battle_MouseLeft = new ButtonState() {ButtonName = "Battle_MouseLeft"};
         public ButtonState Battle_MouseRight = new ButtonState() {ButtonName = "Battle_MouseRight"};
@@ -109,6 +113,8 @@ namespace Client
         #endregion
 
         #region Common
+
+        public bool CommonInputActionsEnabled => CommonInputActions.enabled;
 
         public ButtonState Common_MouseLeft = new ButtonState() {ButtonName = "Common_MouseLeft"};
         public ButtonState Common_MouseRight = new ButtonState() {ButtonName = "Common_MouseRight"};
