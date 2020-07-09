@@ -141,10 +141,10 @@ namespace Client
             }
 
             mcb.transform.SetParent(MechaComponentContainer);
-            mcb.MechaComponentGrids.SetGridShown(GridShown);
-            mcb.MechaComponentGrids.SetSlotLightsShown(SlotLightsShown);
-            mcb.MechaComponentGrids.ResetAllGridConflict();
-            mcb.MechaComponentGrids.SetIsolatedIndicatorShown(false);
+            mcb.MechaComponentGridRoot.SetGridShown(GridShown);
+            mcb.MechaComponentGridRoot.SetSlotLightsShown(SlotLightsShown);
+            mcb.MechaComponentGridRoot.ResetAllGridConflict();
+            mcb.MechaComponentGridRoot.SetIsolatedIndicatorShown(false);
             return mcb;
         }
 
@@ -187,7 +187,7 @@ namespace Client
                 {
                     foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
                     {
-                        kv.Value.MechaComponentGrids.SetSlotLightsShown(value);
+                        kv.Value.MechaComponentGridRoot.SetSlotLightsShown(value);
                     }
                 }
 
@@ -206,7 +206,7 @@ namespace Client
                 {
                     foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
                     {
-                        kv.Value.MechaComponentGrids.SetGridShown(value);
+                        kv.Value.MechaComponentGridRoot.SetGridShown(value);
                     }
                 }
 

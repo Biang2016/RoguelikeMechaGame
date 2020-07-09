@@ -11,6 +11,7 @@ namespace Client
         [SerializeField] private MeshRenderer BorderIndicator;
         [SerializeField] private MeshRenderer ForbidIndicator;
         [SerializeField] private MeshRenderer IsolatedIndicator;
+        [SerializeField] private MechaComponentHitBox MechaComponentHitBox;
 
         public bool IsConflicted = false;
 

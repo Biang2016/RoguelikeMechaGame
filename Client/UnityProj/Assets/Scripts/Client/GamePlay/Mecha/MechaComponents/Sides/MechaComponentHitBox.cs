@@ -5,14 +5,14 @@ namespace Client
 {
     public class MechaComponentHitBox : MonoBehaviour
     {
-        internal MechaComponentHitBoxRoot ParentHitBoxRoot;
-        internal Mecha Mecha => ParentHitBoxRoot.MechaComponentBase.Mecha;
+        internal MechaComponentGridRoot ParentGridRootRoot;
+        internal Mecha Mecha => ParentGridRootRoot.MechaComponentBase.Mecha;
         internal BoxCollider BoxCollider;
 
         private void Awake()
         {
             BoxCollider = GetComponentInParent<BoxCollider>();
-            ParentHitBoxRoot = GetComponentInParent<MechaComponentHitBoxRoot>();
+            ParentGridRootRoot = GetComponentInParent<MechaComponentGridRoot>();
         }
 
         private bool InBattle;
@@ -34,9 +34,9 @@ namespace Client
             if (InBattle)
             {
                 Projectile p = collision.gameObject.GetComponent<Projectile>();
-                if (p && p.ProjectileInfo.MechaType != ParentHitBoxRoot.MechaComponentBase.MechaType)
+                if (p && p.ProjectileInfo.MechaType != ParentGridRootRoot.MechaComponentBase.MechaType)
                 {
-                    ParentHitBoxRoot.MechaComponentBase.MechaComponentInfo.Damage(p.ProjectileInfo.FinalDamage);
+                    ParentGridRootRoot.MechaComponentBase.MechaComponentInfo.Damage(p.ProjectileInfo.FinalDamage);
                     return;
                 }
             }

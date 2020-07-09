@@ -31,9 +31,8 @@ namespace Client
         internal Inventory Inventory => MechaComponentInfo.InventoryItem.Inventory;
         internal InventoryItem InventoryItem => MechaComponentInfo.InventoryItem;
 
-        public MechaComponentGridRoot MechaComponentGrids;
+        public MechaComponentGridRoot MechaComponentGridRoot;
         public GameObject ModelRoot;
-        public MechaComponentHitBoxRoot MechaHitBoxRoot;
 
         internal Draggable Draggable;
         private bool isReturningToBackpack = false;
@@ -44,10 +43,10 @@ namespace Client
 
         public override void PoolRecycle()
         {
-            MechaComponentGrids.SetIsolatedIndicatorShown(true);
+            MechaComponentGridRoot.SetIsolatedIndicatorShown(true);
+            MechaComponentGridRoot.SetInBattle(false);
             MechaComponentInfo = null;
             Mecha = null;
-            MechaHitBoxRoot.SetInBattle(false);
             isReturningToBackpack = false;
             OnRemoveMechaComponentBaseSuc = null;
             base.PoolRecycle();
@@ -86,15 +85,15 @@ namespace Client
 
             {
                 mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) => { GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize); };
-                mechaComponentInfo.InventoryItem.OnIsolatedHandler = MechaComponentGrids.SetIsolatedIndicatorShown;
-                mechaComponentInfo.InventoryItem.OnConflictedHandler = MechaComponentGrids.SetGridConflicted;
-                mechaComponentInfo.InventoryItem.OnResetConflictHandler = MechaComponentGrids.ResetAllGridConflict;
+                mechaComponentInfo.InventoryItem.OnIsolatedHandler = MechaComponentGridRoot.SetIsolatedIndicatorShown;
+                mechaComponentInfo.InventoryItem.OnConflictedHandler = MechaComponentGridRoot.SetGridConflicted;
+                mechaComponentInfo.InventoryItem.OnResetConflictHandler = MechaComponentGridRoot.ResetAllGridConflict;
             }
 
             MechaComponentInfo = mechaComponentInfo;
             GridPos.ApplyGridPosToLocalTransXZ(MechaComponentInfo.InventoryItem.GridPos_World, transform, ConfigManager.GridSize);
             Mecha = parentMecha;
-            MechaHitBoxRoot.SetInBattle(true);
+            MechaComponentGridRoot.SetInBattle(true);
             Child_Initialize();
         }
 
@@ -119,7 +118,7 @@ namespace Client
                 MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
                 mcb.Initialize_Editor(new MechaComponentInfo(mcType, 10, 0));
                 mcbs.Add(mcb);
-                MechaComponentOccupiedGridPosDict.Add(mcType, mcb.MechaComponentGrids.GetOccupiedPositions().Clone());
+                MechaComponentOccupiedGridPosDict.Add(mcType, mcb.MechaComponentGridRoot.GetOccupiedPositions().Clone());
             }
 
             string json = JsonConvert.SerializeObject(MechaComponentOccupiedGridPosDict, Formatting.Indented);

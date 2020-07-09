@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BiangStudio.GameDataFormat.Grid;
+using GameCore;
 using UnityEngine;
 
 namespace Client
@@ -8,11 +10,40 @@ namespace Client
     [ExecuteInEditMode]
     public class MechaComponentGridRoot : ForbidLocalMoveRoot
     {
+        internal MechaComponentBase MechaComponentBase;
         private List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
+        [NonSerialized] public List<MechaComponentHitBox> HitBoxes = new List<MechaComponentHitBox>();
 
         void Awake()
         {
             mechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
+            MechaComponentBase = GetComponentInParent<MechaComponentBase>();
+            HitBoxes = GetComponentsInChildren<MechaComponentHitBox>().ToList();
+            foreach (MechaComponentHitBox hitBox in HitBoxes)
+            {
+                hitBox.LocalGridPos = GridPos.GetGridPosByLocalTransXZ(hitBox.transform, ConfigManager.GridSize);
+            }
+        }
+
+        public void SetInBattle(bool inBattle)
+        {
+            foreach (MechaComponentHitBox hitBox in HitBoxes)
+            {
+                hitBox.SetInBattle(inBattle);
+            }
+        }
+
+        internal MechaComponentHitBox FindHitBox(Collider collider)
+        {
+            foreach (MechaComponentHitBox hitBox in HitBoxes)
+            {
+                if (hitBox.BoxCollider == collider)
+                {
+                    return hitBox;
+                }
+            }
+
+            return null;
         }
 
 #if UNITY_EDITOR

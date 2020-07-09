@@ -26,7 +26,7 @@ namespace Client
                     bladeAttackTick = 0;
                     foreach (MechaComponentHitBox hb in HittingHitBoxes)
                     {
-                        hb.ParentHitBoxRoot.MechaComponentBase.MechaComponentInfo.Damage(BladeInfo.FinalDamage);
+                        hb.ParentGridRootRoot.MechaComponentBase.MechaComponentInfo.Damage(BladeInfo.FinalDamage);
                     }
                 }
             }
@@ -50,7 +50,7 @@ namespace Client
             if (GameStateManager.Instance.GetState() == GameState.Fighting)
             {
                 MechaComponentHitBox hb = c.gameObject.GetComponent<MechaComponentHitBox>();
-                if (hb && hb.ParentHitBoxRoot.MechaComponentBase.MechaComponentInfo.CheckAlive() && hb.Mecha.MechaInfo.MechaType != BladeInfo.MechaType)
+                if (hb && hb.ParentGridRootRoot.MechaComponentBase.MechaComponentInfo.CheckAlive() && hb.Mecha.MechaInfo.MechaType != BladeInfo.MechaType)
                 {
                     HittingHitBoxes.Remove(hb);
                     return;
