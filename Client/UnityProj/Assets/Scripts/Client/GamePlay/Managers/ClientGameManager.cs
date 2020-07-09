@@ -152,11 +152,11 @@ namespace Client
                     {
                         Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
                         GridPos gp = GridUtils.GetGridPosByMousePos(ClientBattleManager.Instance.PlayerMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
+                        GridPosR gp_matrix = ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorInventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gp);
                         MechaComponentInfo mci = mechaComponentInfo.Clone();
-                        ClientBattleManager.Instance.PlayerMecha.MechaInfo.AddMechaComponentInfo(mci, gp);
+                        ClientBattleManager.Instance.PlayerMecha.MechaInfo.AddMechaComponentInfo(mci, gp_matrix);
                         MechaComponentBase mcb = ClientBattleManager.Instance.PlayerMecha.MechaComponentDict[mci.GUID];
-                        GridPosR gpr = new GridPosR(gp.z + ConfigManager.EDIT_AREA_HALF_SIZE, gp.x + ConfigManager.EDIT_AREA_HALF_SIZE);
-                        mci.InventoryItem.SetGridPosition(gpr);
+                        mci.InventoryItem.SetGridPosition(gp_matrix);
                         DragManager.Instance.CurrentDrag = mcb.Draggable;
                         mcb.Draggable.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<MechaComponentBase>());
                         return true;

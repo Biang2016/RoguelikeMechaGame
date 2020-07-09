@@ -6,7 +6,9 @@ namespace Client
     public class MechaComponentHitBox : MonoBehaviour
     {
         internal MechaComponentGridRoot ParentGridRootRoot;
+
         internal Mecha Mecha => ParentGridRootRoot.MechaComponentBase.Mecha;
+
         internal BoxCollider BoxCollider;
 
         private void Awake()

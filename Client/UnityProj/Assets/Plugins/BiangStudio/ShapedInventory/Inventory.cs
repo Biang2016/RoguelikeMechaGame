@@ -291,6 +291,17 @@ namespace BiangStudio.ShapedInventory
             }
         }
 
+        public void PutDownItem(InventoryItem item)
+        {
+            if (InventoryItems.Contains(item))
+            {
+                foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
+                {
+                    InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Unavailable;
+                }
+            }
+        }
+
         public void RefreshConflictAndIsolation()
         {
             RefreshConflictAndIsolation(out List<InventoryItem> conflictItems, out List<InventoryItem> isolatedItems);

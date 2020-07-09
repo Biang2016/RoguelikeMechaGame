@@ -44,7 +44,7 @@ namespace BiangStudio.GridBackpack
             SetInventoryItem(inventoryItem);
             size = new Vector2(InventoryItem.BoundingRect.size.x * Backpack.GridSize, InventoryItem.BoundingRect.size.z * Backpack.GridSize);
             sizeRev = new Vector2(size.y, size.x);
-            PutDown();
+            RefreshView();
         }
 
         public void SetInventoryItem(InventoryItem inventoryItem)
@@ -129,7 +129,7 @@ namespace BiangStudio.GridBackpack
             InventoryItem.GridPos_Matrix.orientation = GridPosR.RotateOrientationClockwise90(InventoryItem.GridPos_Matrix.orientation);
             InventoryItem.SetGridPosition(InventoryItem.GridPos_Matrix);
             dragStartLocalPos += new Vector2(InventoryItem.BoundingRect.x_min * Backpack.GridSize, -InventoryItem.BoundingRect.z_min * Backpack.GridSize) - RectTransform.anchoredPosition;
-            PutDown();
+            RefreshView();
         }
 
         public void Draggable_OnMouseUp(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
@@ -144,13 +144,14 @@ namespace BiangStudio.GridBackpack
                 else
                 {
                     InventoryItem.GridPos_Matrix = dragStartGridPos_Matrix;
+                    Backpack.PutDownItem(InventoryItem);
                 }
 
-                PutDown();
+                RefreshView();
             }
         }
 
-        private void PutDown()
+        private void RefreshView()
         {
             int UI_Pos_X = InventoryItem.BoundingRect.x_min * Backpack.GridSize;
             int UI_Pos_Z = -InventoryItem.BoundingRect.z_min * Backpack.GridSize;

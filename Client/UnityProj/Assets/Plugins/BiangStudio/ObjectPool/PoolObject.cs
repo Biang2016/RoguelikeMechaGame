@@ -23,6 +23,11 @@ namespace BiangStudio.ObjectPool
             usedTimes++;
         }
 
+        public virtual void PoolRecycleAtFrameEnd()
+        {
+            StartCoroutine(Co_PoolRecycleAtFrameEnd());
+        }
+
         public virtual void PoolRecycle(float delay)
         {
             StartCoroutine(Co_PoolRecycle(delay, usedTimes));
@@ -32,6 +37,14 @@ namespace BiangStudio.ObjectPool
         {
             yield return new WaitForSeconds(delay);
             if (!IsRecycled && usedTimes == timeMark)
+            {
+                PoolRecycle();
+            }
+        }
+        private IEnumerator Co_PoolRecycleAtFrameEnd()
+        {
+            yield return new WaitForEndOfFrame();
+            if (!IsRecycled)
             {
                 PoolRecycle();
             }
