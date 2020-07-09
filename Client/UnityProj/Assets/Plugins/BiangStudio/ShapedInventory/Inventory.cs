@@ -64,18 +64,20 @@ namespace BiangStudio.ShapedInventory
         public LogErrorDelegate LogErrorHandler;
 
         /// <summary>
-        /// todo
+        /// Create a new inventory
         /// </summary>
-        /// <param name="inventoryName"></param>
+        /// <param name="inventoryName">The inventory name</param>
         /// <param name="dragArea"></param>
-        /// <param name="gridSize"></param>
-        /// <param name="rows"></param>
-        /// <param name="columns"></param>
-        /// <param name="unlockedPartialGrids"></param>
-        /// <param name="unlockedGridCount"></param>
-        /// <param name="rotateItemKeyDownHandler"></param>
+        /// <param name="gridSize">the gridSize of inventory</param>
+        /// <param name="rows">how many rows in total</param>
+        /// <param name="columns">how many columns in total</param>
+        /// <param name="unlockedPartialGrids">is there any grid locked at the beginning</param>
+        /// <param name="unlockedGridCount">how many grids are locked at the beginning</param>
+        /// <param name="rotateItemKeyDownHandler">this delegate should return a bool whether the rotate item key is pressed down</param>
         /// <param name="coordinateTransformationHandler_FromPosToMatrixIndex"></param>
         /// <param name="coordinateTransformationHandler_FromMatrixIndexToPos"></param>
+        /// <param name="coordinateTransformationHandler_FromPosToMatrixIndex_Diff"></param>
+        /// <param name="coordinateTransformationHandler_FromMatrixIndexToPos_Diff"></param>
         public Inventory(
             string inventoryName,
             DragArea dragArea,

@@ -267,7 +267,7 @@ namespace Client
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
             ClientBattleManager.Instance.StartBattle(battleInfo);
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, 300, 0), new GridPosR(9, 9));
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, 300, 0), new GridPosR(5, 10));
             battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
             // for (int i = -5; i <= 5; i++)
             // {

@@ -21,8 +21,7 @@ namespace BiangStudio.ShapedInventory
 
         private static int guidGenerator;
 
-        [HideInInspector]
-        public int GUID;
+        [HideInInspector] public int GUID;
 
         public IInventoryItemContentInfo ItemContentInfo;
 
@@ -37,8 +36,7 @@ namespace BiangStudio.ShapedInventory
             get { return GridPosR.TransformOccupiedPositions(GridPos_Matrix, ItemContentInfo.OriginalOccupiedGridPositions); }
         }
 
-        [HideInInspector]
-        public GridRect BoundingRect => OccupiedGridPositions_Matrix.GetBoundingRectFromListGridPos();
+        [HideInInspector] public GridRect BoundingRect => OccupiedGridPositions_Matrix.GetBoundingRectFromListGridPos();
 
         public OnSetGridPosDelegate OnSetGridPosHandler;
         public OnIsolatedDelegate OnIsolatedHandler;
@@ -75,36 +73,39 @@ namespace BiangStudio.ShapedInventory
         {
             if (!gp_matrix.Equals(GridPos_Matrix))
             {
+                GridPosR oriGPR = GridPos_Matrix;
+                GridPos_Matrix = gp_matrix;
                 foreach (GridPos gp in OccupiedGridPositions_Matrix)
                 {
-                    GridPos gp_rot = GridPos.RotateGridPos(gp - (GridPos) GridPos_Matrix, (GridPosR.Orientation) ((gp_matrix.orientation - GridPos_Matrix.orientation + 4) % 4));
-                    GridPosR newGP = gp_matrix + (GridPosR) gp_rot;
-                    if (newGP.x >= Inventory.Columns)
+                    if (gp.x >= Inventory.Columns)
                     {
+                        GridPos_Matrix = oriGPR;
                         SetGridPosition(new GridPosR(gp_matrix.x - 1, gp_matrix.z, gp_matrix.orientation));
                         return;
                     }
 
-                    if (newGP.x < 0)
+                    if (gp.x < 0)
                     {
+                        GridPos_Matrix = oriGPR;
                         SetGridPosition(new GridPosR(gp_matrix.x + 1, gp_matrix.z, gp_matrix.orientation));
                         return;
                     }
 
-                    if (newGP.z >= Inventory.Rows)
+                    if (gp.z >= Inventory.Rows)
                     {
+                        GridPos_Matrix = oriGPR;
                         SetGridPosition(new GridPosR(gp_matrix.x, gp_matrix.z - 1, gp_matrix.orientation));
                         return;
                     }
 
-                    if (newGP.z < 0)
+                    if (gp.z < 0)
                     {
+                        GridPos_Matrix = oriGPR;
                         SetGridPosition(new GridPosR(gp_matrix.x, gp_matrix.z + 1, gp_matrix.orientation));
                         return;
                     }
                 }
 
-                GridPos_Matrix = gp_matrix;
                 OnSetGridPosHandler?.Invoke(GridPos_World);
             }
         }
