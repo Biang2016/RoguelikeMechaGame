@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BiangStudio.Singleton;
+using GameCore;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,15 +13,15 @@ namespace Client
         private PlayerInput.MechaBattleInputActions MechaBattleInputActions;
         private PlayerInput.MechaBuildingInputActions MechaBuildingInputActions;
 
-        public List<ButtonState> ButtonStateList = new List<ButtonState>();
+        public Dictionary<ButtonNames, ButtonState> ButtonStateDict = new Dictionary<ButtonNames, ButtonState>();
 
         #region Building
 
         public bool BuildingInputActionEnabled => MechaBuildingInputActions.enabled;
 
-        public ButtonState Building_MouseLeft = new ButtonState() {ButtonName = "Building_MouseLeft"};
-        public ButtonState Building_MouseRight = new ButtonState() {ButtonName = "Building_MouseRight"};
-        public ButtonState Building_MouseMiddle = new ButtonState() {ButtonName = "Building_MouseMiddle"};
+        public ButtonState Building_MouseLeft = new ButtonState() {ButtonName = ButtonNames.Building_MouseLeft};
+        public ButtonState Building_MouseRight = new ButtonState() {ButtonName = ButtonNames.Building_MouseRight};
+        public ButtonState Building_MouseMiddle = new ButtonState() {ButtonName = ButtonNames.Building_MouseMiddle};
 
         private Vector2 Last_Building_MousePosition = Vector2.zero;
 
@@ -55,10 +56,10 @@ namespace Client
             }
         }
 
-        public ButtonState Building_RotateItem = new ButtonState() {ButtonName = "Building_RotateItem"};
-        public ButtonState Building_ToggleBackpack = new ButtonState() {ButtonName = "Building_ToggleBackpack"};
-        public ButtonState Building_ToggleWireLines = new ButtonState() {ButtonName = "Building_ToggleWireLines"};
-        public ButtonState Building_ToggleDebug = new ButtonState() {ButtonName = "Building_ToggleDebug"};
+        public ButtonState Building_RotateItem = new ButtonState() {ButtonName = ButtonNames.Building_RotateItem};
+        public ButtonState Building_ToggleBackpack = new ButtonState() {ButtonName = ButtonNames.Building_ToggleBackpack};
+        public ButtonState Building_ToggleWireLines = new ButtonState() {ButtonName = ButtonNames.Building_ToggleWireLines};
+        public ButtonState Building_ToggleDebug = new ButtonState() {ButtonName = ButtonNames.Building_ToggleDebug};
 
         #endregion
 
@@ -66,9 +67,9 @@ namespace Client
 
         public bool BattleInputActionEnabled => MechaBattleInputActions.enabled;
 
-        public ButtonState Battle_MouseLeft = new ButtonState() {ButtonName = "Battle_MouseLeft"};
-        public ButtonState Battle_MouseRight = new ButtonState() {ButtonName = "Battle_MouseRight"};
-        public ButtonState Battle_MouseMiddle = new ButtonState() {ButtonName = "Battle_MouseMiddle"};
+        public ButtonState Battle_MouseLeft = new ButtonState() {ButtonName = ButtonNames.Battle_MouseLeft};
+        public ButtonState Battle_MouseRight = new ButtonState() {ButtonName = ButtonNames.Battle_MouseRight};
+        public ButtonState Battle_MouseMiddle = new ButtonState() {ButtonName = ButtonNames.Battle_MouseMiddle};
 
         public Vector2 Battle_Move;
 
@@ -105,10 +106,10 @@ namespace Client
             }
         }
 
-        public ButtonState Battle_Skill_0 = new ButtonState() {ButtonName = "Battle_Skill_0"};
-        public ButtonState Battle_Skill_1 = new ButtonState() {ButtonName = "Battle_Skill_1"};
-        public ButtonState Battle_Skill_2 = new ButtonState() {ButtonName = "Battle_Skill_2"};
-        public ButtonState Battle_Skill_3 = new ButtonState() {ButtonName = "Battle_Skill_3"};
+        public ButtonState Battle_Skill_0 = new ButtonState() {ButtonName = ButtonNames.Battle_Skill_0};
+        public ButtonState Battle_Skill_1 = new ButtonState() {ButtonName = ButtonNames.Battle_Skill_1};
+        public ButtonState Battle_Skill_2 = new ButtonState() {ButtonName = ButtonNames.Battle_Skill_2};
+        public ButtonState Battle_Skill_3 = new ButtonState() {ButtonName = ButtonNames.Battle_Skill_3};
 
         #endregion
 
@@ -116,9 +117,9 @@ namespace Client
 
         public bool CommonInputActionsEnabled => CommonInputActions.enabled;
 
-        public ButtonState Common_MouseLeft = new ButtonState() {ButtonName = "Common_MouseLeft"};
-        public ButtonState Common_MouseRight = new ButtonState() {ButtonName = "Common_MouseRight"};
-        public ButtonState Common_MouseMiddle = new ButtonState() {ButtonName = "Common_MouseMiddle"};
+        public ButtonState Common_MouseLeft = new ButtonState() {ButtonName = ButtonNames.Common_MouseLeft};
+        public ButtonState Common_MouseRight = new ButtonState() {ButtonName = ButtonNames.Common_MouseRight};
+        public ButtonState Common_MouseMiddle = new ButtonState() {ButtonName = ButtonNames.Common_MouseMiddle};
 
         private Vector2 Last_Common_MousePosition = Vector2.zero;
 
@@ -153,10 +154,10 @@ namespace Client
             }
         }
 
-        public ButtonState Common_Confirm = new ButtonState() {ButtonName = "Common_Confirm"};
-        public ButtonState Common_Debug = new ButtonState() {ButtonName = "Common_Debug"};
-        public ButtonState Common_Exit = new ButtonState() {ButtonName = "Common_Exit"};
-        public ButtonState Common_Tab = new ButtonState() {ButtonName = "Common_Tab"};
+        public ButtonState Common_Confirm = new ButtonState() {ButtonName = ButtonNames.Common_Confirm};
+        public ButtonState Common_Debug = new ButtonState() {ButtonName = ButtonNames.Common_Debug};
+        public ButtonState Common_Exit = new ButtonState() {ButtonName = ButtonNames.Common_Exit};
+        public ButtonState Common_Tab = new ButtonState() {ButtonName = ButtonNames.Common_Tab};
 
         #endregion
 
@@ -207,9 +208,9 @@ namespace Client
         {
             if (false)
             {
-                foreach (ButtonState buttonState in ButtonStateList)
+                foreach (KeyValuePair<ButtonNames, ButtonState> kv in ButtonStateDict)
                 {
-                    string input = buttonState.ToString();
+                    string input = kv.Key.ToString();
                     if (!string.IsNullOrWhiteSpace(input))
                     {
                         Debug.Log(input);
@@ -220,9 +221,9 @@ namespace Client
 
         public override void LateUpdate()
         {
-            foreach (ButtonState buttonState in ButtonStateList)
+            foreach (KeyValuePair<ButtonNames, ButtonState> kv in ButtonStateDict)
             {
-                buttonState.Reset();
+                kv.Value.Reset();
             }
         }
 
@@ -247,6 +248,18 @@ namespace Client
             else
             {
                 MechaBuildingInputActions.Disable();
+            }
+        }
+
+        public bool CheckButtonAction(ButtonState buttonState)
+        {
+            if (ButtonStateDict.TryGetValue(buttonState.ButtonName, out ButtonState myButtonState))
+            {
+                return (buttonState.Down && myButtonState.Down) || (buttonState.Up && myButtonState.Up) || (buttonState.Pressed && myButtonState.Pressed);
+            }
+            else
+            {
+                return false;
             }
         }
     }

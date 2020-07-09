@@ -84,7 +84,11 @@ namespace Client
             };
 
             {
-                mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) => { GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize); };
+                mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) =>
+                {
+                    GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize);
+                    MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation();
+                };
                 mechaComponentInfo.InventoryItem.OnIsolatedHandler = MechaComponentGridRoot.SetIsolatedIndicatorShown;
                 mechaComponentInfo.InventoryItem.OnConflictedHandler = MechaComponentGridRoot.SetGridConflicted;
                 mechaComponentInfo.InventoryItem.OnResetConflictHandler = MechaComponentGridRoot.ResetAllGridConflict;

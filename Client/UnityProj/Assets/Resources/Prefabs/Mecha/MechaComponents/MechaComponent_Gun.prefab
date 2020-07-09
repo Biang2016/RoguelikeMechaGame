@@ -187,6 +187,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FirePoint: {fileID: 8569312625845208773}
+  ShooterInfo:
+    TriggerButtonState:
+      ButtonName: 0
+      Down: 0
+      Pressed: 1
+      LastPressed: 0
+      Up: 0
+    MechaType: 1
+    FireInterval: 0
+    MaxRange: 0
+    ProjectileInfo:
+      MechaType: 1
+      ProjectileType: 1
+      Damage: 5
+      Modifiers_Damage: []
+      Speed: 1
+      Modifiers_Speed: []
 --- !u!1 &9210583541357241355
 GameObject:
   m_ObjectHideFlags: 0

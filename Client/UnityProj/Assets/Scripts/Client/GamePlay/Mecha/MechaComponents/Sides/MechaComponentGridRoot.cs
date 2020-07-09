@@ -103,6 +103,7 @@ namespace Client
                 if (gp.x == gridPos.x && gp.z == gridPos.z)
                 {
                     grid.IsConflicted = true;
+                    grid.SetForbidIndicatorShown(true);
                 }
             }
         }
@@ -112,6 +113,7 @@ namespace Client
             foreach (MechaComponentGrid grid in mechaComponentGrids)
             {
                 grid.IsConflicted = false;
+                grid.SetForbidIndicatorShown(false);
             }
         }
     }

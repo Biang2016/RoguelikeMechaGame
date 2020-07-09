@@ -1,5 +1,8 @@
+using System;
+
 namespace Client
 {
+    [Serializable]
     public class Modifier
     {
         public int Value;

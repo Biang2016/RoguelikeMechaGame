@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameCore;
 
 namespace Client
 {
+    [Serializable]
     public class ProjectileInfo
     {
         public MechaType MechaType;

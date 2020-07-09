@@ -344,14 +344,14 @@ namespace BiangStudio.ShapedInventory
                     }
                     else
                     {
-                        if (InventoryItemMatrix[gp_matrix.z, gp_matrix.x] != null)
+                        if (InventoryItemMatrix[gp_matrix.x, gp_matrix.z] != null)
                         {
                             hasConflict = true;
                             conflictGridPositions.Add(gp_matrix);
                         }
                         else
                         {
-                            InventoryItemMatrix[gp_matrix.z, gp_matrix.x] = item;
+                            InventoryItemMatrix[gp_matrix.x, gp_matrix.z] = item;
                             if (isRootItem) coreGPs.Add(gp_matrix);
                         }
                     }
@@ -382,7 +382,7 @@ namespace BiangStudio.ShapedInventory
             {
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
-                    connectedMatrix[gp_matrix.z, gp_matrix.x] = 1;
+                    connectedMatrix[gp_matrix.x, gp_matrix.z] = 1;
                 }
             }
 
@@ -390,22 +390,22 @@ namespace BiangStudio.ShapedInventory
 
             foreach (GridPos coreGP in coreGPs)
             {
-                connectedMatrix[coreGP.z, coreGP.x] = 2;
+                connectedMatrix[coreGP.x, coreGP.z] = 2;
                 connectedQueue.Enqueue(coreGP);
             }
 
-            void connectPos(int column, int row)
+            void connectPos(int col, int row)
             {
-                if (row < 0 || row >= Rows || column < 0 || column >= Columns)
+                if (row < 0 || row >= Rows || col < 0 || col >= Columns)
                 {
                     return;
                 }
                 else
                 {
-                    if (connectedMatrix[column, row] == 1)
+                    if (connectedMatrix[col, row] == 1)
                     {
-                        connectedQueue.Enqueue(new GridPos(row, column));
-                        connectedMatrix[column, row] = 2;
+                        connectedQueue.Enqueue(new GridPos(col, row));
+                        connectedMatrix[col, row] = 2;
                     }
                 }
             }
@@ -413,10 +413,10 @@ namespace BiangStudio.ShapedInventory
             while (connectedQueue.Count > 0)
             {
                 GridPos gp = connectedQueue.Dequeue();
-                connectPos(gp.z + 1, gp.x);
-                connectPos(gp.z - 1, gp.x);
-                connectPos(gp.z, gp.x - 1);
-                connectPos(gp.z, gp.x + 1);
+                connectPos(gp.x + 1, gp.z);
+                connectPos(gp.x - 1, gp.z);
+                connectPos(gp.x, gp.z - 1);
+                connectPos(gp.x, gp.z + 1);
             }
 
             for (int col = 0; col < Columns; col++)
@@ -425,7 +425,7 @@ namespace BiangStudio.ShapedInventory
                 {
                     if (connectedMatrix[col, row] == 1)
                     {
-                        isolatedGridPositions.Add((new GridPos(row, col)));
+                        isolatedGridPositions.Add((new GridPos(col, row)));
                         InventoryItem isolatedItem = InventoryItemMatrix[col, row];
                         if (!isolatedItems.Contains(isolatedItem))
                         {
@@ -443,11 +443,10 @@ namespace BiangStudio.ShapedInventory
 
         private void AddForbidComponentIndicator(GridPos gp_matrix)
         {
-            InventoryItem item = InventoryItemMatrix[gp_matrix.z, gp_matrix.x];
+            InventoryItem item = InventoryItemMatrix[gp_matrix.x, gp_matrix.z];
             if (item != null)
             {
-                GridPos gp = CoordinateTransformationHandler_FromMatrixIndexToPos.Invoke(gp_matrix);
-                GridPos gp_local_noRotate = gp - (GridPos) item.GridPos_Matrix;
+                GridPos gp_local_noRotate = gp_matrix - (GridPos) item.GridPos_Matrix;
                 GridPos gp_local_rotate = GridPos.RotateGridPos(gp_local_noRotate, (GridPosR.Orientation) ((4 - (int) item.GridPos_Matrix.orientation) % 4));
                 item.OnConflictedHandler?.Invoke(gp_local_rotate);
             }
@@ -455,7 +454,7 @@ namespace BiangStudio.ShapedInventory
 
         private void AddIsolatedComponentIndicator(GridPos gp_matrix)
         {
-            InventoryItem item = InventoryItemMatrix[gp_matrix.z, gp_matrix.x];
+            InventoryItem item = InventoryItemMatrix[gp_matrix.x, gp_matrix.z];
             item?.OnIsolatedHandler?.Invoke(true);
         }
 
