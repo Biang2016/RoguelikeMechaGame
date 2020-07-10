@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d31b62ec9d586a4e94389d9071559ca, type: 3}
   m_Name: MechaComponent_Gun
   m_EditorClassIdentifier: 
-  _serializedGraph: '{"type":"FlowCanvas.FlowScript","nodes":[{"_simplexNode":{},"_position":{"x":719.0,"y":204.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[SampleNode,
-    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"0"},{"_simplexNode":{},"_position":{"x":1163.0,"y":172.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[SampleNode,
-    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"1"},{"_color":{"r":0.7490196,"g":0.4980392,"b":1.0,"a":1.0},"_position":{"x":638.0,"y":646.0},"$type":"FlowCanvas.Nodes.Dummy","$id":"2"}],"connections":[{"_sourcePortName":"
-    ","_targetPortName":" ","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"
-    ","_targetPortName":"In","_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Out","_targetPortName":"
-    ","_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"0"},"$type":"FlowCanvas.BinderConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{"myInteger":{"_name":"myInteger","_id":"23675f27-9377-4971-9753-7eb7110595b9","$type":"NodeCanvas.Framework.Variable`1[[System.Int32,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}}'
+  _serializedGraph: '{"type":"FlowCanvas.FlowScript","nodes":[{"value":{"_value":true},"_verboseLevel":0,"_position":{"x":356.0,"y":394.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"0"},{"_simplexNode":{},"_position":{"x":564.0,"y":319.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[Client.FlowCanvas.Input,
+    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"1"},{"_simplexNode":{},"_position":{"x":818.0,"y":301.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.WaitWhile,
+    ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"2"},{"value":{"_value":301},"_verboseLevel":0,"_position":{"x":340.0,"y":345.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[GameCore.ButtonNames,
+    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"3"},{"_method":{"_baseInfo":"UnityEngine.Component|GetComponent|UnityEngine.Component","_paramsInfo":"System.Type"},"_inputPortValues":{"type":{"$content":"System.Object","$type":"System.RuntimeType"}},"_position":{"x":663.0,"y":102.0},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper"}],"connections":[{"_sourcePortName":"Value","_targetPortName":"pressed","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Condition","_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"buttonName","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection`1[[GameCore.ButtonNames,
+    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
   _objectReferences: []
   _graphSource:
     _version: 3.08
     _category: 
     _comments: 
-    _translation: {x: 30, y: 27}
+    _translation: {x: -222, y: 113}
     _zoomFactor: 1
   _haltSerialization: 0
 #---GRAPH_START---
@@ -33,14 +34,15 @@ MonoBehaviour:
 #    "type": "FlowCanvas.FlowScript",
 #    "nodes": [
 #        {
-#            "_simplexNode": {
-#
+#            "value": {
+#                "_value": true
 #            },
+#            "_verboseLevel": 0,
 #            "_position": {
-#                "x": 719.0,
-#                "y": 204.0
+#                "x": 356.0,
+#                "y": 394.0
 #            },
-#            "$type": "FlowCanvas.Nodes.SimplexNodeWrapper`1[[SampleNode, GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+#            "$type": "FlowCanvas.Nodes.GetVariable`1[[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]",
 #            "$id": "0"
 #        },
 #        {
@@ -48,70 +50,92 @@ MonoBehaviour:
 #
 #            },
 #            "_position": {
-#                "x": 1163.0,
-#                "y": 172.0
+#                "x": 564.0,
+#                "y": 319.0
 #            },
-#            "$type": "FlowCanvas.Nodes.SimplexNodeWrapper`1[[SampleNode, GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+#            "$type": "FlowCanvas.Nodes.SimplexNodeWrapper`1[[Client.FlowCanvas.Input, Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
 #            "$id": "1"
 #        },
 #        {
-#            "_color": {
-#                "r": 0.7490196,
-#                "g": 0.4980392,
-#                "b": 1.0,
-#                "a": 1.0
+#            "_simplexNode": {
+#
 #            },
 #            "_position": {
-#                "x": 638.0,
-#                "y": 646.0
+#                "x": 818.0,
+#                "y": 301.0
 #            },
-#            "$type": "FlowCanvas.Nodes.Dummy",
+#            "$type": "FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.WaitWhile, ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
 #            "$id": "2"
+#        },
+#        {
+#            "value": {
+#                "_value": 301
+#            },
+#            "_verboseLevel": 0,
+#            "_position": {
+#                "x": 340.0,
+#                "y": 345.0
+#            },
+#            "$type": "FlowCanvas.Nodes.GetVariable`1[[GameCore.ButtonNames, GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+#            "$id": "3"
+#        },
+#        {
+#            "_method": {
+#                "_baseInfo": "UnityEngine.Component|GetComponent|UnityEngine.Component",
+#                "_paramsInfo": "System.Type"
+#            },
+#            "_inputPortValues": {
+#                "type": {
+#                    "$content": "System.Object",
+#                    "$type": "System.RuntimeType"
+#                }
+#            },
+#            "_position": {
+#                "x": 663.0,
+#                "y": 102.0
+#            },
+#            "$type": "FlowCanvas.Nodes.ReflectedMethodNodeWrapper"
 #        }
 #    ],
 #    "connections": [
 #        {
-#            "_sourcePortName": " ",
-#            "_targetPortName": " ",
+#            "_sourcePortName": "Value",
+#            "_targetPortName": "pressed",
 #            "_sourceNode": {
 #                "$ref": "0"
 #            },
 #            "_targetNode": {
 #                "$ref": "1"
 #            },
-#            "$type": "FlowCanvas.BinderConnection"
+#            "$type": "FlowCanvas.BinderConnection`1[[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
 #        },
 #        {
-#            "_sourcePortName": " ",
-#            "_targetPortName": "In",
+#            "_sourcePortName": "Value",
+#            "_targetPortName": "Condition",
 #            "_sourceNode": {
 #                "$ref": "1"
 #            },
 #            "_targetNode": {
 #                "$ref": "2"
 #            },
-#            "$type": "FlowCanvas.BinderConnection"
+#            "$type": "FlowCanvas.BinderConnection`1[[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
 #        },
 #        {
-#            "_sourcePortName": "Out",
-#            "_targetPortName": " ",
+#            "_sourcePortName": "Value",
+#            "_targetPortName": "buttonName",
 #            "_sourceNode": {
-#                "$ref": "2"
+#                "$ref": "3"
 #            },
 #            "_targetNode": {
-#                "$ref": "0"
+#                "$ref": "1"
 #            },
-#            "$type": "FlowCanvas.BinderConnection"
+#            "$type": "FlowCanvas.BinderConnection`1[[GameCore.ButtonNames, GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"
 #        }
 #    ],
 #    "canvasGroups": [],
 #    "localBlackboard": {
 #        "_variables": {
-#            "myInteger": {
-#                "_name": "myInteger",
-#                "_id": "23675f27-9377-4971-9753-7eb7110595b9",
-#                "$type": "NodeCanvas.Framework.Variable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
-#            }
+#
 #        }
 #    }
 #}

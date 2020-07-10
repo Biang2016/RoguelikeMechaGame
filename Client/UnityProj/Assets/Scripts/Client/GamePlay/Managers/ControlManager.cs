@@ -262,5 +262,17 @@ namespace Client
                 return false;
             }
         }
+
+        public bool CheckButtonAction(ButtonNames buttonName, bool down, bool up, bool pressed)
+        {
+            if (ButtonStateDict.TryGetValue(buttonName, out ButtonState myButtonState))
+            {
+                return (down && myButtonState.Down) || (up && myButtonState.Up) || (pressed && myButtonState.Pressed);
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

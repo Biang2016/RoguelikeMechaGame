@@ -102,21 +102,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: 
-  _boundGraphObjectReferences: []
+  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[{"updateInterval":{},"_position":{"x":510.0,"y":180.0},"$type":"FlowCanvas.Nodes.UpdateEvent","$id":"0"},{"_position":{"x":885.0,"y":525.0},"$type":"FlowCanvas.Nodes.While","$id":"1"},{"_method":{"_baseInfo":"Client.Shooter|Shoot|System.Void","_paramsInfo":""},"_callable":true,"_position":{"x":1095.0,"y":270.0},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"2"},{"_simplexNode":{},"_position":{"x":1275.0,"y":315.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.Wait,
+    ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"3"},{"value":{"_value":true},"_verboseLevel":0,"_position":{"x":360.0,"y":390.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"4"},{"_simplexNode":{},"_position":{"x":570.0,"y":315.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[Client.FlowCanvas.Input,
+    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"5"},{"value":{"_value":301},"_verboseLevel":0,"_position":{"x":345.0,"y":345.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[GameCore.ButtonNames,
+    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"6"},{"value":{"_value":1},"_position":{"x":855.0,"y":240.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[Client.Shooter,
+    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"7"},{"value":{"_value":0.2},"_position":{"x":1200.0,"y":585.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"8"}],"connections":[{"_sourcePortName":"Out","_targetPortName":"In","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Do","_targetPortName":"
+    ","_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"
+    ","_targetPortName":"In","_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Done","_targetPortName":"In","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"pressed","_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"5"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Condition","_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"buttonName","_sourceNode":{"$ref":"6"},"_targetNode":{"$ref":"5"},"$type":"FlowCanvas.BinderConnection`1[[GameCore.ButtonNames,
+    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},{"_sourcePortName":"Value","_targetPortName":"Shooter","_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection`1[[Client.Shooter,
+    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},{"_sourcePortName":"Value","_targetPortName":"time","_sourceNode":{"$ref":"8"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphObjectReferences:
+  - {fileID: 0}
+  - {fileID: 348459106108629423}
   _boundGraphSource:
-    _version: 0
+    _version: 3.08
     _category: 
     _comments: 
-    _translation: {x: 0, y: 0}
-    _zoomFactor: 1
+    _translation: {x: -298, y: -54}
+    _zoomFactor: 0.9999809
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
   _lockBoundGraphPrefabOverrides: 1
   _preInitializeSubGraphs: 0
   _updateMode: 0
-  _graph: {fileID: 11400000, guid: 8c3a4afe0751437429f44a906696ac80, type: 2}
+  _graph: {fileID: 0}
   _blackboard: {fileID: 2530100294924697604}
 --- !u!114 &2530100294924697604
 MonoBehaviour:
@@ -130,13 +145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _serializedBlackboard: '{"_variables":{"myBoolean":{"_name":"myBoolean","_id":"e9c02ca5-bc6a-45ab-9ae8-7ff969d8cd27","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
+  _serializedBlackboard: '{"_variables":{}}'
   _objectReferences: []
-  _serializedVariables:
-  - _json: '{"_name":"myBoolean","_id":"e9c02ca5-bc6a-45ab-9ae8-7ff969d8cd27","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
-    _references: []
+  _serializedVariables: []
 --- !u!114 &7667051109334718707
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,10 +18,10 @@ namespace Client
 
         protected override void ControlPerFrame()
         {
-            if (ControlManager.Instance.CheckButtonAction(Shooter.ShooterInfo.TriggerButtonState))
-            {
-                Shooter?.ContinuousShoot();
-            }
+            //if (ControlManager.Instance.CheckButtonAction(Shooter.ShooterInfo.TriggerButtonState))
+            //{
+            //    Shooter?.ContinuousShoot();
+            //}
         }
 
         public void AddModifier(Modifier modifier)
