@@ -1,4 +1,5 @@
-﻿using BiangStudio.GameDataFormat.Grid;
+﻿using BiangStudio.GameDataFormat;
+using BiangStudio.GameDataFormat.Grid;
 using GameCore;
 using UnityEngine;
 
@@ -8,18 +9,22 @@ namespace Client
     {
         private void Initialize_Fighting(MechaInfo mechaInfo)
         {
+            TransformHelper.CurrentTransform.Position = new FixVector3(transform.position);
         }
 
         public float Speed = 3f;
 
+        void LogicTick_Fighting()
+        {
+            Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
+            speed = Quaternion.Euler(0f, 0f, 45f) * speed;
+            MechaInfo.TransformInfo.Position += new FixVector3((Fix64) speed.x, Fix64.Zero, (Fix64) speed.y);
+            RotateToMouseDirection();
+        }
+
         void Update_Fighting()
         {
-            if (GameStateManager.Instance.GetState() == GameState.Fighting)
-            {
-                Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
-                speed = Quaternion.Euler(0f, 0f, 45f) * speed;
-                transform.Translate(speed.x, 0, speed.y, Space.World);
-            }
+            TransformHelper.Update(MechaInfo.TransformInfo, transform, Time.deltaTime);
         }
 
         void FixedUpdate_Fighting()
@@ -28,7 +33,6 @@ namespace Client
 
         void LateUpdate_Fighting()
         {
-            RotateToMouseDirection();
         }
 
         private Quaternion lastRotationByMouse;
@@ -44,7 +48,7 @@ namespace Client
             if (Mathf.Abs((rotation.eulerAngles - lastRotationByMouse.eulerAngles).magnitude) > 0.5f * nearFactor)
             {
                 lastRotationByMouse = rotation;
-                transform.localRotation = Quaternion.Lerp(transform.rotation, rotation, 1);
+                MechaInfo.TransformInfo.Rotation = new FixQuaternion(Quaternion.Lerp(transform.rotation, rotation, 1));
             }
         }
     }

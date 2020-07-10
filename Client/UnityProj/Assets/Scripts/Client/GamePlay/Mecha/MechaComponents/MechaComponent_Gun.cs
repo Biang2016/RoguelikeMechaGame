@@ -2,7 +2,7 @@
 
 namespace Client
 {
-    public class MechaComponent_Gun : MechaComponent_Controllable_Base
+    public class MechaComponent_Gun : MechaComponentBase
     {
         public Shooter Shooter;
 
@@ -16,22 +16,5 @@ namespace Client
             base.Update();
         }
 
-        protected override void ControlPerFrame()
-        {
-            //if (ControlManager.Instance.CheckButtonAction(Shooter.ShooterInfo.TriggerButtonState))
-            //{
-            //    Shooter?.ContinuousShoot();
-            //}
-        }
-
-        public void AddModifier(Modifier modifier)
-        {
-            Shooter.ShooterInfo.ProjectileInfo.Modifiers_Damage.Add(modifier);
-        }
-
-        public void RemoveModifier(Modifier modifier)
-        {
-            Shooter.ShooterInfo.ProjectileInfo.Modifiers_Damage.Remove(modifier);
-        }
     }
 }

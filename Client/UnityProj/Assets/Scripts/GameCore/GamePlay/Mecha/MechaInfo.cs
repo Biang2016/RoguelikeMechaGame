@@ -20,6 +20,8 @@ namespace GameCore
             return guidGenerator++;
         }
 
+        public TransformInfo TransformInfo;
+
         public string MechaName;
         public MechaType MechaType;
         public SortedDictionary<int, MechaComponentInfo> MechaComponentInfos = new SortedDictionary<int, MechaComponentInfo>();

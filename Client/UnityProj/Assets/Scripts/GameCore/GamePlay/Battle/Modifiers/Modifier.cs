@@ -1,6 +1,7 @@
 using System;
+using BiangStudio.GameDataFormat;
 
-namespace Client
+namespace GameCore
 {
     [Serializable]
     public class Modifier
@@ -39,7 +40,7 @@ namespace Client
             return 0;
         }
 
-        public float Calculate(float target)
+        public Fix64 Calculate(Fix64 target)
         {
             switch (Sign)
             {
@@ -61,7 +62,7 @@ namespace Client
                 }
             }
 
-            return 0;
+            return Fix64.Zero;
         }
     }
 }

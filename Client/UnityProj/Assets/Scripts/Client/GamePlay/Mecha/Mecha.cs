@@ -16,6 +16,13 @@ namespace Client
 
         public SortedDictionary<int, MechaComponentBase> MechaComponentDict = new SortedDictionary<int, MechaComponentBase>();
 
+        public TransformHelper TransformHelper = new TransformHelper();
+
+        public bool IsPlayer => MechaInfo.IsPlayer;
+        public TransformInfo TransformInfo => MechaInfo.TransformInfo;
+        public bool IsBuilding => GameStateManager.Instance.GetState() == GameState.Building;
+        public bool IsFighting => GameStateManager.Instance.GetState() == GameState.Fighting;
+
         public override void PoolRecycle()
         {
             Clean();
@@ -74,28 +81,49 @@ namespace Client
             MechaInfo = null;
         }
 
+        public void LogicTick()
+        {
+            if (IsFighting)
+            {
+                LogicTick_Fighting();
+            }
+            else
+            {
+                LogicTick_Building();
+                MechaEditArea.LogicTick();
+            }
+
+            MechaInfo.UpdateLifeChange();
+        }
+
         void Update()
         {
-            if (MechaInfo.MechaType == MechaType.Player)
+            if (IsBuilding && IsPlayer)
             {
                 Update_Building();
+            }
+
+            if (IsFighting)
+            {
                 Update_Fighting();
             }
         }
 
         void FixedUpdate()
         {
-            if (MechaInfo.MechaType == MechaType.Player)
+            if (IsFighting)
             {
                 FixedUpdate_Fighting();
             }
-
-            MechaInfo.UpdateLifeChange();
+            else
+            {
+                FixedUpdate_Building();
+            }
         }
 
         void LateUpdate()
         {
-            if (MechaInfo.MechaType == MechaType.Player)
+            if (IsPlayer)
             {
                 if (GameStateManager.Instance.GetState() == GameState.Fighting)
                 {
@@ -118,14 +146,14 @@ namespace Client
 
         private void Die()
         {
-            if (MechaInfo.MechaType == MechaType.Enemy)
+            if (IsPlayer)
             {
-                OnRemoveMechaSuc?.Invoke(this);
-                PoolRecycle(0.5f);
+                // TODO Endgame
             }
             else
             {
-                // TODO Endgame
+                OnRemoveMechaSuc?.Invoke(this);
+                PoolRecycle(0.5f);
             }
         }
 
@@ -135,7 +163,7 @@ namespace Client
             mcb.OnRemoveMechaComponentBaseSuc = RemoveMechaComponent;
             MechaComponentDict.Add(mci.GUID, mcb);
 
-            if (MechaInfo.MechaType == MechaType.Player && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
+            if (IsPlayer && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
             {
                 MechaInfo.RefreshHUDPanelCoreLifeSliderCount?.Invoke();
             }
@@ -155,7 +183,7 @@ namespace Client
             if (MechaComponentDict.ContainsKey(mcb.MechaComponentInfo.GUID))
             {
                 MechaComponentDict.Remove(mcb.MechaComponentInfo.GUID);
-                if (MechaInfo.MechaType == MechaType.Player && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
+                if (IsPlayer && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
                 {
                     MechaInfo.RefreshHUDPanelCoreLifeSliderCount?.Invoke();
                 }
@@ -167,13 +195,21 @@ namespace Client
             }
         }
 
-        void Update_Building()
+        void LogicTick_Building()
         {
             if (ControlManager.Instance.Building_ToggleWireLines.Down)
             {
                 SlotLightsShown = !SlotLightsShown;
                 GridShown = !GridShown;
             }
+        }
+
+        void Update_Building()
+        {
+        }
+
+        void FixedUpdate_Building()
+        {
         }
 
         private bool _slotLightsShown = true;

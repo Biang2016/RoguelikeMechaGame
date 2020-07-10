@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BiangStudio.GameDataFormat;
 using UnityEngine;
 
 namespace Client
@@ -12,7 +13,7 @@ namespace Client
             BladeInfo = bladeInfo;
         }
 
-        private float bladeAttackTick = 0;
+        private Fix64 bladeAttackTick = Fix64.Zero;
 
         List<MechaComponentHitBox> HittingHitBoxes = new List<MechaComponentHitBox>();
 
@@ -23,7 +24,7 @@ namespace Client
                 bladeAttackTick += Time.deltaTime;
                 if (bladeAttackTick > BladeInfo.FinalInterval)
                 {
-                    bladeAttackTick = 0;
+                    bladeAttackTick = Fix64.Zero;
                     foreach (MechaComponentHitBox hb in HittingHitBoxes)
                     {
                         hb.ParentGridRootRoot.MechaComponentBase.MechaComponentInfo.Damage(BladeInfo.FinalDamage);

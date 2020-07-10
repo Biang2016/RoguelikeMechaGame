@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using BiangStudio.GameDataFormat;
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
 using UnityEngine;
@@ -210,18 +211,7 @@ namespace Client
 
             return res;
         }
-
-        public static float CalculateModifiers(this List<Modifier> modifiers, float value)
-        {
-            float res = value;
-            foreach (Modifier modifier in modifiers)
-            {
-                res = modifier.Calculate(res);
-            }
-
-            return res;
-        }
-
+        
         public static string GetIP()
         {
             IPHostEntry host;

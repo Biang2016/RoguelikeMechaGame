@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace BiangStudio.GameDataFormat
 {
@@ -522,6 +523,13 @@ namespace BiangStudio.GameDataFormat
             this.z = z;
         }
 
+        public FixVector3(Vector3 v)
+        {
+            this.x = (Fix64) v.x;
+            this.y = (Fix64) v.y;
+            this.z = (Fix64) v.z;
+        }
+
         public FixVector3(FixVector3 v)
         {
             this.x = v.x;
@@ -547,7 +555,7 @@ namespace BiangStudio.GameDataFormat
                 else if (index == 1)
                     y = value;
                 else
-                    y = value;
+                    z = value;
             }
         }
 
@@ -672,6 +680,85 @@ namespace BiangStudio.GameDataFormat
             return new UnityEngine.Vector3((float) x, (float) y, (float) z);
         }
 #endif
+    }
+
+    public struct FixQuaternion
+    {
+        public Fix64 x;
+        public Fix64 y;
+        public Fix64 z;
+        public Fix64 w;
+
+        public FixQuaternion(Fix64 x, Fix64 y, Fix64 z, Fix64 w)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.w = w;
+        }
+
+        public FixQuaternion(Quaternion q)
+        {
+            this.x = (Fix64) q.x;
+            this.y = (Fix64) q.y;
+            this.z = (Fix64) q.z;
+            this.w = (Fix64) q.w;
+        }
+
+        public Fix64 this[int index]
+        {
+            get
+            {
+                if (index == 0)
+                    return x;
+                else if (index == 1)
+                    return y;
+                else if (index == 2)
+                    return z;
+                else
+                    return w;
+            }
+            set
+            {
+                if (index == 0)
+                    x = value;
+                else if (index == 1)
+                    y = value;
+                else if (index == 2)
+                    z = value;
+                else if (index == 3)
+                    w = value;
+            }
+        }
+
+        public static FixVector3 Zero
+        {
+            get { return new FixVector3(Fix64.Zero, Fix64.Zero, Fix64.Zero); }
+        }
+
+        public override string ToString()
+        {
+            return $"x:{x} y:{y} z:{z} w:{w}";
+        }
+
+        public static FixQuaternion Lerp(FixQuaternion from, FixQuaternion to, Fix64 t)
+        {
+            Fix64 k0 = 1 - t;
+            Fix64 k1 = t;
+
+            FixQuaternion result = new FixQuaternion();
+            result.w = from.w * k0 + to.w * k1;
+            result.x = from.x * k0 + to.x * k1;
+            result.y = from.y * k0 + to.y * k1;
+            result.z = from.z * k0 + to.z * k1;
+
+            return result;
+        }
+
+        public Quaternion ToQuaternion()
+        {
+            return new Quaternion((float) x, (float) y, (float) z, (float) w);
+        }
     }
 
     public struct FixVector2

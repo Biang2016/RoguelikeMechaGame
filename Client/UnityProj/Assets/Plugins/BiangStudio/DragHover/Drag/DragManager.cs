@@ -48,7 +48,7 @@ namespace BiangStudio.DragHover
             DragAreaLayerMask = dragAreaLayerMask;
         }
 
-        public override void Update()
+        public override void LogicTick()
         {
             Current_DragArea = CheckCurrentDragArea();
             if (ForbidDrag)
@@ -78,7 +78,7 @@ namespace BiangStudio.DragHover
         {
             foreach (DragProcessor dragProcessor in DragProcessors)
             {
-                dragProcessor.Update();
+                dragProcessor.LogicTick();
                 if (DragKeyDownHandler != null && DragKeyDownHandler.Invoke())
                 {
                     if (!CurrentDrag)

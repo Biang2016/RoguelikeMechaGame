@@ -1,4 +1,4 @@
-namespace Client
+namespace GameCore
 {
     public enum Sign
     {

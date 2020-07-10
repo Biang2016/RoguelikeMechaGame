@@ -1,4 +1,6 @@
-﻿using BiangStudio.ObjectPool;
+﻿using BiangStudio.GameDataFormat;
+using BiangStudio.ObjectPool;
+using GameCore;
 using UnityEngine;
 
 namespace Client
@@ -39,7 +41,7 @@ namespace Client
 
             Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             Collider.enabled = false;
-            curSpeed = 0;
+            curSpeed = Fix64.Zero;
 
             if (useTrail) ParticleSystemTrail.enabled = false;
             base.PoolRecycle();
@@ -52,7 +54,7 @@ namespace Client
             ProjectileInfo = projectileInfo;
         }
 
-        private float curSpeed;
+        private Fix64 curSpeed;
 
         public void Play()
         {
@@ -78,7 +80,7 @@ namespace Client
         {
             if (!curSpeed.Equals(0))
             {
-                Rigidbody.velocity = transform.forward * curSpeed;
+                //Rigidbody.velocity = transform.forward * curSpeed;
             }
         }
 

@@ -46,7 +46,7 @@ namespace Client
         private bool onMouseDrag_Left = false;
         private Vector3 mouseDownPos_Left = Vector3.zero;
 
-        void Update()
+        public void LogicTick()
         {
             if (GameStateManager.Instance.GetState() == GameState.Building)
             {

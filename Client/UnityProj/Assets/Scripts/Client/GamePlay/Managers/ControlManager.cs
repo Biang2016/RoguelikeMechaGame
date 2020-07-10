@@ -59,7 +59,6 @@ namespace Client
         public ButtonState Building_RotateItem = new ButtonState() {ButtonName = ButtonNames.Building_RotateItem};
         public ButtonState Building_ToggleBackpack = new ButtonState() {ButtonName = ButtonNames.Building_ToggleBackpack};
         public ButtonState Building_ToggleWireLines = new ButtonState() {ButtonName = ButtonNames.Building_ToggleWireLines};
-        public ButtonState Building_ToggleDebug = new ButtonState() {ButtonName = ButtonNames.Building_ToggleDebug};
 
         #endregion
 
@@ -178,7 +177,6 @@ namespace Client
             Building_RotateItem.GetStateCallbackFromContext(MechaBuildingInputActions.RotateItem);
             Building_ToggleBackpack.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleBackpack);
             Building_ToggleWireLines.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleWireLines);
-            Building_ToggleDebug.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleDebug);
 
             Battle_MouseLeft.GetStateCallbackFromContext(MechaBattleInputActions.MouseLeftClick);
             Battle_MouseRight.GetStateCallbackFromContext(MechaBattleInputActions.MouseRightClick);
@@ -202,15 +200,18 @@ namespace Client
             Common_Tab.GetStateCallbackFromContext(CommonInputActions.Tab);
 
             PlayerInput.Enable();
+            CommonInputActions.Enable();
+            MechaBattleInputActions.Enable();
+            MechaBuildingInputActions.Disable();
         }
 
-        public override void Update()
+        public override void LogicTick()
         {
-            if (false)
+            if (true)
             {
                 foreach (KeyValuePair<ButtonNames, ButtonState> kv in ButtonStateDict)
                 {
-                    string input = kv.Key.ToString();
+                    string input = kv.Value.ToString();
                     if (!string.IsNullOrWhiteSpace(input))
                     {
                         Debug.Log(input);
@@ -219,12 +220,20 @@ namespace Client
             }
         }
 
-        public override void LateUpdate()
+        public override void LateLogicTick()
         {
             foreach (KeyValuePair<ButtonNames, ButtonState> kv in ButtonStateDict)
             {
                 kv.Value.Reset();
             }
+        }
+
+        public override void Update()
+        {
+        }
+
+        public override void LateUpdate()
+        {
         }
 
         public void EnableBattleInputActions(bool enable)

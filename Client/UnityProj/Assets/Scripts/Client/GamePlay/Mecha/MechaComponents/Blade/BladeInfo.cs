@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BiangStudio.GameDataFormat;
 using GameCore;
 
 namespace Client
@@ -9,10 +10,10 @@ namespace Client
         public int Damage;
         public List<Modifier> Modifiers_Damage = new List<Modifier>();
 
-        public float Interval;
+        public Fix64 Interval;
         public List<Modifier> Modifiers_Interval = new List<Modifier>();
 
-        public BladeInfo(MechaType mechaType, float interval, int damage)
+        public BladeInfo(MechaType mechaType, Fix64 interval, int damage)
         {
             MechaType = mechaType;
             Interval = interval;
@@ -20,6 +21,6 @@ namespace Client
         }
 
         public int FinalDamage => Modifiers_Damage.CalculateModifiers(Damage);
-        public float FinalInterval => Modifiers_Interval.CalculateModifiers(Interval);
+        public Fix64 FinalInterval => Modifiers_Interval.CalculateModifiers(Interval);
     }
 }

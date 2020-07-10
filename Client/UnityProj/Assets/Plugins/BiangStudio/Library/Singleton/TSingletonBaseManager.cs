@@ -10,7 +10,11 @@
         {
         }
 
-        public virtual void PreUpdate()
+        public virtual void LogicTick()
+        {
+        }
+
+        public virtual void LateLogicTick()
         {
         }
 
