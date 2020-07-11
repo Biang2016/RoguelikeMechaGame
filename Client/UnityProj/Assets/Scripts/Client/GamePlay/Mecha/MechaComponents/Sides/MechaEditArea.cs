@@ -58,24 +58,24 @@ namespace Client
                     if (ControlManager.Instance.Building_MouseRight.Down)
                     {
                         onMouseDrag_Right = true;
-                        if (GetMousePosOnThisArea(out Vector3 pos, out GridPos _))
+                        if (GetMousePosOnThisArea(out Vector3 pos_world, out Vector3 _, out Vector3 _, out GridPos _))
                         {
-                            mouseDownPos_Right = pos;
+                            mouseDownPos_Right = pos_world;
                         }
                     }
 
                     if (onMouseDrag_Right && ControlManager.Instance.Building_MouseRight.Pressed)
                     {
-                        if (GetMousePosOnThisArea(out Vector3 pos, out GridPos _))
+                        if (GetMousePosOnThisArea(out Vector3 pos_world, out Vector3 _, out Vector3 _, out GridPos _))
                         {
                             Vector3 startVec = mouseDownPos_Right - transform.position;
-                            Vector3 endVec = pos - transform.position;
+                            Vector3 endVec = pos_world - transform.position;
 
                             float rotateAngle = Vector3.SignedAngle(startVec, endVec, transform.up);
                             if (Mathf.Abs(rotateAngle) > 3)
                             {
                                 ClientBattleManager.Instance.PlayerMecha.transform.Rotate(0, rotateAngle, 0);
-                                mouseDownPos_Right = pos;
+                                mouseDownPos_Right = pos_world;
                             }
                         }
                         else
@@ -95,7 +95,7 @@ namespace Client
                     if (ControlManager.Instance.Building_MouseLeft.Down)
                     {
                         onMouseDrag_Left = true;
-                        if (GetMousePosOnThisArea(out Vector3 pos, out GridPos _))
+                        if (GetMousePosOnThisArea(out Vector3 pos, out Vector3 _, out Vector3 _, out GridPos _))
                         {
                             mouseDownPos_Left = pos;
                         }
@@ -103,7 +103,7 @@ namespace Client
 
                     if (onMouseDrag_Left && ControlManager.Instance.Building_MouseLeft.Pressed)
                     {
-                        if (GetMousePosOnThisArea(out Vector3 pos, out GridPos _))
+                        if (GetMousePosOnThisArea(out Vector3 pos, out Vector3 _, out Vector3 _, out GridPos _))
                         {
                             Vector3 delta = pos - mouseDownPos_Left;
                             Vector3 delta_local = ClientBattleManager.Instance.PlayerMecha.transform.InverseTransformVector(delta);
@@ -130,9 +130,11 @@ namespace Client
             }
         }
 
-        public bool GetMousePosOnThisArea(out Vector3 pos, out GridPos gp_matrix)
+        public bool GetMousePosOnThisArea(out Vector3 pos_world, out Vector3 pos_local, out Vector3 pos_matrix, out GridPos gp_matrix)
         {
-            pos = Vector3.zero;
+            pos_world = Vector3.zero;
+            pos_local = Vector3.zero;
+            pos_matrix = Vector3.zero;
             gp_matrix = GridPos.Zero;
             Ray ray = DragProcessor.Camera.ScreenPointToRay(DragProcessor.CurrentMousePosition_Screen);
             Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerManager.Instance.LayerMask_DragAreas);
@@ -140,7 +142,8 @@ namespace Client
             {
                 if (hit.collider == BoxCollider)
                 {
-                    pos = hit.point;
+                    pos_world = hit.point;
+                    //todo!!!!!
                     return true;
                 }
                 else

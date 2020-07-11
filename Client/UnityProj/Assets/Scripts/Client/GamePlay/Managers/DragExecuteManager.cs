@@ -96,9 +96,9 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
         );
     }
 
-    private bool ScreenMousePositionToWorld_MechaEditorInventory(out Vector3 worldPos, out GridPos gp_matrix)
+    private bool ScreenMousePositionToWorld_MechaEditorInventory(out Vector3 pos_world, out Vector3 pos_local, out Vector3 pos_matrix, out GridPos gp_matrix)
     {
-        if (ClientBattleManager.Instance.PlayerMecha.MechaEditArea.GetMousePosOnThisArea(out worldPos, out gp_matrix))
+        if (ClientBattleManager.Instance.PlayerMecha.MechaEditArea.GetMousePosOnThisArea(out pos_world, out pos_local, out pos_matrix, out gp_matrix))
         {
             return true;
         }
@@ -108,9 +108,9 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
         }
     }
 
-    private bool ScreenMousePositionToWorld_BackpackDragArea(out Vector3 pos_world, out GridPos gp_matrix)
+    private bool ScreenMousePositionToWorld_BackpackDragArea(out Vector3 pos_world, out Vector3 pos_local, out Vector3 pos_matrix, out GridPos gp_matrix)
     {
-        if (BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(out pos_world, out gp_matrix))
+        if (BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(out pos_world, out pos_local, out pos_matrix, out gp_matrix))
         {
             return true;
         }

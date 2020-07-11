@@ -21,13 +21,13 @@ namespace BiangStudio.GridBackpack
         public Backpack Backpack;
         public InventoryItem InventoryItem;
         private Draggable Draggable;
-        private RectTransform PanelRectTransform => (RectTransform) Backpack.BackpackPanel.ItemContainer;
+        public RectTransform PanelRectTransform => (RectTransform) Backpack.BackpackPanel.ItemContainer;
 
         [SerializeField] private Image Image;
 
         [SerializeField] private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
 
-        private RectTransform RectTransform => (RectTransform) transform;
+        public RectTransform RectTransform => (RectTransform) transform;
 
         private Vector2 size;
         private Vector2 sizeRev;
@@ -70,7 +70,6 @@ namespace BiangStudio.GridBackpack
             dragStartOccupiedPositions_Matrix = InventoryItem.OccupiedGridPositions_Matrix.Clone();
             dragStartGridPos_Matrix = InventoryItem.GridPos_Matrix;
             InventoryItem.Inventory.PickUpItem(InventoryItem);
-            Debug.Log("Pickup");
         }
 
         private void SetVirtualGridPos(GridPosR gridPos_World)
@@ -138,13 +137,31 @@ namespace BiangStudio.GridBackpack
             Backpack.BackpackPanel.BackpackItemVirtualOccupationRoot.Clear();
             if (dragArea.Equals(Backpack.DragArea))
             {
-                if (!Backpack.CheckSpaceAvailable(InventoryItem.OccupiedGridPositions_Matrix, GridPos.Zero))
+                if (Backpack.CheckSpaceAvailable(dragStartOccupiedPositions_Matrix))
+                {
+                    Backpack.ResetGrids(dragStartOccupiedPositions_Matrix);
+                }
+                else
+                {
+                    // indicates that this is dragged in from outside, and conflict at the first position with another item.
+                }
+
+                if (!Backpack.CheckSpaceAvailable(InventoryItem.OccupiedGridPositions_Matrix))
                 {
                     InventoryItem.GridPos_Matrix = dragStartGridPos_Matrix;
                 }
 
-                Backpack.ResetGrids(dragStartOccupiedPositions_Matrix);
-                Debug.Log("PutDownItem");
+                if (!Backpack.CheckSpaceAvailable(InventoryItem.OccupiedGridPositions_Matrix))
+                {
+                    if (Backpack.FindSpaceToPutItem(InventoryItem))
+                    {
+                    }
+                    else
+                    {
+                        Debug.LogError("No space in bag but suc drag in");
+                    }
+                }
+
                 Backpack.PutDownItem(InventoryItem);
                 RefreshView();
             }

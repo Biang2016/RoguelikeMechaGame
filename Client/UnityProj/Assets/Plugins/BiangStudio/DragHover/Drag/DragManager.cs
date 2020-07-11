@@ -14,7 +14,7 @@ namespace BiangStudio.DragHover
 
         public delegate bool GetScreenMousePositionDelegate(out Vector2 mouseScreenPos);
 
-        public delegate bool ScreenMousePositionToWorldDelegate(out Vector3 worldPos, out GridPos gp_matrix);
+        public delegate bool ScreenMousePositionToWorldDelegate(out Vector3 pos_world, out Vector3 pos_local, out Vector3 pos_matrix, out GridPos gp_matrix);
 
         private LogErrorDelegate LogErrorHandler;
         private DragKeyDelegate DragKeyDownHandler;

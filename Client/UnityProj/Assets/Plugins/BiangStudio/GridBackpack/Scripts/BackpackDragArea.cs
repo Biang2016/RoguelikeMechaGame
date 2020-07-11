@@ -18,9 +18,11 @@ namespace BiangStudio.GridBackpack
             DragProcessor = DragManager.Instance.GetDragProcessor<BackpackItem>();
         }
 
-        public bool GetMousePosOnThisArea(out Vector3 pos_world, out GridPos gp_matrix)
+        public bool GetMousePosOnThisArea(out Vector3 pos_world, out Vector3 pos_local, out Vector3 pos_matrix, out GridPos gp_matrix)
         {
             pos_world = Vector3.zero;
+            pos_local = Vector3.zero;
+            pos_matrix = Vector3.zero;
             gp_matrix = GridPos.Zero;
             Ray ray = DragProcessor.Camera.ScreenPointToRay(DragProcessor.CurrentMousePosition_Screen);
             Physics.Raycast(ray, out RaycastHit hit, 1000f, 1 << BoxCollider.gameObject.layer);
@@ -29,10 +31,12 @@ namespace BiangStudio.GridBackpack
                 if (hit.collider == BoxCollider)
                 {
                     pos_world = hit.point;
-                    Vector3 localPos = Backpack.BackpackPanel.ItemContainer.transform.InverseTransformPoint(pos_world);
+                    Vector3 pos_local_absolute = Backpack.BackpackPanel.ItemContainer.transform.InverseTransformPoint(pos_world);
                     Vector2 containerSize = ((RectTransform) Backpack.BackpackPanel.ItemContainer).rect.size;
-                    Vector3 local_matrix = new Vector3(localPos.x + containerSize.x / 2f - Backpack.GridSize/2f, containerSize.y / 2f - localPos.y - Backpack.GridSize / 2f);
-                    gp_matrix = GridPos.GetGridPosByPointXY(local_matrix, Backpack.GridSize);
+                    pos_local = new Vector3(pos_local_absolute.x + containerSize.x / 2f - Backpack.GridSize / 2f, pos_local_absolute.y - containerSize.y / 2f + Backpack.GridSize / 2f);
+                    pos_matrix = new Vector3(pos_local_absolute.x + containerSize.x / 2f, -pos_local_absolute.y + containerSize.y / 2f);
+                    Vector3 pos_matrix_round = new Vector3(pos_matrix.x - Backpack.GridSize / 2f, pos_matrix.y - Backpack.GridSize / 2f);
+                    gp_matrix = GridPos.GetGridPosByPointXY(pos_matrix_round, Backpack.GridSize);
                     return true;
                 }
                 else

@@ -200,10 +200,9 @@ namespace Client
         public bool ReturnToBackpack(bool cancelDrag, bool dragTheItem)
         {
             Backpack bp = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
-            InventoryItem ii = new InventoryItem(MechaComponentInfo, bp, GridPosR.Zero);
+            bp.BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(out Vector3 _, out Vector3 pos_local, out Vector3 pos_matrix, out GridPos gp_matrix);
+            InventoryItem ii = new InventoryItem(MechaComponentInfo, bp, gp_matrix);
             ii.ItemContentInfo = MechaComponentInfo;
-            bp.BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(out Vector3 _, out GridPos gp_matrix);
-            ii.SetGridPosition(gp_matrix);
             bool suc = bp.TryAddItem(ii);
             if (suc)
             {
@@ -215,8 +214,11 @@ namespace Client
 
                 if (dragTheItem)
                 {
+                    bp.ResetGrids(ii.OccupiedGridPositions_Matrix);
                     BackpackItem backpackItem = bp.BackpackPanel.GetBackpackItem(ii.GUID);
                     DragManager.Instance.CurrentDrag = backpackItem.gameObject.GetComponent<Draggable>();
+                    backpackItem.RectTransform.anchoredPosition = pos_local;
+                    ii.SetGridPosition(gp_matrix);
                     DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BackpackItem>());
                 }
 

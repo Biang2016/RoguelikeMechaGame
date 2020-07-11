@@ -33,9 +33,9 @@ namespace BiangStudio.DragHover
             LastMousePosition_World = CurrentMousePosition_World;
             if (ScreenMousePositionToWorldHandler != null)
             {
-                if (ScreenMousePositionToWorldHandler.Invoke(out Vector3 newWorldPos, out GridPos gp_matrix))
+                if (ScreenMousePositionToWorldHandler.Invoke(out Vector3 pos_world, out Vector3 pos_local, out Vector3 pos_matrix, out GridPos gp_matrix))
                 {
-                    CurrentMousePosition_World = newWorldPos;
+                    CurrentMousePosition_World = pos_world;
                 }
             }
         }

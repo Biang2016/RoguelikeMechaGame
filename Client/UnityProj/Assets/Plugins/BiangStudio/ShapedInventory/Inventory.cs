@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using Sirenix.OdinInspector;
@@ -145,7 +146,7 @@ namespace BiangStudio.ShapedInventory
 
         public bool TryAddItem(InventoryItem item)
         {
-            bool canPlaceDirectly = CheckSpaceAvailable(item.OccupiedGridPositions_Matrix, GridPos.Zero);
+            bool canPlaceDirectly = CheckSpaceAvailable(item.OccupiedGridPositions_Matrix);
             if (canPlaceDirectly)
             {
                 AddItem(item);
@@ -164,70 +165,35 @@ namespace BiangStudio.ShapedInventory
             }
         }
 
-        private bool FindSpaceToPutItem(InventoryItem item)
+        public bool FindSpaceToPutItem(InventoryItem item)
         {
-            foreach (GridPosR.Orientation o in Enum.GetValues(typeof(GridPosR.Orientation)))
+            GridPosR oriGPR = item.GridPos_Matrix;
+            foreach (GridPosR.Orientation orientation in Enum.GetValues(typeof(GridPosR.Orientation)))
             {
-                if (FindSpaceToPutRotatedItem(item, o)) return true;
-            }
-
-            return false;
-        }
-
-        private bool FindSpaceToPutRotatedItem(InventoryItem item, GridPosR.Orientation orientation)
-        {
-            GridPosR.Orientation oriRot = item.GridPos_Matrix.orientation;
-            item.GridPos_Matrix.orientation = GridPosR.Orientation.Up;
-
-            GridRect space = item.BoundingRect;
-
-            bool heightWidthSwap = orientation == GridPosR.Orientation.Right || orientation == GridPosR.Orientation.Left;
-
-            GridPos temp_rot = GridPos.RotateGridPos(space.position, orientation);
-            GridPos start = temp_rot - (GridPos) item.GridPos_Matrix;
-
-            for (int z = 0 - start.z; z < Rows - (heightWidthSwap ? space.z_max : space.x_max); z++)
-            {
-                for (int x = 0 - start.x; x < Columns - (heightWidthSwap ? space.x_max : space.z_max); x++)
+                item.GridPos_Matrix.orientation = orientation;
+                for (int z = 0; z < Rows; z++)
                 {
-                    bool canHold = true;
-                    foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
+                    for (int x = 0; x < Columns; x++)
                     {
-                        GridPos rot_gp = GridPos.RotateGridPos(gp_matrix, orientation);
-                        int col = x + rot_gp.x;
-                        int row = z + rot_gp.z;
-                        if (col < 0 || col >= Columns || row < 0 || row >= Rows)
-                        {
-                            canHold = false;
-                            break;
-                        }
-
-                        if (!InventoryGridMatrix[col, row].Available)
-                        {
-                            canHold = false;
-                            break;
-                        }
-                    }
-
-                    if (canHold)
-                    {
-                        item.GridPos_Matrix.x = x;
                         item.GridPos_Matrix.z = z;
-                        item.GridPos_Matrix.orientation = orientation;
-                        return true;
+                        item.GridPos_Matrix.x = x;
+                        if (CheckSpaceAvailable(item.OccupiedGridPositions_Matrix))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
 
-            item.GridPos_Matrix.orientation = oriRot;
+            item.GridPos_Matrix = oriGPR;
             return false;
         }
 
-        public bool CheckSpaceAvailable(List<GridPos> realGridPoses, GridPos offset)
+        public bool CheckSpaceAvailable(List<GridPos> realGridPoses)
         {
             foreach (GridPos gp in realGridPoses)
             {
-                GridPos addedGP = gp + offset;
+                GridPos addedGP = gp;
 
                 if (addedGP.x < 0 || addedGP.x >= Rows || addedGP.z < 0 || addedGP.z >= Columns)
                 {
@@ -249,10 +215,15 @@ namespace BiangStudio.ShapedInventory
         {
             InventoryItems.Add(item);
             OnAddItemSucAction?.Invoke(item);
-            foreach (GridPos gp in item.OccupiedGridPositions_Matrix)
+            StringBuilder sb = new StringBuilder();
+            foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
             {
-                InventoryGridMatrix[gp.x, gp.z].State = InventoryGrid.States.Unavailable;
+                sb.Append(gp_matrix.ToString());
+                InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Unavailable;
             }
+
+            Debug.Log("AddItem: " + sb.ToString());
+            RefreshConflictAndIsolation();
         }
 
         public void ResetGrids(List<GridPos> oldOccupiedGPs)
@@ -269,13 +240,18 @@ namespace BiangStudio.ShapedInventory
         {
             if (InventoryItems.Contains(item))
             {
+                StringBuilder sb = new StringBuilder();
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
+                    sb.Append(gp_matrix.ToString());
                     InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Available;
                 }
 
+                Debug.Log("RemoveItem: " + sb.ToString());
+
                 InventoryItems.Remove(item);
                 OnRemoveItemSucAction?.Invoke(item);
+                RefreshConflictAndIsolation();
             }
         }
 
@@ -283,10 +259,17 @@ namespace BiangStudio.ShapedInventory
         {
             if (InventoryItems.Contains(item))
             {
+                StringBuilder sb = new StringBuilder();
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
-                    InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.TempUnavailable;
+                    sb.Append(gp_matrix.ToString());
+                    if (InventoryItemMatrix[gp_matrix.x, gp_matrix.z] == item)
+                    {
+                        InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.TempUnavailable;
+                    }
                 }
+
+                Debug.Log("PickUpItem: " + sb.ToString());
             }
         }
 
@@ -294,10 +277,15 @@ namespace BiangStudio.ShapedInventory
         {
             if (InventoryItems.Contains(item))
             {
+                StringBuilder sb = new StringBuilder();
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
+                    sb.Append(gp_matrix.ToString());
                     InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Unavailable;
                 }
+
+                Debug.Log("PutDownItem: " + sb.ToString());
+                RefreshConflictAndIsolation();
             }
         }
 
