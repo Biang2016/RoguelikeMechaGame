@@ -139,7 +139,7 @@ namespace Client
                 10,
                 true,
                 75,
-                () => ControlManager.Instance.Building_ToggleBackpack.Down,
+                () => ControlManager.Instance.Common_Tab.Down,
                 () => ControlManager.Instance.Building_RotateItem.Down,
                 (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackGrid].AllocateGameObject<BackpackGrid>(parent),
                 (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItem].AllocateGameObject<BackpackItem>(parent),
@@ -147,7 +147,7 @@ namespace Client
                 (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItemGridHitBox].AllocateGameObject<BackpackItemGridHitBox>(parent)
             );
 
-            myBackPack.ToggleDebugKeyDownHandler = () => ControlManager.Instance.Common_Tab.Down;
+            myBackPack.ToggleDebugKeyDownHandler = () => ControlManager.Instance.Common_Debug.Down;
             myBackPack.ToggleBackpackCallback = ToggleBattleInventory;
             myBackPack.ToggleDebugCallback = null;
             myBackPack.DragItemOutBackpackCallback = (backpackItem) =>

@@ -102,20 +102,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[{"updateInterval":{},"_position":{"x":675.0,"y":510.0},"$type":"FlowCanvas.Nodes.UpdateEvent","$id":"0"},{"_position":{"x":900.0,"y":555.0},"$type":"FlowCanvas.Nodes.While","$id":"1"},{"_position":{"x":1080.0,"y":525.0},"$type":"FlowCanvas.Nodes.ANDMerge","$id":"2"},{"_method":{"_baseInfo":"Client.Shooter|Shoot|System.Void","_paramsInfo":""},"_callable":true,"_position":{"x":1170.0,"y":210.0},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"3"},{"_simplexNode":{},"_position":{"x":1440.0,"y":255.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.Wait,
-    ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"4"},{"value":{"_value":true},"_verboseLevel":0,"_position":{"x":465.0,"y":765.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"5"},{"_simplexNode":{},"_position":{"x":660.0,"y":675.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[Client.FlowCanvas.Input,
-    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"6"},{"value":{"_value":301},"_verboseLevel":0,"_position":{"x":435.0,"y":660.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[GameCore.ButtonNames,
-    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"7"},{"value":{"_value":1},"_position":{"x":930.0,"y":225.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[Client.Shooter,
-    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"8"},{"value":{"_value":2.0},"_verboseLevel":0,"_position":{"x":1260.0,"y":300.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"9"}],"connections":[{"_sourcePortName":"Out","_targetPortName":"In","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Do","_targetPortName":"1","_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Out","_targetPortName":"
+  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[{"updateInterval":{},"_position":{"x":675.0,"y":510.0},"$type":"FlowCanvas.Nodes.UpdateEvent","$id":"0"},{"_position":{"x":885.0,"y":555.0},"$type":"FlowCanvas.Nodes.While","$id":"1"},{"_inputPortValues":{"Time":{"$content":2.0,"$type":"System.Single"}},"_position":{"x":1095.0,"y":555.0},"$type":"FlowCanvas.Nodes.Cooldown","$id":"2"},{"_method":{"_baseInfo":"Client.Shooter|Shoot|System.Void","_paramsInfo":""},"_callable":true,"_position":{"x":1290.0,"y":330.0},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"3"},{"value":{"_value":true},"_verboseLevel":0,"_position":{"x":465.0,"y":765.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"4"},{"_simplexNode":{},"_position":{"x":660.0,"y":675.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[Client.FlowCanvas.Input,
+    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"5"},{"value":{"_value":301},"_verboseLevel":0,"_position":{"x":435.0,"y":660.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[GameCore.ButtonNames,
+    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"6"},{"value":{"_value":1},"_position":{"x":1110.0,"y":330.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[Client.Shooter,
+    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"7"}],"connections":[{"_sourcePortName":"Out","_targetPortName":"In","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Do","_targetPortName":"In","_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Ready","_targetPortName":"
     ","_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"
-    ","_targetPortName":"In","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Done","_targetPortName":"0","_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"pressed","_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"6"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Condition","_sourceNode":{"$ref":"6"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"buttonName","_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"6"},"$type":"FlowCanvas.BinderConnection`1[[GameCore.ButtonNames,
-    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},{"_sourcePortName":"Value","_targetPortName":"Shooter","_sourceNode":{"$ref":"8"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection`1[[Client.Shooter,
-    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},{"_sourcePortName":"Value","_targetPortName":"time","_sourceNode":{"$ref":"9"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+    ","_targetPortName":"Cancel","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"pressed","_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"5"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Condition","_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"buttonName","_sourceNode":{"$ref":"6"},"_targetNode":{"$ref":"5"},"$type":"FlowCanvas.BinderConnection`1[[GameCore.ButtonNames,
+    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},{"_sourcePortName":"Value","_targetPortName":"Shooter","_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection`1[[Client.Shooter,
+    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
   _boundGraphObjectReferences:
   - {fileID: 0}
   - {fileID: 348459106108629423}
@@ -123,8 +120,8 @@ MonoBehaviour:
     _version: 3.08
     _category: 
     _comments: 
-    _translation: {x: -626, y: -50}
-    _zoomFactor: 0.9776488
+    _translation: {x: -453, y: -239}
+    _zoomFactor: 1
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
