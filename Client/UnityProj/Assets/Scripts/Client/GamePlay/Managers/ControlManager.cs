@@ -207,7 +207,7 @@ namespace Client
 
         public override void LogicTick()
         {
-            if (true)
+            if (false)
             {
                 foreach (KeyValuePair<ButtonNames, ButtonState> kv in ButtonStateDict)
                 {
@@ -218,6 +218,8 @@ namespace Client
                     }
                 }
             }
+
+            InputSystem.Update();
         }
 
         public override void LateLogicTick()

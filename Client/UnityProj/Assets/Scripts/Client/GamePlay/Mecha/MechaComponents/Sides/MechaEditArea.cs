@@ -14,6 +14,7 @@ namespace Client
         [SerializeField] private BoxCollider BoxCollider;
         [SerializeField] private GameObject PivotIndicator;
         [SerializeField] private MechaEditorAreaGridRoot MechaEditorAreaGridRoot;
+        private DragProcessor DragProcessor;
 
         void Start()
         {
@@ -22,6 +23,7 @@ namespace Client
 
         public void Init(MechaInfo mechaInfo)
         {
+            DragProcessor = DragManager.Instance.GetDragProcessor<MechaComponentBase>();
             Clear();
             gameObject.SetActive(mechaInfo.IsPlayer);
             SetShown(false);
@@ -56,7 +58,7 @@ namespace Client
                     if (ControlManager.Instance.Building_MouseRight.Down)
                     {
                         onMouseDrag_Right = true;
-                        if (GetMousePosOnThisArea(ControlManager.Instance.Building_MousePosition, out Vector3 pos))
+                        if (GetMousePosOnThisArea(out Vector3 pos, out GridPos _))
                         {
                             mouseDownPos_Right = pos;
                         }
@@ -64,7 +66,7 @@ namespace Client
 
                     if (onMouseDrag_Right && ControlManager.Instance.Building_MouseRight.Pressed)
                     {
-                        if (GetMousePosOnThisArea(ControlManager.Instance.Building_MousePosition, out Vector3 pos))
+                        if (GetMousePosOnThisArea(out Vector3 pos, out GridPos _))
                         {
                             Vector3 startVec = mouseDownPos_Right - transform.position;
                             Vector3 endVec = pos - transform.position;
@@ -90,18 +92,18 @@ namespace Client
                     }
 
                     // Mouse Left button drag for move whole mecha
-                    if (ControlManager.Instance.Battle_MouseLeft.Down)
+                    if (ControlManager.Instance.Building_MouseLeft.Down)
                     {
                         onMouseDrag_Left = true;
-                        if (GetMousePosOnThisArea(ControlManager.Instance.Building_MousePosition, out Vector3 pos))
+                        if (GetMousePosOnThisArea(out Vector3 pos, out GridPos _))
                         {
                             mouseDownPos_Left = pos;
                         }
                     }
 
-                    if (onMouseDrag_Left && ControlManager.Instance.Battle_MouseLeft.Pressed)
+                    if (onMouseDrag_Left && ControlManager.Instance.Building_MouseLeft.Pressed)
                     {
-                        if (GetMousePosOnThisArea(ControlManager.Instance.Building_MousePosition, out Vector3 pos))
+                        if (GetMousePosOnThisArea(out Vector3 pos, out GridPos _))
                         {
                             Vector3 delta = pos - mouseDownPos_Left;
                             Vector3 delta_local = ClientBattleManager.Instance.PlayerMecha.transform.InverseTransformVector(delta);
@@ -119,7 +121,7 @@ namespace Client
                         }
                     }
 
-                    if (ControlManager.Instance.Battle_MouseLeft.Up)
+                    if (ControlManager.Instance.Building_MouseLeft.Up)
                     {
                         onMouseDrag_Left = false;
                         mouseDownPos_Left = Vector3.zero;
@@ -128,10 +130,11 @@ namespace Client
             }
         }
 
-        public bool GetMousePosOnThisArea(Vector2 mousePos, out Vector3 pos)
+        public bool GetMousePosOnThisArea(out Vector3 pos, out GridPos gp_matrix)
         {
             pos = Vector3.zero;
-            Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(mousePos);
+            gp_matrix = GridPos.Zero;
+            Ray ray = DragProcessor.Camera.ScreenPointToRay(DragProcessor.CurrentMousePosition_Screen);
             Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerManager.Instance.LayerMask_DragAreas);
             if (hit.collider)
             {

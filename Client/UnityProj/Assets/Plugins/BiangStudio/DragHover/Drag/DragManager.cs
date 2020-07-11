@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.Singleton;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,12 +14,14 @@ namespace BiangStudio.DragHover
 
         public delegate bool GetScreenMousePositionDelegate(out Vector2 mouseScreenPos);
 
-        public delegate bool ScreenMousePositionToWorldDelegate(Vector2 mousePos, out Vector3 worldPos);
+        public delegate bool ScreenMousePositionToWorldDelegate(out Vector3 worldPos, out GridPos gp_matrix);
 
         private LogErrorDelegate LogErrorHandler;
         private DragKeyDelegate DragKeyDownHandler;
         private DragKeyDelegate DragKeyUpHandler;
         internal int DragAreaLayerMask;
+
+        public List<Draggable> AllDraggables = new List<Draggable>();
 
         internal UnityAction OnCancelDrag;
         private List<DragProcessor> DragProcessors = new List<DragProcessor>();
@@ -50,6 +53,11 @@ namespace BiangStudio.DragHover
 
         public override void LogicTick()
         {
+            foreach (Draggable draggable in AllDraggables.ToArray())
+            {
+                draggable.LogicTick();
+            }
+
             Current_DragArea = CheckCurrentDragArea();
             if (ForbidDrag)
             {

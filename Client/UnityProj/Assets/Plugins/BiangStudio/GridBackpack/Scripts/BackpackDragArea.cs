@@ -1,4 +1,5 @@
 ﻿using BiangStudio.DragHover;
+using BiangStudio.GameDataFormat.Grid;
 using UnityEngine;
 
 namespace BiangStudio.GridBackpack
@@ -17,16 +18,21 @@ namespace BiangStudio.GridBackpack
             DragProcessor = DragManager.Instance.GetDragProcessor<BackpackItem>();
         }
 
-        public bool GetMousePosOnThisArea(Vector2 mousePos, out Vector3 pos)
+        public bool GetMousePosOnThisArea(out Vector3 pos_world, out GridPos gp_matrix)
         {
-            pos = Vector3.zero;
-            Ray ray = DragManager.Instance.GetDragProcessor<BackpackItem>().Camera.ScreenPointToRay(mousePos);
+            pos_world = Vector3.zero;
+            gp_matrix = GridPos.Zero;
+            Ray ray = DragProcessor.Camera.ScreenPointToRay(DragProcessor.CurrentMousePosition_Screen);
             Physics.Raycast(ray, out RaycastHit hit, 1000f, 1 << BoxCollider.gameObject.layer);
             if (hit.collider)
             {
                 if (hit.collider == BoxCollider)
                 {
-                    pos = hit.point;
+                    pos_world = hit.point;
+                    Vector3 localPos = Backpack.BackpackPanel.ItemContainer.transform.InverseTransformPoint(pos_world);
+                    Vector2 containerSize = ((RectTransform) Backpack.BackpackPanel.ItemContainer).rect.size;
+                    Vector3 local_matrix = new Vector3(localPos.x + containerSize.x / 2f - Backpack.GridSize/2f, containerSize.y / 2f - localPos.y - Backpack.GridSize / 2f);
+                    gp_matrix = GridPos.GetGridPosByPointXY(local_matrix, Backpack.GridSize);
                     return true;
                 }
                 else

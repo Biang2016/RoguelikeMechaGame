@@ -41,6 +41,8 @@ namespace Client
 
         public UnityAction<MechaComponentBase> OnRemoveMechaComponentBaseSuc;
 
+        public UnityEvent OnLogicTick; // used by FlowCanvas
+
         public override void PoolRecycle()
         {
             MechaComponentGridRoot.SetIsolatedIndicatorShown(true);
@@ -55,6 +57,11 @@ namespace Client
         void Awake()
         {
             Draggable = GetComponent<Draggable>();
+        }
+
+        public virtual void LogicTick()
+        {
+            OnLogicTick?.Invoke();
         }
 
         protected virtual void Update()
@@ -195,6 +202,8 @@ namespace Client
             Backpack bp = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
             InventoryItem ii = new InventoryItem(MechaComponentInfo, bp, GridPosR.Zero);
             ii.ItemContentInfo = MechaComponentInfo;
+            bp.BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(out Vector3 _, out GridPos gp_matrix);
+            ii.SetGridPosition(gp_matrix);
             bool suc = bp.TryAddItem(ii);
             if (suc)
             {
@@ -206,7 +215,8 @@ namespace Client
 
                 if (dragTheItem)
                 {
-                    DragManager.Instance.CurrentDrag = bp.BackpackPanel.GetBackpackItem(ii.GUID).gameObject.GetComponent<Draggable>();
+                    BackpackItem backpackItem = bp.BackpackPanel.GetBackpackItem(ii.GUID);
+                    DragManager.Instance.CurrentDrag = backpackItem.gameObject.GetComponent<Draggable>();
                     DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BackpackItem>());
                 }
 

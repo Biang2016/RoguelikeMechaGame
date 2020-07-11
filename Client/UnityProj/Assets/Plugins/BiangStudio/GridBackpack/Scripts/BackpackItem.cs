@@ -64,12 +64,13 @@ namespace BiangStudio.GridBackpack
             PickUp();
         }
 
-        private void PickUp()
+        public void PickUp()
         {
             dragStartLocalPos = RectTransform.anchoredPosition;
             dragStartOccupiedPositions_Matrix = InventoryItem.OccupiedGridPositions_Matrix.Clone();
             dragStartGridPos_Matrix = InventoryItem.GridPos_Matrix;
             InventoryItem.Inventory.PickUpItem(InventoryItem);
+            Debug.Log("Pickup");
         }
 
         private void SetVirtualGridPos(GridPosR gridPos_World)
@@ -137,16 +138,14 @@ namespace BiangStudio.GridBackpack
             Backpack.BackpackPanel.BackpackItemVirtualOccupationRoot.Clear();
             if (dragArea.Equals(Backpack.DragArea))
             {
-                if (Backpack.CheckSpaceAvailable(InventoryItem.OccupiedGridPositions_Matrix, GridPos.Zero))
-                {
-                    Backpack.MoveItem(dragStartOccupiedPositions_Matrix, InventoryItem.OccupiedGridPositions_Matrix);
-                }
-                else
+                if (!Backpack.CheckSpaceAvailable(InventoryItem.OccupiedGridPositions_Matrix, GridPos.Zero))
                 {
                     InventoryItem.GridPos_Matrix = dragStartGridPos_Matrix;
-                    Backpack.PutDownItem(InventoryItem);
                 }
 
+                Backpack.ResetGrids(dragStartOccupiedPositions_Matrix);
+                Debug.Log("PutDownItem");
+                Backpack.PutDownItem(InventoryItem);
                 RefreshView();
             }
         }

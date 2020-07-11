@@ -20,9 +20,11 @@ namespace BiangStudio.DragHover
             {
                 DragManager.LogError("Couldn't find IDraggable in the gameObject with Draggable component.");
             }
+
+            DragManager.Instance.AllDraggables.Add(this);
         }
 
-        void Update()
+        public void LogicTick()
         {
             if (!canDrag) return;
             if (isDragging)
@@ -68,6 +70,11 @@ namespace BiangStudio.DragHover
                     MyDragProcessor = null;
                 }
             }
+        }
+
+        void OnDestroy()
+        {
+            DragManager.Instance.AllDraggables.Remove(this);
         }
     }
 }

@@ -1,12 +1,16 @@
-﻿using BiangStudio.GameDataFormat;
+﻿using System.Collections.Generic;
+using BiangStudio.GameDataFormat;
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Client
 {
     public partial class Mecha
     {
+        public UnityEvent OnLogicTick; // used by FlowCanvas
+
         private void Initialize_Fighting(MechaInfo mechaInfo)
         {
             TransformHelper.CurrentTransform.Position = new FixVector3(transform.position);
@@ -20,6 +24,12 @@ namespace Client
             speed = Quaternion.Euler(0f, 0f, 45f) * speed;
             MechaInfo.TransformInfo.Position += new FixVector3((Fix64) speed.x, Fix64.Zero, (Fix64) speed.y);
             RotateToMouseDirection();
+
+            OnLogicTick?.Invoke();
+            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
+            {
+                kv.Value.LogicTick();
+            }
         }
 
         void Update_Fighting()

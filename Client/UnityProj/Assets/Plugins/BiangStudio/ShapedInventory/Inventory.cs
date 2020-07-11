@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace BiangStudio.ShapedInventory
 {
+    [Serializable]
     public abstract class Inventory
     {
         public string InventoryName;
@@ -43,10 +45,11 @@ namespace BiangStudio.ShapedInventory
         public int GridSize { get; private set; }
         public int Rows { get; private set; }
         public int Columns { get; private set; }
-        public bool UnlockedPartialGrids { get; private set; }
+        [ShowInInspector] public bool UnlockedPartialGrids { get; private set; }
 
         private int unlockedGridCount = 0;
 
+        [ShowInInspector]
         public int UnlockedGridCount
         {
             get { return unlockedGridCount; }
@@ -128,13 +131,14 @@ namespace BiangStudio.ShapedInventory
 
         public void RefreshInventoryGrids()
         {
+            RefreshConflictAndIsolation();
             int count = 0;
             for (int row = 0; row < Rows; row++)
             {
                 for (int col = 0; col < Columns; col++)
                 {
                     count++;
-                    InventoryGridMatrix[col, row].State = (count > unlockedGridCount && UnlockedPartialGrids) ? InventoryGrid.States.Locked : InventoryGrid.States.Available;
+                    InventoryGridMatrix[col, row].State = (count > unlockedGridCount && UnlockedPartialGrids) ? InventoryGrid.States.Locked : (InventoryItemMatrix[col, row] != null ? InventoryGrid.States.Unavailable : InventoryGrid.States.Available);
                 }
             }
         }
@@ -251,16 +255,11 @@ namespace BiangStudio.ShapedInventory
             }
         }
 
-        public void MoveItem(List<GridPos> oldOccupiedGPs, List<GridPos> newOccupiedGPs)
+        public void ResetGrids(List<GridPos> oldOccupiedGPs)
         {
             foreach (GridPos gp in oldOccupiedGPs)
             {
                 InventoryGridMatrix[gp.x, gp.z].State = InventoryGrid.States.Available;
-            }
-
-            foreach (GridPos gp in newOccupiedGPs)
-            {
-                InventoryGridMatrix[gp.x, gp.z].State = InventoryGrid.States.Unavailable;
             }
         }
 

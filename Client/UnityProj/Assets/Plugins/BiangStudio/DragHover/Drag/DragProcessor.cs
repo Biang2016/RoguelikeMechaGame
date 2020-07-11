@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BiangStudio.GameDataFormat.Grid;
+using UnityEngine;
 
 namespace BiangStudio.DragHover
 {
@@ -32,7 +33,7 @@ namespace BiangStudio.DragHover
             LastMousePosition_World = CurrentMousePosition_World;
             if (ScreenMousePositionToWorldHandler != null)
             {
-                if (ScreenMousePositionToWorldHandler.Invoke(CurrentMousePosition_Screen, out Vector3 newWorldPos))
+                if (ScreenMousePositionToWorldHandler.Invoke(out Vector3 newWorldPos, out GridPos gp_matrix))
                 {
                     CurrentMousePosition_World = newWorldPos;
                 }

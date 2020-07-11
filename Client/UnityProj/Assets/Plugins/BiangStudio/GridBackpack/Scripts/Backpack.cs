@@ -6,6 +6,7 @@ using BiangStudio.ShapedInventory;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable]
 public class Backpack : Inventory
 {
     public BackpackPanel BackpackPanel;

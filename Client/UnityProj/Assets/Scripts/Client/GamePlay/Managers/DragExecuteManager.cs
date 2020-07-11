@@ -55,7 +55,6 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
             delegate(MechaComponentDropSprite mcds, Collider collider, DragProcessor dragProcessor)
             {
                 Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
-
                 MechaComponentInfo mci = mcds.MechaComponentInfo.Clone();
                 ClientBattleManager.Instance.PlayerMecha.MechaInfo.AddMechaComponentInfo(mci, GridPosR.Zero);
                 MechaComponentBase mcb = ClientBattleManager.Instance.PlayerMecha.MechaComponentDict[mci.GUID];
@@ -97,9 +96,9 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
         );
     }
 
-    private bool ScreenMousePositionToWorld_MechaEditorInventory(Vector2 mousePos, out Vector3 worldPos)
+    private bool ScreenMousePositionToWorld_MechaEditorInventory(out Vector3 worldPos, out GridPos gp_matrix)
     {
-        if (ClientBattleManager.Instance.PlayerMecha.MechaEditArea.GetMousePosOnThisArea(mousePos, out worldPos))
+        if (ClientBattleManager.Instance.PlayerMecha.MechaEditArea.GetMousePosOnThisArea(out worldPos, out gp_matrix))
         {
             return true;
         }
@@ -109,9 +108,9 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
         }
     }
 
-    private bool ScreenMousePositionToWorld_BackpackDragArea(Vector2 mousePos, out Vector3 worldPos)
+    private bool ScreenMousePositionToWorld_BackpackDragArea(out Vector3 pos_world, out GridPos gp_matrix)
     {
-        if (BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(mousePos, out worldPos))
+        if (BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.BackpackDragArea.GetMousePosOnThisArea(out pos_world, out gp_matrix))
         {
             return true;
         }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using UnityEngine.Events;
 
 namespace Client
 {
@@ -15,6 +15,5 @@ namespace Client
         {
             base.Update();
         }
-
     }
 }

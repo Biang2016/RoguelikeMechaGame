@@ -24,13 +24,6 @@ namespace BiangStudio.GridBackpack
         void Awake()
         {
             BackpackItemVirtualOccupationRoot = GetComponentInChildren<BackpackItemVirtualOccupationRoot>();
-            //UIType.InitUIType(
-            //    false,
-            //    true,
-            //    false,
-            //    UIFormTypes.Normal,
-            //    UIFormShowModes.Normal,
-            //    UIFormLucencyTypes.Penetrable);
         }
 
         void Update()
