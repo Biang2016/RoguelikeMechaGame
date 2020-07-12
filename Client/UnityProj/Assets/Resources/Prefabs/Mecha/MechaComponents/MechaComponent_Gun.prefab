@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 1244351346966676}
   - component: {fileID: 8787363159894584536}
   - component: {fileID: -2509402043850843953}
-  - component: {fileID: 4278341419360836779}
-  - component: {fileID: 2530100294924697604}
   m_Layer: 0
   m_Name: MechaComponent_Gun
   m_TagString: Untagged
@@ -50,9 +48,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa7fb56a9db4a438c79afa0d4bc2769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TriggerButtonState:
+    ButtonName: 301
+    Down: 1
+    Pressed: 1
+    Up: 0
+    LastPressed: 0
+  ShooterDummyPos: {fileID: 8569312625845208773}
+  AnotherSampleDummyPos: {fileID: 0}
   MechaComponentInfo:
     GUID: 0
-    MechaComponentType: 0
+    MechaComponentType: 2
+    AbilityConfigs:
+    - {fileID: 11400000, guid: d461ae4bac4669f4c95a9d7f20f4477c, type: 2}
     InventoryItem:
       GUID: 0
       GridPos_Matrix:
@@ -60,10 +68,9 @@ MonoBehaviour:
         z: 0
         orientation: 0
     DropProbability: 0
-    TotalLife: 0
+    TotalLife: 50
   MechaComponentGridRoot: {fileID: 4618707353109224937}
   ModelRoot: {fileID: 7716897934555374000}
-  Shooter: {fileID: 348459106108629423}
   OnLogicTick:
     m_PersistentCalls:
       m_Calls: []
@@ -92,80 +99,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartDragPos: {x: 0, y: 0, z: 0}
---- !u!114 &4278341419360836779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2936411875950737291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b5c3ebb24c97464da319951cafe5a47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"FlowCanvas.FlowScript","nodes":[{"_field":{"_baseInfo":"Client.MechaComponent_Gun|OnLogicTick"},"_position":{"x":570.0,"y":495.0},"$type":"FlowCanvas.Nodes.UnityEventAutoCallbackEvent","$id":"0"},{"_position":{"x":855.0,"y":555.0},"$type":"FlowCanvas.Nodes.While","$id":"1"},{"_method":{"_baseInfo":"Client.Shooter|Shoot|System.Void","_paramsInfo":""},"_callable":true,"_position":{"x":1020.0,"y":690.0},"$type":"FlowCanvas.Nodes.ReflectedMethodNodeWrapper","$id":"2"},{"_position":{"x":1170.0,"y":690.0},"$type":"FlowCanvas.Nodes.Cooldown","$id":"3"},{"targetVariable":{"_name":"IsCoolingDown","_targetVariableID":"83e9d5f1-282c-40a6-a373-45e60da2c980"},"_position":{"x":1395.0,"y":735.0},"$type":"FlowCanvas.Nodes.SetVariable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"4"},{"targetVariable":{"_name":"IsCoolingDown","_targetVariableID":"83e9d5f1-282c-40a6-a373-45e60da2c980"},"_inputPortValues":{"Value":{"$content":true,"$type":"System.Boolean"}},"_position":{"x":1395.0,"y":645.0},"$type":"FlowCanvas.Nodes.SetVariable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"5"},{"value":{"_value":true},"_verboseLevel":0,"_position":{"x":255.0,"y":720.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"6"},{"_simplexNode":{},"_position":{"x":450.0,"y":630.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[Client.FlowCanvas.Input,
-    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"7"},{"_simplexNode":{},"_position":{"x":705.0,"y":660.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.AND,
-    ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"8"},{"value":{"_value":301},"_verboseLevel":0,"_position":{"x":225.0,"y":615.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[GameCore.ButtonNames,
-    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"9"},{"value":{"_value":1},"_position":{"x":855.0,"y":705.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[Client.Shooter,
-    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"10"},{"value":{"_name":"IsCoolingDown","_targetVariableID":"83e9d5f1-282c-40a6-a373-45e60da2c980"},"_position":{"x":345.0,"y":795.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"11"},{"_simplexNode":{},"_position":{"x":510.0,"y":795.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.NOT,
-    ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"12"},{"value":{"_name":"CoolingDownTime","_targetVariableID":"09938a39-49a6-4f74-a9a3-cb904ad72c96"},"_position":{"x":975.0,"y":855.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"13"}],"connections":[{"_sourcePortName":"Event","_targetPortName":"In","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Do","_targetPortName":"
-    ","_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"
-    ","_targetPortName":"In","_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Ready","_targetPortName":"In","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Out","_targetPortName":"In","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"5"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"pressed","_sourceNode":{"$ref":"6"},"_targetNode":{"$ref":"7"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"a","_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"8"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Condition","_sourceNode":{"$ref":"8"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"buttonName","_sourceNode":{"$ref":"9"},"_targetNode":{"$ref":"7"},"$type":"FlowCanvas.BinderConnection`1[[GameCore.ButtonNames,
-    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},{"_sourcePortName":"Value","_targetPortName":"Shooter","_sourceNode":{"$ref":"10"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection`1[[Client.Shooter,
-    Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},{"_sourcePortName":"Value","_targetPortName":"value","_sourceNode":{"$ref":"11"},"_targetNode":{"$ref":"12"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"b","_sourceNode":{"$ref":"12"},"_targetNode":{"$ref":"8"},"$type":"FlowCanvas.BinderConnection`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"Value","_targetPortName":"Time","_sourceNode":{"$ref":"13"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
-  _boundGraphObjectReferences:
-  - {fileID: 0}
-  - {fileID: 348459106108629423}
-  _boundGraphSource:
-    _version: 3.08
-    _category: 
-    _comments: 
-    _translation: {x: -132, y: -176}
-    _zoomFactor: 0.7500095
-  _firstActivation: 0
-  _enableAction: 0
-  _disableAction: 0
-  _lockBoundGraphPrefabOverrides: 1
-  _preInitializeSubGraphs: 0
-  _updateMode: 0
-  _graph: {fileID: 0}
-  _blackboard: {fileID: 2530100294924697604}
---- !u!114 &2530100294924697604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2936411875950737291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _serializedBlackboard: '{"_variables":{"IsCoolingDown":{"_name":"IsCoolingDown","_id":"83e9d5f1-282c-40a6-a373-45e60da2c980","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"CoolingDownTime":{"_value":0.1,"_name":"CoolingDownTime","_id":"09938a39-49a6-4f74-a9a3-cb904ad72c96","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
-  _objectReferences: []
-  _serializedVariables:
-  - _json: '{"_name":"IsCoolingDown","_id":"83e9d5f1-282c-40a6-a373-45e60da2c980","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
-    _references: []
-  - _json: '{"_value":0.1,"_name":"CoolingDownTime","_id":"09938a39-49a6-4f74-a9a3-cb904ad72c96","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
-    _references: []
 --- !u!114 &7667051109334718707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,9 +164,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8569312625845208773}
-  - component: {fileID: 348459106108629423}
   m_Layer: 0
-  m_Name: Shooter
+  m_Name: ShooterDummyPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,32 +185,6 @@ Transform:
   m_Father: {fileID: 113634007938543383}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &348459106108629423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9061267210989612451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d53a46d46cb9f7b48a9d5b8469c89596, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FirePoint: {fileID: 8569312625845208773}
-  ShooterInfo:
-    TriggerButtonState:
-      ButtonName: 301
-      Down: 0
-      Pressed: 1
-      Up: 0
-      LastPressed: 0
-    FireInterval: 0
-    MaxRange: 0
-    ProjectileInfo:
-      MechaType: 1
-      ProjectileType: 1
-      Damage: 5
 --- !u!1 &9210583541357241355
 GameObject:
   m_ObjectHideFlags: 0

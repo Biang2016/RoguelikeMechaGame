@@ -9,10 +9,12 @@ namespace Client
 {
     public partial class Mecha
     {
+        [HideInInspector]
         public UnityEvent OnLogicTick; // used by FlowCanvas
 
         private void Initialize_Fighting(MechaInfo mechaInfo)
         {
+
             TransformHelper.CurrentTransform.Position = new FixVector3(transform.position);
         }
 

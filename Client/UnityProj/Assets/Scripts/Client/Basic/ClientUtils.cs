@@ -201,17 +201,6 @@ namespace Client
             return new GridPos(gp_matrix.z - ConfigManager.EDIT_AREA_HALF_SIZE, gp_matrix.x - ConfigManager.EDIT_AREA_HALF_SIZE);
         }
 
-        public static int CalculateModifiers(this List<Modifier> modifiers, int value)
-        {
-            int res = value;
-            foreach (Modifier modifier in modifiers)
-            {
-                res = modifier.Calculate(res);
-            }
-
-            return res;
-        }
-        
         public static string GetIP()
         {
             IPHostEntry host;

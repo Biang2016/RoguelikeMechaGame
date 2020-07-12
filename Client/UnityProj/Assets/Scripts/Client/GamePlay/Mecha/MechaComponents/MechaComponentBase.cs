@@ -10,6 +10,7 @@ using BiangStudio.ObjectPool;
 using BiangStudio.ShapedInventory;
 using GameCore;
 using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using DragAreaDefines = GameCore.DragAreaDefines;
@@ -21,27 +22,36 @@ using UnityEditor;
 namespace Client
 {
     [ExecuteInEditMode]
-    public abstract class MechaComponentBase : PoolObject, IDraggable
+    public abstract partial class MechaComponentBase : PoolObject, IDraggable
     {
+        [ReadOnly]
+        [PropertyOrder(-10)]
+        [HideInEditorMode]
+        public Mecha Mecha = null;
+
+        [PropertyOrder(10)]
+        [Title("Data")]
         public MechaComponentInfo MechaComponentInfo;
 
-        internal Mecha Mecha = null;
-        internal MechaInfo MechaInfo => Mecha.MechaInfo;
-
-        internal Inventory Inventory => MechaComponentInfo.InventoryItem.Inventory;
-        internal InventoryItem InventoryItem => MechaComponentInfo.InventoryItem;
-
+        [TitleGroup("GameObjectContainers")]
+        [PropertyOrder(-9)]
         public MechaComponentGridRoot MechaComponentGridRoot;
+
+        [TitleGroup("GameObjectContainers")]
+        [PropertyOrder(-9)]
         public GameObject ModelRoot;
+
+        [HideInInspector]
+        public UnityEvent OnLogicTick; // used by FlowCanvas
 
         internal Draggable Draggable;
         private bool isReturningToBackpack = false;
+        internal UnityAction<MechaComponentBase> OnRemoveMechaComponentBaseSuc;
 
+        internal MechaInfo MechaInfo => Mecha.MechaInfo;
+        internal Inventory Inventory => MechaComponentInfo.InventoryItem.Inventory;
+        internal InventoryItem InventoryItem => MechaComponentInfo.InventoryItem;
         internal MechaType MechaType => Mecha ? Mecha.MechaInfo.MechaType : MechaType.None;
-
-        public UnityAction<MechaComponentBase> OnRemoveMechaComponentBaseSuc;
-
-        public UnityEvent OnLogicTick; // used by FlowCanvas
 
         public override void PoolRecycle()
         {
@@ -62,6 +72,7 @@ namespace Client
         public virtual void LogicTick()
         {
             OnLogicTick?.Invoke();
+            LogicTick_Fighting();
         }
 
         protected virtual void Update()

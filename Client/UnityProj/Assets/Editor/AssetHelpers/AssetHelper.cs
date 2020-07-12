@@ -44,11 +44,6 @@ public class AssetHelper : UnityEditor.AssetModificationProcessor
             model.transform.Translate(new Vector3(-center.x * ConfigManager.GridSize, 0, -center.z * ConfigManager.GridSize));
         }
 
-        foreach (Shooter st in component.GetComponentsInChildren<Shooter>())
-        {
-            st.transform.Translate(new Vector3(-center.x * ConfigManager.GridSize, 0, -center.z * ConfigManager.GridSize));
-        }
-
         return center.x != 0 || center.z != 0;
     }
 }

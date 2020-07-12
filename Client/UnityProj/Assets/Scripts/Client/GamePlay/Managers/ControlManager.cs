@@ -262,11 +262,23 @@ namespace Client
             }
         }
 
-        public bool CheckButtonAction(ButtonState buttonState)
+        public bool CheckButtonAction_Instantaneously(ButtonState buttonState)
         {
             if (ButtonStateDict.TryGetValue(buttonState.ButtonName, out ButtonState myButtonState))
             {
-                return (buttonState.Down && myButtonState.Down) || (buttonState.Up && myButtonState.Up) || (buttonState.Pressed && myButtonState.Pressed);
+                return (buttonState.Down && myButtonState.Down) || (buttonState.Up && myButtonState.Up);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckButtonAction_Continuously(ButtonState buttonState)
+        {
+            if (ButtonStateDict.TryGetValue(buttonState.ButtonName, out ButtonState myButtonState))
+            {
+                return (buttonState.Pressed && myButtonState.Pressed);
             }
             else
             {

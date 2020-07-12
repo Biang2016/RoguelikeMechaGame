@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ShapedInventory;
+using GameCore.AbilityDataDriven;
+using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
 namespace GameCore
@@ -10,7 +12,10 @@ namespace GameCore
     [Serializable]
     public class MechaComponentInfo : IInventoryItemContentInfo
     {
+        [ReadOnly]
+        [HideInEditorMode]
         public int GUID;
+
         private static int guidGenerator = (int) ConfigManager.GUID_Separator.MechaComponentInfo;
 
         private int GetGUID()
@@ -20,15 +25,24 @@ namespace GameCore
 
         public MechaComponentType MechaComponentType;
 
-        private List<GridPos> originalOccupiedGridPositions;
-        public List<GridPos> OriginalOccupiedGridPositions => originalOccupiedGridPositions;
+        [ReadOnly]
+        [ShowInInspector]
+        [DisableInEditorMode]
+        [ListDrawerSettings(ListElementLabelName = "AbilityName")]
+        public List<Ability> Abilities = new List<Ability>();
 
+        [HideInPlayMode]
+        public List<AbilityConfigSerializedScriptableObject> AbilityConfigs = new List<AbilityConfigSerializedScriptableObject>();
+
+        [HideInEditorMode]
         public InventoryItem InventoryItem;
 
         public UnityAction<MechaComponentInfo> OnRemoveMechaComponentInfoSuc;
 
-        public string ItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
+        private List<GridPos> originalOccupiedGridPositions;
 
+        public List<GridPos> OriginalOccupiedGridPositions => originalOccupiedGridPositions;
+        public string ItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
         public string ItemName => "机甲组件." + MechaComponentType;
 
         public MechaComponentInfo(MechaComponentType mechaComponentType, int totalLife, int dropProbability)
