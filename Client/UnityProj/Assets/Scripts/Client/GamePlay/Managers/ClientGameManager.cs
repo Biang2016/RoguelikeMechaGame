@@ -299,8 +299,6 @@ namespace Client
         // todo 做成AI原子
         private void ToggleBattleInventory(bool open)
         {
-            ControlManager.Instance.EnableBuildingInputActions(open);
-            ControlManager.Instance.EnableBattleInputActions(!open);
             BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.gameObject.SetActive(open);
             if (open)
             {
@@ -333,6 +331,9 @@ namespace Client
                 CameraManager.Instance.MainCameraFollow.FOV_Level = 2;
                 GameStateManager.Instance.SetState(GameState.Fighting);
             }
+
+            ControlManager.Instance.EnableBuildingInputActions(open);
+            ControlManager.Instance.EnableBattleInputActions(!open);
         }
 
         /// <summary>

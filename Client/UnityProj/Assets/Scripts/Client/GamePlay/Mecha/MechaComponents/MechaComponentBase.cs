@@ -87,11 +87,11 @@ namespace Client
 
         private void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
-            mechaComponentInfo.OnDied = () => PoolRecycle(0.2f);
+            mechaComponentInfo.OnDied = PoolRecycle;
             mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) =>
             {
                 OnRemoveMechaComponentBaseSuc?.Invoke(this);
-                PoolRecycle(1f);
+                PoolRecycle();
             };
 
             {

@@ -137,8 +137,8 @@ namespace Client
             }
             else
             {
-                OnRemoveMechaSuc?.Invoke(this);
-                PoolRecycle(0.5f);
+                OnRemoveMechaSuc(this);
+                PoolRecycle();
             }
         }
 

@@ -203,13 +203,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d82ea23828953ef45a52e9e46331aa52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
   MechaInfo:
     GUID: 0
     MechaName: 
     MechaType: 0
   MechaComponentContainer: {fileID: 8826551087886504790}
   MechaEditArea: {fileID: 6405004443083676034}
-  Speed: 10
+  Speed: 20
 --- !u!1 &3533798144039660283
 GameObject:
   m_ObjectHideFlags: 0
