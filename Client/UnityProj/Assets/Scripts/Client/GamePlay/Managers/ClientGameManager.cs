@@ -17,8 +17,6 @@ namespace Client
 {
     public class ClientGameManager : MonoSingleton<ClientGameManager>
     {
-        private LockStepLogic LockStepLogic;
-
         #region Managers
 
         #region Mono
@@ -74,10 +72,6 @@ namespace Client
 
         private void Awake()
         {
-            LockStepLogic = new LockStepLogic();
-            LockStepLogic.OnLogicTick = LogicTick;
-            LockStepLogic.OnLateLogicTick = LateLogicTick;
-
             UIManager.Init(
                 (prefabName) => Instantiate(PrefabManager.GetPrefab(prefabName)),
                 Debug.LogError,
@@ -118,6 +112,8 @@ namespace Client
             ClientBattleManager.Init(new GameObject("MechaContainerRoot").transform, new GameObject("MechaComponentDropSpriteContainerRoot").transform);
             ClientBattleManager.Awake();
             FXManager.Awake();
+
+            ProjectileManager.Init(new GameObject("ProjectileRoot").transform);
             ProjectileManager.Awake();
         }
 
@@ -205,52 +201,8 @@ namespace Client
             StartGame();
         }
 
-        private void LogicTick()
-        {
-            ConfigManager.LogicTick();
-            LayerManager.LogicTick();
-            PrefabManager.LogicTick();
-            GameObjectPoolManager.LogicTick();
-
-            ControlManager.LogicTick();
-            RoutineManager.LogicTick();
-            GameStateManager.LogicTick();
-
-            BackpackManager.LogicTick();
-            DragManager.LogicTick();
-            DragExecuteManager.LogicTick();
-
-            ClientLevelManager.LogicTick();
-            ClientBattleManager.LogicTick();
-            FXManager.LogicTick();
-            ProjectileManager.LogicTick();
-        }
-
-        private void LateLogicTick()
-        {
-            ConfigManager.LateLogicTick();
-            LayerManager.LateLogicTick();
-            PrefabManager.LateLogicTick();
-            GameObjectPoolManager.LateLogicTick();
-
-            ControlManager.LateLogicTick();
-            RoutineManager.LateLogicTick();
-            GameStateManager.LateLogicTick();
-
-            BackpackManager.LateLogicTick();
-            DragManager.LateLogicTick();
-            DragExecuteManager.LateLogicTick();
-
-            ClientLevelManager.LateLogicTick();
-            ClientBattleManager.LateLogicTick();
-            FXManager.LateLogicTick();
-            ProjectileManager.LateLogicTick();
-        }
-
         private void Update()
         {
-            LockStepLogic.UpdateLogic();
-
             ConfigManager.Update();
             LayerManager.Update();
             PrefabManager.Update();
@@ -321,7 +273,7 @@ namespace Client
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
             ClientBattleManager.Instance.StartBattle(battleInfo);
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 300, 0), new GridPosR(5, 10));
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 300, 0), new GridPosR(9, 9));
             battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
             // for (int i = -5; i <= 5; i++)
             // {

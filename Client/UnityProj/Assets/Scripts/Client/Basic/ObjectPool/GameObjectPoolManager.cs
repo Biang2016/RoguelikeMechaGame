@@ -151,6 +151,10 @@ namespace Client
             }
         }
 
+        public void WarmUpPool()
+        {
+        }
+
         public void OptimizeAllGameObjectPools()
         {
             foreach (KeyValuePair<PrefabNames, GameObjectPool> kv in PoolDict)

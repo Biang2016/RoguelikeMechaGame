@@ -128,6 +128,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5980882136729047177, guid: 776f29a684a9a412eb9b5171aa4742bd,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980882136729047177, guid: 776f29a684a9a412eb9b5171aa4742bd,
+        type: 3}
+      propertyPath: m_BounceIntensity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5980882138566427480, guid: 776f29a684a9a412eb9b5171aa4742bd,
         type: 3}
       propertyPath: m_LocalPosition.x

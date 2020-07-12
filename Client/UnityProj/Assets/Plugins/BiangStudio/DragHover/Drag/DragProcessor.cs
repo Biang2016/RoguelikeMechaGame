@@ -19,7 +19,7 @@ namespace BiangStudio.DragHover
         public Vector3 LastMousePosition_World;
         public Vector3 CurrentMousePosition_World;
 
-        public void LogicTick()
+        public void Update()
         {
             LastMousePosition_Screen = CurrentMousePosition_Screen;
             if (GetScreenMousePositionHandler != null)

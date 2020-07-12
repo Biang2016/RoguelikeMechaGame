@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4821,7 +4822,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4547426643567910}
   - component: {fileID: 198867168163737436}
-  - component: {fileID: 114277090277008968}
   - component: {fileID: 199824800488492700}
   m_Layer: 13
   m_Name: Smoke
@@ -9560,18 +9560,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114277090277008968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1409122004649670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199824800488492700
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -9587,6 +9575,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14402,6 +14391,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14462,6 +14452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1782394446380236
 GameObject:
   m_ObjectHideFlags: 0
@@ -19225,6 +19216,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

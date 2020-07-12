@@ -31,15 +31,6 @@ namespace Client
             HUDPanel = UIManager.Instance.ShowUIForms<HUDPanel>();
         }
 
-        public override void LogicTick()
-        {
-            PlayerMecha.LogicTick();
-            foreach (KeyValuePair<int, Mecha> kv in EnemyMechaDict)
-            {
-                kv.Value.LogicTick();
-            }
-        }
-
         public override void Update()
         {
             Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Battle_MousePosition);

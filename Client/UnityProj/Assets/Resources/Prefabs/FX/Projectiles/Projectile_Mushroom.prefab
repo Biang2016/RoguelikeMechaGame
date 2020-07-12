@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 108204780233298718}
   - component: {fileID: 54953225180484114}
   - component: {fileID: 135567518640564876}
-  - component: {fileID: 114065039287725156}
   m_Layer: 13
   m_Name: Projectile_Mushroom
   m_TagString: Untagged
@@ -4787,6 +4786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
@@ -4807,6 +4807,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4863,8 +4864,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047741547062842}
   m_Enabled: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 2
+  m_Shape: 0
   m_Color: {r: 0.63706994, g: 1, b: 0.48584908, a: 1}
   m_Intensity: 1
   m_Range: 4
@@ -4944,18 +4946,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114065039287725156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047741547062842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1322666646146556
 GameObject:
   m_ObjectHideFlags: 0
@@ -9719,6 +9709,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9778,7 +9769,6 @@ GameObject:
   - component: {fileID: 4597138759503960}
   - component: {fileID: 198488797301884742}
   - component: {fileID: 199140273679472108}
-  - component: {fileID: 114142020104582556}
   m_Layer: 0
   m_Name: Sparks
   m_TagString: Untagged
@@ -14482,6 +14472,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14530,18 +14521,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &114142020104582556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385617868753870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1881952664250806
 GameObject:
   m_ObjectHideFlags: 0
@@ -19305,6 +19284,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -24116,6 +24096,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

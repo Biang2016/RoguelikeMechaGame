@@ -10,14 +10,6 @@
         {
         }
 
-        public virtual void LogicTick()
-        {
-        }
-
-        public virtual void LateLogicTick()
-        {
-        }
-
         public virtual void Update()
         {
         }

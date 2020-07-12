@@ -35,16 +35,12 @@ namespace BiangStudio.GridBackpack
         {
         }
 
-        public override void LogicTick()
+        public override void Update()
         {
             foreach (KeyValuePair<string, Backpack> kv in BackpackDict)
             {
                 kv.Value.Update();
             }
-        }
-
-        public override void Update()
-        {
         }
 
         public Sprite GetBackpackItemSprite(string spriteName)

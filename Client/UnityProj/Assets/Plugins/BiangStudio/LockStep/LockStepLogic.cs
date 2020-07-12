@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameCore
+namespace BiangStudio.LockStep
 {
     public class LockStepLogic
     {
@@ -15,6 +15,8 @@ namespace GameCore
         public UnityAction OnLateLogicTick;
 
         private static int LogicTickRatePerFrame = 60;
+
+        public static Fix64 FixedTimeStep = 1 / (Fix64) LogicTickRatePerFrame;
 
         public LockStepLogic()
         {
@@ -45,7 +47,7 @@ namespace GameCore
                 OnLateLogicTick?.Invoke();
 
                 //计算下一个逻辑帧应有的时间
-                NextGameTime += 1 / (Fix64) LogicTickRatePerFrame;
+                NextGameTime += FixedTimeStep;
                 GameFrameCount += 1;
 
                 //Debug.Log($"Tick:{GameFrameCount}");
@@ -55,7 +57,7 @@ namespace GameCore
             }
 
             //计算两帧的时间差,用于运行补间动画
-            Interpolation = AccumulatedTime + 1 / (Fix64) LogicTickRatePerFrame - NextGameTime;
+            Interpolation = AccumulatedTime + FixedTimeStep - NextGameTime;
         }
     }
 }

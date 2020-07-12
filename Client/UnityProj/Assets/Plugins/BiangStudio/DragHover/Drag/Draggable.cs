@@ -24,7 +24,7 @@ namespace BiangStudio.DragHover
             DragManager.Instance.AllDraggables.Add(this);
         }
 
-        public void LogicTick()
+        public void Update()
         {
             if (!canDrag) return;
             if (isDragging)

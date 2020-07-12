@@ -19,77 +19,70 @@ namespace Client
         private Rigidbody Rigidbody;
         private Collider Collider;
         private ParticleSystem ParticleSystem;
-        private ParticleSystem.TrailModule ParticleSystemTrail;
-        private bool useTrail = false;
 
-        [SerializeField]
-        private GameObject[] Detached;
+        public TransformHelper TransformHelper = new TransformHelper();
+
+        internal ProjectileInfo ProjectileInfo;
+        private Fix64 curSpeed;
+        private Fix64 accelerate;
+        private Fix64 range;
+
+        public override void PoolRecycle()
+        {
+            Stop();
+            Rigidbody.velocity = Vector3.zero;
+            Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            Collider.enabled = false;
+            curSpeed = Fix64.Zero;
+            accelerate = Fix64.Zero;
+            range = Fix64.Zero;
+            base.PoolRecycle();
+        }
 
         void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
             Collider = GetComponent<Collider>();
-            ParticleSystem = GetComponent<ParticleSystem>();
-            if (!ParticleSystem)
-            {
-                ParticleSystem = GetComponentInChildren<ParticleSystem>();
-            }
-
-            ParticleSystemTrail = ParticleSystem.trails;
-            useTrail = ParticleSystemTrail.enabled;
+            ParticleSystem = GetComponentInChildren<ParticleSystem>();
         }
 
         void Start()
         {
         }
 
-        public override void PoolRecycle()
-        {
-            ParticleSystem.Stop(true);
-
-            Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-            Collider.enabled = false;
-            curSpeed = Fix64.Zero;
-
-            if (useTrail) ParticleSystemTrail.enabled = false;
-            base.PoolRecycle();
-        }
-
-        internal ProjectileInfo ProjectileInfo;
-
         public void Initialize(ProjectileInfo projectileInfo)
         {
             ProjectileInfo = projectileInfo;
         }
 
-        private Fix64 curSpeed;
-
-        public void Play()
+        public void Launch()
         {
-            if (useTrail) ParticleSystemTrail.enabled = true;
             Rigidbody.constraints = RigidbodyConstraints.None;
             Collider.enabled = true;
             curSpeed = (Fix64) ProjectileInfo.ParentAction.Speed;
-            ParticleSystem.Play(true);
-            if (GameObjectPoolManager.Instance.ProjectileFlashDict.ContainsKey(ProjectileInfo.ProjectileType))
+            accelerate = (Fix64) ProjectileInfo.ParentAction.Acceleration;
+            range = (Fix64) ProjectileInfo.ParentAction.Range;
+            if (GameObjectPoolManager.Instance.ProjectileFlashDict.TryGetValue(ProjectileInfo.ProjectileType, out GameObjectPool flashPool))
             {
-                ProjectileFlash flash = GameObjectPoolManager.Instance.ProjectileFlashDict[ProjectileInfo.ProjectileType].AllocateGameObject<ProjectileFlash>(ProjectileManager.Instance.Root);
+                ProjectileFlash flash = flashPool.AllocateGameObject<ProjectileFlash>(ProjectileManager.Instance.Root);
                 flash.transform.position = transform.position;
                 flash.transform.rotation = Quaternion.identity;
                 flash.transform.forward = gameObject.transform.forward;
-                flash.ParticleSystem.Play(true);
-                flash.PoolRecycle(flash.ParticleSystem.main.duration);
+                flash.Play();
             }
 
+            Play();
             PoolRecycle(ParticleSystem.main.duration);
         }
 
-        void FixedUpdate()
+        private void Play()
         {
-            if (!curSpeed.Equals(0))
-            {
-                Rigidbody.velocity = transform.forward * (float) curSpeed;
-            }
+            ParticleSystem.Play(true);
+        }
+
+        private void Stop()
+        {
+            ParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
         void OnCollisionEnter(Collision collision)
@@ -114,19 +107,19 @@ namespace Client
                     hit.transform.LookAt(contact.point + contact.normal);
                 }
 
-                hit.ParticleSystem.Play(true);
-                hit.PoolRecycle(hit.ParticleSystem.main.duration);
-            }
-
-            foreach (GameObject detachedPrefab in Detached)
-            {
-                if (detachedPrefab != null)
-                {
-                    detachedPrefab.transform.parent = null;
-                }
+                hit.Play();
             }
 
             PoolRecycle();
+        }
+
+        public void Update()
+        {
+            if (!IsRecycled)
+            {
+                Rigidbody.velocity = transform.forward * (float) curSpeed;
+                curSpeed += accelerate * Time.deltaTime;
+            }
         }
     }
 }

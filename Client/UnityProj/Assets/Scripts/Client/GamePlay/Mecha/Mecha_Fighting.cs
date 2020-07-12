@@ -9,33 +9,18 @@ namespace Client
 {
     public partial class Mecha
     {
-        [HideInInspector]
-        public UnityEvent OnLogicTick; // used by FlowCanvas
-
         private void Initialize_Fighting(MechaInfo mechaInfo)
         {
-            TransformHelper.CurrentTransform.Position = new FixVector3(transform.position);
         }
 
-        public float Speed = 3f;
-
-        void LogicTick_Fighting()
-        {
-            Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
-            speed = Quaternion.Euler(0f, 0f, 45f) * speed;
-            MechaInfo.TransformInfo.Position += new FixVector3((Fix64) speed.x, Fix64.Zero, (Fix64) speed.y);
-            RotateToMouseDirection();
-
-            OnLogicTick?.Invoke();
-            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
-            {
-                kv.Value.LogicTick();
-            }
-        }
+        public float Speed = 6f;
 
         void Update_Fighting()
         {
-            TransformHelper.Update(MechaInfo.TransformInfo, transform, Time.deltaTime);
+            Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
+            speed = Quaternion.Euler(0f, 0f, 45f) * speed;
+            transform.position += new Vector3(speed.x, 0, speed.y);
+            RotateToMouseDirection();
         }
 
         void FixedUpdate_Fighting()
@@ -59,7 +44,7 @@ namespace Client
             if (Mathf.Abs((rotation.eulerAngles - lastRotationByMouse.eulerAngles).magnitude) > 0.5f * nearFactor)
             {
                 lastRotationByMouse = rotation;
-                MechaInfo.TransformInfo.Rotation = new FixQuaternion(Quaternion.Lerp(transform.rotation, rotation, 1));
+                transform.rotation = rotation;
             }
         }
     }

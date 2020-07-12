@@ -42,9 +42,6 @@ namespace Client
         [PropertyOrder(-9)]
         public GameObject ModelRoot;
 
-        [HideInInspector]
-        public UnityEvent OnLogicTick; // used by FlowCanvas
-
         internal Draggable Draggable;
         private bool isReturningToBackpack = false;
         internal UnityAction<MechaComponentBase> OnRemoveMechaComponentBaseSuc;
@@ -70,14 +67,9 @@ namespace Client
             Draggable = GetComponent<Draggable>();
         }
 
-        public virtual void LogicTick()
-        {
-            OnLogicTick?.Invoke();
-            LogicTick_Fighting();
-        }
-
         protected virtual void Update()
         {
+            Update_Fighting();
             if (!Application.isPlaying)
             {
                 transform.localPosition = Vector3.zero;

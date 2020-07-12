@@ -1,7 +1,9 @@
 ﻿using GameCore;
 using GameCore.AbilityDataDriven;
+using Google.Protobuf.WellKnownTypes;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Enum = System.Enum;
 using Event = GameCore.AbilityDataDriven.Event;
 
 namespace Client
@@ -23,7 +25,7 @@ namespace Client
         [TitleGroup("DummyPositions")]
         private Transform AnotherSampleDummyPos;
 
-        void LogicTick_Fighting()
+        void Update_Fighting()
         {
             if (ControlManager.Instance.CheckButtonAction_Instantaneously(TriggerButtonState))
             {
@@ -34,8 +36,14 @@ namespace Client
             {
                 ContinuousTriggerAbilities();
             }
+
+            if (ControlManager.Instance.Battle_Skill_2.Down)
+            {
+                projectileType = (ProjectileType) (((int) projectileType + 1) % Enum.GetValues(typeof(ProjectileType)).Length);
+            }
         }
 
+        private ProjectileType projectileType;
         public void TriggerAbilities()
         {
             foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
@@ -54,7 +62,7 @@ namespace Client
                                     {
                                         case ENUM_AbilityCastDummyPosition.ShooterDummyPos:
                                         {
-                                            ProjectileInfo pi = new ProjectileInfo(act, MechaType, act.ProjectileType);
+                                            ProjectileInfo pi = new ProjectileInfo(act, MechaType, projectileType);
                                             ProjectileManager.Instance.ShootProjectile(pi, ShooterDummyPos.position, ShooterDummyPos.forward);
                                             break;
                                         }

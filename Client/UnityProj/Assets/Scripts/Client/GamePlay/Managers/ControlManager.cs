@@ -205,7 +205,7 @@ namespace Client
             MechaBuildingInputActions.Disable();
         }
 
-        public override void LogicTick()
+        public override void Update()
         {
             if (false)
             {
@@ -218,24 +218,14 @@ namespace Client
                     }
                 }
             }
-
-            InputSystem.Update();
         }
 
-        public override void LateLogicTick()
+        public override void LateUpdate()
         {
             foreach (KeyValuePair<ButtonNames, ButtonState> kv in ButtonStateDict)
             {
                 kv.Value.Reset();
             }
-        }
-
-        public override void Update()
-        {
-        }
-
-        public override void LateUpdate()
-        {
         }
 
         public void EnableBattleInputActions(bool enable)

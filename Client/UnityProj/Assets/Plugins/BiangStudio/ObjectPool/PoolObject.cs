@@ -7,7 +7,7 @@ namespace BiangStudio.ObjectPool
     {
         private GameObjectPool Pool { get; set; }
 
-        internal bool IsRecycled = false;
+        public bool IsRecycled = false;
 
         internal void SetObjectPool(GameObjectPool pool)
         {

@@ -17,11 +17,7 @@ namespace Client
         public MechaEditArea MechaEditArea;
 
         public SortedDictionary<int, MechaComponentBase> MechaComponentDict = new SortedDictionary<int, MechaComponentBase>();
-
-        public TransformHelper TransformHelper = new TransformHelper();
-
         public bool IsPlayer => MechaInfo.IsPlayer;
-        public TransformInfo TransformInfo => MechaInfo.TransformInfo;
         public bool IsBuilding => GameStateManager.Instance.GetState() == GameState.Building;
         public bool IsFighting => GameStateManager.Instance.GetState() == GameState.Fighting;
 
@@ -83,23 +79,10 @@ namespace Client
             MechaInfo = null;
         }
 
-        public void LogicTick()
-        {
-            if (IsFighting)
-            {
-                LogicTick_Fighting();
-            }
-            else
-            {
-                LogicTick_Building();
-                MechaEditArea.LogicTick();
-            }
-
-            MechaInfo.UpdateLifeChange();
-        }
-
         void Update()
         {
+            MechaInfo.UpdateLifeChange();
+
             if (IsBuilding && IsPlayer)
             {
                 Update_Building();
@@ -197,17 +180,13 @@ namespace Client
             }
         }
 
-        void LogicTick_Building()
+        void Update_Building()
         {
             if (ControlManager.Instance.Building_ToggleWireLines.Down)
             {
                 SlotLightsShown = !SlotLightsShown;
                 GridShown = !GridShown;
             }
-        }
-
-        void Update_Building()
-        {
         }
 
         void FixedUpdate_Building()
