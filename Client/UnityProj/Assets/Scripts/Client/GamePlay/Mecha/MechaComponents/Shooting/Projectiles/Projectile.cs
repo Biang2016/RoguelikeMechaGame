@@ -7,15 +7,23 @@ namespace Client
 {
     public class Projectile : PoolObject
     {
-        [SerializeField] private float hitOffset = 0f;
-        [SerializeField] private bool UseFirePointRotation;
-        [SerializeField] private Vector3 rotationOffset = new Vector3(0, 0, 0);
+        [SerializeField]
+        private float hitOffset = 0f;
+
+        [SerializeField]
+        private bool UseFirePointRotation;
+
+        [SerializeField]
+        private Vector3 rotationOffset = new Vector3(0, 0, 0);
+
         private Rigidbody Rigidbody;
         private Collider Collider;
         private ParticleSystem ParticleSystem;
         private ParticleSystem.TrailModule ParticleSystemTrail;
         private bool useTrail = false;
-        [SerializeField] private GameObject[] Detached;
+
+        [SerializeField]
+        private GameObject[] Detached;
 
         void Awake()
         {
@@ -61,7 +69,7 @@ namespace Client
             if (useTrail) ParticleSystemTrail.enabled = true;
             Rigidbody.constraints = RigidbodyConstraints.None;
             Collider.enabled = true;
-            curSpeed = ProjectileInfo.Speed;
+            curSpeed = (Fix64) ProjectileInfo.ParentAction.Speed;
             ParticleSystem.Play(true);
             if (GameObjectPoolManager.Instance.ProjectileFlashDict.ContainsKey(ProjectileInfo.ProjectileType))
             {
@@ -80,7 +88,7 @@ namespace Client
         {
             if (!curSpeed.Equals(0))
             {
-                //Rigidbody.velocity = transform.forward * curSpeed;
+                Rigidbody.velocity = transform.forward * (float) curSpeed;
             }
         }
 

@@ -7,7 +7,8 @@ namespace Client
 {
     public class MechaEditorAreaGrid : PoolObject
     {
-        [SerializeField] private TextMeshPro GridPosText;
+        [SerializeField]
+        private TextMeshPro GridPosText;
 
         public void Init(GridPos gridPos)
         {

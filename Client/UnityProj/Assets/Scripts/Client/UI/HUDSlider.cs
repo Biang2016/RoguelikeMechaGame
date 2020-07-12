@@ -7,9 +7,14 @@ namespace Client
 {
     public class HUDSlider : PoolObject
     {
-        [SerializeField] private Text ValueText;
-        [SerializeField] private Slider Slider;
-        [SerializeField] private Image FillImage;
+        [SerializeField]
+        private Text ValueText;
+
+        [SerializeField]
+        private Slider Slider;
+
+        [SerializeField]
+        private Image FillImage;
 
         private const float SLIDER_HEIGHT = 30f;
 

@@ -14,6 +14,7 @@ namespace BiangStudio.ShapedInventory
     {
         public string InventoryName;
         public DragArea DragArea;
+        public bool EnableLog = false;
 
         public delegate bool KeyDownDelegate();
 
@@ -46,7 +47,9 @@ namespace BiangStudio.ShapedInventory
         public int GridSize { get; private set; }
         public int Rows { get; private set; }
         public int Columns { get; private set; }
-        [ShowInInspector] public bool UnlockedPartialGrids { get; private set; }
+
+        [ShowInInspector]
+        public bool UnlockedPartialGrids { get; private set; }
 
         private int unlockedGridCount = 0;
 
@@ -222,7 +225,8 @@ namespace BiangStudio.ShapedInventory
                 InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Unavailable;
             }
 
-            Debug.Log("AddItem: " + sb.ToString());
+            if (EnableLog) Debug.Log("AddItem: " + sb.ToString());
+            sb.Clear();
             RefreshConflictAndIsolation();
         }
 
@@ -247,7 +251,7 @@ namespace BiangStudio.ShapedInventory
                     InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Available;
                 }
 
-                Debug.Log("RemoveItem: " + sb.ToString());
+                if (EnableLog) Debug.Log("RemoveItem: " + sb.ToString());
 
                 InventoryItems.Remove(item);
                 OnRemoveItemSucAction?.Invoke(item);
@@ -269,7 +273,7 @@ namespace BiangStudio.ShapedInventory
                     }
                 }
 
-                Debug.Log("PickUpItem: " + sb.ToString());
+                if (EnableLog) Debug.Log("PickUpItem: " + sb.ToString());
             }
         }
 
@@ -284,7 +288,7 @@ namespace BiangStudio.ShapedInventory
                     InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Unavailable;
                 }
 
-                Debug.Log("PutDownItem: " + sb.ToString());
+                if (EnableLog) Debug.Log("PutDownItem: " + sb.ToString());
                 RefreshConflictAndIsolation();
             }
         }

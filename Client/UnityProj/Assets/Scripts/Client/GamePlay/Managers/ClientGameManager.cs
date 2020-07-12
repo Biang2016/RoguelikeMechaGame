@@ -9,6 +9,7 @@ using BiangStudio.Log;
 using BiangStudio.ShapedInventory;
 using BiangStudio.Singleton;
 using GameCore;
+using GameCore.AbilityDataDriven;
 using UnityEngine;
 using DragAreaDefines = GameCore.DragAreaDefines;
 
@@ -177,12 +178,15 @@ namespace Client
             backpackPanel.Init(myBackPack);
             BackpackManager.AddBackPack(myBackPack);
 
-            foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
-            {
-                MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-                InventoryItem ii = new InventoryItem(new MechaComponentInfo(mcType, 100, 0), myBackPack, GridPosR.Zero);
-                myBackPack.TryAddItem(ii);
-            }
+            //foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
+            //{
+            //    MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
+            //    InventoryItem ii = new InventoryItem(new MechaComponentInfo(mcType, new AbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
+            //    myBackPack.TryAddItem(ii);
+            //}
+
+            InventoryItem ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 100, 0), myBackPack, GridPosR.Zero);
+            myBackPack.TryAddItem(ii);
 
             BackpackManager.Start();
             DragManager.Start();
@@ -317,7 +321,7 @@ namespace Client
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
             ClientBattleManager.Instance.StartBattle(battleInfo);
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, 300, 0), new GridPosR(5, 10));
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 300, 0), new GridPosR(5, 10));
             battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
             // for (int i = -5; i <= 5; i++)
             // {

@@ -7,12 +7,20 @@ namespace GameCore
     [Serializable]
     public class ButtonState
     {
-        [LabelText("按键")] public ButtonNames ButtonName;
-        [LabelText("按下")] public bool Down;
-        [LabelText("按住")] public bool Pressed;
-        [LabelText("释放")] public bool Up;
+        [LabelText("按键")]
+        public ButtonNames ButtonName;
 
-        [HideInInspector] public bool LastPressed;
+        [LabelText("按下")]
+        public bool Down;
+
+        [LabelText("按住")]
+        public bool Pressed;
+
+        [LabelText("释放")]
+        public bool Up;
+
+        [HideInInspector]
+        public bool LastPressed;
 
         public override string ToString()
         {

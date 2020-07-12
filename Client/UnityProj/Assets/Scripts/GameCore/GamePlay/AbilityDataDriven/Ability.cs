@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace GameCore.AbilityDataDriven
 {
-    public class Ability
+    public class Ability : IClone<Ability>
     {
         [LabelText("技能名称")]
         public string AbilityName;
@@ -15,8 +15,8 @@ namespace GameCore.AbilityDataDriven
         [LabelText("被动")]
         public bool Passive;
 
-        [LabelText("释放点")]
-        public Vector3 AbilityCastPoint;
+        [LabelText("施法点")]
+        public ENUM_AbilityCastDummyPosition CastDummyPosition;
 
         [LabelText("释放范围")]
         [SuffixLabel("unit", true)]
@@ -36,5 +36,21 @@ namespace GameCore.AbilityDataDriven
         [LabelText("触发事件列表")]
         [ListDrawerSettings(ListElementLabelName = "EventName")]
         public List<Event> Events = new List<Event>();
+
+        public Ability Clone()
+        {
+            return new Ability
+            {
+                AbilityName = AbilityName,
+                AbilityBehaviors = AbilityBehaviors,
+                Passive = Passive,
+                CastDummyPosition = CastDummyPosition,
+                AbilityCastRange = AbilityCastRange,
+                AbilityCooldown = AbilityCooldown,
+                AbilityPowerCost = AbilityPowerCost,
+                Modifiers = Modifiers.Clone(),
+                Events = Events.Clone(),
+            };
+        }
     }
 }

@@ -1,11 +1,6 @@
-﻿using System.Collections.Generic;
-using BiangStudio.GameDataFormat;
-using GameCore;
-
-namespace Client
+﻿namespace Client
 {
     public class BladeInfo
     {
-       
     }
 }

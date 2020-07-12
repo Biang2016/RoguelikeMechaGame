@@ -1,5 +1,4 @@
-﻿using BiangStudio.GameDataFormat;
-using BiangStudio.Singleton;
+﻿using BiangStudio.Singleton;
 using GameCore;
 using UnityEngine;
 

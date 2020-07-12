@@ -1,13 +1,10 @@
-using System;
 using System.Collections.Generic;
-using BiangStudio.GameDataFormat;
+using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
-using UnityEngine;
 
 namespace GameCore.AbilityDataDriven
 {
-    public class Modifier
+    public class Modifier : IClone<Modifier>
     {
         [LabelText("Modifier名称")]
         public string ModifierName;
@@ -32,12 +29,28 @@ namespace GameCore.AbilityDataDriven
         [SuffixLabel("ms", true)]
         public int ThinkInterval;
 
-        public Dictionary<ENUM_ModifierProperty, Fix64> Properties = new Dictionary<ENUM_ModifierProperty, Fix64>();
+        //public Dictionary<ENUM_ModifierProperty, Fix64> Properties = new Dictionary<ENUM_ModifierProperty, Fix64>();
 
-        public HashSet<ENUM_ModifierStates> States = new HashSet<ENUM_ModifierStates>();
+        //public HashSet<ENUM_ModifierStates> States = new HashSet<ENUM_ModifierStates>();
 
         [LabelText("触发事件列表")]
         [ListDrawerSettings(ListElementLabelName = "EventName")]
         public List<Event> Events = new List<Event>();
+
+        public Modifier Clone()
+        {
+            return new Modifier
+            {
+                ModifierName = ModifierName,
+                Attributes = Attributes,
+                Duration = Duration,
+                IsBuff = IsBuff,
+                IsDeBuff = IsDeBuff,
+                IsHidden = IsHidden,
+                Passive = Passive,
+                ThinkInterval = ThinkInterval,
+                Events = Events.Clone(),
+            };
+        }
     }
 }

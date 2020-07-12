@@ -9,6 +9,7 @@ using BiangStudio.GridBackpack;
 using BiangStudio.ObjectPool;
 using BiangStudio.ShapedInventory;
 using GameCore;
+using GameCore.AbilityDataDriven;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -138,7 +139,7 @@ namespace Client
 
                 GameObject prefab = PrefabManager.Instance.GetPrefab("MechaComponent_" + mcType);
                 MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
-                mcb.Initialize_Editor(new MechaComponentInfo(mcType, 10, 0));
+                mcb.Initialize_Editor(new MechaComponentInfo(mcType, new AbilityGroup(), 10, 0));
                 mcbs.Add(mcb);
                 MechaComponentOccupiedGridPosDict.Add(mcType, mcb.MechaComponentGridRoot.GetOccupiedPositions().Clone());
             }

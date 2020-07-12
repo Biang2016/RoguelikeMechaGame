@@ -19,7 +19,7 @@ namespace BiangStudio.ShapedInventory
 
         public delegate bool AmIRootItemInIsolationCalculationDelegate();
 
-        private static int guidGenerator;
+        private static int guidGenerator = 10000;
 
         [HideInInspector] public int GUID;
 

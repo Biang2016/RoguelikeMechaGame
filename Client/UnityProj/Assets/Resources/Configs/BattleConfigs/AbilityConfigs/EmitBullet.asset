@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a3221cbe1ff0a849bca96ff1e7bce7b, type: 3}
-  m_Name: GunShoot
+  m_Name: EmitBullet
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -33,21 +33,9 @@ MonoBehaviour:
     - Name: Passive
       Entry: 5
       Data: false
-    - Name: AbilityCastPoint
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
+    - Name: CastDummyPosition
+      Entry: 3
+      Data: 1
     - Name: AbilityCastRange
       Entry: 3
       Data: 0
@@ -93,18 +81,18 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile_DelayLine, GameCore
-    - Name: ProjectilePrefabPath
-      Entry: 6
-      Data: 
+    - Name: ProjectileType
+      Entry: 3
+      Data: 15
     - Name: Range
       Entry: 3
-      Data: 6
+      Data: 20
     - Name: Speed
       Entry: 3
-      Data: 10
+      Data: 20
     - Name: Acceleration
       Entry: 3
-      Data: 1
+      Data: 5
     - Name: 
       Entry: 8
       Data: 

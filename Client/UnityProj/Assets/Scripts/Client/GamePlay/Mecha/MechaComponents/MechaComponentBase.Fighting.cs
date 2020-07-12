@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using BiangStudio.DragHover;
-using BiangStudio.GameDataFormat.Grid;
-using BiangStudio.GamePlay;
-using BiangStudio.GridBackpack;
-using BiangStudio.ShapedInventory;
-using GameCore;
+﻿using GameCore;
 using GameCore.AbilityDataDriven;
-using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Events;
-#if UNITY_EDITOR
-using UnityEditor;
-
-#endif
+using Event = GameCore.AbilityDataDriven.Event;
 
 namespace Client
 {
@@ -51,11 +38,33 @@ namespace Client
 
         public void TriggerAbilities()
         {
-            foreach (Ability ability in MechaComponentInfo.Abilities)
+            foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
+                if (!ability.Passive && ability.AbilityPowerCost < 100) // todo power
+                {
+                    foreach (Event evnt in ability.Events)
+                    {
+                        if (evnt.EventType == ENUM_Event.OnAbilityStart)
+                        {
+                            foreach (Action action in evnt.Actions)
+                            {
+                                if (action is Action_EmitProjectile_DelayLine act)
+                                {
+                                    switch (ability.CastDummyPosition)
+                                    {
+                                        case ENUM_AbilityCastDummyPosition.ShooterDummyPos:
+                                        {
+                                            ProjectileInfo pi = new ProjectileInfo(act, MechaType, act.ProjectileType);
+                                            ProjectileManager.Instance.ShootProjectile(pi, ShooterDummyPos.position, ShooterDummyPos.forward);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-
-            FireByFirePointDirection();
         }
 
         public void ContinuousTriggerAbilities()
@@ -66,11 +75,6 @@ namespace Client
             //    fireCountdown = 0;
             //    fireCountdown += ShooterInfo.FireInterval;
             //}
-        }
-
-        private void FireByFirePointDirection()
-        {
-            //ProjectileManager.Instance.ShootProjectile(ShooterInfo.ProjectileInfo, ShooterDummyPos.position, ShooterDummyPos.forward);
         }
     }
 }

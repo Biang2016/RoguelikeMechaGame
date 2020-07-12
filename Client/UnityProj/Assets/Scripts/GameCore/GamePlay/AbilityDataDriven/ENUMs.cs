@@ -139,6 +139,12 @@ namespace GameCore.AbilityDataDriven
         ABILITY_BEHAVIOR_DONT_ALERT_TARGET = 1 << 21,
     }
 
+    public enum ENUM_AbilityCastDummyPosition
+    {
+        None = 0,
+        ShooterDummyPos,
+    }
+
     public enum ENUM_Event
     {
         [LabelText("技能阶段开始时")]
@@ -534,6 +540,5 @@ namespace GameCore.AbilityDataDriven
 
     public enum ENUM_ProjectileType
     {
-
     }
 }

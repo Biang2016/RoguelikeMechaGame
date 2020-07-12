@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BiangStudio.CloneVariant;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ShapedInventory;

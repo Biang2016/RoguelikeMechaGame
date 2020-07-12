@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using BiangStudio.GameDataFormat;
-using BiangStudio.GameDataFormat.Grid;
 using Newtonsoft.Json;
 
 namespace GameCore
@@ -76,7 +75,7 @@ namespace GameCore
 
             if (baseType.IsInterface)
             {
-                foreach (var t in type.GetInterfaces())
+                foreach (Type t in type.GetInterfaces())
                 {
                     if (t == baseType)
                     {

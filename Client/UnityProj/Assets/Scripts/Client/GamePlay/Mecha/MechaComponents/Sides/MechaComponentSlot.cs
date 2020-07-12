@@ -7,10 +7,15 @@ namespace Client
     [ExecuteInEditMode]
     public class MechaComponentSlot : MonoBehaviour
     {
-        [SerializeField] private MeshRenderer SlotLightRenderer;
-        [SerializeField] private Material[] SlotLightMaterials;
+        [SerializeField]
+        private MeshRenderer SlotLightRenderer;
 
-        [SerializeField] private SlotType _slotType;
+        [SerializeField]
+        private Material[] SlotLightMaterials;
+
+        [SerializeField]
+        private SlotType _slotType;
+
         internal GridPosR.Orientation Orientation;
 
         public SlotType SlotType

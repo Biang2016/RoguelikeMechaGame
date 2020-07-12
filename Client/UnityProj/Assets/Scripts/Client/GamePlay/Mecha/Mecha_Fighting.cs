@@ -14,7 +14,6 @@ namespace Client
 
         private void Initialize_Fighting(MechaInfo mechaInfo)
         {
-
             TransformHelper.CurrentTransform.Position = new FixVector3(transform.position);
         }
 

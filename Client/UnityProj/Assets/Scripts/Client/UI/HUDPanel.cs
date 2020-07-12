@@ -16,8 +16,11 @@ namespace Client
                 UIFormLucencyTypes.Penetrable);
         }
 
-        [SerializeField] private MechaInfoHUD PlayerMechaInfoHUD;
-        [SerializeField] private MechaInfoHUD EnemyMechaInfoHUD;
+        [SerializeField]
+        private MechaInfoHUD PlayerMechaInfoHUD;
+
+        [SerializeField]
+        private MechaInfoHUD EnemyMechaInfoHUD;
 
         public void Initialize()
         {

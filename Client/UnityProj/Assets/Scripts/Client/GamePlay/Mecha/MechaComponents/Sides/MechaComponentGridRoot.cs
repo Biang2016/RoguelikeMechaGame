@@ -12,7 +12,9 @@ namespace Client
     {
         internal MechaComponentBase MechaComponentBase;
         private List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
-        [NonSerialized] public List<MechaComponentHitBox> HitBoxes = new List<MechaComponentHitBox>();
+
+        [NonSerialized]
+        public List<MechaComponentHitBox> HitBoxes = new List<MechaComponentHitBox>();
 
         void Awake()
         {

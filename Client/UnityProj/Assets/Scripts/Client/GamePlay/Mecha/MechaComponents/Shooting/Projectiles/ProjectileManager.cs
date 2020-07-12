@@ -30,5 +30,4 @@ namespace Client
             projectile.Play();
         }
     }
-
 }

@@ -5,11 +5,13 @@ using UnityEngine;
 
 namespace GameCore.AbilityDataDriven
 {
-    [CreateAssetMenu(menuName = "BattleConfig/AbilityConfig")]
-    public class AbilityConfigSerializedScriptableObject : SerializedScriptableObject
+    [CreateAssetMenu(menuName = "BattleConfig/Ability")]
+    public class AbilityConfigSSO : SerializedScriptableObject
     {
         [NonSerialized]
         [OdinSerialize]
         public Ability Ability = new Ability();
+
+        public string AbilityName => Ability.AbilityName;
     }
 }

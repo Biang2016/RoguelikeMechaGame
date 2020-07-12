@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-using Client;
+﻿using Client;
 using GameCore.AbilityDataDriven;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 [RequireComponent(typeof(MechaComponentBase))]
 public class AbilityComponent : MonoBehaviour

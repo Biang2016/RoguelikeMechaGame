@@ -8,12 +8,23 @@ namespace Client
 {
     public class MechaInfoHUD : PoolObject
     {
-        [SerializeField] private Text MechaNameText;
-        [SerializeField] private Transform SliderContainer;
-        [SerializeField] private Transform CoreLifeSliderContainer;
-        [SerializeField] private Color LifeSliderColor;
-        [SerializeField] private Color CoreLifeSliderColor;
-        [SerializeField] private Color PowerSliderColor;
+        [SerializeField]
+        private Text MechaNameText;
+
+        [SerializeField]
+        private Transform SliderContainer;
+
+        [SerializeField]
+        private Transform CoreLifeSliderContainer;
+
+        [SerializeField]
+        private Color LifeSliderColor;
+
+        [SerializeField]
+        private Color CoreLifeSliderColor;
+
+        [SerializeField]
+        private Color PowerSliderColor;
 
         private Mecha targetMecha;
 

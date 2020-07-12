@@ -1,23 +1,20 @@
 ﻿using System;
 using BiangStudio.GameDataFormat;
-using GameCore;
 
 namespace GameCore
 {
     [Serializable]
     public class ProjectileInfo
     {
+        public AbilityDataDriven.Action_EmitProjectile_DelayLine ParentAction;
         public MechaType MechaType;
         public ProjectileType ProjectileType;
-        public int Damage;
-        public Fix64 Speed;
 
-        public ProjectileInfo(MechaType mechaType, ProjectileType projectileType, Fix64 speed, int damage)
+        public ProjectileInfo(AbilityDataDriven.Action_EmitProjectile_DelayLine parentAction, MechaType mechaType, ProjectileType projectileType)
         {
+            ParentAction = parentAction;
             MechaType = mechaType;
             ProjectileType = projectileType;
-            Speed = speed;
-            Damage = damage;
         }
     }
 

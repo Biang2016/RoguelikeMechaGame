@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ObjectPool;
 using GameCore;
 using UnityEngine;
@@ -11,7 +10,10 @@ namespace Client
     {
         public MechaInfo MechaInfo;
         public UnityAction<Mecha> OnRemoveMechaSuc;
-        [SerializeField] private Transform MechaComponentContainer;
+
+        [SerializeField]
+        private Transform MechaComponentContainer;
+
         public MechaEditArea MechaEditArea;
 
         public SortedDictionary<int, MechaComponentBase> MechaComponentDict = new SortedDictionary<int, MechaComponentBase>();

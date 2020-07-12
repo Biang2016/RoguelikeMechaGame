@@ -1,6 +1,4 @@
-﻿using BiangStudio.GameDataFormat;
-
-namespace Client
+﻿namespace Client
 {
     public class MechaComponent_Sword : MechaComponentBase
     {

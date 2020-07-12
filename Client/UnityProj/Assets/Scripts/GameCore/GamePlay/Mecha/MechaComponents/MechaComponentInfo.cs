@@ -29,10 +29,7 @@ namespace GameCore
         [ShowInInspector]
         [DisableInEditorMode]
         [ListDrawerSettings(ListElementLabelName = "AbilityName")]
-        public List<Ability> Abilities = new List<Ability>();
-
-        [HideInPlayMode]
-        public List<AbilityConfigSerializedScriptableObject> AbilityConfigs = new List<AbilityConfigSerializedScriptableObject>();
+        public AbilityGroup AbilityGroup;
 
         [HideInEditorMode]
         public InventoryItem InventoryItem;
@@ -45,10 +42,11 @@ namespace GameCore
         public string ItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
         public string ItemName => "机甲组件." + MechaComponentType;
 
-        public MechaComponentInfo(MechaComponentType mechaComponentType, int totalLife, int dropProbability)
+        public MechaComponentInfo(MechaComponentType mechaComponentType, AbilityGroup abilityGroup, int totalLife, int dropProbability)
         {
             GUID = GetGUID();
             MechaComponentType = mechaComponentType;
+            AbilityGroup = abilityGroup;
             TotalLife = totalLife;
             M_LeftLife = totalLife;
             DropProbability = dropProbability;
@@ -60,7 +58,7 @@ namespace GameCore
 
         public MechaComponentInfo Clone()
         {
-            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType, TotalLife, DropProbability);
+            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType, AbilityGroup.Clone(), TotalLife, DropProbability);
             return mci;
         }
 

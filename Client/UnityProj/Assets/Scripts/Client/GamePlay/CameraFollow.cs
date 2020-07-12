@@ -6,13 +6,19 @@ namespace Client
 {
     public class CameraFollow : MonoBehaviour
     {
-        [SerializeField] private Camera Camera;
+        [SerializeField]
+        private Camera Camera;
+
         private Transform target;
         private Vector3 targetingPoint;
         private Vector3 Offset_Fighting;
         private Vector3 Offset_Building;
-        [SerializeField] private float MinFOV;
-        [SerializeField] private float MaxFOV;
+
+        [SerializeField]
+        private float MinFOV;
+
+        [SerializeField]
+        private float MaxFOV;
 
         void Awake()
         {

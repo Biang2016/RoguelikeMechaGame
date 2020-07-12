@@ -7,8 +7,11 @@ namespace Client
 {
     public class MechaComponentDropSprite : PoolObject
     {
-        [SerializeField] private SpriteRenderer SpriteRenderer;
-        [SerializeField] private Collider Collider;
+        [SerializeField]
+        private SpriteRenderer SpriteRenderer;
+
+        [SerializeField]
+        private Collider Collider;
 
         public MechaComponentInfo MechaComponentInfo;
 

@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
+using UnityEngine;
 
 namespace Client
 {

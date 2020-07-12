@@ -8,10 +8,17 @@ namespace Client
 {
     public class MechaComponentGrid : MonoBehaviour
     {
-        [SerializeField] private MeshRenderer BorderIndicator;
-        [SerializeField] private MeshRenderer ForbidIndicator;
-        [SerializeField] private MeshRenderer IsolatedIndicator;
-        [SerializeField] private MechaComponentHitBox MechaComponentHitBox;
+        [SerializeField]
+        private MeshRenderer BorderIndicator;
+
+        [SerializeField]
+        private MeshRenderer ForbidIndicator;
+
+        [SerializeField]
+        private MeshRenderer IsolatedIndicator;
+
+        [SerializeField]
+        private MechaComponentHitBox MechaComponentHitBox;
 
         public bool IsConflicted = false;
 

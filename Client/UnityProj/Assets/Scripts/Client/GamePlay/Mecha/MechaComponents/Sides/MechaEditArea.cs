@@ -9,11 +9,21 @@ namespace Client
     [RequireComponent(typeof(BoxCollider))]
     public class MechaEditArea : DragAreaIndicator
     {
-        [SerializeField] private MeshRenderer MeshRenderer_Range;
-        [SerializeField] private MeshRenderer MeshRenderer_Grid;
-        [SerializeField] private BoxCollider BoxCollider;
-        [SerializeField] private GameObject PivotIndicator;
-        [SerializeField] private MechaEditorAreaGridRoot MechaEditorAreaGridRoot;
+        [SerializeField]
+        private MeshRenderer MeshRenderer_Range;
+
+        [SerializeField]
+        private MeshRenderer MeshRenderer_Grid;
+
+        [SerializeField]
+        private BoxCollider BoxCollider;
+
+        [SerializeField]
+        private GameObject PivotIndicator;
+
+        [SerializeField]
+        private MechaEditorAreaGridRoot MechaEditorAreaGridRoot;
+
         private DragProcessor DragProcessor;
 
         void Start()
