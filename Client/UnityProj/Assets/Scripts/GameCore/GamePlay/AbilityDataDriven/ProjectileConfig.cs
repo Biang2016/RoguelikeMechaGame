@@ -8,12 +8,15 @@ namespace GameCore.AbilityDataDriven
         [LabelText("投掷物名称")]
         public string ProjectileName;
 
+        [LabelText("投掷物表现体")]
+        public ProjectileType ProjectileType;
 
         public ProjectileConfig Clone()
         {
             return new ProjectileConfig
             {
                 ProjectileName = ProjectileName,
+                ProjectileType = ProjectileType,
             };
         }
     }

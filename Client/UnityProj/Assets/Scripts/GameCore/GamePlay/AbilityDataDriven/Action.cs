@@ -1,6 +1,7 @@
 ﻿using System;
 using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -75,17 +76,55 @@ namespace GameCore.AbilityDataDriven
 
     public abstract class Action_EmitProjectile : Action
     {
-        [LabelText("投掷物")]
-        public ProjectileConfig ProjectileConfig;
+        [OdinSerialize]
+        [HideInInspector]
+        private ProjectileConfig projectileConfig;
 
-        [LabelText("投掷物表现体")]
-        public ProjectileType ProjectileType;
+        [LabelText("投掷物")]
+        [ReadOnly]
+        [ShowInInspector]
+        public ProjectileConfig ProjectileConfig
+        {
+            get
+            {
+                if (ProjectileConfigSSO != null)
+                {
+                    projectileConfig = ProjectileConfigSSO.ProjectileConfig.Clone();
+                }
+
+                return projectileConfig;
+            }
+            set
+            {
+                if (ProjectileConfigSSO == null)
+                {
+                    projectileConfig = value;
+                }
+            }
+        }
+
+        [OnValueChanged("RefreshProjectileConfig")]
+        [HideInPlayMode]
+        [LabelText("投掷物配置体")]
+        public ProjectileConfigSSO ProjectileConfigSSO;
+
+        private void RefreshProjectileConfig()
+        {
+            if (ProjectileConfigSSO != null)
+            {
+                projectileConfig = ProjectileConfigSSO.ProjectileConfig.Clone();
+            }
+            else
+            {
+                projectileConfig = new ProjectileConfig();
+            }
+        }
 
         protected override void ChildClone(Action newAction)
         {
             base.ChildClone(newAction);
             Action_EmitProjectile action = ((Action_EmitProjectile) newAction);
-            action.ProjectileType = ProjectileType;
+            action.ProjectileConfig = ProjectileConfig.Clone();
         }
 
         [HideInInspector]

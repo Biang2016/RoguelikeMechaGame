@@ -4,6 +4,7 @@ using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.Singleton;
 using GameCore.AbilityDataDriven;
 using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEditor;
 using UnityEngine;
@@ -28,12 +29,20 @@ namespace GameCore
 
         public static string AbilityConfigFolder_Relative = "Configs/BattleConfigs/AbilityConfigs";
         public static string AbilityGroupConfigFolder_Relative = "Configs/BattleConfigs/AbilityGroupConfigs";
+        public static string ProjectileConfigFolder_Relative = "Configs/BattleConfigs/ProjectileConfigs";
 
         public static string AbilityConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityConfigFolder_Relative + "/";
         public static string AbilityGroupConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityGroupConfigFolder_Relative + "/";
+        public static string ProjectileConfigFolder_Build = Application.streamingAssetsPath + "/" + ProjectileConfigFolder_Relative + "/";
 
-        private static Dictionary<string, Ability> AbilityConfigDict = new Dictionary<string, Ability>();
-        private static Dictionary<string, AbilityGroup> AbilityGroupConfigDict = new Dictionary<string, AbilityGroup>();
+        [ShowInInspector]
+        public static readonly Dictionary<string, Ability> AbilityConfigDict = new Dictionary<string, Ability>();
+
+        [ShowInInspector]
+        public static readonly Dictionary<string, AbilityGroup> AbilityGroupConfigDict = new Dictionary<string, AbilityGroup>();
+
+        [ShowInInspector]
+        public static readonly Dictionary<string, ProjectileConfig> ProjectileConfigDict = new Dictionary<string, ProjectileConfig>();
 
         public override void Awake()
         {
@@ -84,10 +93,26 @@ namespace GameCore
                 }
             }
 
+            {
+                Object[] configObjs = Resources.LoadAll(ProjectileConfigFolder_Relative, typeof(Object));
+                string folder = ProjectileConfigFolder_Build;
+                if (Directory.Exists(folder)) Directory.Delete(folder, true);
+                Directory.CreateDirectory(folder);
+                foreach (Object obj in configObjs)
+                {
+                    ProjectileConfigSSO config = (ProjectileConfigSSO) obj;
+                    ProjectileConfig pc = config.ProjectileConfig;
+                    string path = folder + config.name + ".config";
+                    byte[] bytes = SerializationUtility.SerializeValue(pc, dataFormat);
+                    File.WriteAllBytes(path, bytes);
+                }
+            }
+
             AssetDatabase.Refresh();
         }
 
-        private void LoadAllAbilityConfigs()
+        [MenuItem("开发工具/加载技能配置")]
+        private static void LoadAllAbilityConfigs()
         {
             DataFormat dataFormat = DataFormat.Binary;
 
@@ -149,6 +174,32 @@ namespace GameCore
                     Debug.LogError("技能组配置表不存在");
                 }
             }
+
+            {
+                ProjectileConfigDict.Clear();
+
+                DirectoryInfo di = new DirectoryInfo(ProjectileConfigFolder_Build);
+                if (di.Exists)
+                {
+                    foreach (FileInfo fi in di.GetFiles("*.config", SearchOption.AllDirectories))
+                    {
+                        byte[] bytes = File.ReadAllBytes(fi.FullName);
+                        ProjectileConfig pc = SerializationUtility.DeserializeValue<ProjectileConfig>(bytes, dataFormat);
+                        if (ProjectileConfigDict.ContainsKey(pc.ProjectileName))
+                        {
+                            Debug.LogError($"投掷物重名:{pc.ProjectileName}");
+                        }
+                        else
+                        {
+                            ProjectileConfigDict.Add(pc.ProjectileName, pc);
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogError("投掷物表不存在");
+                }
+            }
         }
 
         public Ability GetAbility(string abilityName)
@@ -161,6 +212,12 @@ namespace GameCore
         {
             AbilityGroupConfigDict.TryGetValue(abilityGroupName, out AbilityGroup abilityGroup);
             return abilityGroup?.Clone();
+        }
+
+        public ProjectileConfig GetProjectileConfig(string projectileConfigName)
+        {
+            ProjectileConfigDict.TryGetValue(projectileConfigName, out ProjectileConfig projectileConfig);
+            return projectileConfig?.Clone();
         }
     }
 }

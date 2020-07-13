@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 985d808a95ccd2c4c81c906826036a54, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -81,9 +82,15 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile_DelayLine, GameCore
+    - Name: ProjectileConfig
+      Entry: 6
+      Data: 
     - Name: ProjectileType
       Entry: 3
       Data: 15
+    - Name: ProjectileConfigSSO
+      Entry: 10
+      Data: 0
     - Name: Range
       Entry: 3
       Data: 20
@@ -107,10 +114,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 100
+      Data: 0
     - Name: 
       Entry: 4
-      Data: 100
+      Data: 0
     - Name: 
       Entry: 4
       Data: 100
