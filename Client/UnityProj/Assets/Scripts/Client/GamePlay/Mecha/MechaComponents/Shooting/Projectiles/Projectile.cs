@@ -21,19 +21,13 @@ namespace Client
         private ParticleSystem ParticleSystem;
 
         internal ProjectileInfo ProjectileInfo;
-        private Vector3 curSpeed;
-        private Vector3 accelerate;
-        private float range;
 
         public override void PoolRecycle()
         {
-            Stop();
+            StopSelfEffect();
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             Collider.enabled = false;
-            curSpeed = Vector3.zero;
-            accelerate = Vector3.zero;
-            range = 0;
             ProjectileInfo = null;
             base.PoolRecycle();
         }
@@ -56,43 +50,69 @@ namespace Client
 
         public void Launch()
         {
-            FlyRealtimeData = new ProjectileInfo.FlyRealtimeData();
             Rigidbody.constraints = RigidbodyConstraints.None;
             Collider.enabled = true;
-            curSpeed = ProjectileInfo.ParentAction.Velocity;
-            accelerate = ProjectileInfo.ParentAction.Acceleration;
-            range = ProjectileInfo.ParentAction.Range;
-            if (GameObjectPoolManager.Instance.ProjectileFlashDict.TryGetValue(ProjectileInfo.ProjectileType, out GameObjectPool flashPool))
+            FlyRealtimeData = new ProjectileInfo.FlyRealtimeData
             {
-                ProjectileFlash flash = flashPool.AllocateGameObject<ProjectileFlash>(ProjectileManager.Instance.Root);
-                flash.transform.position = transform.position;
-                flash.transform.rotation = Quaternion.identity;
-                flash.transform.forward = transform.forward;
-                flash.Play();
-            }
+                FlyDistance = 0,
+                FlyDuration = 0,
+                Velocity = ProjectileInfo.ParentAction.Velocity,
+                Accelerate = ProjectileInfo.ParentAction.Acceleration,
+                Range = ProjectileInfo.ParentAction.Range,
+                CurrentPosition = transform.position,
+                HitCollider = null,
+            };
 
-            Play();
+            PlayFlashEffect(transform.position, transform.forward);
+            PlaySelfEffect();
             PoolRecycle(ParticleSystem.main.duration);
         }
 
-        private void Play()
-        {
-            ParticleSystem.Play(true);
-        }
+        private ProjectileInfo.FlyRealtimeData FlyRealtimeData = new ProjectileInfo.FlyRealtimeData();
 
-        private void Stop()
+        void FixedUpdate()
         {
-            ParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            if (!IsRecycled)
+            {
+                Rigidbody.velocity = transform.TransformVector(FlyRealtimeData.Velocity);
+                FlyRealtimeData.FlyDistance += FlyRealtimeData.Velocity.magnitude * Time.fixedDeltaTime;
+                FlyRealtimeData.FlyDuration += Time.fixedDeltaTime;
+                FlyRealtimeData.CurrentPosition = transform.position;
+                FlyRealtimeData.Velocity += FlyRealtimeData.Accelerate * Time.fixedDeltaTime;
+            }
         }
 
         void OnCollisionEnter(Collision collision)
         {
-            if (ProjectileInfo != null)
+            if (!IsRecycled)
             {
                 ContactPoint contact = collision.contacts[0];
+                FlyRealtimeData.HitCollider = collision.collider;
                 ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
                 PlayHitEffect(contact.point, contact.normal);
                 PoolRecycle();
+            }
+        }
+
+        private void PlaySelfEffect()
+        {
+            ParticleSystem.Play(true);
+        }
+
+        private void StopSelfEffect()
+        {
+            ParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+
+        public void PlayFlashEffect(Vector3 position, Vector3 direction)
+        {
+            if (GameObjectPoolManager.Instance.ProjectileFlashDict.TryGetValue(ProjectileInfo.ProjectileType, out GameObjectPool flashPool))
+            {
+                ProjectileFlash flash = flashPool.AllocateGameObject<ProjectileFlash>(ProjectileManager.Instance.Root);
+                flash.transform.position = position;
+                flash.transform.rotation = Quaternion.identity;
+                flash.transform.forward = direction;
+                flash.Play();
             }
         }
 
@@ -117,19 +137,6 @@ namespace Client
                 }
 
                 hit.Play();
-            }
-        }
-
-        private ProjectileInfo.FlyRealtimeData FlyRealtimeData = new ProjectileInfo.FlyRealtimeData();
-
-        public void Update()
-        {
-            if (!IsRecycled)
-            {
-                Rigidbody.velocity = transform.TransformVector(curSpeed);
-                curSpeed += accelerate * Time.deltaTime;
-                FlyRealtimeData.Velocity = Rigidbody.velocity;
-                FlyRealtimeData.Accelerate = accelerate;
             }
         }
     }

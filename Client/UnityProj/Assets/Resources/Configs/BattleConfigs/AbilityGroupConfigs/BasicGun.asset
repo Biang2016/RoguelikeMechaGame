@@ -24,4 +24,3 @@ MonoBehaviour:
   AbilityGroupName: BasicGun
   AbilityConfigs:
   - {fileID: 11400000, guid: d461ae4bac4669f4c95a9d7f20f4477c, type: 2}
-  AbilityNames: []

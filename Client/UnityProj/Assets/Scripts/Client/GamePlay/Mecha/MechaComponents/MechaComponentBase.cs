@@ -69,11 +69,14 @@ namespace Client
 
         protected virtual void Update()
         {
-            Update_Fighting();
-            if (!Application.isPlaying)
+            if (!IsRecycled)
             {
-                transform.localPosition = Vector3.zero;
-                transform.localRotation = Quaternion.identity;
+                Update_Fighting();
+                if (!Application.isPlaying)
+                {
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = Quaternion.identity;
+                }
             }
         }
 
@@ -118,7 +121,7 @@ namespace Client
 
 #if UNITY_EDITOR
 
-        [MenuItem("Tools/序列化模组占位")]
+        [MenuItem("开发工具/序列化模组占位")]
         public static void SerializeMechaComponentOccupiedPositions()
         {
             PrefabManager.Instance.LoadPrefabs();

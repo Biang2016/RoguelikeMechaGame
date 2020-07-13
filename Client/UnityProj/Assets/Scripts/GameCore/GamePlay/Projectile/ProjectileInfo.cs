@@ -22,6 +22,7 @@ namespace GameCore
         {
             public float FlyDistance;
             public float FlyDuration;
+            public int Range;
             public Vector3 Velocity;
             public Vector3 Accelerate;
             public Vector3 CurrentPosition;

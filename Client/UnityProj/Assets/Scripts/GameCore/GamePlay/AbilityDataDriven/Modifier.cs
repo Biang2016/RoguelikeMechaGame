@@ -6,34 +6,34 @@ namespace GameCore.AbilityDataDriven
 {
     public class Modifier : IClone<Modifier>
     {
-        [LabelText("ModifierÃû³Æ")]
+        [LabelText("Modifieråç§°")]
         public string ModifierName;
 
-        [LabelText("ÊôĞÔ")]
+        [LabelText("å±æ€§")]
         public ENUM_ModifierAttribute Attributes;
 
-        [LabelText("³ÖĞøÊ±¼ä")]
+        [LabelText("æŒç»­æ—¶é—´")]
         [SuffixLabel("ms", true)]
         public int Duration;
 
         public bool IsBuff;
         public bool IsDeBuff;
 
-        [LabelText("Òş²Ø")]
+        [LabelText("éšè—")]
         public bool IsHidden;
 
-        [LabelText("±»¶¯´¥·¢")]
+        [LabelText("è¢«åŠ¨")]
         public bool Passive;
 
-        [LabelText("´¥·¢¼ä¸ô")]
+        [LabelText("è§¦å‘å™¨å®šæ—¶é—´éš”")]
         [SuffixLabel("ms", true)]
-        public int ThinkInterval;
+        public int TickerInterval;
 
         //public Dictionary<ENUM_ModifierProperty, Fix64> Properties = new Dictionary<ENUM_ModifierProperty, Fix64>();
 
         //public HashSet<ENUM_ModifierStates> States = new HashSet<ENUM_ModifierStates>();
 
-        [LabelText("´¥·¢ÊÂ¼şÁĞ±í")]
+        [LabelText("è§¦å‘äº‹ä»¶åˆ—è¡¨")]
         [ListDrawerSettings(ListElementLabelName = "EventName")]
         public List<Event> Events = new List<Event>();
 
@@ -48,7 +48,7 @@ namespace GameCore.AbilityDataDriven
                 IsDeBuff = IsDeBuff,
                 IsHidden = IsHidden,
                 Passive = Passive,
-                ThinkInterval = ThinkInterval,
+                TickerInterval = TickerInterval,
                 Events = Events.Clone(),
             };
         }

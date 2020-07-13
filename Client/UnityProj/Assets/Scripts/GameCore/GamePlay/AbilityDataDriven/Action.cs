@@ -75,7 +75,10 @@ namespace GameCore.AbilityDataDriven
 
     public abstract class Action_EmitProjectile : Action
     {
-        [LabelText("投掷物类型")]
+        [LabelText("投掷物")]
+        public ProjectileConfig ProjectileConfig;
+
+        [LabelText("投掷物表现体")]
         public ProjectileType ProjectileType;
 
         protected override void ChildClone(Action newAction)
@@ -85,8 +88,12 @@ namespace GameCore.AbilityDataDriven
             action.ProjectileType = ProjectileType;
         }
 
+        [HideInInspector]
+        [NonSerialized]
         public UnityAction<ProjectileInfo.FlyRealtimeData> OnHit;
 
+        [HideInInspector]
+        [NonSerialized]
         public UnityAction<ProjectileInfo.FlyRealtimeData> OnMiss;
     }
 
@@ -112,12 +119,10 @@ namespace GameCore.AbilityDataDriven
         [SuffixLabel("unit", true)]
         public int Range;
 
-        [LabelText("初速度")]
-        [SuffixLabel("unit/s", true)]
+        [LabelText("初速度(unit/s)")]
         public Vector3 Velocity;
 
-        [LabelText("加速度")]
-        [SuffixLabel("unit/s2", true)]
+        [LabelText("加速度(unit/s^2)")]
         public Vector3 Acceleration;
 
         protected override void ChildClone(Action newAction)

@@ -84,12 +84,6 @@ MonoBehaviour:
     - Name: ProjectileType
       Entry: 3
       Data: 15
-    - Name: OnHit
-      Entry: 6
-      Data: 
-    - Name: OnMiss
-      Entry: 6
-      Data: 
     - Name: Range
       Entry: 3
       Data: 20
@@ -113,10 +107,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 100
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 100
     - Name: 
       Entry: 4
       Data: 100

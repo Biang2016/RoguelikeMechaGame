@@ -49,7 +49,7 @@ namespace GameCore
             MechaComponentOccupiedGridPosDict = JsonConvert.DeserializeObject<SortedDictionary<MechaComponentType, List<GridPos>>>(content);
         }
 
-        [MenuItem("Tools/序列化技能配置")]
+        [MenuItem("开发工具/序列化技能配置")]
         private static void ExportAbilityConfigs()
         {
             // http://www.sirenix.net/odininspector/faq?Search=&t-11=on#faq
@@ -77,7 +77,7 @@ namespace GameCore
                 foreach (Object obj in configObjs)
                 {
                     AbilityGroupConfigSSO config = (AbilityGroupConfigSSO) obj;
-                    AbilityGroup ag = config.GetAbilityGroup();
+                    AbilityGroup ag = config.GetAbilityGroup_NoData();
                     string path = folder + config.name + ".config";
                     byte[] bytes = SerializationUtility.SerializeValue(ag, dataFormat);
                     File.WriteAllBytes(path, bytes);
