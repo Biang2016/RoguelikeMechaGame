@@ -1,5 +1,6 @@
 ﻿using System;
 using BiangStudio.GameDataFormat;
+using UnityEngine;
 
 namespace GameCore
 {
@@ -10,13 +11,21 @@ namespace GameCore
         public MechaType MechaType;
         public ProjectileType ProjectileType;
 
-        public TransformInfo TransformInfo;
-
         public ProjectileInfo(AbilityDataDriven.Action_EmitProjectile_DelayLine parentAction, MechaType mechaType, ProjectileType projectileType)
         {
             ParentAction = parentAction;
             MechaType = mechaType;
             ProjectileType = projectileType;
+        }
+
+        public struct FlyRealtimeData
+        {
+            public float FlyDistance;
+            public float FlyDuration;
+            public Vector3 Velocity;
+            public Vector3 Accelerate;
+            public Vector3 CurrentPosition;
+            public Collider HitCollider;
         }
     }
 

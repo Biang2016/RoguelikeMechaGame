@@ -2,6 +2,7 @@
 using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GameCore.AbilityDataDriven
 {
@@ -83,6 +84,10 @@ namespace GameCore.AbilityDataDriven
             Action_EmitProjectile action = ((Action_EmitProjectile) newAction);
             action.ProjectileType = ProjectileType;
         }
+
+        public UnityAction<ProjectileInfo.FlyRealtimeData> OnHit;
+
+        public UnityAction<ProjectileInfo.FlyRealtimeData> OnMiss;
     }
 
     [LabelText("行为_释放投掷物_瞬时直线")]
@@ -109,18 +114,18 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("初速度")]
         [SuffixLabel("unit/s", true)]
-        public int Speed;
+        public Vector3 Velocity;
 
         [LabelText("加速度")]
         [SuffixLabel("unit/s2", true)]
-        public int Acceleration;
+        public Vector3 Acceleration;
 
         protected override void ChildClone(Action newAction)
         {
             base.ChildClone(newAction);
             Action_EmitProjectile_DelayLine action = ((Action_EmitProjectile_DelayLine) newAction);
             action.Range = Range;
-            action.Speed = Speed;
+            action.Velocity = Velocity;
             action.Acceleration = Acceleration;
         }
     }

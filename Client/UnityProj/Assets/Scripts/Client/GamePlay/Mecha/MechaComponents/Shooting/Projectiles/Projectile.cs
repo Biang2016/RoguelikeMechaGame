@@ -20,12 +20,10 @@ namespace Client
         private Collider Collider;
         private ParticleSystem ParticleSystem;
 
-        public TransformHelper TransformHelper = new TransformHelper();
-
         internal ProjectileInfo ProjectileInfo;
-        private Fix64 curSpeed;
-        private Fix64 accelerate;
-        private Fix64 range;
+        private Vector3 curSpeed;
+        private Vector3 accelerate;
+        private float range;
 
         public override void PoolRecycle()
         {
@@ -33,9 +31,10 @@ namespace Client
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             Collider.enabled = false;
-            curSpeed = Fix64.Zero;
-            accelerate = Fix64.Zero;
-            range = Fix64.Zero;
+            curSpeed = Vector3.zero;
+            accelerate = Vector3.zero;
+            range = 0;
+            ProjectileInfo = null;
             base.PoolRecycle();
         }
 
@@ -57,17 +56,18 @@ namespace Client
 
         public void Launch()
         {
+            FlyRealtimeData = new ProjectileInfo.FlyRealtimeData();
             Rigidbody.constraints = RigidbodyConstraints.None;
             Collider.enabled = true;
-            curSpeed = (Fix64) ProjectileInfo.ParentAction.Speed;
-            accelerate = (Fix64) ProjectileInfo.ParentAction.Acceleration;
-            range = (Fix64) ProjectileInfo.ParentAction.Range;
+            curSpeed = ProjectileInfo.ParentAction.Velocity;
+            accelerate = ProjectileInfo.ParentAction.Acceleration;
+            range = ProjectileInfo.ParentAction.Range;
             if (GameObjectPoolManager.Instance.ProjectileFlashDict.TryGetValue(ProjectileInfo.ProjectileType, out GameObjectPool flashPool))
             {
                 ProjectileFlash flash = flashPool.AllocateGameObject<ProjectileFlash>(ProjectileManager.Instance.Root);
                 flash.transform.position = transform.position;
                 flash.transform.rotation = Quaternion.identity;
-                flash.transform.forward = gameObject.transform.forward;
+                flash.transform.forward = transform.forward;
                 flash.Play();
             }
 
@@ -87,13 +87,22 @@ namespace Client
 
         void OnCollisionEnter(Collision collision)
         {
-            ContactPoint contact = collision.contacts[0];
+            if (ProjectileInfo != null)
+            {
+                ContactPoint contact = collision.contacts[0];
+                ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
+                PlayHitEffect(contact.point, contact.normal);
+                PoolRecycle();
+            }
+        }
 
+        public void PlayHitEffect(Vector3 position, Vector3 direction)
+        {
             if (GameObjectPoolManager.Instance.ProjectileHitDict.ContainsKey(ProjectileInfo.ProjectileType))
             {
                 ProjectileHit hit = GameObjectPoolManager.Instance.ProjectileHitDict[ProjectileInfo.ProjectileType].AllocateGameObject<ProjectileHit>(ProjectileManager.Instance.Root);
-                hit.transform.position = contact.point + contact.normal * hitOffset;
-                hit.transform.rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
+                hit.transform.position = position + direction * hitOffset;
+                hit.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
                 if (UseFirePointRotation)
                 {
                     hit.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180f, 0);
@@ -104,21 +113,23 @@ namespace Client
                 }
                 else
                 {
-                    hit.transform.LookAt(contact.point + contact.normal);
+                    hit.transform.LookAt(position + direction);
                 }
 
                 hit.Play();
             }
-
-            PoolRecycle();
         }
+
+        private ProjectileInfo.FlyRealtimeData FlyRealtimeData = new ProjectileInfo.FlyRealtimeData();
 
         public void Update()
         {
             if (!IsRecycled)
             {
-                Rigidbody.velocity = transform.forward * (float) curSpeed;
+                Rigidbody.velocity = transform.TransformVector(curSpeed);
                 curSpeed += accelerate * Time.deltaTime;
+                FlyRealtimeData.Velocity = Rigidbody.velocity;
+                FlyRealtimeData.Accelerate = accelerate;
             }
         }
     }

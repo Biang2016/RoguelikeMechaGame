@@ -84,15 +84,45 @@ MonoBehaviour:
     - Name: ProjectileType
       Entry: 3
       Data: 15
+    - Name: OnHit
+      Entry: 6
+      Data: 
+    - Name: OnMiss
+      Entry: 6
+      Data: 
     - Name: Range
       Entry: 3
       Data: 20
-    - Name: Speed
-      Entry: 3
-      Data: 20
+    - Name: Velocity
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: Acceleration
-      Entry: 3
-      Data: 5
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
