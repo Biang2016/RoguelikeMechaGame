@@ -14386,7 +14386,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449260960837898}
   serializedVersion: 6
-  lengthInSec: 2
+  lengthInSec: 20
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -14461,7 +14461,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 20
       minScalar: 0.8
       maxCurve:
         serializedVersion: 2
@@ -19128,8 +19128,6 @@ MonoBehaviour:
   hitOffset: 0.1
   UseFirePointRotation: 0
   rotationOffset: {x: 0, y: 0, z: 0}
-  Detached:
-  - {fileID: 1112018524344104}
 --- !u!199 &199828426782813410
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -19268,7 +19266,7 @@ Rigidbody:
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!135 &135951470721667518

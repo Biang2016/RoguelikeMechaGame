@@ -156,6 +156,9 @@ namespace GameCore.AbilityDataDriven
         [LabelText("加速度(unit/s^2)")]
         public Vector3 Acceleration;
 
+        [LabelText("局部坐标加速度")]
+        public bool LocalAcceleration;
+
         protected override void ChildClone(Action newAction)
         {
             base.ChildClone(newAction);
@@ -164,6 +167,7 @@ namespace GameCore.AbilityDataDriven
             action.MaxDuration = MaxDuration;
             action.Velocity = Velocity;
             action.Acceleration = Acceleration;
+            action.LocalAcceleration = LocalAcceleration;
         }
     }
 

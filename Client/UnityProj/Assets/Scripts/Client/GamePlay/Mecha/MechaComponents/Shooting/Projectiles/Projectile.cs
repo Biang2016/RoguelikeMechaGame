@@ -78,7 +78,16 @@ namespace Client
                 FlyRealtimeData.FlyDistance += FlyRealtimeData.Velocity.magnitude * Time.fixedDeltaTime;
                 FlyRealtimeData.FlyDuration += Time.fixedDeltaTime;
                 FlyRealtimeData.CurrentPosition = transform.position;
-                FlyRealtimeData.Velocity += FlyRealtimeData.Accelerate * Time.fixedDeltaTime;
+                transform.forward = FlyRealtimeData.Velocity;
+                if (ProjectileInfo.ParentAction.LocalAcceleration)
+                {
+                    Vector3 accelerate_global = transform.TransformVector(FlyRealtimeData.Accelerate);
+                    FlyRealtimeData.Velocity += accelerate_global * Time.fixedDeltaTime;
+                }
+                else
+                {
+                    FlyRealtimeData.Velocity += FlyRealtimeData.Accelerate * Time.fixedDeltaTime;
+                }
 
                 if (ProjectileInfo.ParentAction.MaxRange > 0 && FlyRealtimeData.FlyDistance > ProjectileInfo.ParentAction.MaxRange)
                 {
