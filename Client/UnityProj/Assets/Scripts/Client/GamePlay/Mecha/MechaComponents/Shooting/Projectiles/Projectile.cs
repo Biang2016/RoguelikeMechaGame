@@ -56,11 +56,12 @@ namespace Client
             {
                 FlyDistance = 0,
                 FlyDuration = 0,
-                Velocity = ProjectileInfo.ParentAction.Velocity,
+                Position = transform.position,
+                Velocity_Local = ProjectileInfo.ParentAction.Velocity,
+                Velocity_Global = transform.TransformVector(ProjectileInfo.ParentAction.Velocity),
                 Accelerate = ProjectileInfo.ParentAction.Acceleration,
-                Range = ProjectileInfo.ParentAction.MaxRange,
-                CurrentPosition = transform.position,
                 HitCollider = null,
+                RemainCollideTimes = ProjectileInfo.ParentAction.CollideTimes,
             };
 
             PlayFlashEffect(transform.position, transform.forward);
@@ -68,27 +69,32 @@ namespace Client
             PoolRecycle(ParticleSystem.main.duration);
         }
 
-        private ProjectileInfo.FlyRealtimeData FlyRealtimeData = new ProjectileInfo.FlyRealtimeData();
+        private ProjectileInfo.FlyRealtimeData FlyRealtimeData;
 
         void FixedUpdate()
         {
             if (!IsRecycled)
             {
-                Rigidbody.velocity = transform.TransformVector(FlyRealtimeData.Velocity);
-                FlyRealtimeData.FlyDistance += FlyRealtimeData.Velocity.magnitude * Time.fixedDeltaTime;
+                // 统计
+                FlyRealtimeData.FlyDistance += FlyRealtimeData.Velocity_Global.magnitude * Time.fixedDeltaTime;
                 FlyRealtimeData.FlyDuration += Time.fixedDeltaTime;
-                FlyRealtimeData.CurrentPosition = transform.position;
-                transform.forward = FlyRealtimeData.Velocity;
-                if (ProjectileInfo.ParentAction.LocalAcceleration)
-                {
-                    Vector3 accelerate_global = transform.TransformVector(FlyRealtimeData.Accelerate);
-                    FlyRealtimeData.Velocity += accelerate_global * Time.fixedDeltaTime;
-                }
-                else
-                {
-                    FlyRealtimeData.Velocity += FlyRealtimeData.Accelerate * Time.fixedDeltaTime;
-                }
+                FlyRealtimeData.Position = transform.position;
 
+                // 朝向
+
+                // 加速度 Y轴世界坐标，XZ轴局部坐标
+                transform.forward = FlyRealtimeData.Velocity_Global.normalized;
+                FlyRealtimeData.Velocity_Local += Vector3.Scale(new Vector3(1, 0, 1), FlyRealtimeData.Accelerate) * Time.fixedDeltaTime;
+                FlyRealtimeData.Velocity_Global = transform.TransformVector(FlyRealtimeData.Velocity_Local);
+                FlyRealtimeData.Velocity_Global += new Vector3(0, FlyRealtimeData.Accelerate.y * Time.fixedDeltaTime, 0);
+
+                transform.forward = FlyRealtimeData.Velocity_Global.normalized;
+                FlyRealtimeData.Velocity_Local = transform.InverseTransformVector(FlyRealtimeData.Velocity_Global);
+
+                // 速度
+                Rigidbody.velocity = FlyRealtimeData.Velocity_Global;
+
+                // 消亡检查
                 if (ProjectileInfo.ParentAction.MaxRange > 0 && FlyRealtimeData.FlyDistance > ProjectileInfo.ParentAction.MaxRange)
                 {
                     ProjectileInfo.ParentAction.OnMiss?.Invoke(FlyRealtimeData);
@@ -111,9 +117,26 @@ namespace Client
             {
                 ContactPoint contact = collision.contacts[0];
                 FlyRealtimeData.HitCollider = collision.collider;
-                ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
-                PlayHitEffect(contact.point, contact.normal);
-                PoolRecycle();
+                MechaComponentBase mcb = collision.collider.GetComponentInParent<MechaComponentBase>();
+                if (mcb && !ProjectileInfo.ParentAction.IsCollideWithOwner && mcb.MechaInfo == ProjectileInfo.ParentMechaInfo)
+                {
+                    return;
+                }
+                else
+                {
+                    FlyRealtimeData.RemainCollideTimes--;
+                    PlayHitEffect(contact.point, contact.normal);
+                    Vector3 reflectDir = FlyRealtimeData.Velocity_Global.normalized - 2 * Vector3.Dot(FlyRealtimeData.Velocity_Global.normalized, contact.normal) * contact.normal;
+                    FlyRealtimeData.Velocity_Global = reflectDir * FlyRealtimeData.Velocity_Global.magnitude;
+                    transform.forward = FlyRealtimeData.Velocity_Global.normalized;
+                    Rigidbody.velocity = FlyRealtimeData.Velocity_Global;
+                    FlyRealtimeData.Velocity_Local = transform.InverseTransformVector(FlyRealtimeData.Velocity_Global);
+                    if (FlyRealtimeData.RemainCollideTimes <= 0)
+                    {
+                        ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
+                        PoolRecycle();
+                    }
+                }
             }
         }
 

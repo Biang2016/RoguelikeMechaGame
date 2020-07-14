@@ -33,11 +33,12 @@ namespace GameCore
         {
             public float FlyDistance;
             public float FlyDuration;
-            public int Range;
-            public Vector3 Velocity;
+            public Vector3 Position;
+            public Vector3 Velocity_Local;
+            public Vector3 Velocity_Global;
             public Vector3 Accelerate;
-            public Vector3 CurrentPosition;
             public Collider HitCollider;
+            public int RemainCollideTimes;
         }
     }
 

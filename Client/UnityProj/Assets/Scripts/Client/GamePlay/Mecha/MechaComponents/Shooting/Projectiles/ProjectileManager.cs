@@ -14,7 +14,7 @@ namespace Client
             Root = root;
         }
 
-        public Projectile ShootProjectile(ProjectileInfo projectileInfo, Vector3 from, Vector3 dir)
+       public Projectile ShootProjectile(ProjectileInfo projectileInfo, Vector3 from, Vector3 dir)
         {
             Projectile projectile = GameObjectPoolManager.Instance.ProjectileDict[projectileInfo.ProjectileType].AllocateGameObject<Projectile>(Root);
             projectile.transform.position = from;

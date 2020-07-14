@@ -77,67 +77,25 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 7
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile_DelayLine, GameCore
     - Name: ProjectileName
       Entry: 1
       Data: NormalBullet
-    - Name: MaxRange
+    - Name: CollideTimes
       Entry: 3
-      Data: 500
-    - Name: MaxDuration
-      Entry: 3
-      Data: 0
-    - Name: Velocity
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 20
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Acceleration
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: -100
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: LocalAcceleration
+      Data: 5
+    - Name: IsCollideWithOwner
       Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 6|GameCore.AbilityDataDriven.Action_EmitProjectile_DelayLine, GameCore
-    - Name: ProjectileName
-      Entry: 1
-      Data: PurpleSmoke
+      Data: false
     - Name: MaxRange
       Entry: 3
-      Data: 0
+      Data: 500000
     - Name: MaxDuration
       Entry: 3
-      Data: 20000
+      Data: 0
     - Name: Velocity
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -156,21 +114,18 @@ MonoBehaviour:
     - Name: Acceleration
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
     - Name: 
       Entry: 4
       Data: 100
     - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
       Entry: 8
       Data: 
-    - Name: LocalAcceleration
-      Entry: 5
-      Data: true
     - Name: 
       Entry: 8
       Data: 
@@ -185,23 +140,23 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 7|GameCore.AbilityDataDriven.Event, GameCore
+      Data: 6|GameCore.AbilityDataDriven.Event, GameCore
     - Name: EventType
       Entry: 3
       Data: 16
     - Name: Actions
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.Action,
+      Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.Action,
         GameCore]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 9|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
+      Data: 8|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
     - Name: Target
       Entry: 7
-      Data: 10|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
+      Data: 9|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
     - Name: Target
       Entry: 3
       Data: 3

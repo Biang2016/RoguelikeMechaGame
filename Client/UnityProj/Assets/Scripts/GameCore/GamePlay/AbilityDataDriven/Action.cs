@@ -98,6 +98,12 @@ namespace GameCore.AbilityDataDriven
             }
         }
 
+        [LabelText("最大碰撞次数")]
+        public int CollideTimes = 1;
+
+        [LabelText("和施法者碰撞")]
+        public bool IsCollideWithOwner = false;
+
         private IEnumerable GetProjectileNames()
         {
             if (!ConfigManager.IsLoaded)
@@ -113,6 +119,8 @@ namespace GameCore.AbilityDataDriven
             base.ChildClone(newAction);
             Action_EmitProjectile action = ((Action_EmitProjectile) newAction);
             action.ProjectileName = ProjectileName;
+            action.IsCollideWithOwner = IsCollideWithOwner;
+            action.CollideTimes = CollideTimes;
         }
 
         [HideInInspector]
@@ -156,9 +164,6 @@ namespace GameCore.AbilityDataDriven
         [LabelText("加速度(unit/s^2)")]
         public Vector3 Acceleration;
 
-        [LabelText("局部坐标加速度")]
-        public bool LocalAcceleration;
-
         protected override void ChildClone(Action newAction)
         {
             base.ChildClone(newAction);
@@ -167,7 +172,6 @@ namespace GameCore.AbilityDataDriven
             action.MaxDuration = MaxDuration;
             action.Velocity = Velocity;
             action.Acceleration = Acceleration;
-            action.LocalAcceleration = LocalAcceleration;
         }
     }
 
