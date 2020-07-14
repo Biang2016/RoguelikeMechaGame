@@ -86,7 +86,7 @@ MonoBehaviour:
       Data: NormalBullet
     - Name: MaxRange
       Entry: 3
-      Data: 5
+      Data: 500
     - Name: MaxDuration
       Entry: 3
       Data: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: -100
     - Name: 
       Entry: 4
       Data: 0
@@ -120,6 +120,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: LocalAcceleration
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 8
       Data: 
@@ -134,7 +137,7 @@ MonoBehaviour:
       Data: 0
     - Name: MaxDuration
       Entry: 3
-      Data: 5000
+      Data: 20000
     - Name: Velocity
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
@@ -146,7 +149,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: 5
+      Data: 20
     - Name: 
       Entry: 8
       Data: 
@@ -155,7 +158,7 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 100
     - Name: 
       Entry: 4
       Data: 0
@@ -165,6 +168,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: LocalAcceleration
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 8
       Data: 
