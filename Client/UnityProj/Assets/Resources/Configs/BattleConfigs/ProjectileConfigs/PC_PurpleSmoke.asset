@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35c8926ff715f014698824889fcf097e, type: 3}
-  m_Name: PC_NormalBullet
+  m_Name: PC_PurpleSmoke
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -26,10 +26,10 @@ MonoBehaviour:
       Data: 0|GameCore.AbilityDataDriven.ProjectileConfig, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: NormalBullet
+      Data: PurpleSmoke
     - Name: ProjectileType
       Entry: 3
-      Data: 0
+      Data: 5
     - Name: 
       Entry: 8
       Data: 

@@ -58,7 +58,7 @@ namespace Client
                 FlyDuration = 0,
                 Velocity = ProjectileInfo.ParentAction.Velocity,
                 Accelerate = ProjectileInfo.ParentAction.Acceleration,
-                Range = ProjectileInfo.ParentAction.Range,
+                Range = ProjectileInfo.ParentAction.MaxRange,
                 CurrentPosition = transform.position,
                 HitCollider = null,
             };
@@ -79,6 +79,20 @@ namespace Client
                 FlyRealtimeData.FlyDuration += Time.fixedDeltaTime;
                 FlyRealtimeData.CurrentPosition = transform.position;
                 FlyRealtimeData.Velocity += FlyRealtimeData.Accelerate * Time.fixedDeltaTime;
+
+                if (ProjectileInfo.ParentAction.MaxRange > 0 && FlyRealtimeData.FlyDistance > ProjectileInfo.ParentAction.MaxRange)
+                {
+                    ProjectileInfo.ParentAction.OnMiss?.Invoke(FlyRealtimeData);
+                    PoolRecycle();
+                    return;
+                }
+
+                if (ProjectileInfo.ParentAction.MaxDuration > 0 && FlyRealtimeData.FlyDuration * 1000 > ProjectileInfo.ParentAction.MaxDuration)
+                {
+                    ProjectileInfo.ParentAction.OnMiss?.Invoke(FlyRealtimeData);
+                    PoolRecycle();
+                    return;
+                }
             }
         }
 

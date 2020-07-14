@@ -127,24 +127,28 @@ namespace GameCore.AbilityDataDriven
     [LabelText("行为_释放投掷物_瞬时直线")]
     public class Action_EmitProjectile_ImmediateLine : Action_EmitProjectile
     {
-        [LabelText("射程")]
+        [LabelText("射程(负值为无限)")]
         [SuffixLabel("unit", true)]
-        public int Range;
+        public int MaxRange;
 
         protected override void ChildClone(Action newAction)
         {
             base.ChildClone(newAction);
             Action_EmitProjectile_ImmediateLine action = ((Action_EmitProjectile_ImmediateLine) newAction);
-            action.Range = Range;
+            action.MaxRange = MaxRange;
         }
     }
 
     [LabelText("行为_释放投掷物_延时直线")]
     public class Action_EmitProjectile_DelayLine : Action_EmitProjectile
     {
-        [LabelText("射程")]
+        [LabelText("射程(负值为无限)")]
         [SuffixLabel("unit", true)]
-        public int Range;
+        public int MaxRange;
+
+        [LabelText("生存最大时间(负值为无限)")]
+        [SuffixLabel("ms", true)]
+        public int MaxDuration;
 
         [LabelText("初速度(unit/s)")]
         public Vector3 Velocity;
@@ -156,7 +160,8 @@ namespace GameCore.AbilityDataDriven
         {
             base.ChildClone(newAction);
             Action_EmitProjectile_DelayLine action = ((Action_EmitProjectile_DelayLine) newAction);
-            action.Range = Range;
+            action.MaxRange = MaxRange;
+            action.MaxDuration = MaxDuration;
             action.Velocity = Velocity;
             action.Acceleration = Acceleration;
         }
