@@ -1,5 +1,6 @@
 ﻿using System;
 using BiangStudio.GameDataFormat;
+using GameCore.AbilityDataDriven;
 using UnityEngine;
 
 namespace GameCore
@@ -7,15 +8,25 @@ namespace GameCore
     [Serializable]
     public class ProjectileInfo
     {
-        public AbilityDataDriven.Action_EmitProjectile_DelayLine ParentAction;
-        public MechaType MechaType;
-        public ProjectileType ProjectileType;
+        public Action_EmitProjectile_DelayLine ParentAction;
+        public MechaComponentInfo ParentMechaComponentInfo;
+        public MechaInfo ParentMechaInfo;
 
-        public ProjectileInfo(AbilityDataDriven.Action_EmitProjectile_DelayLine parentAction, MechaType mechaType, ProjectileType projectileType)
+        public Transform ChasingTarget;
+        public Vector3 ChasingPosition;
+
+        public MechaType MechaType => ParentMechaInfo.MechaType;
+        public ProjectileConfig ProjectileConfig => ParentAction.ProjectileConfig;
+        public ProjectileType ProjectileType => ProjectileConfig.ProjectileType;
+
+        public ProjectileInfo(Action_EmitProjectile_DelayLine parentAction, MechaComponentInfo parentMechaComponentInfo, MechaInfo parentMechaInfo,
+            Transform chasingTarget, Vector3 chasingPosition)
         {
             ParentAction = parentAction;
-            MechaType = mechaType;
-            ProjectileType = projectileType;
+            ParentMechaComponentInfo = parentMechaComponentInfo;
+            ParentMechaInfo = parentMechaInfo;
+            ChasingTarget = chasingTarget;
+            ChasingPosition = chasingPosition;
         }
 
         public struct FlyRealtimeData

@@ -58,8 +58,7 @@ namespace GameCore
             MechaComponentOccupiedGridPosDict = JsonConvert.DeserializeObject<SortedDictionary<MechaComponentType, List<GridPos>>>(content);
         }
 
-        [MenuItem("开发工具/序列化技能配置")]
-        private static void ExportAbilityConfigs()
+        public static void ExportAbilityConfigs()
         {
             // http://www.sirenix.net/odininspector/faq?Search=&t-11=on#faq
 
@@ -111,8 +110,9 @@ namespace GameCore
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("开发工具/加载技能配置")]
-        private static void LoadAllAbilityConfigs()
+        public static bool IsLoaded = false;
+
+        public static void LoadAllAbilityConfigs()
         {
             DataFormat dataFormat = DataFormat.Binary;
 
@@ -200,22 +200,26 @@ namespace GameCore
                     Debug.LogError("投掷物表不存在");
                 }
             }
+            IsLoaded = true;
         }
 
         public Ability GetAbility(string abilityName)
         {
+            if (!IsLoaded) LoadAllAbilityConfigs();
             AbilityConfigDict.TryGetValue(abilityName, out Ability ability);
             return ability?.Clone();
         }
 
         public AbilityGroup GetAbilityGroup(string abilityGroupName)
         {
+            if (!IsLoaded) LoadAllAbilityConfigs();
             AbilityGroupConfigDict.TryGetValue(abilityGroupName, out AbilityGroup abilityGroup);
             return abilityGroup?.Clone();
         }
 
         public ProjectileConfig GetProjectileConfig(string projectileConfigName)
         {
+            if (!IsLoaded) LoadAllAbilityConfigs();
             ProjectileConfigDict.TryGetValue(projectileConfigName, out ProjectileConfig projectileConfig);
             return projectileConfig?.Clone();
         }

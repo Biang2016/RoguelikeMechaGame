@@ -44,6 +44,7 @@ namespace Client
         }
 
         private ProjectileType projectileType;
+
         public void TriggerAbilities()
         {
             foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
@@ -62,7 +63,7 @@ namespace Client
                                     {
                                         case ENUM_AbilityCastDummyPosition.ShooterDummyPos:
                                         {
-                                            ProjectileInfo pi = new ProjectileInfo(act, MechaType, projectileType);
+                                            ProjectileInfo pi = new ProjectileInfo(act, MechaComponentInfo, MechaInfo, null, Vector3.zero);
                                             ProjectileManager.Instance.ShootProjectile(pi, ShooterDummyPos.position, ShooterDummyPos.forward);
                                             break;
                                         }

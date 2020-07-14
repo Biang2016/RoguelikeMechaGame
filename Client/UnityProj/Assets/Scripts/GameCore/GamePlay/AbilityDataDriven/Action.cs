@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -76,10 +77,11 @@ namespace GameCore.AbilityDataDriven
 
     public abstract class Action_EmitProjectile : Action
     {
-        [OdinSerialize]
-        [HideInInspector]
-        private ProjectileConfig projectileConfig;
+        [PropertyOrder(-1)]
+        [ValueDropdown("GetProjectileNames")]
+        public string ProjectileName;
 
+        [PropertyOrder(-1)]
         [LabelText("投掷物")]
         [ReadOnly]
         [ShowInInspector]
@@ -87,44 +89,30 @@ namespace GameCore.AbilityDataDriven
         {
             get
             {
-                if (ProjectileConfigSSO != null)
+                if (string.IsNullOrWhiteSpace(ProjectileName))
                 {
-                    projectileConfig = ProjectileConfigSSO.ProjectileConfig.Clone();
+                    return null;
                 }
 
-                return projectileConfig;
-            }
-            set
-            {
-                if (ProjectileConfigSSO == null)
-                {
-                    projectileConfig = value;
-                }
+                return ConfigManager.Instance.GetProjectileConfig(ProjectileName);
             }
         }
 
-        [OnValueChanged("RefreshProjectileConfig")]
-        [HideInPlayMode]
-        [LabelText("投掷物配置体")]
-        public ProjectileConfigSSO ProjectileConfigSSO;
-
-        private void RefreshProjectileConfig()
+        private IEnumerable GetProjectileNames()
         {
-            if (ProjectileConfigSSO != null)
+            if (!ConfigManager.IsLoaded)
             {
-                projectileConfig = ProjectileConfigSSO.ProjectileConfig.Clone();
+                ConfigManager.LoadAllAbilityConfigs();
             }
-            else
-            {
-                projectileConfig = new ProjectileConfig();
-            }
+
+            return ConfigManager.ProjectileConfigDict.Keys;
         }
 
         protected override void ChildClone(Action newAction)
         {
             base.ChildClone(newAction);
             Action_EmitProjectile action = ((Action_EmitProjectile) newAction);
-            action.ProjectileConfig = ProjectileConfig.Clone();
+            action.ProjectileName = ProjectileName;
         }
 
         [HideInInspector]

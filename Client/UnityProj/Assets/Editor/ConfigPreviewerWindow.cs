@@ -10,6 +10,7 @@ public class ConfigPreviewerWindow : OdinEditorWindow
     [MenuItem("面板/配置浏览器")]
     private static void OpenConfigPreviewWindow()
     {
+        ConfigManager.LoadAllAbilityConfigs();
         InspectObject(ConfigManager.Instance);
     }
 
