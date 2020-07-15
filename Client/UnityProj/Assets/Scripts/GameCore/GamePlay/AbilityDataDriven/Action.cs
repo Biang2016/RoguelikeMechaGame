@@ -75,11 +75,13 @@ namespace GameCore.AbilityDataDriven
         }
     }
 
-    public abstract class Action_EmitProjectile : Action
+    public class Action_EmitProjectile : Action
     {
         [PropertyOrder(-1)]
         [ValueDropdown("GetProjectileNames")]
         public string ProjectileName;
+
+        private ProjectileConfig projectConfig;
 
         [PropertyOrder(-1)]
         [LabelText("投掷物")]
@@ -91,18 +93,21 @@ namespace GameCore.AbilityDataDriven
             {
                 if (string.IsNullOrWhiteSpace(ProjectileName))
                 {
+                    projectConfig = null;
                     return null;
                 }
+                else
+                {
+                    if (projectConfig == null)
+                    {
+                        projectConfig = ConfigManager.Instance.GetProjectileConfig(ProjectileName);
+                    }
+                }
 
-                return ConfigManager.Instance.GetProjectileConfig(ProjectileName);
+                return projectConfig;
             }
         }
 
-        [LabelText("最大碰撞次数")]
-        public int CollideTimes = 1;
-
-        [LabelText("和施法者碰撞")]
-        public bool IsCollideWithOwner = false;
 
         private IEnumerable GetProjectileNames()
         {
@@ -119,8 +124,6 @@ namespace GameCore.AbilityDataDriven
             base.ChildClone(newAction);
             Action_EmitProjectile action = ((Action_EmitProjectile) newAction);
             action.ProjectileName = ProjectileName;
-            action.IsCollideWithOwner = IsCollideWithOwner;
-            action.CollideTimes = CollideTimes;
         }
 
         [HideInInspector]
@@ -130,49 +133,6 @@ namespace GameCore.AbilityDataDriven
         [HideInInspector]
         [NonSerialized]
         public UnityAction<ProjectileInfo.FlyRealtimeData> OnMiss;
-    }
-
-    [LabelText("行为_释放投掷物_瞬时直线")]
-    public class Action_EmitProjectile_ImmediateLine : Action_EmitProjectile
-    {
-        [LabelText("射程(负值为无限)")]
-        [SuffixLabel("unit", true)]
-        public int MaxRange;
-
-        protected override void ChildClone(Action newAction)
-        {
-            base.ChildClone(newAction);
-            Action_EmitProjectile_ImmediateLine action = ((Action_EmitProjectile_ImmediateLine) newAction);
-            action.MaxRange = MaxRange;
-        }
-    }
-
-    [LabelText("行为_释放投掷物_延时直线")]
-    public class Action_EmitProjectile_DelayLine : Action_EmitProjectile
-    {
-        [LabelText("射程(负值为无限)")]
-        [SuffixLabel("unit", true)]
-        public int MaxRange;
-
-        [LabelText("生存最大时间(负值为无限)")]
-        [SuffixLabel("ms", true)]
-        public int MaxDuration;
-
-        [LabelText("初速度(unit/s)")]
-        public Vector3 Velocity;
-
-        [LabelText("加速度(unit/s^2)")]
-        public Vector3 Acceleration;
-
-        protected override void ChildClone(Action newAction)
-        {
-            base.ChildClone(newAction);
-            Action_EmitProjectile_DelayLine action = ((Action_EmitProjectile_DelayLine) newAction);
-            action.MaxRange = MaxRange;
-            action.MaxDuration = MaxDuration;
-            action.Velocity = Velocity;
-            action.Acceleration = Acceleration;
-        }
     }
 
     [LabelText("行为_造成伤害")]

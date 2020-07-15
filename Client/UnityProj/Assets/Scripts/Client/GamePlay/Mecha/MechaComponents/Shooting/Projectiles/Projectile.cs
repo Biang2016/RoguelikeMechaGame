@@ -57,11 +57,11 @@ namespace Client
                 FlyDistance = 0,
                 FlyDuration = 0,
                 Position = transform.position,
-                Velocity_Local = ProjectileInfo.ParentAction.Velocity,
-                Velocity_Global = transform.TransformVector(ProjectileInfo.ParentAction.Velocity),
-                Accelerate = ProjectileInfo.ParentAction.Acceleration,
+                Velocity_Local = ProjectileInfo.ProjectileConfig.Velocity,
+                Velocity_Global = transform.TransformVector(ProjectileInfo.ProjectileConfig.Velocity),
+                Accelerate = ProjectileInfo.ProjectileConfig.Acceleration,
                 HitCollider = null,
-                RemainCollideTimes = ProjectileInfo.ParentAction.CollideTimes,
+                RemainCollideTimes = ProjectileInfo.ProjectileConfig.CollideTimes,
             };
 
             PlayFlashEffect(transform.position, transform.forward);
@@ -95,14 +95,14 @@ namespace Client
                 Rigidbody.velocity = FlyRealtimeData.Velocity_Global;
 
                 // 消亡检查
-                if (ProjectileInfo.ParentAction.MaxRange > 0 && FlyRealtimeData.FlyDistance > ProjectileInfo.ParentAction.MaxRange)
+                if (ProjectileInfo.ProjectileConfig.MaxRange > 0 && FlyRealtimeData.FlyDistance > ProjectileInfo.ProjectileConfig.MaxRange)
                 {
                     ProjectileInfo.ParentAction.OnMiss?.Invoke(FlyRealtimeData);
                     PoolRecycle();
                     return;
                 }
 
-                if (ProjectileInfo.ParentAction.MaxDuration > 0 && FlyRealtimeData.FlyDuration * 1000 > ProjectileInfo.ParentAction.MaxDuration)
+                if (ProjectileInfo.ProjectileConfig.MaxDuration > 0 && FlyRealtimeData.FlyDuration * 1000 > ProjectileInfo.ProjectileConfig.MaxDuration)
                 {
                     ProjectileInfo.ParentAction.OnMiss?.Invoke(FlyRealtimeData);
                     PoolRecycle();
@@ -118,7 +118,7 @@ namespace Client
                 ContactPoint contact = collision.contacts[0];
                 FlyRealtimeData.HitCollider = collision.collider;
                 MechaComponentBase mcb = collision.collider.GetComponentInParent<MechaComponentBase>();
-                if (mcb && !ProjectileInfo.ParentAction.IsCollideWithOwner && mcb.MechaInfo == ProjectileInfo.ParentMechaInfo)
+                if (mcb && !ProjectileInfo.ProjectileConfig.IsCollideWithOwner && mcb.MechaInfo == ProjectileInfo.ParentMechaInfo)
                 {
                     return;
                 }

@@ -8,7 +8,7 @@ namespace GameCore
     [Serializable]
     public class ProjectileInfo
     {
-        public Action_EmitProjectile_DelayLine ParentAction;
+        public Action_EmitProjectile ParentAction;
         public MechaComponentInfo ParentMechaComponentInfo;
         public MechaInfo ParentMechaInfo;
 
@@ -19,7 +19,7 @@ namespace GameCore
         public ProjectileConfig ProjectileConfig => ParentAction.ProjectileConfig;
         public ProjectileType ProjectileType => ProjectileConfig.ProjectileType;
 
-        public ProjectileInfo(Action_EmitProjectile_DelayLine parentAction, MechaComponentInfo parentMechaComponentInfo, MechaInfo parentMechaInfo,
+        public ProjectileInfo(Action_EmitProjectile parentAction, MechaComponentInfo parentMechaComponentInfo, MechaInfo parentMechaInfo,
             Transform chasingTarget, Vector3 chasingPosition)
         {
             ParentAction = parentAction;

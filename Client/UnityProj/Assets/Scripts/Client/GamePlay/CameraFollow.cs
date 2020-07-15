@@ -48,13 +48,13 @@ namespace Client
             {
                 if (_fov_Level != value)
                 {
-                    _fov_Level = Mathf.Clamp(value, 0, 3);
+                    _fov_Level = Mathf.Clamp(value, 0, FOVs.Length - 1);
                     Camera.DOFieldOfView(FOVs[_fov_Level], 0.2f);
                 }
             }
         }
 
-        private float[] FOVs = new float[] {10, 15, 25, 35};
+        private float[] FOVs = new float[] {10, 15, 25, 35, 50, 75};
 
         private Vector3 offset_Manually;
 

@@ -40,6 +40,7 @@ namespace Client
             if (ControlManager.Instance.Battle_Skill_2.Down)
             {
                 projectileType = (ProjectileType) (((int) projectileType + 1) % Enum.GetValues(typeof(ProjectileType)).Length);
+                Debug.Log(projectileType);
             }
         }
 
@@ -57,7 +58,7 @@ namespace Client
                         {
                             foreach (Action action in evnt.Actions)
                             {
-                                if (action is Action_EmitProjectile_DelayLine act)
+                                if (action is Action_EmitProjectile act)
                                 {
                                     switch (ability.CastDummyPosition)
                                     {
