@@ -25,23 +25,23 @@ MonoBehaviour:
       Entry: 7
       Data: 0|GameCore.AbilityDataDriven.GamePlayAbility, GameCore
     - Name: AbilityName
-      Entry: 1
-      Data: EmitBullet
+      Entry: 6
+      Data: 
     - Name: AbilityBehaviors
       Entry: 3
-      Data: 2244644
+      Data: 0
     - Name: Passive
       Entry: 5
       Data: false
     - Name: CastDummyPosition
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: AbilityCastRange
       Entry: 3
       Data: 0
     - Name: AbilityCooldown
       Entry: 3
-      Data: 100
+      Data: 0
     - Name: AbilityPowerCost
       Entry: 3
       Data: 0
@@ -64,78 +64,7 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 3|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
-    - Name: EventType
-      Entry: 3
-      Data: 1
-    - Name: Actions
-      Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
-        GameCore]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile, GameCore
-    - Name: ProjectileName
-      Entry: 1
-      Data: NormalBullet
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 6|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
-    - Name: EventType
-      Entry: 3
-      Data: 16
-    - Name: Actions
-      Entry: 7
-      Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
-        GameCore]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 8|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
-    - Name: Target
-      Entry: 7
-      Data: 9|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
-    - Name: Target
-      Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Damage
-      Entry: 3
-      Data: 10
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: 0
     - Name: 
       Entry: 13
       Data: 

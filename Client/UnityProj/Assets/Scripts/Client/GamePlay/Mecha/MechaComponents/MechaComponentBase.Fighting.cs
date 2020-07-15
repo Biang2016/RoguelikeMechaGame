@@ -26,11 +26,6 @@ namespace Client
 
         void Update_Fighting()
         {
-            if (ControlManager.Instance.CheckButtonAction_Continuously(TriggerButtonState))
-            {
-                ContinuousTriggerAbilities();
-            }
-
             if (ControlManager.Instance.Battle_Skill_2.Down)
             {
                 projectileType = (ProjectileType) (((int) projectileType + 1) % Enum.GetValues(typeof(ProjectileType)).Length);
