@@ -26,11 +26,6 @@ namespace Client
 
         void Update_Fighting()
         {
-            if (ControlManager.Instance.CheckButtonAction_Instantaneously(TriggerButtonState))
-            {
-                TriggerAbilities();
-            }
-
             if (ControlManager.Instance.CheckButtonAction_Continuously(TriggerButtonState))
             {
                 ContinuousTriggerAbilities();

@@ -6,6 +6,7 @@ using BiangStudio.GamePlay;
 using BiangStudio.GamePlay.UI;
 using BiangStudio.GridBackpack;
 using BiangStudio.Log;
+using BiangStudio.Messenger;
 using BiangStudio.ShapedInventory;
 using BiangStudio.Singleton;
 using GameCore;
@@ -57,6 +58,9 @@ namespace Client
         private LevelManager LevelManager => LevelManager.Instance;
         private ClientLevelManager ClientLevelManager => ClientLevelManager.Instance;
         private ClientBattleManager ClientBattleManager => ClientBattleManager.Instance;
+
+        public Messenger BattleMessenger => ClientBattleManager.BattleInfo.BattleMessenger;
+
         private FXManager FXManager => FXManager.Instance;
         private ProjectileManager ProjectileManager => ProjectileManager.Instance;
 

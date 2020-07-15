@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BiangStudio.Messenger;
 using UnityEngine.Events;
 
 namespace GameCore
@@ -9,6 +10,8 @@ namespace GameCore
         public SortedDictionary<int, MechaInfo> EnemyMechaInfoDict = new SortedDictionary<int, MechaInfo>();
 
         public UnityAction<MechaInfo> OnAddEnemyMechaInfoSuc;
+
+        public Messenger BattleMessenger = new Messenger();
 
         public BattleInfo(MechaInfo playerMechaInfo)
         {

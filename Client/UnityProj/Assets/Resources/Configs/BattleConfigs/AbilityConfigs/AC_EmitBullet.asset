@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Ability
       Entry: 7
-      Data: 0|GameCore.AbilityDataDriven.Ability, GameCore
+      Data: 0|GameCore.AbilityDataDriven.GamePlayAbility, GameCore
     - Name: AbilityName
       Entry: 1
       Data: EmitBullet
@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 0
     - Name: Modifiers
       Entry: 7
-      Data: 1|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.Modifier,
+      Data: 1|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayModifier,
         GameCore]], mscorlib
     - Name: 
       Entry: 12
@@ -60,123 +60,30 @@ MonoBehaviour:
       Data: 
     - Name: Events
       Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.Event,
+      Data: 2|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayEvent,
         GameCore]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 3|GameCore.AbilityDataDriven.Event, GameCore
+      Data: 3|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
       Data: 1
     - Name: Actions
       Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.Action,
+      Data: 4|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 7
-      Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile_DelayLine, GameCore
+      Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile, GameCore
     - Name: ProjectileName
       Entry: 1
       Data: NormalBullet
-    - Name: CollideTimes
-      Entry: 3
-      Data: 0
-    - Name: IsCollideWithOwner
-      Entry: 5
-      Data: false
-    - Name: MaxRange
-      Entry: 3
-      Data: 500
-    - Name: MaxDuration
-      Entry: 3
-      Data: 0
-    - Name: Velocity
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 20
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Acceleration
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: -100
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 6|GameCore.AbilityDataDriven.Action_EmitProjectile_DelayLine, GameCore
-    - Name: ProjectileName
-      Entry: 1
-      Data: PurpleSmoke
-    - Name: CollideTimes
-      Entry: 3
-      Data: 0
-    - Name: IsCollideWithOwner
-      Entry: 5
-      Data: false
-    - Name: MaxRange
-      Entry: 3
-      Data: 0
-    - Name: MaxDuration
-      Entry: 3
-      Data: 20000
-    - Name: Velocity
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 20
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Acceleration
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 100
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -191,23 +98,23 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 7|GameCore.AbilityDataDriven.Event, GameCore
+      Data: 6|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
       Data: 16
     - Name: Actions
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.Action,
+      Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
         GameCore]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 9|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
+      Data: 8|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
     - Name: Target
       Entry: 7
-      Data: 10|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
+      Data: 9|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
     - Name: Target
       Entry: 3
       Data: 3

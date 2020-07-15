@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1244351346966676}
   - component: {fileID: 8787363159894584536}
   - component: {fileID: -2509402043850843953}
+  - component: {fileID: 7680559199144587999}
+  - component: {fileID: 7895351557902982126}
   m_Layer: 0
   m_Name: MechaComponent_Gun
   m_TagString: Untagged
@@ -48,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa7fb56a9db4a438c79afa0d4bc2769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
   TriggerButtonState:
     ButtonName: 301
     Down: 1
@@ -56,11 +59,10 @@ MonoBehaviour:
     LastPressed: 0
   ShooterDummyPos: {fileID: 8569312625845208773}
   AnotherSampleDummyPos: {fileID: 0}
+  Mecha: {fileID: 0}
   MechaComponentInfo:
     GUID: 0
     MechaComponentType: 2
-    AbilityConfigs:
-    - {fileID: 11400000, guid: d461ae4bac4669f4c95a9d7f20f4477c, type: 2}
     InventoryItem:
       GUID: 0
       GridPos_Matrix:
@@ -71,9 +73,6 @@ MonoBehaviour:
     TotalLife: 50
   MechaComponentGridRoot: {fileID: 4618707353109224937}
   ModelRoot: {fileID: 7716897934555374000}
-  OnLogicTick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &8787363159894584536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +98,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartDragPos: {x: 0, y: 0, z: 0}
+--- !u!114 &7680559199144587999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936411875950737291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad115aca74ce3c4891b3f6de0b4aae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializedExposedParameters: []
+  _boundGraphSerialization: 
+  _boundGraphObjectReferences: []
+  _boundGraphSource:
+    _version: 0
+    _category: 
+    _comments: 
+    _translation: {x: 0, y: 0}
+    _zoomFactor: 1
+  _firstActivation: 0
+  _enableAction: 0
+  _disableAction: 0
+  _lockBoundGraphPrefabOverrides: 1
+  _preInitializeSubGraphs: 0
+  _updateMode: 0
+  _graph: {fileID: 11400000, guid: 213038ac2b0d50247bf4732c6e1ff35f, type: 2}
+  _blackboard: {fileID: 7895351557902982126}
+--- !u!114 &7895351557902982126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936411875950737291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializedBlackboard: '{"_variables":{}}'
+  _objectReferences: []
+  _serializedVariables: []
 --- !u!114 &7667051109334718707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,6 +499,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4537220519913810940, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5309277208809338386, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -709,6 +757,11 @@ PrefabInstance:
     - target: {fileID: 3815810835871158874, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537220519913810940, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5309277208809338386, guid: 6505c5b1f033442c4bf82c6641ecccf0,
@@ -774,7 +827,7 @@ PrefabInstance:
     - target: {fileID: 7837267221893058980, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8379077277720560284, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}

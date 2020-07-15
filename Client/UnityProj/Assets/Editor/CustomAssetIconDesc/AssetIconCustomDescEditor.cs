@@ -10,7 +10,6 @@ public class AssetIconCustomDescEditor
 {
     private static AssetIconDescAttribute[] IconTypes = new AssetIconDescAttribute[]
     {
-        new AssetIconDescAttribute(typeof(MechaComponentBase),"MCB"),
     };
     static AssetIconCustomDescEditor()
     {
