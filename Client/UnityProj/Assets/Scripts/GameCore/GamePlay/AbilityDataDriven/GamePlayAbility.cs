@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 
 namespace GameCore.AbilityDataDriven
 {
-    public class Ability : IClone<Ability>
+    public class GamePlayAbility : IClone<GamePlayAbility>
     {
         [LabelText("技能名称")]
         public string AbilityName;
@@ -31,15 +31,15 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("Modifier定义列表")]
         [ListDrawerSettings(ListElementLabelName = "ModifierName")]
-        public List<Modifier> Modifiers = new List<Modifier>();
+        public List<GamePlayModifier> Modifiers = new List<GamePlayModifier>();
 
         [LabelText("触发事件列表")]
         [ListDrawerSettings(ListElementLabelName = "EventName")]
-        public List<Event> Events = new List<Event>();
+        public List<GamePlayEvent> Events = new List<GamePlayEvent>();
 
-        public Ability Clone()
+        public GamePlayAbility Clone()
         {
-            return new Ability
+            return new GamePlayAbility
             {
                 AbilityName = AbilityName,
                 AbilityBehaviors = AbilityBehaviors,

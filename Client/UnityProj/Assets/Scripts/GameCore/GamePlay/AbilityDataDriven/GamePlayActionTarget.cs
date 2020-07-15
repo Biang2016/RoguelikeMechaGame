@@ -5,34 +5,34 @@ using Sirenix.OdinInspector;
 namespace GameCore.AbilityDataDriven
 {
     [LabelText("执行目标")]
-    public abstract class ActionTarget : IClone<ActionTarget>
+    public abstract class GamePlayActionTarget : IClone<GamePlayActionTarget>
     {
-        public ActionTarget Clone()
+        public GamePlayActionTarget Clone()
         {
             Type type = GetType();
-            ActionTarget newActionTarget = (ActionTarget) Activator.CreateInstance(type);
+            GamePlayActionTarget newActionTarget = (GamePlayActionTarget) Activator.CreateInstance(type);
             ChildClone(newActionTarget);
             return newActionTarget;
         }
 
-        protected virtual void ChildClone(ActionTarget newActionTarget)
+        protected virtual void ChildClone(GamePlayActionTarget newActionTarget)
         {
         }
     }
 
-    public class SingleActionTarget : ActionTarget
+    public class SingleActionTarget : GamePlayActionTarget
     {
         [LabelText("目标")]
         public ENUM_SingleTarget Target;
 
-        protected override void ChildClone(ActionTarget newActionTarget)
+        protected override void ChildClone(GamePlayActionTarget newActionTarget)
         {
             base.ChildClone(newActionTarget);
             ((SingleActionTarget) newActionTarget).Target = Target;
         }
     }
 
-    public class MultipleActionTarget : ActionTarget
+    public class MultipleActionTarget : GamePlayActionTarget
     {
         [LabelText("搜索中心")]
         public ENUM_MultipleTargetCenter Center;
@@ -66,7 +66,7 @@ namespace GameCore.AbilityDataDriven
         [LabelText("随机选择")]
         public bool Random;
 
-        protected override void ChildClone(ActionTarget newActionTarget)
+        protected override void ChildClone(GamePlayActionTarget newActionTarget)
         {
             base.ChildClone(newActionTarget);
             MultipleActionTarget actionTarget = ((MultipleActionTarget) newActionTarget);

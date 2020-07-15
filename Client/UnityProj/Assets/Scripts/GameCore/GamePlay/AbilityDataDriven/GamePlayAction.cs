@@ -8,33 +8,33 @@ using UnityEngine.Events;
 
 namespace GameCore.AbilityDataDriven
 {
-    public abstract class Action : IClone<Action>
+    public abstract class GamePlayAction : IClone<GamePlayAction>
     {
         [HideInInspector]
         public string ActionName => GetType().ToString();
 
-        public Action Clone()
+        public GamePlayAction Clone()
         {
             Type type = GetType();
-            Action newAction = (Action) Activator.CreateInstance(type);
+            GamePlayAction newAction = (GamePlayAction) Activator.CreateInstance(type);
             ChildClone(newAction);
             return newAction;
         }
 
-        protected virtual void ChildClone(Action newAction)
+        protected virtual void ChildClone(GamePlayAction newAction)
         {
         }
     }
 
     [LabelText("行为_赋予技能")]
-    public class Action_AddAbility : Action
+    public class Action_AddAbility : GamePlayAction
     {
-        public ActionTarget Target;
+        public GamePlayActionTarget Target;
 
         [LabelText("技能名称")]
         public string AbilityName;
 
-        protected override void ChildClone(Action newAction)
+        protected override void ChildClone(GamePlayAction newAction)
         {
             base.ChildClone(newAction);
             Action_AddAbility action = ((Action_AddAbility) newAction);
@@ -43,13 +43,13 @@ namespace GameCore.AbilityDataDriven
         }
     }
 
-    public class Action_ActOnTargets : Action
+    public class Action_ActOnTargets : GamePlayAction
     {
-        public ActionTarget Target;
+        public GamePlayActionTarget Target;
 
-        public Action Action;
+        public GamePlayAction Action;
 
-        protected override void ChildClone(Action newAction)
+        protected override void ChildClone(GamePlayAction newAction)
         {
             base.ChildClone(newAction);
             Action_ActOnTargets action = ((Action_ActOnTargets) newAction);
@@ -59,14 +59,14 @@ namespace GameCore.AbilityDataDriven
     }
 
     [LabelText("行为_赋予Modifier")]
-    public class Action_ApplyModifier : Action
+    public class Action_ApplyModifier : GamePlayAction
     {
-        public ActionTarget Target;
+        public GamePlayActionTarget Target;
 
         [LabelText("Modifier名称")]
         public string ModifierName;
 
-        protected override void ChildClone(Action newAction)
+        protected override void ChildClone(GamePlayAction newAction)
         {
             base.ChildClone(newAction);
             Action_ApplyModifier action = ((Action_ApplyModifier) newAction);
@@ -75,7 +75,7 @@ namespace GameCore.AbilityDataDriven
         }
     }
 
-    public class Action_EmitProjectile : Action
+    public class Action_EmitProjectile : GamePlayAction
     {
         [PropertyOrder(-1)]
         [ValueDropdown("GetProjectileNames")]
@@ -119,7 +119,7 @@ namespace GameCore.AbilityDataDriven
             return ConfigManager.ProjectileConfigDict.Keys;
         }
 
-        protected override void ChildClone(Action newAction)
+        protected override void ChildClone(GamePlayAction newAction)
         {
             base.ChildClone(newAction);
             Action_EmitProjectile action = ((Action_EmitProjectile) newAction);
@@ -136,14 +136,14 @@ namespace GameCore.AbilityDataDriven
     }
 
     [LabelText("行为_造成伤害")]
-    public class Action_DealDamage : Action
+    public class Action_DealDamage : GamePlayAction
     {
-        public ActionTarget Target;
+        public GamePlayActionTarget Target;
 
         [LabelText("伤害量")]
         public int Damage;
 
-        protected override void ChildClone(Action newAction)
+        protected override void ChildClone(GamePlayAction newAction)
         {
             base.ChildClone(newAction);
             Action_DealDamage action = ((Action_DealDamage) newAction);

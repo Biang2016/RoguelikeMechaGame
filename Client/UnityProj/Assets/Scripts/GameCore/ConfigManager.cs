@@ -36,10 +36,10 @@ namespace GameCore
         public static string ProjectileConfigFolder_Build = Application.streamingAssetsPath + "/" + ProjectileConfigFolder_Relative + "/";
 
         [ShowInInspector]
-        public static readonly Dictionary<string, Ability> AbilityConfigDict = new Dictionary<string, Ability>();
+        public static readonly Dictionary<string, GamePlayAbility> AbilityConfigDict = new Dictionary<string, GamePlayAbility>();
 
         [ShowInInspector]
-        public static readonly Dictionary<string, AbilityGroup> AbilityGroupConfigDict = new Dictionary<string, AbilityGroup>();
+        public static readonly Dictionary<string, GamePlayAbilityGroup> AbilityGroupConfigDict = new Dictionary<string, GamePlayAbilityGroup>();
 
         [ShowInInspector]
         public static readonly Dictionary<string, ProjectileConfig> ProjectileConfigDict = new Dictionary<string, ProjectileConfig>();
@@ -85,7 +85,7 @@ namespace GameCore
                 foreach (Object obj in configObjs)
                 {
                     AbilityGroupConfigSSO config = (AbilityGroupConfigSSO) obj;
-                    AbilityGroup ag = config.GetAbilityGroup_NoData();
+                    GamePlayAbilityGroup ag = config.GetAbilityGroup_NoData();
                     string path = folder + config.name + ".config";
                     byte[] bytes = SerializationUtility.SerializeValue(ag, dataFormat);
                     File.WriteAllBytes(path, bytes);
@@ -125,7 +125,7 @@ namespace GameCore
                     foreach (FileInfo fi in di.GetFiles("*.config", SearchOption.AllDirectories))
                     {
                         byte[] bytes = File.ReadAllBytes(fi.FullName);
-                        Ability ability = SerializationUtility.DeserializeValue<Ability>(bytes, dataFormat);
+                        GamePlayAbility ability = SerializationUtility.DeserializeValue<GamePlayAbility>(bytes, dataFormat);
                         if (AbilityConfigDict.ContainsKey(ability.AbilityName))
                         {
                             Debug.LogError($"技能重名:{ability.AbilityName}");
@@ -150,7 +150,7 @@ namespace GameCore
                     foreach (FileInfo fi in di.GetFiles("*.config", SearchOption.AllDirectories))
                     {
                         byte[] bytes = File.ReadAllBytes(fi.FullName);
-                        AbilityGroup abilityGroup = SerializationUtility.DeserializeValue<AbilityGroup>(bytes, dataFormat);
+                        GamePlayAbilityGroup abilityGroup = SerializationUtility.DeserializeValue<GamePlayAbilityGroup>(bytes, dataFormat);
                         if (AbilityConfigDict.ContainsKey(abilityGroup.AbilityGroupName))
                         {
                             Debug.LogError($"技能组重名:{abilityGroup.AbilityGroupName}");
@@ -159,7 +159,7 @@ namespace GameCore
                         {
                             foreach (string ac_name in abilityGroup.AbilityNames)
                             {
-                                if (AbilityConfigDict.TryGetValue(ac_name, out Ability ability))
+                                if (AbilityConfigDict.TryGetValue(ac_name, out GamePlayAbility ability))
                                 {
                                     abilityGroup.Abilities.Add(ability);
                                 }
@@ -203,17 +203,17 @@ namespace GameCore
             IsLoaded = true;
         }
 
-        public Ability GetAbility(string abilityName)
+        public GamePlayAbility GetAbility(string abilityName)
         {
             if (!IsLoaded) LoadAllAbilityConfigs();
-            AbilityConfigDict.TryGetValue(abilityName, out Ability ability);
+            AbilityConfigDict.TryGetValue(abilityName, out GamePlayAbility ability);
             return ability?.Clone();
         }
 
-        public AbilityGroup GetAbilityGroup(string abilityGroupName)
+        public GamePlayAbilityGroup GetAbilityGroup(string abilityGroupName)
         {
             if (!IsLoaded) LoadAllAbilityConfigs();
-            AbilityGroupConfigDict.TryGetValue(abilityGroupName, out AbilityGroup abilityGroup);
+            AbilityGroupConfigDict.TryGetValue(abilityGroupName, out GamePlayAbilityGroup abilityGroup);
             return abilityGroup?.Clone();
         }
 

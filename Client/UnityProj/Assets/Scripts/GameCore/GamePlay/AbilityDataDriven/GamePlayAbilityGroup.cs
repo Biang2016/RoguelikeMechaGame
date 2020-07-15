@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameCore.AbilityDataDriven
 {
-    public class AbilityGroup : IClone<AbilityGroup>
+    public class GamePlayAbilityGroup : IClone<GamePlayAbilityGroup>
     {
         public string AbilityGroupName;
 
@@ -13,11 +13,11 @@ namespace GameCore.AbilityDataDriven
         public List<string> AbilityNames = new List<string>();
 
         [ListDrawerSettings(ListElementLabelName = "AbilityName")]
-        public List<Ability> Abilities = new List<Ability>();
+        public List<GamePlayAbility> Abilities = new List<GamePlayAbility>();
 
-        public AbilityGroup Clone()
+        public GamePlayAbilityGroup Clone()
         {
-            AbilityGroup ag = new AbilityGroup();
+            GamePlayAbilityGroup ag = new GamePlayAbilityGroup();
             ag.AbilityGroupName = AbilityGroupName;
             ag.AbilityNames = AbilityNames.Clone();
             ag.Abilities = Abilities.Clone();

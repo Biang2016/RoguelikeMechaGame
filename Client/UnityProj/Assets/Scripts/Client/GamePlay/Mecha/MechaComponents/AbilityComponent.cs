@@ -7,5 +7,5 @@ using UnityEngine;
 public class AbilityComponent : MonoBehaviour
 {
     [LabelText("技能编辑区")]
-    public Ability Ability;
+    public GamePlayAbility Ability;
 }

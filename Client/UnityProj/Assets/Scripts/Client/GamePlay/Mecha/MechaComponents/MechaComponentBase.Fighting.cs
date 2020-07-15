@@ -4,7 +4,6 @@ using Google.Protobuf.WellKnownTypes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Enum = System.Enum;
-using Event = GameCore.AbilityDataDriven.Event;
 
 namespace Client
 {
@@ -48,15 +47,15 @@ namespace Client
 
         public void TriggerAbilities()
         {
-            foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
+            foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
                 if (!ability.Passive && ability.AbilityPowerCost < 100) // todo power
                 {
-                    foreach (Event evnt in ability.Events)
+                    foreach (GamePlayEvent evnt in ability.Events)
                     {
                         if (evnt.EventType == ENUM_Event.OnAbilityStart)
                         {
-                            foreach (Action action in evnt.Actions)
+                            foreach (GamePlayAction action in evnt.Actions)
                             {
                                 if (action is Action_EmitProjectile act)
                                 {

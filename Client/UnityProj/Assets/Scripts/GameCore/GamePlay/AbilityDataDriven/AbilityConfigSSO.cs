@@ -10,7 +10,7 @@ namespace GameCore.AbilityDataDriven
     {
         [NonSerialized]
         [OdinSerialize]
-        public Ability Ability = new Ability();
+        public GamePlayAbility Ability = new GamePlayAbility();
 
         public string AbilityName => Ability.AbilityName;
     }

@@ -29,7 +29,7 @@ namespace GameCore
         [ShowInInspector]
         [DisableInEditorMode]
         [ListDrawerSettings(ListElementLabelName = "AbilityName")]
-        public AbilityGroup AbilityGroup;
+        public GamePlayAbilityGroup AbilityGroup;
 
         [HideInEditorMode]
         public InventoryItem InventoryItem;
@@ -42,7 +42,7 @@ namespace GameCore
         public string ItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
         public string ItemName => "机甲组件." + MechaComponentType;
 
-        public MechaComponentInfo(MechaComponentType mechaComponentType, AbilityGroup abilityGroup, int totalLife, int dropProbability)
+        public MechaComponentInfo(MechaComponentType mechaComponentType, GamePlayAbilityGroup abilityGroup, int totalLife, int dropProbability)
         {
             GUID = GetGUID();
             MechaComponentType = mechaComponentType;

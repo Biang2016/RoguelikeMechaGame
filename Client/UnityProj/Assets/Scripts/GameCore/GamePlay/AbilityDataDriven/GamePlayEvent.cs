@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameCore.AbilityDataDriven
 {
-    public class Event : IClone<Event>
+    public class GamePlayEvent : IClone<GamePlayEvent>
     {
         [HideInInspector]
         public string EventName => EventType.ToString();
@@ -15,11 +15,11 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("行为列表")]
         [ListDrawerSettings(ListElementLabelName = "ActionName")]
-        public List<Action> Actions = new List<Action>();
+        public List<GamePlayAction> Actions = new List<GamePlayAction>();
 
-        public Event Clone()
+        public GamePlayEvent Clone()
         {
-            return new Event
+            return new GamePlayEvent
             {
                 EventType = EventType,
                 Actions = Actions.Clone(),
