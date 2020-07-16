@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a3221cbe1ff0a849bca96ff1e7bce7b, type: 3}
-  m_Name: AC_EmitBullet
+  m_Name: AC_EmitBullet 2
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -26,7 +26,7 @@ MonoBehaviour:
       Data: 0|GameCore.AbilityDataDriven.GamePlayAbility, GameCore
     - Name: AbilityName
       Entry: 1
-      Data: EmitBullet
+      Data: EmitBullet2
     - Name: AbilityBehaviors
       Entry: 3
       Data: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: PurpleSmoke
+      Data: WaterBall
     - Name: 
       Entry: 8
       Data: 
