@@ -12,11 +12,11 @@ namespace GameCore.AbilityDataDriven
         [LabelText("投掷物表现体")]
         public ProjectileType ProjectileType;
 
-        [LabelText("射程(负值为无限)")]
+        [LabelText("射程(0为无限)")]
         [SuffixLabel("unit", true)]
         public int MaxRange;
 
-        [LabelText("生存最大时间(负值为无限)")]
+        [LabelText("生存最大时间(0为无限)")]
         [SuffixLabel("ms", true)]
         public int MaxDuration;
 

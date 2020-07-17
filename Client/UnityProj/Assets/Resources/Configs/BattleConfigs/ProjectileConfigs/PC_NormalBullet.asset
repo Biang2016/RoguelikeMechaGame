@@ -25,14 +25,14 @@ MonoBehaviour:
       Entry: 7
       Data: 0|GameCore.AbilityDataDriven.ProjectileConfig, GameCore
     - Name: ProjectileName
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: NormalBullet
     - Name: ProjectileType
       Entry: 3
       Data: 0
     - Name: MaxRange
       Entry: 3
-      Data: 0
+      Data: 15
     - Name: MaxDuration
       Entry: 3
       Data: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 100
     - Name: 
       Entry: 8
       Data: 
@@ -71,7 +71,7 @@ MonoBehaviour:
       Data: 1
     - Name: IsCollideWithOwner
       Entry: 5
-      Data: false
+      Data: true
     - Name: 
       Entry: 8
       Data: 

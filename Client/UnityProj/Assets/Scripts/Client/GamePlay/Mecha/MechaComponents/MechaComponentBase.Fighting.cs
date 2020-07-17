@@ -26,6 +26,11 @@ namespace Client
 
         void Update_Fighting()
         {
+            if (ControlManager.Instance.CheckButtonAction_Instantaneously(TriggerButtonState))
+            {
+                TriggerAbilities();
+            }
+
             if (ControlManager.Instance.Battle_Skill_2.Down)
             {
                 projectileType = (ProjectileType) (((int) projectileType + 1) % Enum.GetValues(typeof(ProjectileType)).Length);
@@ -54,7 +59,7 @@ namespace Client
                                         case ENUM_AbilityCastDummyPosition.ShooterDummyPos:
                                         {
                                             ProjectileInfo pi = new ProjectileInfo(act, MechaComponentInfo, MechaInfo, null, Vector3.zero);
-                                            pi.ParentAction.ProjectileConfig.ProjectileType = projectileType;
+                                            //pi.ParentAction.ProjectileConfig.ProjectileType = projectileType;
                                             ProjectileManager.Instance.ShootProjectile(pi, ShooterDummyPos.position, ShooterDummyPos.forward);
                                             break;
                                         }

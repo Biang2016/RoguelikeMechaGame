@@ -187,6 +187,10 @@ namespace Client
 
             InventoryItem ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 100, 0), myBackPack, GridPosR.Zero);
             myBackPack.TryAddItem(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun1"), 100, 0), myBackPack, GridPosR.Zero);
+            myBackPack.TryAddItem(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun2"), 100, 0), myBackPack, GridPosR.Zero);
+            myBackPack.TryAddItem(ii);
 
             BackpackManager.Start();
             DragManager.Start();

@@ -30,6 +30,48 @@ MonoBehaviour:
     - Name: ProjectileType
       Entry: 3
       Data: 13
+    - Name: MaxRange
+      Entry: 3
+      Data: 0
+    - Name: MaxDuration
+      Entry: 3
+      Data: 0
+    - Name: Velocity
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 20
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Acceleration
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CollideTimes
+      Entry: 3
+      Data: 3
+    - Name: IsCollideWithOwner
+      Entry: 5
+      Data: true
     - Name: 
       Entry: 8
       Data: 
