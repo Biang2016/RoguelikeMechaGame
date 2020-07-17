@@ -16,7 +16,7 @@ namespace Client
 
         public MechaEditArea MechaEditArea;
 
-        public SortedDictionary<int, MechaComponentBase> MechaComponentDict = new SortedDictionary<int, MechaComponentBase>();
+        public SortedDictionary<uint, MechaComponentBase> MechaComponentDict = new SortedDictionary<uint, MechaComponentBase>();
         public bool IsPlayer => MechaInfo.IsPlayer;
         public bool IsBuilding => GameStateManager.Instance.GetState() == GameState.Building;
         public bool IsFighting => GameStateManager.Instance.GetState() == GameState.Fighting;
@@ -54,7 +54,7 @@ namespace Client
             MechaInfo.MechaEditorInventory.RefreshInventoryGrids();
             MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation();
 
-            foreach (KeyValuePair<int, MechaComponentInfo> kv in mechaInfo.MechaComponentInfos)
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in mechaInfo.MechaComponentInfos)
             {
                 AddMechaComponent(kv.Value);
             }
@@ -69,7 +69,7 @@ namespace Client
         public void Clean()
         {
             MechaEditArea.Clear();
-            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
+            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
             {
                 kv.Value.PoolRecycle();
             }
@@ -123,7 +123,7 @@ namespace Client
 
         public void SetShown(bool shown)
         {
-            foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
+            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
             {
                 kv.Value.SetShown(shown);
             }
@@ -202,7 +202,7 @@ namespace Client
             {
                 if (_slotLightsShown != value)
                 {
-                    foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
+                    foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
                     {
                         kv.Value.MechaComponentGridRoot.SetSlotLightsShown(value);
                     }
@@ -221,7 +221,7 @@ namespace Client
             {
                 if (_gridShown != value)
                 {
-                    foreach (KeyValuePair<int, MechaComponentBase> kv in MechaComponentDict)
+                    foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
                     {
                         kv.Value.MechaComponentGridRoot.SetGridShown(value);
                     }

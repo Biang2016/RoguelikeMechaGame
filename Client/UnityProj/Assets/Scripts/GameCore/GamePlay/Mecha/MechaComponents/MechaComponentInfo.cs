@@ -14,11 +14,11 @@ namespace GameCore
     {
         [ReadOnly]
         [HideInEditorMode]
-        public int GUID;
+        public uint GUID;
 
-        private static int guidGenerator = (int) ConfigManager.GUID_Separator.MechaComponentInfo;
+        private static uint guidGenerator = (uint) ConfigManager.GUID_Separator.MechaComponentInfo;
 
-        private int GetGUID()
+        private uint GetGUID()
         {
             return guidGenerator++;
         }

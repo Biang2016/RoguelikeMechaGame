@@ -6,8 +6,7 @@ namespace GameCore
 {
     public class BattleInfo
     {
-        public MechaInfo PlayerMechaInfo;
-        public SortedDictionary<int, MechaInfo> EnemyMechaInfoDict = new SortedDictionary<int, MechaInfo>();
+        public BattleMechaInfoData BattleMechaInfoData = new BattleMechaInfoData();
 
         public UnityAction<MechaInfo> OnAddEnemyMechaInfoSuc;
 
@@ -15,24 +14,30 @@ namespace GameCore
 
         public BattleInfo(MechaInfo playerMechaInfo)
         {
-            PlayerMechaInfo = playerMechaInfo;
+            BattleMechaInfoData.PlayerMechaInfo = playerMechaInfo;
         }
 
         public void SetPlayerMecha(MechaInfo mechaInfo)
         {
-            PlayerMechaInfo = mechaInfo;
+            BattleMechaInfoData.PlayerMechaInfo = mechaInfo;
         }
 
         public void AddEnemyMechaInfo(MechaInfo mechaInfo)
         {
             mechaInfo.OnRemoveMechaInfoSuc += RemoveEnemyMechaInfo;
-            EnemyMechaInfoDict.Add(mechaInfo.GUID, mechaInfo);
+            BattleMechaInfoData.EnemyMechaInfoDict.Add(mechaInfo.GUID, mechaInfo);
             OnAddEnemyMechaInfoSuc?.Invoke(mechaInfo);
         }
 
         private void RemoveEnemyMechaInfo(MechaInfo mechaInfo)
         {
-            EnemyMechaInfoDict.Remove(mechaInfo.GUID);
+            BattleMechaInfoData.EnemyMechaInfoDict.Remove(mechaInfo.GUID);
         }
+    }
+
+    public class BattleMechaInfoData
+    {
+        public MechaInfo PlayerMechaInfo;
+        public SortedDictionary<uint, MechaInfo> EnemyMechaInfoDict = new SortedDictionary<uint, MechaInfo>();
     }
 }
