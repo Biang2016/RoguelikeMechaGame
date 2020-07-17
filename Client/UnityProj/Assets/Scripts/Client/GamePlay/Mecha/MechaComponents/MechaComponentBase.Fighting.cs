@@ -26,9 +26,48 @@ namespace Client
 
         void Update_Fighting()
         {
-            if (ControlManager.Instance.CheckButtonAction_Instantaneously(TriggerButtonState))
+            foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
-                TriggerAbilities();
+                if (ability.cooldownTicker <= ability.AbilityCooldown)
+                {
+                    ability.cooldownTicker += Mathf.RoundToInt(Time.deltaTime * 1000);
+                }
+            }
+
+            if (ControlManager.Instance.CheckButtonAction(TriggerButtonState))
+            {
+                foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
+                {
+                    if (ability.canTriggered)
+                    {
+                        if (!ability.Passive && ability.AbilityPowerCost < 100) // todo power
+                        {
+                            foreach (GamePlayEvent evnt in ability.Events)
+                            {
+                                if (evnt.EventType == ENUM_Event.OnAbilityStart)
+                                {
+                                    ability.cooldownTicker = 0;
+                                    foreach (GamePlayAction action in evnt.Actions)
+                                    {
+                                        if (action is Action_EmitProjectile act)
+                                        {
+                                            switch (ability.CastDummyPosition)
+                                            {
+                                                case ENUM_AbilityCastDummyPosition.ShooterDummyPos:
+                                                {
+                                                    ProjectileInfo pi = new ProjectileInfo(act, MechaComponentInfo, MechaInfo, null, Vector3.zero);
+                                                    //pi.ParentAction.ProjectileConfig.ProjectileType = projectileType;
+                                                    ProjectileManager.Instance.ShootProjectile(pi, ShooterDummyPos.position, ShooterDummyPos.forward);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             if (ControlManager.Instance.Battle_Skill_2.Down)
@@ -39,47 +78,5 @@ namespace Client
         }
 
         private ProjectileType projectileType;
-
-        public void TriggerAbilities()
-        {
-            foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
-            {
-                if (!ability.Passive && ability.AbilityPowerCost < 100) // todo power
-                {
-                    foreach (GamePlayEvent evnt in ability.Events)
-                    {
-                        if (evnt.EventType == ENUM_Event.OnAbilityStart)
-                        {
-                            foreach (GamePlayAction action in evnt.Actions)
-                            {
-                                if (action is Action_EmitProjectile act)
-                                {
-                                    switch (ability.CastDummyPosition)
-                                    {
-                                        case ENUM_AbilityCastDummyPosition.ShooterDummyPos:
-                                        {
-                                            ProjectileInfo pi = new ProjectileInfo(act, MechaComponentInfo, MechaInfo, null, Vector3.zero);
-                                            //pi.ParentAction.ProjectileConfig.ProjectileType = projectileType;
-                                            ProjectileManager.Instance.ShootProjectile(pi, ShooterDummyPos.position, ShooterDummyPos.forward);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public void ContinuousTriggerAbilities()
-        {
-            //if (fireCountdown <= 0f)
-            //{
-            //    FireByFirePointDirection();
-            //    fireCountdown = 0;
-            //    fireCountdown += ShooterInfo.FireInterval;
-            //}
-        }
     }
 }

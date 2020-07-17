@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
 
@@ -25,6 +26,11 @@ namespace GameCore.AbilityDataDriven
         [LabelText("冷却时间")]
         [SuffixLabel("ms", true)]
         public int AbilityCooldown;
+
+        [NonSerialized]
+        public int cooldownTicker = 0;
+
+        public bool canTriggered => cooldownTicker > AbilityCooldown;
 
         [LabelText("能量消耗")]
         public int AbilityPowerCost;
