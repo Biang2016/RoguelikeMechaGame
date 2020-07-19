@@ -62,7 +62,7 @@ namespace Client
         public Messenger BattleMessenger => ClientBattleManager.BattleInfo.BattleMessenger;
 
         private FXManager FXManager => FXManager.Instance;
-        private ProjectileManager ProjectileManager => ProjectileManager.Instance;
+        private ClientProjectileManager ProjectileManager => ClientProjectileManager.Instance;
 
         #endregion
 

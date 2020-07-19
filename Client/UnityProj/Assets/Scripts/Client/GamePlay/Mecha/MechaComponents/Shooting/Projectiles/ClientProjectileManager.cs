@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Client
 {
-    public class ProjectileManager : TSingletonBaseManager<ProjectileManager>
+    public class ClientProjectileManager : TSingletonBaseManager<ClientProjectileManager>
     {
         public Transform Root;
 

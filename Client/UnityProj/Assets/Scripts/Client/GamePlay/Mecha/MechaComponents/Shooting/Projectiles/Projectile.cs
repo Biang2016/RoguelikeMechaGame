@@ -154,7 +154,7 @@ namespace Client
         {
             if (GameObjectPoolManager.Instance.ProjectileFlashDict.TryGetValue(ProjectileInfo.ProjectileType, out GameObjectPool flashPool))
             {
-                ProjectileFlash flash = flashPool.AllocateGameObject<ProjectileFlash>(ProjectileManager.Instance.Root);
+                ProjectileFlash flash = flashPool.AllocateGameObject<ProjectileFlash>(ClientProjectileManager.Instance.Root);
                 flash.transform.position = position;
                 flash.transform.rotation = Quaternion.identity;
                 flash.transform.forward = direction;
@@ -166,7 +166,7 @@ namespace Client
         {
             if (GameObjectPoolManager.Instance.ProjectileHitDict.ContainsKey(ProjectileInfo.ProjectileType))
             {
-                ProjectileHit hit = GameObjectPoolManager.Instance.ProjectileHitDict[ProjectileInfo.ProjectileType].AllocateGameObject<ProjectileHit>(ProjectileManager.Instance.Root);
+                ProjectileHit hit = GameObjectPoolManager.Instance.ProjectileHitDict[ProjectileInfo.ProjectileType].AllocateGameObject<ProjectileHit>(ClientProjectileManager.Instance.Root);
                 hit.transform.position = position + direction * hitOffset;
                 hit.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
                 if (UseFirePointRotation)

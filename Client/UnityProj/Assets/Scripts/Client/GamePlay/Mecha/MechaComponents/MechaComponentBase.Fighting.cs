@@ -60,7 +60,7 @@ namespace Client
                                         {
                                             ProjectileInfo pi = new ProjectileInfo(act, MechaComponentInfo, MechaInfo, null, Vector3.zero);
                                             //pi.ParentAction.ProjectileConfig.ProjectileType = projectileType;
-                                            ProjectileManager.Instance.ShootProjectile(pi, ShooterDummyPos.position, ShooterDummyPos.forward);
+                                            ClientProjectileManager.Instance.ShootProjectile(pi, ShooterDummyPos.position, ShooterDummyPos.forward);
                                             break;
                                         }
                                     }
