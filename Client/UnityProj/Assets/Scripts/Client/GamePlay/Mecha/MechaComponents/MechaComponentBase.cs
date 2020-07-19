@@ -71,11 +71,14 @@ namespace Client
         {
             if (!IsRecycled)
             {
-                Update_Fighting();
                 if (!Application.isPlaying)
                 {
                     transform.localPosition = Vector3.zero;
                     transform.localRotation = Quaternion.identity;
+                }
+                else
+                {
+                    Update_Fighting();
                 }
             }
         }

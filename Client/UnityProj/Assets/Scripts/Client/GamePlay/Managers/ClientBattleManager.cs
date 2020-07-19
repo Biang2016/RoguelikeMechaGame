@@ -10,7 +10,7 @@ namespace Client
     {
         public BattleInfo BattleInfo;
         internal Mecha PlayerMecha;
-        internal SortedDictionary<int, Mecha> EnemyMechaDict = new SortedDictionary<int, Mecha>();
+        internal SortedDictionary<uint, Mecha> EnemyMechaDict = new SortedDictionary<uint, Mecha>();
 
         private HUDPanel HUDPanel;
         public Transform MechaContainerRoot;
@@ -62,7 +62,7 @@ namespace Client
         {
             PlayerMecha?.PoolRecycle();
             PlayerMecha = null;
-            foreach (KeyValuePair<int, Mecha> kv in EnemyMechaDict)
+            foreach (KeyValuePair<uint, Mecha> kv in EnemyMechaDict)
             {
                 kv.Value.PoolRecycle();
             }
@@ -78,9 +78,9 @@ namespace Client
             BattleInfo.OnAddEnemyMechaInfoSuc = AddMecha;
 
             PlayerMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainerRoot);
-            PlayerMecha.Initialize(battleInfo.PlayerMechaInfo);
+            PlayerMecha.Initialize(battleInfo.BattleMechaInfoData.PlayerMechaInfo);
 
-            foreach (KeyValuePair<int, MechaInfo> kv in battleInfo.EnemyMechaInfoDict)
+            foreach (KeyValuePair<uint, MechaInfo> kv in battleInfo.BattleMechaInfoData.EnemyMechaInfoDict)
             {
             }
 
@@ -107,7 +107,7 @@ namespace Client
 
         public void SetAllEnemyShown(bool shown)
         {
-            foreach (KeyValuePair<int, Mecha> kv in EnemyMechaDict)
+            foreach (KeyValuePair<uint, Mecha> kv in EnemyMechaDict)
             {
                 kv.Value.SetShown(shown);
             }

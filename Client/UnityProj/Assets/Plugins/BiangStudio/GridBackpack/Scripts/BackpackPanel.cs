@@ -19,7 +19,7 @@ namespace BiangStudio.GridBackpack
         public Transform ItemContainer;
 
         private BackpackGrid[,] backpackGridMatrix; // column, row
-        private SortedDictionary<int, BackpackItem> backpackItems = new SortedDictionary<int, BackpackItem>();
+        private SortedDictionary<uint, BackpackItem> backpackItems = new SortedDictionary<uint, BackpackItem>();
 
         void Awake()
         {
@@ -32,7 +32,7 @@ namespace BiangStudio.GridBackpack
 
         void Reset()
         {
-            foreach (KeyValuePair<int, BackpackItem> kv in backpackItems)
+            foreach (KeyValuePair<uint, BackpackItem> kv in backpackItems)
             {
                 kv.Value.PoolRecycle();
             }
@@ -61,7 +61,7 @@ namespace BiangStudio.GridBackpack
             backPack.RefreshInventoryGrids();
         }
 
-        public BackpackItem GetBackpackItem(int guid)
+        public BackpackItem GetBackpackItem(uint guid)
         {
             backpackItems.TryGetValue(guid, out BackpackItem backpackItem);
             return backpackItem;

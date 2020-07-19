@@ -19,9 +19,9 @@ namespace BiangStudio.ShapedInventory
 
         public delegate bool AmIRootItemInIsolationCalculationDelegate();
 
-        private static int guidGenerator = 10000;
+        private static uint guidGenerator = 10000;
 
-        [HideInInspector] public int GUID;
+        [HideInInspector] public uint GUID;
 
         public IInventoryItemContentInfo ItemContentInfo;
 
@@ -59,13 +59,16 @@ namespace BiangStudio.ShapedInventory
             }
         }
 
+        private uint GetGUID()
+        {
+            return guidGenerator++;
+        }
+
         public InventoryItem(IInventoryItemContentInfo itemContentInfo, Inventory inventory, GridPosR gp_matrix)
         {
-            GUID = guidGenerator;
-            guidGenerator++;
-
-            GridPos_Matrix = gp_matrix;
+            GUID = GetGUID();
             Inventory = inventory;
+            GridPos_Matrix = gp_matrix;
             ItemContentInfo = itemContentInfo;
         }
 

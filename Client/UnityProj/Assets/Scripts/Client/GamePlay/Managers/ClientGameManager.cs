@@ -11,6 +11,7 @@ using BiangStudio.ShapedInventory;
 using BiangStudio.Singleton;
 using GameCore;
 using GameCore.AbilityDataDriven;
+using ParadoxNotion;
 using UnityEngine;
 using DragAreaDefines = GameCore.DragAreaDefines;
 
@@ -110,8 +111,8 @@ namespace Client
             DragExecuteManager.Init();
             DragExecuteManager.Awake();
 
-            LevelManager.Init(6789);
             ClientLevelManager.Init();
+            LevelManager.Init();
             ClientLevelManager.Awake();
             ClientBattleManager.Init(new GameObject("MechaContainerRoot").transform, new GameObject("MechaComponentDropSpriteContainerRoot").transform);
             ClientBattleManager.Awake();
@@ -185,12 +186,6 @@ namespace Client
             //    myBackPack.TryAddItem(ii);
             //}
 
-            InventoryItem ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 100, 0), myBackPack, GridPosR.Zero);
-            myBackPack.TryAddItem(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun1"), 100, 0), myBackPack, GridPosR.Zero);
-            myBackPack.TryAddItem(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun2"), 100, 0), myBackPack, GridPosR.Zero);
-            myBackPack.TryAddItem(ii);
 
             BackpackManager.Start();
             DragManager.Start();
@@ -274,13 +269,23 @@ namespace Client
 
         private void StartGame()
         {
-            ClientLevelManager.Instance.StartLevel();
+            Backpack myBackPack = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
+            InventoryInfo inventoryInfo = new InventoryInfo();
+            InventoryItem ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun1"), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun2"), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            myBackPack.LoadInventoryInfo(inventoryInfo);
+
 
             MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player);
             MechaInfo enemyMechaInfo = new MechaInfo("Junk Mecha", MechaType.Enemy);
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
             ClientBattleManager.Instance.StartBattle(battleInfo);
+            battleInfo.SetPlayerMecha(playerMechaInfo);
             playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 300, 0), new GridPosR(9, 9));
             battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
             // for (int i = -5; i <= 5; i++)
@@ -302,6 +307,8 @@ namespace Client
             // }
 
             ClientBattleManager.EnemyMechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
+
+            ClientLevelManager.Instance.StartLevel();
         }
 
         // todo 做成AI原子

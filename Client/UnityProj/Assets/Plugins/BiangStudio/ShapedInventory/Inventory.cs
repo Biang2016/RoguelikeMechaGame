@@ -42,7 +42,7 @@ namespace BiangStudio.ShapedInventory
         public InventoryGrid[,] InventoryGridMatrix; // column, row
         public InventoryItem[,] InventoryItemMatrix; // column, row
 
-        public List<InventoryItem> InventoryItems = new List<InventoryItem>();
+        public InventoryInfo InventoryInfo = new InventoryInfo();
 
         public int GridSize { get; private set; }
         public int Rows { get; private set; }
@@ -128,6 +128,23 @@ namespace BiangStudio.ShapedInventory
             InventoryItemMatrix = new InventoryItem[Columns, Rows];
         }
 
+        public void RemoveAllInventoryItems()
+        {
+            foreach (InventoryItem inventoryItem in InventoryInfo.InventoryItems)
+            {
+                RemoveItem(inventoryItem);
+            }
+        }
+
+        public void LoadInventoryInfo(InventoryInfo inventoryInfo)
+        {
+            RemoveAllInventoryItems();
+            foreach (InventoryItem inventoryItem in inventoryInfo.InventoryItems)
+            {
+                TryAddItem(inventoryItem);
+            }
+        }
+
         public void LogError(string log)
         {
             LogErrorHandler?.Invoke($"BiangStudio.ShapedInventory Error: {log}");
@@ -142,7 +159,9 @@ namespace BiangStudio.ShapedInventory
                 for (int col = 0; col < Columns; col++)
                 {
                     count++;
-                    InventoryGridMatrix[col, row].State = (count > unlockedGridCount && UnlockedPartialGrids) ? InventoryGrid.States.Locked : (InventoryItemMatrix[col, row] != null ? InventoryGrid.States.Unavailable : InventoryGrid.States.Available);
+                    InventoryGridMatrix[col, row].State = (count > unlockedGridCount && UnlockedPartialGrids)
+                        ? InventoryGrid.States.Locked
+                        : (InventoryItemMatrix[col, row] != null ? InventoryGrid.States.Unavailable : InventoryGrid.States.Available);
                 }
             }
         }
@@ -216,7 +235,8 @@ namespace BiangStudio.ShapedInventory
 
         private void AddItem(InventoryItem item)
         {
-            InventoryItems.Add(item);
+            item.Inventory = this;
+            InventoryInfo.InventoryItems.Add(item);
             OnAddItemSucAction?.Invoke(item);
             StringBuilder sb = new StringBuilder();
             foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
@@ -242,7 +262,7 @@ namespace BiangStudio.ShapedInventory
 
         public void RemoveItem(InventoryItem item)
         {
-            if (InventoryItems.Contains(item))
+            if (InventoryInfo.InventoryItems.Contains(item))
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
@@ -253,7 +273,7 @@ namespace BiangStudio.ShapedInventory
 
                 if (EnableLog) Debug.Log("RemoveItem: " + sb.ToString());
 
-                InventoryItems.Remove(item);
+                InventoryInfo.InventoryItems.Remove(item);
                 OnRemoveItemSucAction?.Invoke(item);
                 RefreshConflictAndIsolation();
             }
@@ -261,7 +281,7 @@ namespace BiangStudio.ShapedInventory
 
         public void PickUpItem(InventoryItem item)
         {
-            if (InventoryItems.Contains(item))
+            if (InventoryInfo.InventoryItems.Contains(item))
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
@@ -279,7 +299,7 @@ namespace BiangStudio.ShapedInventory
 
         public void PutDownItem(InventoryItem item)
         {
-            if (InventoryItems.Contains(item))
+            if (InventoryInfo.InventoryItems.Contains(item))
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
@@ -300,7 +320,7 @@ namespace BiangStudio.ShapedInventory
 
         public void RefreshConflictAndIsolation(out List<InventoryItem> conflictItems, out List<InventoryItem> isolatedItems)
         {
-            foreach (InventoryItem item in InventoryItems)
+            foreach (InventoryItem item in InventoryInfo.InventoryItems)
             {
                 item.OnIsolatedHandler?.Invoke(false);
                 item.OnResetConflictHandler?.Invoke();
@@ -321,7 +341,7 @@ namespace BiangStudio.ShapedInventory
                 }
             }
 
-            foreach (InventoryItem item in InventoryItems)
+            foreach (InventoryItem item in InventoryInfo.InventoryItems)
             {
                 bool isRootItem = item.AmIRootItemInIsolationCalculationHandler != null && item.AmIRootItemInIsolationCalculationHandler.Invoke();
                 bool hasConflict = false;
@@ -452,7 +472,7 @@ namespace BiangStudio.ShapedInventory
         public void MoveAllItemTogether(GridPos delta_local_GP)
         {
             GridPos delta_matrix = CoordinateTransformationHandler_FromPosToMatrixIndex_Diff(delta_local_GP);
-            foreach (InventoryItem item in InventoryItems)
+            foreach (InventoryItem item in InventoryInfo.InventoryItems)
             {
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
@@ -471,7 +491,7 @@ namespace BiangStudio.ShapedInventory
                 }
             }
 
-            foreach (InventoryItem item in InventoryItems)
+            foreach (InventoryItem item in InventoryInfo.InventoryItems)
             {
                 GridPosR newGridPos_Matrix = item.GridPos_Matrix + delta_matrix;
                 item.SetGridPosition(newGridPos_Matrix);
@@ -479,5 +499,11 @@ namespace BiangStudio.ShapedInventory
 
             RefreshConflictAndIsolation();
         }
+    }
+
+    [Serializable]
+    public class InventoryInfo
+    {
+        public List<InventoryItem> InventoryItems = new List<InventoryItem>();
     }
 }

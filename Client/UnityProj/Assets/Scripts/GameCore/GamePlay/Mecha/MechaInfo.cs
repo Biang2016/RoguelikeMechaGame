@@ -11,17 +11,17 @@ namespace GameCore
     [Serializable]
     public class MechaInfo : IClone<MechaInfo>
     {
-        public int GUID;
-        private static int guidGenerator = (int) ConfigManager.GUID_Separator.MechaInfo;
+        public uint GUID;
+        private static uint guidGenerator = (uint) ConfigManager.GUID_Separator.MechaInfo;
 
-        private int GetGUID()
+        private uint GetGUID()
         {
             return guidGenerator++;
         }
 
         public string MechaName;
         public MechaType MechaType;
-        public SortedDictionary<int, MechaComponentInfo> MechaComponentInfos = new SortedDictionary<int, MechaComponentInfo>();
+        public SortedDictionary<uint, MechaComponentInfo> MechaComponentInfos = new SortedDictionary<uint, MechaComponentInfo>();
 
         public UnityAction<MechaComponentInfo, GridPosR> OnAddMechaComponentInfoSuc;
         public UnityAction<MechaInfo> OnRemoveMechaInfoSuc;
@@ -41,7 +41,7 @@ namespace GameCore
         public MechaInfo Clone()
         {
             MechaInfo mechaInfo = new MechaInfo(MechaName, MechaType);
-            foreach (KeyValuePair<int, MechaComponentInfo> kv in MechaComponentInfos)
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfos)
             {
                 AddMechaComponentInfo(kv.Value.Clone(), kv.Value.InventoryItem.GridPos_Matrix);
             }
@@ -95,7 +95,7 @@ namespace GameCore
         {
             int totalLife = 0;
             int leftLife = 0;
-            foreach (KeyValuePair<int, MechaComponentInfo> kv in MechaComponentInfos)
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfos)
             {
                 totalLife += kv.Value.M_TotalLife;
                 leftLife += kv.Value.M_LeftLife;
@@ -110,7 +110,7 @@ namespace GameCore
         public List<MechaComponentInfo> GetCoreLifeChangeDelegates()
         {
             List<MechaComponentInfo> res = new List<MechaComponentInfo>();
-            foreach (KeyValuePair<int, MechaComponentInfo> kv in MechaComponentInfos)
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfos)
             {
                 if (kv.Value.MechaComponentType == MechaComponentType.Core)
                 {
