@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 namespace GameCore.AbilityDataDriven
 {
@@ -17,7 +18,7 @@ namespace GameCore.AbilityDataDriven
         public bool Passive;
 
         [LabelText("施法点")]
-        public ENUM_AbilityCastDummyPosition CastDummyPosition;
+        public ENUM_ProjectileDummyPosition CastDummyPosition;
 
         [LabelText("释放范围")]
         [SuffixLabel("unit", true)]
@@ -41,7 +42,27 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("触发事件列表")]
         [ListDrawerSettings(ListElementLabelName = "EventName")]
-        public SortedDictionary<ENUM_Event, GamePlayEvent> Events = new SortedDictionary<ENUM_Event, GamePlayEvent>();
+        [ShowInInspector]
+        public List<GamePlayEvent> Events = new List<GamePlayEvent>();
+
+        public SortedDictionary<ENUM_Event, GamePlayEvent> EventDict
+        {
+            get
+            {
+                if (eventDict == null)
+                {
+                    eventDict = new SortedDictionary<ENUM_Event, GamePlayEvent>();
+                    foreach (GamePlayEvent gamePlayEvent in Events)
+                    {
+                        eventDict.Add(gamePlayEvent.EventType, gamePlayEvent);
+                    }
+                }
+
+                return eventDict;
+            }
+        }
+
+        private SortedDictionary<ENUM_Event, GamePlayEvent> eventDict = null;
 
         public GamePlayAbility Clone()
         {

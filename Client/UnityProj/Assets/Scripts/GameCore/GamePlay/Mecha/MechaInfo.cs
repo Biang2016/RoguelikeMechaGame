@@ -21,7 +21,7 @@ namespace GameCore
 
         public string MechaName;
         public MechaType MechaType;
-        public SortedDictionary<uint, MechaComponentInfo> MechaComponentInfos = new SortedDictionary<uint, MechaComponentInfo>();
+        public SortedDictionary<uint, MechaComponentInfo> MechaComponentInfoDict = new SortedDictionary<uint, MechaComponentInfo>();
 
         public UnityAction<MechaComponentInfo, GridPosR> OnAddMechaComponentInfoSuc;
         public UnityAction<MechaInfo> OnRemoveMechaInfoSuc;
@@ -41,7 +41,7 @@ namespace GameCore
         public MechaInfo Clone()
         {
             MechaInfo mechaInfo = new MechaInfo(MechaName, MechaType);
-            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfos)
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
             {
                 AddMechaComponentInfo(kv.Value.Clone(), kv.Value.InventoryItem.GridPos_Matrix);
             }
@@ -52,7 +52,7 @@ namespace GameCore
         public void AddMechaComponentInfo(MechaComponentInfo mci, GridPosR gp_matrix)
         {
             mci.OnRemoveMechaComponentInfoSuc += RemoveMechaComponentInfo;
-            MechaComponentInfos.Add(mci.GUID, mci);
+            MechaComponentInfoDict.Add(mci.GUID, mci);
             InventoryItem item = new InventoryItem(mci, MechaEditorInventory, gp_matrix);
             item.AmIRootItemInIsolationCalculationHandler = () => ((MechaComponentInfo) item.ItemContentInfo).MechaComponentType == MechaComponentType.Core;
             mci.SetInventoryItem(item);
@@ -81,7 +81,7 @@ namespace GameCore
             }
 
             mci.OnRemoveMechaComponentInfoSuc = null;
-            MechaComponentInfos.Remove(mci.GUID);
+            MechaComponentInfoDict.Remove(mci.GUID);
         }
 
         public void RemoveMechaInfo()
@@ -95,7 +95,7 @@ namespace GameCore
         {
             int totalLife = 0;
             int leftLife = 0;
-            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfos)
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
             {
                 totalLife += kv.Value.M_TotalLife;
                 leftLife += kv.Value.M_LeftLife;
@@ -110,7 +110,7 @@ namespace GameCore
         public List<MechaComponentInfo> GetCoreLifeChangeDelegates()
         {
             List<MechaComponentInfo> res = new List<MechaComponentInfo>();
-            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfos)
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
             {
                 if (kv.Value.MechaComponentType == MechaComponentType.Core)
                 {

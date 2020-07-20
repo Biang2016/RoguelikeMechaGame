@@ -25,24 +25,36 @@ namespace Client
         [TitleGroup("DummyPositions")]
         private Transform AnotherSampleDummyPos;
 
+        public Dictionary<ENUM_ProjectileDummyPosition, Transform> DummyPosDict = new Dictionary<ENUM_ProjectileDummyPosition, Transform>();
+
+        private void Awake_Fighting()
+        {
+            DummyPosDict.Add(ENUM_ProjectileDummyPosition.ShooterDummyPos, ShooterDummyPos);
+        }
+
         private void Initialize_Fighting()
         {
             foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
                 ability.cooldownTicker = 0;
-                foreach (KeyValuePair<ENUM_Event, GamePlayEvent> kv in ability.Events)
+                ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) ENUM_Event.OnAbilityStart, (executeInfo) =>
                 {
-                    switch (kv.Key)
+                    if (ability == executeInfo.Ability)
                     {
-                        case ENUM_Event.OnAbilityStart:
+                        ability.cooldownTicker = 0;
+                    }
+                });
+                foreach (KeyValuePair<ENUM_Event, GamePlayEvent> kv in ability.EventDict)
+                {
+                    foreach (GamePlayAction action in kv.Value.Actions)
+                    {
+                        ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) kv.Key, (executeInfo) =>
                         {
-                            foreach (GamePlayAction action in kv.Value.Actions)
+                            if (ability == executeInfo.Ability)
                             {
-                                ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) ENUM_Event.OnAbilityStart, (executeInfo) => { action.Execute(executeInfo); });
+                                action.Execute(executeInfo);
                             }
-
-                            break;
-                        }
+                        });
                     }
                 }
             }
@@ -68,45 +80,14 @@ namespace Client
                         {
                             ClientGameManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_Event.OnAbilityStart, new ExecuteInfo
                             {
-                                MechaGUID = MechaInfo.GUID, MechaComponentGUID = MechaComponentInfo.GUID, AbilityName = ability.AbilityName
+                                MechaInfo = MechaInfo,
+                                MechaComponentInfo = MechaComponentInfo,
+                                Ability = ability
                             });
-
-                            foreach (KeyValuePair<ENUM_Event, GamePlayEvent> kv in ability.Events)
-                            {
-                                if (kv.Key == ENUM_Event.OnAbilityStart)
-                                {
-                                    ability.cooldownTicker = 0;
-                                    foreach (GamePlayAction action in kv.Value.Actions)
-                                    {
-                                        if (action is Action_EmitProjectile act)
-                                        {
-                                            act.OnHit += flyRealTimeData => { };
-                                            switch (ability.CastDummyPosition)
-                                            {
-                                                case ENUM_AbilityCastDummyPosition.ShooterDummyPos:
-                                                {
-                                                    ProjectileInfo pi = new ProjectileInfo(act, MechaComponentInfo, MechaInfo, null, Vector3.zero);
-                                                    //pi.ParentAction.ProjectileConfig.ProjectileType = projectileType;
-                                                    ClientProjectileManager.Instance.ShootProjectile(pi, ShooterDummyPos.position, ShooterDummyPos.forward);
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
                 }
             }
-
-            if (ControlManager.Instance.Battle_Skill_2.Down)
-            {
-                projectileType = (ProjectileType) (((int) projectileType + 1) % Enum.GetValues(typeof(ProjectileType)).Length);
-                Debug.Log(projectileType);
-            }
         }
-
-        private ProjectileType projectileType;
     }
 }

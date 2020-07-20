@@ -54,7 +54,7 @@ namespace Client
             MechaInfo.MechaEditorInventory.RefreshInventoryGrids();
             MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation();
 
-            foreach (KeyValuePair<uint, MechaComponentInfo> kv in mechaInfo.MechaComponentInfos)
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in mechaInfo.MechaComponentInfoDict)
             {
                 AddMechaComponent(kv.Value);
             }

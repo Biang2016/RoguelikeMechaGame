@@ -12,6 +12,9 @@ namespace GameCore.AbilityDataDriven
         [LabelText("投掷物表现体")]
         public ProjectileType ProjectileType;
 
+        [LabelText("投掷物发射点")]
+        public ENUM_ProjectileDummyPosition DummyPos;
+
         [LabelText("射程(0为无限)")]
         [SuffixLabel("unit", true)]
         public int MaxRange;
@@ -38,6 +41,7 @@ namespace GameCore.AbilityDataDriven
             {
                 ProjectileName = ProjectileName,
                 ProjectileType = ProjectileType,
+                DummyPos = DummyPos,
                 MaxRange = MaxRange,
                 MaxDuration = MaxDuration,
                 Velocity = Velocity,

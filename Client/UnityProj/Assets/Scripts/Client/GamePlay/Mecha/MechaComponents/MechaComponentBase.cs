@@ -65,6 +65,7 @@ namespace Client
         void Awake()
         {
             Draggable = GetComponent<Draggable>();
+            Awake_Fighting();
         }
 
         protected virtual void Update()

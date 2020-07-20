@@ -63,7 +63,8 @@ namespace Client
         public Messenger BattleMessenger => ClientBattleManager.BattleInfo.BattleMessenger;
 
         private FXManager FXManager => FXManager.Instance;
-        private ClientProjectileManager ProjectileManager => ClientProjectileManager.Instance;
+        private ProjectileManager ProjectileManager => ProjectileManager.Instance;
+        private ClientProjectileManager ClientProjectileManager => ClientProjectileManager.Instance;
 
         #endregion
 
@@ -114,12 +115,11 @@ namespace Client
             ClientLevelManager.Init();
             LevelManager.Init();
             ClientLevelManager.Awake();
-            ClientBattleManager.Init(new GameObject("MechaContainerRoot").transform, new GameObject("MechaComponentDropSpriteContainerRoot").transform);
             ClientBattleManager.Awake();
             FXManager.Awake();
 
-            ProjectileManager.Init(new GameObject("ProjectileRoot").transform);
-            ProjectileManager.Awake();
+            ClientProjectileManager.Init(new GameObject("ProjectileRoot").transform);
+            ClientProjectileManager.Awake();
         }
 
         private void Start()
@@ -193,7 +193,8 @@ namespace Client
             ClientLevelManager.Start();
             ClientBattleManager.Start();
             FXManager.Start();
-            ProjectileManager.Start();
+            ProjectileManager.Init(ClientProjectileManager.EmitProjectile);
+            ClientProjectileManager.Start();
 
             UIManager.Instance.ShowUIForms<DebugPanel>();
 #if !DEBUG
@@ -221,7 +222,7 @@ namespace Client
             ClientLevelManager.Update();
             ClientBattleManager.Update();
             FXManager.Update();
-            ProjectileManager.Update();
+            ClientProjectileManager.Update();
         }
 
         void LateUpdate()
@@ -242,7 +243,7 @@ namespace Client
             ClientLevelManager.LateUpdate();
             ClientBattleManager.LateUpdate();
             FXManager.LateUpdate();
-            ProjectileManager.LateUpdate();
+            ClientProjectileManager.LateUpdate();
         }
 
         void FixedUpdate()
@@ -263,7 +264,7 @@ namespace Client
             ClientLevelManager.FixedUpdate();
             ClientBattleManager.FixedUpdate();
             FXManager.FixedUpdate();
-            ProjectileManager.FixedUpdate();
+            ClientProjectileManager.FixedUpdate();
         }
 
         private void StartGame()
@@ -296,7 +297,7 @@ namespace Client
                 }
             }
 
-            ClientBattleManager.EnemyMechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
+            ClientBattleManager.MechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
 
             ClientLevelManager.Instance.StartLevel();
         }
@@ -307,7 +308,7 @@ namespace Client
             BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.gameObject.SetActive(open);
             if (open)
             {
-                ClientBattleManager.Instance.SetAllEnemyShown(false);
+                ClientBattleManager.Instance.SetAllEnemyMechaShown(false);
                 ClientBattleManager.Instance.PlayerMecha.MechaEditArea.SetShown(true);
                 ClientBattleManager.Instance.PlayerMecha.SlotLightsShown = true;
                 CameraManager.Instance.MainCameraFollow.FOV_Level = 1;
@@ -316,7 +317,7 @@ namespace Client
             }
             else
             {
-                ClientBattleManager.Instance.SetAllEnemyShown(true);
+                ClientBattleManager.Instance.SetAllEnemyMechaShown(true);
                 ClientBattleManager.Instance.PlayerMecha.MechaEditArea.SetShown(false);
                 ClientBattleManager.Instance.PlayerMecha.SlotLightsShown = false;
                 ClientBattleManager.Instance.PlayerMecha.GridShown = false;

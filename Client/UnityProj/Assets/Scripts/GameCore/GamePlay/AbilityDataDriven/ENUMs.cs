@@ -139,7 +139,7 @@ namespace GameCore.AbilityDataDriven
         ABILITY_BEHAVIOR_DONT_ALERT_TARGET = 1 << 21,
     }
 
-    public enum ENUM_AbilityCastDummyPosition
+    public enum ENUM_ProjectileDummyPosition
     {
         None = 0,
         ShooterDummyPos,

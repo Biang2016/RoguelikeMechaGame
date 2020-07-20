@@ -11,21 +11,28 @@ namespace Client
         public BattleInfo BattleInfo;
 
         internal Mecha PlayerMecha;
-        internal SortedDictionary<uint, Mecha> EnemyMechaDict = new SortedDictionary<uint, Mecha>();
-        internal SortedDictionary<uint, Projectile> ProjectileDict = new SortedDictionary<uint, Projectile>();
+        internal SortedDictionary<uint, Mecha> MechaDict = new SortedDictionary<uint, Mecha>();
 
         private HUDPanel HUDPanel;
         public Transform MechaContainerRoot;
         public Transform MechaComponentDropSpriteContainerRoot;
 
-        public void Init(Transform mechaContainerRoot, Transform mechaComponentDropSpriteContainerRoot)
+        public void Clear()
         {
-            MechaContainerRoot = mechaContainerRoot;
-            MechaComponentDropSpriteContainerRoot = mechaComponentDropSpriteContainerRoot;
+            foreach (KeyValuePair<uint, Mecha> kv in MechaDict)
+            {
+                kv.Value.PoolRecycle();
+            }
+
+            MechaDict.Clear();
+            PlayerMecha = null;
+            BattleInfo = null;
         }
 
         public override void Awake()
         {
+            MechaContainerRoot = new GameObject("MechaContainerRoot").transform;
+            MechaComponentDropSpriteContainerRoot = new GameObject("MechaComponentDropSpriteContainerRoot").transform;
         }
 
         public override void Start()
@@ -60,33 +67,13 @@ namespace Client
             }
         }
 
-        public void Clean()
-        {
-            PlayerMecha?.PoolRecycle();
-            PlayerMecha = null;
-            foreach (KeyValuePair<uint, Mecha> kv in EnemyMechaDict)
-            {
-                kv.Value.PoolRecycle();
-            }
-
-            EnemyMechaDict.Clear();
-            foreach (KeyValuePair<uint, Projectile> kv in ProjectileDict)
-            {
-                kv.Value.PoolRecycle();
-            }
-
-            EnemyMechaDict.Clear();
-            BattleInfo = null;
-        }
-
         public void StartBattle(BattleInfo battleInfo)
         {
-            Clean();
+            Clear();
             BattleInfo = battleInfo;
             BattleInfo.OnAddEnemyMechaInfoSuc = AddMecha;
 
-            PlayerMecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainerRoot);
-            PlayerMecha.Initialize(battleInfo.BattleMechaInfoData.PlayerMechaInfo);
+            AddMecha(battleInfo.BattleMechaInfoData.PlayerMechaInfo);
 
             foreach (KeyValuePair<uint, MechaInfo> kv in battleInfo.BattleMechaInfoData.EnemyMechaInfoDict)
             {
@@ -104,20 +91,54 @@ namespace Client
             Mecha mecha = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.Mecha].AllocateGameObject<Mecha>(MechaContainerRoot);
             mecha.Initialize(mechaInfo);
             mecha.OnRemoveMechaSuc = RemoveMecha;
-            EnemyMechaDict.Add(mecha.MechaInfo.GUID, mecha);
+            MechaDict.Add(mecha.MechaInfo.GUID, mecha);
+            if (mechaInfo.MechaType == MechaType.Player)
+            {
+                PlayerMecha = mecha;
+            }
         }
 
         private void RemoveMecha(Mecha mecha)
         {
-            EnemyMechaDict.Remove(mecha.MechaInfo.GUID);
+            MechaDict.Remove(mecha.MechaInfo.GUID);
             mecha.PoolRecycle();
         }
 
-        public void SetAllEnemyShown(bool shown)
+        public Mecha FindMecha(uint guid)
         {
-            foreach (KeyValuePair<uint, Mecha> kv in EnemyMechaDict)
+            MechaDict.TryGetValue(guid, out Mecha mecha);
+            return mecha;
+        }
+
+        public MechaComponentBase FindMechaComponentBase(uint guid)
+        {
+            foreach (KeyValuePair<uint, Mecha> kv in MechaDict)
+            {
+                if (kv.Value.MechaComponentDict.TryGetValue(guid, out MechaComponentBase mcb))
+                {
+                    return mcb;
+                }
+            }
+
+            return null;
+        }
+
+        public void SetAllMechaShown(bool shown)
+        {
+            foreach (KeyValuePair<uint, Mecha> kv in MechaDict)
             {
                 kv.Value.SetShown(shown);
+            }
+        }
+
+        public void SetAllEnemyMechaShown(bool shown)
+        {
+            foreach (KeyValuePair<uint, Mecha> kv in MechaDict)
+            {
+                if (!kv.Value.IsPlayer)
+                {
+                    kv.Value.SetShown(shown);
+                }
             }
         }
     }

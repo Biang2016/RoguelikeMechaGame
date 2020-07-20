@@ -10,9 +10,9 @@ namespace GameCore.AbilityDataDriven
 {
     public struct ExecuteInfo
     {
-        public uint MechaGUID;
-        public uint MechaComponentGUID;
-        public string AbilityName;
+        public GamePlayAbility Ability;
+        public MechaInfo MechaInfo;
+        public MechaComponentInfo MechaComponentInfo;
     }
 
     public abstract class GamePlayAction : IClone<GamePlayAction>
@@ -147,6 +147,9 @@ namespace GameCore.AbilityDataDriven
         public override void Execute(ExecuteInfo executeInfo)
         {
             base.Execute(executeInfo);
+            OnHit += flyRealTimeData => { };
+            ProjectileInfo pi = new ProjectileInfo(this, executeInfo.MechaComponentInfo, executeInfo.MechaInfo, null, Vector3.zero);
+            ProjectileManager.Instance.EmitProjectileHandler(pi);
         }
 
         protected override void ChildClone(GamePlayAction newAction)

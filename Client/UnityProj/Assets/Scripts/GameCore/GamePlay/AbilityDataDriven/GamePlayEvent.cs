@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace GameCore.AbilityDataDriven
 {
     public class GamePlayEvent : IClone<GamePlayEvent>
     {
-        [HideInInspector]
         public string EventName => EventType.ToString();
 
-        [LabelText("时机")]
+        [LabelText("触发时机")]
         public ENUM_Event EventType;
 
         [LabelText("行为列表")]
@@ -21,8 +19,8 @@ namespace GameCore.AbilityDataDriven
         {
             return new GamePlayEvent
             {
-                EventType = EventType,
                 Actions = Actions.Clone(),
+                EventType = EventType,
             };
         }
     }
