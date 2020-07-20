@@ -9,8 +9,10 @@ namespace Client
     public class ClientBattleManager : TSingletonBaseManager<ClientBattleManager>
     {
         public BattleInfo BattleInfo;
+
         internal Mecha PlayerMecha;
         internal SortedDictionary<uint, Mecha> EnemyMechaDict = new SortedDictionary<uint, Mecha>();
+        internal SortedDictionary<uint, Projectile> ProjectileDict = new SortedDictionary<uint, Projectile>();
 
         private HUDPanel HUDPanel;
         public Transform MechaContainerRoot;
@@ -63,6 +65,12 @@ namespace Client
             PlayerMecha?.PoolRecycle();
             PlayerMecha = null;
             foreach (KeyValuePair<uint, Mecha> kv in EnemyMechaDict)
+            {
+                kv.Value.PoolRecycle();
+            }
+
+            EnemyMechaDict.Clear();
+            foreach (KeyValuePair<uint, Projectile> kv in ProjectileDict)
             {
                 kv.Value.PoolRecycle();
             }

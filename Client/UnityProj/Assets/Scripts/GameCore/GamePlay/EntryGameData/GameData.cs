@@ -12,7 +12,7 @@ namespace GameCore
     public class GameData
     {
         public SortedDictionary<uint, LevelInfo> LevelInfoDict = new SortedDictionary<uint, LevelInfo>();
-        public LevelInfo CurrentLevelInfo;
+        public LevelGroupInfo LevelGroupInfo;
 
         public PlayerData PlayerData;
     }

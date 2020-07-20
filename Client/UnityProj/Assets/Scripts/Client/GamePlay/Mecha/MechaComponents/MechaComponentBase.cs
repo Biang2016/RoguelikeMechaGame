@@ -23,7 +23,7 @@ using UnityEditor;
 namespace Client
 {
     [ExecuteInEditMode]
-    public abstract partial class MechaComponentBase : PoolObject, IDraggable
+    public partial class MechaComponentBase : PoolObject, IDraggable
     {
         [ReadOnly]
         [PropertyOrder(-10)]

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2936411875950737291}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a19f2364437d2b546bfbdcf4f8fda371, type: 3}
+  m_Script: {fileID: 11500000, guid: ab8e73238f2352e41ab0894cb0c4e7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsRecycled: 0
@@ -67,9 +67,9 @@ MonoBehaviour:
         z: 0
         orientation: 0
     DropProbability: 0
-    TotalLife: 100
-  MechaComponentGridRoot: {fileID: 4618707353109224937}
-  ModelRoot: {fileID: 7716897934555374000}
+    TotalLife: 0
+  MechaComponentGridRoot: {fileID: 0}
+  ModelRoot: {fileID: 0}
 --- !u!114 &8787363159894584536
 MonoBehaviour:
   m_ObjectHideFlags: 0

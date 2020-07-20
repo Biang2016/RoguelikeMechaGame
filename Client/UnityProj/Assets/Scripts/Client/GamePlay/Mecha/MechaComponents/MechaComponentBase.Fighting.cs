@@ -7,7 +7,7 @@ using Enum = System.Enum;
 
 namespace Client
 {
-    public abstract partial class MechaComponentBase
+    public  partial class MechaComponentBase
     {
         [LabelText("触发按键")]
         [PropertyOrder(9)]

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BiangStudio.GameDataFormat;
+﻿using BiangStudio.GameDataFormat;
 using BiangStudio.Singleton;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,7 +23,7 @@ namespace GameCore
             }
         }
 
-        public LevelInfoGroup LevelInfoGroup = new LevelInfoGroup();
+        public LevelGroupInfo LevelInfoGroup = new LevelGroupInfo();
 
         public void Init()
         {
@@ -47,11 +46,5 @@ namespace GameCore
 
         public UnityAction<LevelInfo> OnGenerateLevel;
         public UnityAction<uint> OnSetCurrentLevel;
-    }
-
-    public class LevelInfoGroup
-    {
-        public SortedDictionary<uint, LevelInfo> LevelInfoDict = new SortedDictionary<uint, LevelInfo>();
-        public LevelInfo CurrentLevelInfo;
     }
 }

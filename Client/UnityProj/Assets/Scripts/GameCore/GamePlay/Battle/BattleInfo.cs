@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BiangStudio.Messenger;
+﻿using BiangStudio.Messenger;
 using UnityEngine.Events;
 
 namespace GameCore
@@ -33,11 +32,5 @@ namespace GameCore
         {
             BattleMechaInfoData.EnemyMechaInfoDict.Remove(mechaInfo.GUID);
         }
-    }
-
-    public class BattleMechaInfoData
-    {
-        public MechaInfo PlayerMechaInfo;
-        public SortedDictionary<uint, MechaInfo> EnemyMechaInfoDict = new SortedDictionary<uint, MechaInfo>();
     }
 }
