@@ -115,11 +115,8 @@ namespace Client
             GridPos.ApplyGridPosToLocalTransXZ(MechaComponentInfo.InventoryItem.GridPos_World, transform, ConfigManager.GridSize);
             Mecha = parentMecha;
             MechaComponentGridRoot.SetInBattle(true);
-            Child_Initialize();
-        }
 
-        protected virtual void Child_Initialize()
-        {
+            Initialize_Fighting();
         }
 
 #if UNITY_EDITOR

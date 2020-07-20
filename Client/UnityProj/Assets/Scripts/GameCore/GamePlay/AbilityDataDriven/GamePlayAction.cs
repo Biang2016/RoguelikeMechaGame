@@ -8,6 +8,13 @@ using UnityEngine.Events;
 
 namespace GameCore.AbilityDataDriven
 {
+    public struct ExecuteInfo
+    {
+        public uint MechaGUID;
+        public uint MechaComponentGUID;
+        public string AbilityName;
+    }
+
     public abstract class GamePlayAction : IClone<GamePlayAction>
     {
         [HideInInspector]
@@ -19,6 +26,10 @@ namespace GameCore.AbilityDataDriven
             GamePlayAction newAction = (GamePlayAction) Activator.CreateInstance(type);
             ChildClone(newAction);
             return newAction;
+        }
+
+        public virtual void Execute(ExecuteInfo executeInfo)
+        {
         }
 
         protected virtual void ChildClone(GamePlayAction newAction)
@@ -34,6 +45,11 @@ namespace GameCore.AbilityDataDriven
         [LabelText("技能名称")]
         public string AbilityName;
 
+        public override void Execute(ExecuteInfo executeInfo)
+        {
+            base.Execute(executeInfo);
+        }
+
         protected override void ChildClone(GamePlayAction newAction)
         {
             base.ChildClone(newAction);
@@ -48,6 +64,11 @@ namespace GameCore.AbilityDataDriven
         public GamePlayActionTarget Target;
 
         public GamePlayAction Action;
+
+        public override void Execute(ExecuteInfo executeInfo)
+        {
+            base.Execute(executeInfo);
+        }
 
         protected override void ChildClone(GamePlayAction newAction)
         {
@@ -65,6 +86,11 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("Modifier名称")]
         public string ModifierName;
+
+        public override void Execute(ExecuteInfo executeInfo)
+        {
+            base.Execute(executeInfo);
+        }
 
         protected override void ChildClone(GamePlayAction newAction)
         {
@@ -108,7 +134,6 @@ namespace GameCore.AbilityDataDriven
             }
         }
 
-
         private IEnumerable GetProjectileNames()
         {
             if (!ConfigManager.IsLoaded)
@@ -117,6 +142,11 @@ namespace GameCore.AbilityDataDriven
             }
 
             return ConfigManager.ProjectileConfigDict.Keys;
+        }
+
+        public override void Execute(ExecuteInfo executeInfo)
+        {
+            base.Execute(executeInfo);
         }
 
         protected override void ChildClone(GamePlayAction newAction)
@@ -142,6 +172,11 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("伤害量")]
         public int Damage;
+
+        public override void Execute(ExecuteInfo executeInfo)
+        {
+            base.Execute(executeInfo);
+        }
 
         protected override void ChildClone(GamePlayAction newAction)
         {

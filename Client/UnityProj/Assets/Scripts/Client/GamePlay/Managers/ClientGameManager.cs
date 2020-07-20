@@ -186,7 +186,6 @@ namespace Client
             //    myBackPack.TryAddItem(ii);
             //}
 
-
             BackpackManager.Start();
             DragManager.Start();
             DragExecuteManager.Start();
@@ -279,7 +278,6 @@ namespace Client
             inventoryInfo.InventoryItems.Add(ii);
             myBackPack.LoadInventoryInfo(inventoryInfo);
 
-
             MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player);
             MechaInfo enemyMechaInfo = new MechaInfo("Junk Mecha", MechaType.Enemy);
 
@@ -288,23 +286,15 @@ namespace Client
             battleInfo.SetPlayerMecha(playerMechaInfo);
             playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 300, 0), new GridPosR(9, 9));
             battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
-            // for (int i = -5; i <= 5; i++)
-            // {
-            //     for (int j = -8; j <= 8; j++)
-            //     {
-            //         MechaComponentInfo mci;
-            //         if (i == 0 && j == 0)
-            //         {
-            //             mci = new MechaComponentInfo(MechaComponentType.Core, 500, 0);
-            //         }
-            //         else
-            //         {
-            //             mci = new MechaComponentInfo((MechaComponentType) LevelManager.SRandom.Range(1, Enum.GetNames(typeof(MechaComponentType)).Length), 50, 5);
-            //         }
-            //
-            //         enemyMechaInfo.AddMechaComponentInfo(mci, new GridPosR(i, j, GridPosR.Orientation.Up));
-            //     }
-            // }
+            for (int i = -5; i <= 5; i++)
+            {
+                for (int j = -8; j <= 8; j++)
+                {
+                    MechaComponentInfo mci;
+                    mci = new MechaComponentInfo(MechaComponentType.Core, new GamePlayAbilityGroup(), 500, 0);
+                    enemyMechaInfo.AddMechaComponentInfo(mci, new GridPosR(i, j, GridPosR.Orientation.Up));
+                }
+            }
 
             ClientBattleManager.EnemyMechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
 

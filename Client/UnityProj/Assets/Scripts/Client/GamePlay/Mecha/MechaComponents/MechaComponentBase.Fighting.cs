@@ -1,4 +1,5 @@
-﻿using GameCore;
+﻿using System.Collections.Generic;
+using GameCore;
 using GameCore.AbilityDataDriven;
 using Google.Protobuf.WellKnownTypes;
 using Sirenix.OdinInspector;
@@ -7,7 +8,7 @@ using Enum = System.Enum;
 
 namespace Client
 {
-    public  partial class MechaComponentBase
+    public partial class MechaComponentBase
     {
         [LabelText("触发按键")]
         [PropertyOrder(9)]
@@ -24,7 +25,30 @@ namespace Client
         [TitleGroup("DummyPositions")]
         private Transform AnotherSampleDummyPos;
 
-        void Update_Fighting()
+        private void Initialize_Fighting()
+        {
+            foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
+            {
+                ability.cooldownTicker = 0;
+                foreach (KeyValuePair<ENUM_Event, GamePlayEvent> kv in ability.Events)
+                {
+                    switch (kv.Key)
+                    {
+                        case ENUM_Event.OnAbilityStart:
+                        {
+                            foreach (GamePlayAction action in kv.Value.Actions)
+                            {
+                                ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) ENUM_Event.OnAbilityStart, (executeInfo) => { action.Execute(executeInfo); });
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Update_Fighting()
         {
             foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
@@ -42,15 +66,21 @@ namespace Client
                     {
                         if (!ability.Passive && ability.AbilityPowerCost < 100) // todo power
                         {
-                            foreach (GamePlayEvent evnt in ability.Events)
+                            ClientGameManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_Event.OnAbilityStart, new ExecuteInfo
                             {
-                                if (evnt.EventType == ENUM_Event.OnAbilityStart)
+                                MechaGUID = MechaInfo.GUID, MechaComponentGUID = MechaComponentInfo.GUID, AbilityName = ability.AbilityName
+                            });
+
+                            foreach (KeyValuePair<ENUM_Event, GamePlayEvent> kv in ability.Events)
+                            {
+                                if (kv.Key == ENUM_Event.OnAbilityStart)
                                 {
                                     ability.cooldownTicker = 0;
-                                    foreach (GamePlayAction action in evnt.Actions)
+                                    foreach (GamePlayAction action in kv.Value.Actions)
                                     {
                                         if (action is Action_EmitProjectile act)
                                         {
+                                            act.OnHit += flyRealTimeData => { };
                                             switch (ability.CastDummyPosition)
                                             {
                                                 case ENUM_AbilityCastDummyPosition.ShooterDummyPos:

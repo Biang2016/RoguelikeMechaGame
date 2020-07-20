@@ -41,7 +41,7 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("触发事件列表")]
         [ListDrawerSettings(ListElementLabelName = "EventName")]
-        public List<GamePlayEvent> Events = new List<GamePlayEvent>();
+        public SortedDictionary<ENUM_Event, GamePlayEvent> Events = new SortedDictionary<ENUM_Event, GamePlayEvent>();
 
         public GamePlayAbility Clone()
         {

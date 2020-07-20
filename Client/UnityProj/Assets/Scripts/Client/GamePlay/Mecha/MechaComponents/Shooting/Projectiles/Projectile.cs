@@ -1,6 +1,7 @@
 ﻿using BiangStudio.GameDataFormat;
 using BiangStudio.ObjectPool;
 using GameCore;
+using GameCore.AbilityDataDriven;
 using UnityEngine;
 
 namespace Client
@@ -131,9 +132,11 @@ namespace Client
                     transform.forward = FlyRealtimeData.Velocity_Global.normalized;
                     Rigidbody.velocity = FlyRealtimeData.Velocity_Global;
                     FlyRealtimeData.Velocity_Local = transform.InverseTransformVector(FlyRealtimeData.Velocity_Global);
+
+                    ClientGameManager.Instance.BattleMessenger.Broadcast(ENUM_Event.OnProjectileHitUnit, FlyRealtimeData);
+                    ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
                     if (FlyRealtimeData.RemainCollideTimes <= 0)
                     {
-                        ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
                         PoolRecycle();
                     }
                 }

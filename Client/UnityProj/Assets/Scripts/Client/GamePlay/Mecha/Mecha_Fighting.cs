@@ -17,10 +17,13 @@ namespace Client
 
         void Update_Fighting()
         {
-            Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
-            speed = Quaternion.Euler(0f, 0f, 45f) * speed;
-            transform.position += new Vector3(speed.x, 0, speed.y);
-            RotateToMouseDirection();
+            if (MechaInfo.MechaType == MechaType.Player)
+            {
+                Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
+                speed = Quaternion.Euler(0f, 0f, 45f) * speed;
+                transform.position += new Vector3(speed.x, 0, speed.y);
+                RotateToMouseDirection();
+            }
         }
 
         void FixedUpdate_Fighting()
