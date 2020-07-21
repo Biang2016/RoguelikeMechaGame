@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 0
     - Name: AbilityCooldown
       Entry: 3
-      Data: 3000
+      Data: 500
     - Name: AbilityPowerCost
       Entry: 3
       Data: 0
