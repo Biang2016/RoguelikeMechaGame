@@ -9,7 +9,7 @@ namespace GameCore.AbilityDataDriven
         public string EventName => EventType.ToString();
 
         [LabelText("触发时机")]
-        public ENUM_Event EventType;
+        public ENUM_AbilityEvent EventType;
 
         [LabelText("行为列表")]
         [ListDrawerSettings(ListElementLabelName = "ActionName")]

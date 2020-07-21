@@ -145,8 +145,13 @@ namespace GameCore.AbilityDataDriven
         ShooterDummyPos,
     }
 
-    public enum ENUM_Event
+    /// <summary>
+    /// Event for abilities. Only triggered by the caster of ability.
+    /// </summary>
+    public enum ENUM_AbilityEvent
     {
+        ENUM_AbilityEvent_MIN = 5000,
+
         [LabelText("技能阶段开始时")]
         OnAbilityPhaseStart, // Triggers when the ability is cast (before the unit turns toward the target)
 
@@ -221,6 +226,8 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("升级时")]
         OnUpgrade,
+
+        ENUM_AbilityEvent_MAX = 6000,
     }
 
     public enum ENUM_SingleTarget
@@ -480,6 +487,8 @@ namespace GameCore.AbilityDataDriven
 
     public enum ENUM_ModifierEvent
     {
+        ENUM_ModifierEvent_MIN = 6001,
+
         [LabelText("技能释放时")]
         OnAbilityExecuted,
 
@@ -536,6 +545,8 @@ namespace GameCore.AbilityDataDriven
         /// </summary>
         [LabelText("受到伤害时")]
         OnTakeDamage,
+
+        ENUM_ModifierEvent_MAX = 7000,
     }
 
     public enum ENUM_ProjectileType

@@ -45,13 +45,13 @@ namespace GameCore.AbilityDataDriven
         [ShowInInspector]
         public List<GamePlayEvent> Events = new List<GamePlayEvent>();
 
-        public SortedDictionary<ENUM_Event, GamePlayEvent> EventDict
+        public SortedDictionary<ENUM_AbilityEvent, GamePlayEvent> EventDict
         {
             get
             {
                 if (eventDict == null)
                 {
-                    eventDict = new SortedDictionary<ENUM_Event, GamePlayEvent>();
+                    eventDict = new SortedDictionary<ENUM_AbilityEvent, GamePlayEvent>();
                     foreach (GamePlayEvent gamePlayEvent in Events)
                     {
                         eventDict.Add(gamePlayEvent.EventType, gamePlayEvent);
@@ -62,7 +62,7 @@ namespace GameCore.AbilityDataDriven
             }
         }
 
-        private SortedDictionary<ENUM_Event, GamePlayEvent> eventDict = null;
+        private SortedDictionary<ENUM_AbilityEvent, GamePlayEvent> eventDict = null;
 
         public GamePlayAbility Clone()
         {

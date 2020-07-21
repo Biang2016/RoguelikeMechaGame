@@ -34,6 +34,7 @@ namespace BiangStudio.GamePlay.UI
         public Transform UINormalRoot = null; //全屏幕显示窗体的根节点
         public Transform UIFixedRoot = null; //固定显示窗体的根节点
         public Transform UIPopUpRoot = null; //弹出窗体的根节点
+        public Transform UI3DRoot = null; //3D UI组件的根节点
 
         public void Init(LoadUIPanelDelegate loadUIPanelHandler, LogErrorDelegate logErrorHandler,
             ButtonDownDelegate mouseLeftButtonDownHandler,

@@ -133,7 +133,7 @@ namespace Client
                     Rigidbody.velocity = FlyRealtimeData.Velocity_Global;
                     FlyRealtimeData.Velocity_Local = transform.InverseTransformVector(FlyRealtimeData.Velocity_Global);
 
-                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_Event.OnProjectileHitUnit, FlyRealtimeData, ProjectileInfo.ParentMechaInfo, ProjectileInfo.ParentMechaComponentInfo);
+                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitUnit, FlyRealtimeData, ProjectileInfo.ParentMechaInfo, ProjectileInfo.ParentMechaComponentInfo);
                     ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
                     if (FlyRealtimeData.RemainCollideTimes <= 0)
                     {

@@ -37,14 +37,14 @@ namespace Client
             foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
                 ability.cooldownTicker = 0;
-                ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) ENUM_Event.OnAbilityStart, (executeInfo) =>
+                ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, (executeInfo) =>
                 {
                     if (ability == executeInfo.Ability)
                     {
                         ability.cooldownTicker = 0;
                     }
                 });
-                foreach (KeyValuePair<ENUM_Event, GamePlayEvent> kv in ability.EventDict)
+                foreach (KeyValuePair<ENUM_AbilityEvent, GamePlayEvent> kv in ability.EventDict)
                 {
                     foreach (GamePlayAction action in kv.Value.Actions)
                     {
@@ -78,7 +78,7 @@ namespace Client
                     {
                         if (!ability.Passive && ability.AbilityPowerCost < 100) // todo power
                         {
-                            ClientGameManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_Event.OnAbilityStart, new ExecuteInfo
+                            ClientGameManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, new ExecuteInfo
                             {
                                 MechaInfo = MechaInfo,
                                 MechaComponentInfo = MechaComponentInfo,
