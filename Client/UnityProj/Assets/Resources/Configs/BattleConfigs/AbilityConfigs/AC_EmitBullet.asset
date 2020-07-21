@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 0
     - Name: AbilityCooldown
       Entry: 3
-      Data: 100
+      Data: 3000
     - Name: AbilityPowerCost
       Entry: 3
       Data: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: PurpleSmoke
+      Data: WaterBall
     - Name: 
       Entry: 8
       Data: 

@@ -30,6 +30,9 @@ MonoBehaviour:
     - Name: ProjectileType
       Entry: 3
       Data: 0
+    - Name: DummyPos
+      Entry: 3
+      Data: 1
     - Name: MaxRange
       Entry: 3
       Data: 15

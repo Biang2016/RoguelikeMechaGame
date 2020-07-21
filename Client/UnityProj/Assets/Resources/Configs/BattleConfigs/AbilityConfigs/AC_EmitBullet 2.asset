@@ -83,7 +83,7 @@ MonoBehaviour:
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: WaterBall
+      Data: PurpleSmoke
     - Name: 
       Entry: 8
       Data: 

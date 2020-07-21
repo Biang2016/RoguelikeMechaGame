@@ -41,14 +41,17 @@ namespace Client
             Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Battle_MousePosition);
             Vector3 intersect = GridUtils.GetIntersectWithLineAndPlane(ray.origin, ray.direction, Vector3.up, transform.position);
 
-            float nearFactor = 3f / (intersect - transform.position).magnitude;
+            Vector3 diff = intersect - transform.position;
+            float nearFactor = 3f / (diff).magnitude;
 
-            Quaternion rotation = Quaternion.LookRotation(intersect - transform.position);
-            if (Mathf.Abs((rotation.eulerAngles - lastRotationByMouse.eulerAngles).magnitude) > 0.5f * nearFactor)
+            Quaternion rotation = Quaternion.LookRotation(diff);
+            if (Mathf.Abs((rotation.eulerAngles - lastRotationByMouse.eulerAngles).magnitude) < 0.5f * nearFactor)
             {
-                lastRotationByMouse = rotation;
-                transform.rotation = rotation;
+                rotation = transform.rotation;
             }
+
+            lastRotationByMouse = transform.rotation;
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * diff.magnitude * 3f);
         }
     }
 }
