@@ -11,7 +11,7 @@ namespace Client
     {
         const float step = 1.0f;
         public ulong ident;
-        public AttackType attackType;
+        public UIBattleTipType attackType;
         public float startTime;
         public Vector3 lastOffset;
         public bool isValid = false;
@@ -21,7 +21,7 @@ namespace Client
             isValid = false;
         }
 
-        public bool IsEqual(ulong id, AttackType type)
+        public bool IsEqual(ulong id, UIBattleTipType type)
         {
             if (isValid)
             {
@@ -31,7 +31,7 @@ namespace Client
             return false;
         }
 
-        public void SetInfo(ulong id, AttackType type, ref Vector3 pos)
+        public void SetInfo(ulong id, UIBattleTipType type, ref Vector3 pos)
         {
             ident = id;
             attackType = type;
@@ -49,12 +49,12 @@ namespace Client
         }
     }
 
-    public enum AttackType
+    public enum UIBattleTipType
     {
         None = 0,
         Resist = 1, //抵抗//这个无用的
         Dodge = 2, //躲闪
-        SequenceAttack = 3, //暴击-
+        CriticalAttack = 3, //暴击-
         Damage = 4, //普通伤害-
         Rampage = 5, //暴走 //这个无用的-
         MeleekillScore = 6, //近身击杀得分//这个无用的-
@@ -136,7 +136,7 @@ namespace Client
     {
         public MechaComponentBase MechaComponentBase;
         public long decHp;
-        public AttackType attackType;
+        public UIBattleTipType attackType;
         public MechaComponentBase attackerMCB;
         public int elementType;
         public long elementHP;
@@ -146,7 +146,7 @@ namespace Client
     {
         public ulong hitIdent;
         public Vector3 startPos;
-        public AttackType attackType;
+        public UIBattleTipType attackType;
         public long diffHP;
         public long elementHP;
         public float offsetX;
@@ -157,7 +157,7 @@ namespace Client
         public int elementType;
         public string spriteImagePath;
 
-        public void Setup(Vector3 pos, ulong id, AttackType _attackType, long _diff, uint _attackerType = 0, float _scale = 1.0f, int _elementType = 0, string _imagePath = "", long _elementHP = 0)
+        public void Setup(Vector3 pos, ulong id, UIBattleTipType _attackType, long _diff, uint _attackerType = 0, float _scale = 1.0f, int _elementType = 0, string _imagePath = "", long _elementHP = 0)
         {
             startPos = pos;
             hitIdent = id;
@@ -222,7 +222,7 @@ namespace Client
             Messenger.AddListener<SAttackData>((uint) ENUM_BattleEvent.Battle_MechaComponentAttackTip, HandleAttackTip);
             Messenger.AddListener<MechaComponentBase, int>((uint) ENUM_BattleEvent.Battle_AddScoreTip, HandleAddScore);
             Messenger.AddListener<MechaComponentBase, int>((uint) ENUM_BattleEvent.Battle_SkillTip, HandleAgeConfigTip);
-            Messenger.AddListener<uint, AttackType>((uint) ENUM_BattleEvent.Battle_CommonTip, HandleCommonTip);
+            Messenger.AddListener<uint, UIBattleTipType>((uint) ENUM_BattleEvent.Battle_CommonTip, HandleCommonTip);
         }
 
         private void UnRegisterEvent()
@@ -230,7 +230,7 @@ namespace Client
             Messenger.RemoveListener<SAttackData>((uint) ENUM_BattleEvent.Battle_MechaComponentAttackTip, HandleAttackTip);
             Messenger.RemoveListener<MechaComponentBase, int>((uint) ENUM_BattleEvent.Battle_AddScoreTip, HandleAddScore);
             Messenger.RemoveListener<MechaComponentBase, int>((uint) ENUM_BattleEvent.Battle_SkillTip, HandleAgeConfigTip);
-            Messenger.RemoveListener<uint, AttackType>((uint) ENUM_BattleEvent.Battle_CommonTip, HandleCommonTip);
+            Messenger.RemoveListener<uint, UIBattleTipType>((uint) ENUM_BattleEvent.Battle_CommonTip, HandleCommonTip);
         }
 
         private ulong GetHitActorID(MechaComponentBase hitter)
@@ -246,12 +246,12 @@ namespace Client
         private void HandleAddScore(MechaComponentBase mcb, int diffHP)
         {
             Debug.Log($"HandleAddScore：score:{diffHP}");
-            AddTip(mcb, diffHP, AttackType.AddScore, null);
+            AddTip(mcb, diffHP, UIBattleTipType.AddScore, null);
         }
 
         private void HandleAgeConfigTip(MechaComponentBase mcb, int type)
         {
-            AddTip(mcb, 0, (AttackType) type, null);
+            AddTip(mcb, 0, (UIBattleTipType) type, null);
         }
 
         private void HandleAttackTip(SAttackData sAttackData)
@@ -259,9 +259,9 @@ namespace Client
             AddTip(sAttackData.MechaComponentBase, sAttackData.decHp, sAttackData.attackType, sAttackData.attackerMCB, sAttackData.elementType, null, sAttackData.elementHP);
         }
 
-        private void HandleCommonTip(uint mcbGUID, AttackType type)
+        private void HandleCommonTip(uint mcbGUID, UIBattleTipType type)
         {
-            if ((int) type >= (int) AttackType.FollowDummySeparate)
+            if ((int) type >= (int) UIBattleTipType.FollowDummySeparate)
             {
                 return;
             }
@@ -298,9 +298,9 @@ namespace Client
             list.Clear();
         }
 
-        private Vector3 GetPos(MechaComponentBase mcb, AttackType attackType)
+        private Vector3 GetPos(MechaComponentBase mcb, UIBattleTipType attackType)
         {
-            if ((int) attackType >= (int) AttackType.ScreenCenterSeparate)
+            if ((int) attackType >= (int) UIBattleTipType.ScreenCenterSeparate)
             {
                 return Vector3.zero;
             }
@@ -346,9 +346,9 @@ namespace Client
             }
         }
 
-        public void AddTip(MechaComponentBase mcb, long diffHp, AttackType attackType, MechaComponentBase attacker, int elementType = 0, string image = "", long elementHP = 0)
+        public void AddTip(MechaComponentBase mcb, long diffHp, UIBattleTipType attackType, MechaComponentBase attacker, int elementType = 0, string image = "", long elementHP = 0)
         {
-            if ((int) attackType >= (int) AttackType.FollowDummySeparate)
+            if ((int) attackType >= (int) UIBattleTipType.FollowDummySeparate)
             {
                 return;
             }
@@ -365,7 +365,7 @@ namespace Client
         }
 
         //攻击者类型
-        private uint GetAttackerType(MechaComponentBase attacker, MechaComponentBase hitter, AttackType attackType)
+        private uint GetAttackerType(MechaComponentBase attacker, MechaComponentBase hitter, UIBattleTipType attackType)
         {
             if (hitter != null && hitter.ActorDataComponent != null && hitter.ActorDataComponent.ActorConfig != null)
             {
@@ -374,7 +374,7 @@ namespace Client
             }
 
             //不走攻击类型判定
-            if ((int) attackType > (int) AttackType.NoAttackSeparate)
+            if ((int) attackType > (int) UIBattleTipType.NoAttackSeparate)
             {
                 return (uint) EAttackerType.None;
             }
@@ -494,7 +494,7 @@ namespace Client
             return null;
         }
 
-        public TipInfo GetTipInfo(ulong ident, AttackType attackType)
+        public TipInfo GetTipInfo(ulong ident, UIBattleTipType attackType)
         {
             for (int i = 0; i < TipInfoList.Count; ++i)
             {
@@ -507,7 +507,7 @@ namespace Client
             return null;
         }
 
-        public void AddTipInfo(ulong id, AttackType attackType, ref Vector3 offsetPos)
+        public void AddTipInfo(ulong id, UIBattleTipType attackType, ref Vector3 offsetPos)
         {
             for (int i = 0; i < TipInfoList.Count; ++i)
             {
