@@ -99,12 +99,10 @@ namespace Client
         BulletTimeTutorialTip = 401, //新手引导用的子弹时间
     }
 
-
     public class UIBattleTip : PoolObject
     {
-        public float DisappearTime = 1.5f;
         private float disappearTick = 0;
-        UIBattleTipInfo UIBattleTipInfo ;
+        UIBattleTipInfo UIBattleTipInfo;
 
         public Image spriteIcon;
         public TextMeshProUGUI spriteTextType;
@@ -120,7 +118,6 @@ namespace Client
 
         protected Color color = new Color();
         protected Vector3 offsetPos = new Vector3();
-        protected Vector3 scale = new Vector3();
 
         public override void PoolRecycle()
         {
@@ -151,11 +148,44 @@ namespace Client
             }
         }
 
-        public void Setup(UIBattleTipInfo param, UIBattleTipManager battleTipManager)
+        public void Initialize(UIBattleTipInfo info)
         {
-            param.CopyData(attackParam);
+            UIBattleTipInfo = info;
             disappearTick = 0;
-            InitTip();
+
+            float scaleVal = info.Scale;
+            transform.localScale.Set(scaleVal, scaleVal, scaleVal); 
+        
+            if (info.RandomRange.magnitude > 0)
+            {
+                RandomPos();
+            }
+
+            UpdatePos();
+            //transform.localPosition = attackParam.startPos;
+
+            int page = (int) attackParam.cfg.PageNum;
+            bool changeClr = attackParam.acttackerType != (uint) AttackerType.LocalPlayer;
+
+            bool hadType = UpdateSpriteByText(spriteTextType, attackParam.cfg.Note, ref typeLocalPos, page, changeClr);
+
+            //if (attackParam.cfg.Note != "A" && attackParam.cfg.Note != "B" && attackParam.cfg.Note != "C")
+            UpdateSpriteByText(spriteIcon, attackParam.cfg.PreNote, ref iconLocalPos, page, changeClr);
+
+            SetContextSprite(spriteTextContext, attackParam.diffHP, hadType, page, changeClr);
+            SetContextElementSprite(spriteTextElementContext, attackParam.elementHP, hadType, page, changeClr);
+
+            UpdateSpriteByText(spriteWhiteTextType, attackParam.cfg.Note, ref typeLocalPos);
+
+            //if (attackParam.cfg.Note != "A" && attackParam.cfg.Note != "B" && attackParam.cfg.Note != "C")
+            UpdateSpriteByText(spriteWhiteIcon, attackParam.cfg.PreNote, ref iconLocalPos);
+
+            SetContextSprite(spriteWhiteTextContext, attackParam.diffHP, hadType);
+            SetContextElementSprite(spriteWhiteTextElementContext, attackParam.elementHP, hadType);
+
+            ResetspriteImageIcon();
+
+            PlayAnim();
         }
 
         void SetContextSprite(SpriteText3D sprite, long diffHP, bool hadType, int page = -1, bool chagneClr = true)
@@ -242,16 +272,14 @@ namespace Client
 
         void RandomPos()
         {
-            if (UIBattleTipManager == null)
-                return;
-            TipInfo tipInfo = UIBattleTipManager.GetTipInfo(attackParam.hitIdent, attackParam.attackType);
+            TipInfo tipInfo = UIBattleTipInfo.UIBattleTipManager.GetTipInfo(attackParam.hitIdent, attackParam.attackType);
             if (tipInfo == null)
             {
                 int offset = RandomSquare((int) attackParam.cfg.SquareX);
                 offsetPos.x += offset * 0.001f;
                 offsetPos.y += offset * 0.001f;
                 //Logger.Log("tip:RandomSquare:" + offsetPos.ToString());
-                UIBattleTipManager.AddTipInfo(attackParam.hitIdent, attackParam.attackType, ref offsetPos);
+                UIBattleTipInfo.UIBattleTipManager.AddTipInfo(attackParam.hitIdent, attackParam.attackType, ref offsetPos);
             }
             else
             {
@@ -260,178 +288,20 @@ namespace Client
             }
         }
 
-        void InitTip()
-        {
-            if (attackParam != null && attackParam.IsValid())
-            {
-                float scaleVal = attackParam.cfg.Scale * 0.01f * attackParam.scale;
-                scale.Set(scaleVal, scaleVal, scaleVal);
-                //Logger.Log(string.Format("InitTip:sacle:{0},sacle:{1}",transform.localScale,scale));
-
-                transform.localScale = scale;
-
-                // Logger.Log(string.Format("scale:{0},cfgScale:{1},calcScale:{2},attacker:{3}",scale, attackParam.cfg.Scale, attackParam.scale, attackParam.acttackerType));
-                color.r = attackParam.cfg.ColorRed / 255.0f;
-                color.g = attackParam.cfg.ColorGreen / 255.0f;
-                color.b = attackParam.cfg.ColorBlue / 255.0f;
-                color.a = attackParam.cfg.ColorAlpha / 255.0f;
-                offsetPos.x = attackParam.cfg.OffsetX * 0.001f + attackParam.offsetX;
-                offsetPos.y = attackParam.cfg.OffsetY * 0.001f + attackParam.offsetY;
-                offsetPos.z = attackParam.cfg.OffsetZ * 0.001f;
-                if (attackParam.cfg.SquareX > 0)
-                {
-                    RandomPos();
-                }
-                else
-                {
-                    //Logger.Log("tip:normal:" + offsetPos.ToString());
-                }
-
-                UpdatePos();
-                //transform.localPosition = attackParam.startPos;
-
-                int page = (int) attackParam.cfg.PageNum;
-                bool changeClr = attackParam.acttackerType != (uint) AttackerType.LocalPlayer;
-
-                bool hadType = UpdateSpriteByText(spriteTextType, attackParam.cfg.Note, ref typeLocalPos, page, changeClr);
-
-                //if (attackParam.cfg.Note != "A" && attackParam.cfg.Note != "B" && attackParam.cfg.Note != "C")
-                UpdateSpriteByText(spriteIcon, attackParam.cfg.PreNote, ref iconLocalPos, page, changeClr);
-
-                SetContextSprite(spriteTextContext, attackParam.diffHP, hadType, page, changeClr);
-                SetContextElementSprite(spriteTextElementContext, attackParam.elementHP, hadType, page, changeClr);
-
-                UpdateSpriteByText(spriteWhiteTextType, attackParam.cfg.Note, ref typeLocalPos);
-
-                //if (attackParam.cfg.Note != "A" && attackParam.cfg.Note != "B" && attackParam.cfg.Note != "C")
-                UpdateSpriteByText(spriteWhiteIcon, attackParam.cfg.PreNote, ref iconLocalPos);
-
-                SetContextSprite(spriteWhiteTextContext, attackParam.diffHP, hadType);
-                SetContextElementSprite(spriteWhiteTextElementContext, attackParam.elementHP, hadType);
-
-                ResetspriteImageIcon();
-
-
-                PlayAnim();
-            }
-        }
-
-        void ResetspriteImageIcon()
-        {
-            if (spriteImage != null && !string.IsNullOrEmpty(attackParam.spriteImagePath))
-            {
-                ResourceManager.LoadAsset<Texture2D>(attackParam.spriteImagePath).Completed += LoadIconCallBack;
-            }
-        }
-
-        void LoadIconCallBack(IAsyncOperation<Texture2D> async)
-        {
-            if (async == null)
-                return;
-            if (spriteImage != null)
-            {
-                spriteImage.texture = async.Result;
-            }
-            else
-            {
-                ResourceManager.ReleaseAsset(async.Result);
-            }
-
-            async.Release();
-        }
-
-
-        void SetPageNum(SpriteText3D text3D, int page)
-        {
-            if (text3D != null)
-            {
-                text3D.Page = page;
-            }
-        }
-
-        public void Shutdown()
-        {
-        }
-
-        public void Reset()
-        {
-            StopAnim();
-        }
-
         void UpdatePos()
         {
-            if (GetMainCamera != null && GetUI3DCamera != null && attackParam != null)
+            if (CameraManager.Instance.MainCamera != null && UIManager.Instance.UICamera != null)
             {
-                if (attackParam != null && !attackParam.inScreenCenter)
+                if (UIBattleTipInfo != null && !UIBattleTipInfo.InScreenCenter)
                 {
-                    var pos = GetMainCamera.WorldToScreenPoint(attackParam.startPos);
-                    cacheTrans.localPosition = GetUI3DCamera.ScreenToWorldPoint(pos);
+                    Vector3 pos = CameraManager.Instance.MainCamera.WorldToScreenPoint(UIBattleTipInfo.StartPos);
+                    transform.localPosition = UIManager.Instance.UICamera.ScreenToWorldPoint(pos);
                 }
                 else
                 {
-                    cacheTrans.localPosition = Vector3.zero;
+                    transform.localPosition = Vector3.zero;
                 }
             }
-        }
-
-        public bool Tick(float detlaTime)
-        {
-            elapseTime -= detlaTime;
-            if (elapseTime < 0.0f)
-            {
-                Reset();
-                return true;
-            }
-
-            UpdatePos();
-            return false;
-        }
-
-        public bool IsEqualParam(UIBattleTipInfo param)
-        {
-            if (param == null)
-                return false;
-            return param.IsEqual(attackParam);
-        }
-
-        void PlayAnim()
-        {
-            gameObject.CustomSetActive(true);
-            //if (animator != null)
-            //{
-            //    animator.enabled = true;
-            //}
-            if (needPlayAni != null)
-            {
-                for (int i = 0; i < needPlayAni.Length; ++i)
-                {
-                    if (needPlayAni[i] != null)
-                    {
-                        needPlayAni[i].PlayAnim(null);
-                    }
-                }
-            }
-
-            if (needSpritePlayAni != null)
-            {
-                for (int i = 0; i < needSpritePlayAni.Length; ++i)
-                {
-                    if (needSpritePlayAni[i] != null)
-                    {
-                        needSpritePlayAni[i].PlayAnim(null);
-                    }
-                }
-            }
-        }
-
-        void StopAnim()
-        {
-            gameObject.CustomSetActive(false);
-
-            //if (animator != null)
-            //{
-            //    animator.enabled = false;
-            //}
         }
     }
 }

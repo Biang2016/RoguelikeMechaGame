@@ -33,9 +33,10 @@ namespace Client
         public Vector3 StartPos;
         public Vector2 Offset;
         public Vector2 RandomRange;
+        public float DisappearTime = 1.5f;
 
         public UIBattleTipInfo(uint hitMcbGuid, BattleTipType battleTipType, AttackerType attackerType, int diffHp, int elementHp, float scale, bool inScreenCenter, int elementType,
-            string spriteImagePath, Color color, Vector3 startPos, Vector2 offset, Vector2 randomRange)
+            string spriteImagePath, Color color, Vector3 startPos, Vector2 offset, Vector2 randomRange, float disappearTime)
         {
             HitMCB_GUID = hitMcbGuid;
             BattleTipType = battleTipType;
@@ -50,69 +51,12 @@ namespace Client
             StartPos = startPos;
             Offset = offset;
             RandomRange = randomRange;
+            DisappearTime = disappearTime;
         }
 
         public UIBattleTipInfo Clone()
         {
-            return new UIBattleTipInfo(HitMCB_GUID, BattleTipType, AttackerType, DiffHP, ElementHP, Scale, InScreenCenter, ElementType, SpriteImagePath, Color, StartPos, Offset, RandomRange);
-        }
-
-        public struct SAttackData
-        {
-            public MechaComponentBase MechaComponentBase;
-            public long decHp;
-            public UIBattleTipType attackType;
-            public MechaComponentBase attackerMCB;
-            public int elementType;
-            public long elementHP;
-        }
-
-        public class UIBattleTipParam
-        {
-            public ulong hitIdent;
-            public Vector3 startPos;
-            public UIBattleTipType attackType;
-            public long diffHP;
-            public long elementHP;
-            public float offsetX;
-            public float offsetY;
-            public uint attackerType;
-            public float scale;
-            public bool inScreenCenter;
-            public int elementType;
-            public string spriteImagePath;
-
-            public void Setup(Vector3 pos, ulong id, UIBattleTipType _attackType, long _diff, uint _attackerType = 0, float _scale = 1.0f, int _elementType = 0, string _imagePath = "",
-                long _elementHP = 0)
-            {
-                startPos = pos;
-                hitIdent = id;
-                attackType = _attackType;
-                diffHP = _diff;
-                scale = _scale;
-                attackerType = _attackerType;
-                offsetX = 0.0f;
-                offsetY = 0.0f;
-                inScreenCenter = (pos.magnitude < 0.001f);
-                elementType = _elementType;
-                spriteImagePath = _imagePath;
-                elementHP = _elementHP;
-            }
-
-            public void CopyData(UIBattleTipParam param)
-            {
-                param.startPos = startPos;
-                param.attackType = attackType;
-                param.diffHP = diffHP;
-                param.offsetX = offsetX;
-                param.offsetY = offsetY;
-                param.scale = scale;
-                param.attackerType = attackerType;
-                param.hitIdent = hitIdent;
-                param.inScreenCenter = inScreenCenter;
-                param.spriteImagePath = spriteImagePath;
-                param.elementHP = elementHP;
-            }
+            return new UIBattleTipInfo(HitMCB_GUID, BattleTipType, AttackerType, DiffHP, ElementHP, Scale, InScreenCenter, ElementType, SpriteImagePath, Color, StartPos, Offset, RandomRange, DisappearTime);
         }
 
         public class UIBattleTipManager : TSingleton<UIBattleTipManager>
@@ -142,7 +86,6 @@ namespace Client
                 return 0;
             }
 
-
             private void HandleAttackTip(AttackData attackData)
             {
                 UIBattleTipInfo info = new UIBattleTipInfo(
@@ -158,18 +101,14 @@ namespace Client
                     Color.red,
                     attackData.HitterMCB.transform.position + Vector3.up * 3f,
                     Vector2.zero,
-                    Vector2.zero);
+                    Vector2.zero,
+                    1.0f);
                 CreateTip(info);
             }
 
             private void HandleCommonTip(uint mcbGUID, BattleTipType battleTipType)
             {
-                AddTip(sAttackData.MechaComponentBase, sAttackData.decHp, sAttackData.attackType, sAttackData.attackerMCB, sAttackData.elementType, null, sAttackData.elementHP);
-            }
-
-            private void HandleCommonTip(uint mcbGUID, UIBattleTipType type)
-            {
-                if ((int) type >= (int) UIBattleTipType.FollowDummySeparate)
+                if ((int) battleTipType >= (int) BattleTipType.FollowDummySeparate)
                 {
                     return;
                 }
@@ -200,14 +139,15 @@ namespace Client
                     Color.red,
                     mcb_owner.transform.position + Vector3.up * 3f,
                     Vector2.zero,
-                    Vector2.zero);
+                    Vector2.zero,
+                    1.0f);
                 CreateTip(info);
             }
 
             private void CreateTip(UIBattleTipInfo info)
             {
                 UIBattleTip tip = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.UIBattleTip].AllocateGameObject<UIBattleTip>(UIManager.Instance.UI3DRoot);
-                tip.
+                tip.Initialize(info);
             }
 
             private AttackerType GetAttackerType(Mecha attacker, Mecha hitter, BattleTipType battleTipType)
@@ -249,3 +189,4 @@ namespace Client
             }
         }
     }
+}
