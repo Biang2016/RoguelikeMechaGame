@@ -53,5 +53,28 @@ namespace Client
             lastRotationByMouse = transform.rotation;
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * diff.magnitude * 3f);
         }
+
+
+        public bool IsFriend(Mecha mecha)
+        {
+            if (MechaInfo.MechaType == mecha.MechaInfo.MechaType) return true;
+            if (mecha.MechaInfo.MechaType == MechaType.Friend && MechaInfo.MechaType == MechaType.Player) return true;
+            if (MechaInfo.MechaType == MechaType.Friend && mecha.MechaInfo.MechaType == MechaType.Player) return true;
+            return false;
+        }
+
+        public bool IsMainPlayerFriend()
+        {
+            return MechaInfo.MechaType == MechaType.Friend;
+        }
+
+        public bool IsOpponent(Mecha mecha)
+        {
+            if (mecha.MechaInfo.MechaType == MechaType.Player && MechaInfo.MechaType == MechaType.Enemy) return true;
+            if (MechaInfo.MechaType == MechaType.Enemy && mecha.MechaInfo.MechaType == MechaType.Player) return true;
+            if (mecha.MechaInfo.MechaType == MechaType.Friend && MechaInfo.MechaType == MechaType.Enemy) return true;
+            if (MechaInfo.MechaType == MechaType.Enemy && mecha.MechaInfo.MechaType == MechaType.Friend) return true;
+            return false;
+        }
     }
 }

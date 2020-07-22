@@ -6,9 +6,7 @@ namespace GameCore
         ENUM_BattleEvent_MIN = 7001,
 
         Battle_MechaComponentAttackTip,
-        Battle_AddScoreTip,
-        Battle_SkillTip,
-        Battle_CommonTip,
+        Battle_MechaComponentCommonTip,
 
         ENUM_BattleEvent_MAX = 8000,
     }

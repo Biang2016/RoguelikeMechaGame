@@ -1,10 +1,12 @@
 ﻿using BiangStudio.GamePlay.UI;
 using BiangStudio.ObjectPool;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Client
 {
-    public enum EAttackerType
+    public enum AttackerType
     {
         None = 0,
         LocalPlayer = 1,
@@ -14,27 +16,100 @@ namespace Client
         NoTip = 100,
     }
 
+    public enum BattleTipType
+    {
+        None = 0,
+        Resist = 1, //抵抗//这个无用的
+        Dodge = 2, //躲闪
+        SequenceAttack = 3, //暴击-
+        Damage = 4, //普通伤害-
+        Rampage = 5, //暴走 //这个无用的-
+        MeleekillScore = 6, //近身击杀得分//这个无用的-
+        MpTip = 7, //得到能量//这个无用的-
+        AddHp = 8, //加血 //这个无用的-
+
+        AddLife = 9, //生命 +/- xxx
+        Stun = 10, //晕眩
+        Shield = 11, //护盾
+        Hiding = 12, //隐身
+        SpeedUp = 13, //加速
+        SlowDown = 14, //减速
+        Defense = 15, //防御 +/- xxx
+        Attack = 16, //攻击 +/- xxx
+        Invincible = 17, //无敌
+        Frozen = 18, // 冰冻
+        Poison = 19, //中毒
+        Firing = 20, //灼烧
+        SecKill = 21, //秒杀----
+        Bullet = 22, //弹药 +/- xxx
+        ExtraDamage = 24, //额外伤害 +/- xxx
+        PickWeapon = 25,
+        Parry = 26, //格挡
+
+        RaceDamage = 27, //种族伤害, 加深伤害
+
+        GetBuff = 28, //获得Buff
+        GetBestBuff = 29, //获得强力BUFF
+        UpLevel = 31, //升级，大幅提升武器伤害
+
+        InvincibleSpirit = 32, //不屈意志！
+        Overloading = 33, //超载！
+        AirAttack = 34, //空袭！
+        BoomShield = 35, //防护盾！
+        Thud = 36, //震击
+        Quickness = 37, //急速
+        WarmBlood = 38, //热血
+        NerveGas = 39, //神经毒气
+        Sober = 40, //清醒
+        Discipline = 41, //惩戒
+        EleInterference = 42, //电磁干扰
+        FastHatch = 43, //快速填充
+        LevelIncrease = 44, //等级提升
+        LeaderAppeared = 45, //首领现身
+        LeaderKilled = 46, //首领已被击杀
+        WeaponOutbreak = 47, //武器爆发
+        BeFound = 48, //被发现, 【通用机制】被敌兵发现时增加飘字“被发现”
+        MpDamage = 49, //【通用机制】MP盾特殊飘字 MP伤害
+
+        ParticalCannon = 51, //粒子炮
+        DevilBomb = 52, //恶魔炸弹
+        IonArc = 52, //离子电弧
+        AbsolutenessDomain = 53, //绝对领域
+        UW8AddGold = 56, //【水下8关】【单局】【敌兵掉落】敌兵掉落表现
+        PlaySoul = 57, //播放枪魂
+        ExpNum = 61, // Exp + xx
+
+        NoDamage = 66, //1.10英雄天赋（跨版本）：固定值伤害减伤BUFF storyID:61774891 BUFF持续时间内，每次受到的伤害减少固定值例如1000（伤害最低减少到0），减少到0的时候免疫此次伤害并飘字“免疫”提示玩家
+
+        SafeZone = 75, // 吃鸡毒圈
+
+        NoAttackSeparate = 200,
+        AddScore = 201, //得分
+        SwitchWeapon = 202, //切换武器时飘字
+        GetOverlap = 203, //获取叉乘
+        BulletTimeAttckTip = 204, //子弹时间暴击提示
+        DesignTest = 205,
+
+        ScreenCenterSeparate = 300, //不取挂点，直接获取屏幕中心
+        BulletTimeTip = 301, //子弹时间屏幕中心得示
+        ScreenCenterTest2 = 302,
+        ScreenCenterTest3 = 303,
+
+        FollowDummySeparate = 400, //取挂点，且一直随着挂点移动
+        BulletTimeTutorialTip = 401, //新手引导用的子弹时间
+    }
+
+
     public class UIBattleTip : PoolObject
     {
-        public float disappearTime = 1.5f;
-        float elapseTime = 1.5f;
-        UIBattleTipParam attackParam = new UIBattleTipParam();
+        public float DisappearTime = 1.5f;
+        private float disappearTick = 0;
+        UIBattleTipInfo UIBattleTipInfo ;
 
-        public SpriteText3D spriteIcon;
-        public SpriteText3D spriteTextType;
-        public SpriteText3D spriteTextContext;
-        public SpriteText3D spriteTextElementContext;
-
-        public SpriteText3D spriteWhiteIcon;
-        public SpriteText3D spriteWhiteTextType;
-        public SpriteText3D spriteWhiteTextContext;
-        public SpriteText3D spriteWhiteTextElementContext;
-
-        public Sprite3D spriteImage;
-
-        public SpriteText3D[] needPlayAni;
-        public Sprite3D[] needSpritePlayAni;
-
+        public Image spriteIcon;
+        public TextMeshProUGUI spriteTextType;
+        public TextMeshProUGUI spriteTextContext;
+        public Image spriteTextElementContext;
 
         public Animator animator;
 
@@ -43,41 +118,14 @@ namespace Client
         protected Vector3 typeLocalPos = Vector3.zero;
         protected Vector3 iconLocalPos = Vector3.zero;
 
-
         protected Color color = new Color();
         protected Vector3 offsetPos = new Vector3();
         protected Vector3 scale = new Vector3();
 
-        protected UIBattleTipManager UIBattleTipManager;
-
-        Transform cacheTrans = null;
-        Camera mainCamera;
-        Camera ui3DCamera;
-
-        Camera GetUI3DCamera
+        public override void PoolRecycle()
         {
-            get
-            {
-                if (ui3DCamera == null)
-                {
-                    ui3DCamera = UIManager.Instance.UICamera;
-                }
-
-                return ui3DCamera;
-            }
-        }
-
-        Camera GetMainCamera
-        {
-            get
-            {
-                if (mainCamera == null)
-                {
-                    mainCamera = CameraManager.Instance.MainCamera;
-                }
-
-                return mainCamera;
-            }
+            base.PoolRecycle();
+            UIBattleTipInfo = null;
         }
 
         void Awake()
@@ -101,49 +149,13 @@ namespace Client
             {
                 iconLocalPos = spriteIcon.transform.localPosition;
             }
-
-            cacheTrans = transform;
         }
 
-        public void Setup(UIBattleTipParam param, UIBattleTipManager battleTipManager)
+        public void Setup(UIBattleTipInfo param, UIBattleTipManager battleTipManager)
         {
-            UIBattleTipManager = battleTipManager;
-
             param.CopyData(attackParam);
-            elapseTime = disappearTime;
+            disappearTick = 0;
             InitTip();
-        }
-
-        bool UpdateSpriteByText(SpriteText3D sprite, string note, ref Vector3 pos, int page = -1, bool chagneClr = true)
-        {
-            bool result = false;
-            if (sprite != null)
-            {
-                if (page >= 0)
-                    sprite.Page = page;
-                if (note != null && note.Length > 0)
-                {
-                    sprite.text = note;
-                    if (chagneClr)
-                    {
-                        sprite.color = color;
-                    }
-                    else
-                    {
-                        sprite.color = Color.white;
-                    }
-
-                    sprite.gameObject.CustomSetActive(true);
-                    sprite.transform.localPosition = pos + offsetPos;
-                    result = true;
-                }
-                else
-                {
-                    sprite.gameObject.CustomSetActive(false);
-                }
-            }
-
-            return result;
         }
 
         void SetContextSprite(SpriteText3D sprite, long diffHP, bool hadType, int page = -1, bool chagneClr = true)
@@ -243,7 +255,7 @@ namespace Client
             }
             else
             {
-                RandomCircle((int) attackParam.cfg.Radius, ref tipInfo.lastOffset);
+                RandomCircle((int) attackParam.cfg.Radius, ref tipInfo.LastOffset);
                 tipInfo.SetInfo(tipInfo.ident, tipInfo.attackType, ref offsetPos);
             }
         }
@@ -279,7 +291,7 @@ namespace Client
                 //transform.localPosition = attackParam.startPos;
 
                 int page = (int) attackParam.cfg.PageNum;
-                bool changeClr = attackParam.acttackerType != (uint) EAttackerType.LocalPlayer;
+                bool changeClr = attackParam.acttackerType != (uint) AttackerType.LocalPlayer;
 
                 bool hadType = UpdateSpriteByText(spriteTextType, attackParam.cfg.Note, ref typeLocalPos, page, changeClr);
 
@@ -375,7 +387,7 @@ namespace Client
             return false;
         }
 
-        public bool IsEqualParam(UIBattleTipParam param)
+        public bool IsEqualParam(UIBattleTipInfo param)
         {
             if (param == null)
                 return false;
