@@ -104,10 +104,10 @@ namespace Client
         private float disappearTick = 0;
         UIBattleTipInfo UIBattleTipInfo;
 
-        public Image spriteIcon;
-        public TextMeshProUGUI spriteTextType;
-        public TextMeshProUGUI spriteTextContext;
-        public Image spriteTextElementContext;
+        public Image Icon;
+        public TextMeshProUGUI TextType;
+        public TextMeshProUGUI TextContext;
+        public TextMeshProUGUI TextElementContext;
 
         public Animator animator;
 
@@ -127,24 +127,24 @@ namespace Client
 
         void Awake()
         {
-            if (spriteTextContext != null)
+            if (TextContext != null)
             {
-                contextLocalPos = spriteTextContext.transform.localPosition;
+                contextLocalPos = TextContext.transform.localPosition;
             }
 
-            if (spriteTextElementContext != null)
+            if (TextElementContext != null)
             {
-                contextElementLocalPos = spriteTextElementContext.transform.localPosition;
+                contextElementLocalPos = TextElementContext.transform.localPosition;
             }
 
-            if (spriteTextType != null)
+            if (TextType != null)
             {
-                typeLocalPos = spriteTextType.transform.localPosition;
+                typeLocalPos = TextType.transform.localPosition;
             }
 
-            if (spriteIcon != null)
+            if (Icon != null)
             {
-                iconLocalPos = spriteIcon.transform.localPosition;
+                iconLocalPos = Icon.transform.localPosition;
             }
         }
 
@@ -154,141 +154,58 @@ namespace Client
             disappearTick = 0;
 
             float scaleVal = info.Scale;
-            transform.localScale.Set(scaleVal, scaleVal, scaleVal); 
-        
+            transform.localScale.Set(scaleVal, scaleVal, scaleVal);
+
             if (info.RandomRange.magnitude > 0)
             {
                 RandomPos();
             }
 
-            UpdatePos();
-            //transform.localPosition = attackParam.startPos;
+            PosTransformToScreen();
 
-            int page = (int) attackParam.cfg.PageNum;
-            bool changeClr = attackParam.acttackerType != (uint) AttackerType.LocalPlayer;
+            bool changeColor = info.AttackerType != AttackerType.LocalPlayer;
 
-            bool hadType = UpdateSpriteByText(spriteTextType, attackParam.cfg.Note, ref typeLocalPos, page, changeClr);
-
-            //if (attackParam.cfg.Note != "A" && attackParam.cfg.Note != "B" && attackParam.cfg.Note != "C")
-            UpdateSpriteByText(spriteIcon, attackParam.cfg.PreNote, ref iconLocalPos, page, changeClr);
-
-            SetContextSprite(spriteTextContext, attackParam.diffHP, hadType, page, changeClr);
-            SetContextElementSprite(spriteTextElementContext, attackParam.elementHP, hadType, page, changeClr);
-
-            UpdateSpriteByText(spriteWhiteTextType, attackParam.cfg.Note, ref typeLocalPos);
-
-            //if (attackParam.cfg.Note != "A" && attackParam.cfg.Note != "B" && attackParam.cfg.Note != "C")
-            UpdateSpriteByText(spriteWhiteIcon, attackParam.cfg.PreNote, ref iconLocalPos);
-
-            SetContextSprite(spriteWhiteTextContext, attackParam.diffHP, hadType);
-            SetContextElementSprite(spriteWhiteTextElementContext, attackParam.elementHP, hadType);
-
-            ResetspriteImageIcon();
-
-            PlayAnim();
+            SetContextSprite(TextContext, info.DiffHP, changeColor);
+            SetContextElementSprite(TextElementContext, info.ElementHP, changeColor);
         }
 
-        void SetContextSprite(SpriteText3D sprite, long diffHP, bool hadType, int page = -1, bool chagneClr = true)
+        private void SetContextSprite(TextMeshProUGUI text, long diffHP, bool changeColor = true)
         {
-            if (sprite != null)
-            {
-                if (page >= 0)
-                    sprite.Page = page;
-                sprite.text = diffHP.ToString();
-
-                if (chagneClr)
-                {
-                    sprite.color = color;
-                }
-                else
-                {
-                    sprite.color = Color.white;
-                }
-
-                //spriteTextContext.transform.localPosition = (hadType ? typeLocalPos : contextLocalPos) + offsetPos;
-                var pos = (hadType ? contextLocalPos : typeLocalPos) + offsetPos;
-                sprite.transform.SetLocalPosition(pos.x, pos.y, pos.z);
-            }
+            text.text = diffHP.ToString();
+            text.color = changeColor ? color : Color.white;
+            text.transform.localPosition = contextLocalPos + offsetPos;
         }
 
-        void SetContextElementSprite(SpriteText3D sprite, long diffHP, bool hadType, int page = -1, bool chagneClr = true)
+        private void SetContextElementSprite(TextMeshProUGUI text, long diffHP, bool changeColor = true)
         {
-            if (sprite != null)
+            if (diffHP == 0)
             {
-                if (page >= 0)
-                    sprite.Page = page;
-                if (diffHP == 0)
-                {
-                    sprite.gameObject.CustomSetActive(false);
-                }
-                else
-                {
-                    sprite.gameObject.CustomSetActive(true);
-                    sprite.text = diffHP.ToString();
-                }
-
-                if (chagneClr)
-                {
-                    sprite.color = color;
-                }
-                else
-                {
-                    sprite.color = Color.white;
-                }
-
-                var pos = (hadType ? contextElementLocalPos : typeLocalPos) + offsetPos;
-                sprite.transform.SetLocalPosition(pos.x, pos.y, pos.z);
+                text.gameObject.SetActive(false);
             }
+            else
+            {
+                text.gameObject.SetActive(true);
+                text.text = diffHP.ToString();
+            }
+
+            text.color = changeColor ? color : Color.white;
+            text.transform.localPosition = contextElementLocalPos + offsetPos;
         }
 
-        int RandomSquare(int val)
+        private int RandomSquare(int val)
         {
             return Random.Range(-val, val);
         }
 
-        void RandomCircle(int radius, ref Vector3 lastOffset)
+        private void RandomPos()
         {
-            float quadRadius = attackParam.cfg.SquareX * 0.001f;
-            float square = quadRadius;
-            for (int i = 0; i < 100; ++i)
-            {
-                int val = Random.Range(-radius, radius);
-                float diffX = lastOffset.x + val * 0.001f;
-                if (diffX < offsetPos.x + square && diffX > offsetPos.x - square)
-                {
-                    float diffY = lastOffset.y + val * 0.001f;
-                    if (diffY < offsetPos.y + square && diffY > offsetPos.y - square)
-                    {
-                        offsetPos.x = lastOffset.x + val * 0.001f;
-                        offsetPos.y = lastOffset.y + val * 0.001f;
-                        //Logger.Log("tip:RandomCircle:" + offsetPos.ToString());
-                        return;
-                    }
-                }
-            }
-
-            offsetPos = lastOffset;
+            int offset = RandomSquare((int) attackParam.cfg.SquareX);
+            offsetPos.x += offset * 0.001f;
+            offsetPos.y += offset * 0.001f;
+            UIBattleTipInfo.UIBattleTipManager.AddTipInfo(attackParam.hitIdent, attackParam.attackType, ref offsetPos);
         }
 
-        void RandomPos()
-        {
-            TipInfo tipInfo = UIBattleTipInfo.UIBattleTipManager.GetTipInfo(attackParam.hitIdent, attackParam.attackType);
-            if (tipInfo == null)
-            {
-                int offset = RandomSquare((int) attackParam.cfg.SquareX);
-                offsetPos.x += offset * 0.001f;
-                offsetPos.y += offset * 0.001f;
-                //Logger.Log("tip:RandomSquare:" + offsetPos.ToString());
-                UIBattleTipInfo.UIBattleTipManager.AddTipInfo(attackParam.hitIdent, attackParam.attackType, ref offsetPos);
-            }
-            else
-            {
-                RandomCircle((int) attackParam.cfg.Radius, ref tipInfo.LastOffset);
-                tipInfo.SetInfo(tipInfo.ident, tipInfo.attackType, ref offsetPos);
-            }
-        }
-
-        void UpdatePos()
+        private void PosTransformToScreen()
         {
             if (CameraManager.Instance.MainCamera != null && UIManager.Instance.UICamera != null)
             {
