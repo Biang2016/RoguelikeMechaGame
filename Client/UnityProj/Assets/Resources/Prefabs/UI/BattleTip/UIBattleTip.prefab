@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5823464011768448823}
   - component: {fileID: 3702113063057688936}
   - component: {fileID: 119160362679774155}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Label3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 513
+  m_textAlignment: 516
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 7802783907955531883}
   - component: {fileID: 8215019982717526596}
   - component: {fileID: 1190339801179915389}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Label1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,8 +421,8 @@ GameObject:
   - component: {fileID: 3185480781134291812}
   - component: {fileID: 4615280859108185761}
   - component: {fileID: 1021943772368765113}
-  m_Layer: 26
-  m_Name: SelfAttackNumberTips
+  m_Layer: 18
+  m_Name: UIBattleTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -537,10 +537,10 @@ MonoBehaviour:
     maxOffsetY: 5
   ColorDuringLife:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 1, g: 1, b: 1, a: 0}
+    key1: {r: 1, g: 0, b: 0, a: 0.90671635}
+    key2: {r: 0, g: 0, b: 0, a: 0.9720149}
+    key3: {r: 0, g: 0, b: 0, a: 1}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
@@ -554,16 +554,16 @@ MonoBehaviour:
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
+    atime1: 10148
+    atime2: 63701
+    atime3: 65535
     atime4: 0
     atime5: 0
     atime6: 0
     atime7: 0
     m_Mode: 0
     m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
+    m_NumAlphaKeys: 4
 --- !u!1 &1021943772382702522
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 5420435667774771923}
   - component: {fileID: 806819482264197796}
   - component: {fileID: 6885033576240617639}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Label2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 513
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -778,7 +778,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1021943773225309682}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}

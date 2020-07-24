@@ -63,6 +63,7 @@ namespace Client
         public Messenger BattleMessenger => ClientBattleManager.BattleInfo.BattleMessenger;
 
         private FXManager FXManager => FXManager.Instance;
+        private UIBattleTipManager UIBattleTipManager => UIBattleTipManager.Instance;
         private ProjectileManager ProjectileManager => ProjectileManager.Instance;
         private ClientProjectileManager ClientProjectileManager => ClientProjectileManager.Instance;
 
@@ -284,15 +285,17 @@ namespace Client
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
             ClientBattleManager.Instance.StartBattle(battleInfo);
+            UIBattleTipManager.Init();
+
             battleInfo.SetPlayerMecha(playerMechaInfo);
             playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 300, 0), new GridPosR(9, 9));
             battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
-            for (int i = -5; i <= 5; i++)
+            for (int i = -2; i <= 2; i++)
             {
-                for (int j = -8; j <= 8; j++)
+                for (int j = -4; j <= 4; j++)
                 {
                     MechaComponentInfo mci;
-                    mci = new MechaComponentInfo(MechaComponentType.Core, new GamePlayAbilityGroup(), 500, 0);
+                    mci = new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 500, 0);
                     enemyMechaInfo.AddMechaComponentInfo(mci, new GridPosR(i, j, GridPosR.Orientation.Up));
                 }
             }
@@ -300,6 +303,11 @@ namespace Client
             ClientBattleManager.MechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
 
             ClientLevelManager.Instance.StartLevel();
+        }
+
+        private void ShutDownGame()
+        {
+            UIBattleTipManager.Instance.ShutDown();
         }
 
         // todo 做成AI原子

@@ -1,5 +1,6 @@
 ﻿using BiangStudio.GameDataFormat;
 using BiangStudio.ObjectPool;
+using FlowCanvas.Nodes;
 using GameCore;
 using GameCore.AbilityDataDriven;
 using UnityEngine;
@@ -119,7 +120,12 @@ namespace Client
                 ContactPoint contact = collision.contacts[0];
                 FlyRealtimeData.HitCollider = collision.collider;
                 MechaComponentBase mcb = collision.collider.GetComponentInParent<MechaComponentBase>();
-                if (mcb && !ProjectileInfo.ProjectileConfig.IsCollideWithOwner && mcb.MechaInfo == ProjectileInfo.ParentMechaInfo)
+                if (mcb)
+                {
+                    FlyRealtimeData.HitMechaComponentInfo = mcb.MechaComponentInfo;
+                }
+
+                if (mcb && !ProjectileInfo.ProjectileConfig.IsCollideWithOwner && mcb.MechaInfo == ProjectileInfo.ParentExecuteInfo.MechaInfo)
                 {
                     return;
                 }
@@ -133,13 +139,16 @@ namespace Client
                     Rigidbody.velocity = FlyRealtimeData.Velocity_Global;
                     FlyRealtimeData.Velocity_Local = transform.InverseTransformVector(FlyRealtimeData.Velocity_Global);
 
-                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitUnit, FlyRealtimeData, ProjectileInfo.ParentMechaInfo, ProjectileInfo.ParentMechaComponentInfo);
+                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitUnit, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
                     ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
                     if (FlyRealtimeData.RemainCollideTimes <= 0)
                     {
                         PoolRecycle();
                     }
                 }
+
+                FlyRealtimeData.HitMechaComponentInfo = null;
+                FlyRealtimeData.HitCollider = null;
             }
         }
 

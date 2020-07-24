@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using BiangStudio.CloneVariant;
+using BiangStudio.Messenger;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -13,6 +14,13 @@ namespace GameCore.AbilityDataDriven
         public GamePlayAbility Ability;
         public MechaInfo MechaInfo;
         public MechaComponentInfo MechaComponentInfo;
+
+        public ExecuteInfo(GamePlayAbility ability, MechaInfo mechaInfo, MechaComponentInfo mechaComponentInfo)
+        {
+            Ability = ability;
+            MechaInfo = mechaInfo;
+            MechaComponentInfo = mechaComponentInfo;
+        }
     }
 
     public abstract class GamePlayAction : IClone<GamePlayAction>
@@ -28,12 +36,18 @@ namespace GameCore.AbilityDataDriven
             return newAction;
         }
 
-        public virtual void Execute(ExecuteInfo executeInfo)
+        protected virtual void ChildClone(GamePlayAction newAction)
         {
         }
 
-        protected virtual void ChildClone(GamePlayAction newAction)
+        public virtual void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, GamePlayAbility parentAbility)
         {
+            messenger.AddListener<ExecuteInfo>((uint) abilityEvent, (executeInfo) =>
+            {
+                if (parentAbility == executeInfo.Ability)
+                {
+                }
+            });
         }
     }
 
@@ -44,11 +58,6 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("技能名称")]
         public string AbilityName;
-
-        public override void Execute(ExecuteInfo executeInfo)
-        {
-            base.Execute(executeInfo);
-        }
 
         protected override void ChildClone(GamePlayAction newAction)
         {
@@ -64,11 +73,6 @@ namespace GameCore.AbilityDataDriven
         public GamePlayActionTarget Target;
 
         public GamePlayAction Action;
-
-        public override void Execute(ExecuteInfo executeInfo)
-        {
-            base.Execute(executeInfo);
-        }
 
         protected override void ChildClone(GamePlayAction newAction)
         {
@@ -86,11 +90,6 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("Modifier名称")]
         public string ModifierName;
-
-        public override void Execute(ExecuteInfo executeInfo)
-        {
-            base.Execute(executeInfo);
-        }
 
         protected override void ChildClone(GamePlayAction newAction)
         {
@@ -144,11 +143,21 @@ namespace GameCore.AbilityDataDriven
             return ConfigManager.ProjectileConfigDict.Keys;
         }
 
-        public override void Execute(ExecuteInfo executeInfo)
+        public override void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, GamePlayAbility parentAbility)
         {
-            base.Execute(executeInfo);
+            messenger.AddListener<ExecuteInfo>((uint) abilityEvent, (executeInfo) =>
+            {
+                if (parentAbility == executeInfo.Ability)
+                {
+                    Execute(executeInfo);
+                }
+            });
+        }
+
+        public void Execute(ExecuteInfo executeInfo)
+        {
             OnHit += flyRealTimeData => { };
-            ProjectileInfo pi = new ProjectileInfo(this, executeInfo.MechaComponentInfo, executeInfo.MechaInfo, null, Vector3.zero);
+            ProjectileInfo pi = new ProjectileInfo(this, executeInfo, null, Vector3.zero);
             ProjectileManager.Instance.EmitProjectileHandler(pi);
         }
 
@@ -176,17 +185,27 @@ namespace GameCore.AbilityDataDriven
         [LabelText("伤害量")]
         public int Damage;
 
-        public override void Execute(ExecuteInfo executeInfo)
-        {
-            base.Execute(executeInfo);
-        }
-
         protected override void ChildClone(GamePlayAction newAction)
         {
             base.ChildClone(newAction);
             Action_DealDamage action = ((Action_DealDamage) newAction);
             action.Target = Target.Clone();
             action.Damage = Damage;
+        }
+
+        public override void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, GamePlayAbility parentAbility)
+        {
+            messenger.AddListener<ExecuteInfo, ProjectileInfo.FlyRealtimeData>((uint) abilityEvent, (executeInfo, flyRealTimeData) =>
+            {
+                if (parentAbility == executeInfo.Ability)
+                {
+                    if (flyRealTimeData.HitMechaComponentInfo != null)
+                    {
+                        flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, Damage);
+                        Debug.Log("Dealt damage: " + Damage);
+                    }
+                }
+            });
         }
     }
 }

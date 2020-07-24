@@ -114,40 +114,52 @@ namespace Client
         public AnimCurve3D AnimCurve3D;
         public Gradient ColorDuringLife;
 
-        protected Vector3 iconLocalPos = Vector3.zero;
-        protected Vector3 typeLocalPos = Vector3.zero;
-        protected Vector3 contextLocalPos = Vector3.zero;
-        protected Vector3 contextElementLocalPos = Vector3.zero;
+        protected Vector3 default_IconLocalPos = Vector3.zero;
+        protected Vector3 default_TextTypeLocalPos = Vector3.zero;
+        protected Vector3 default_TextContextLocalPos = Vector3.zero;
+        protected Vector3 default_TextElementContextLocalPos = Vector3.zero;
 
         protected Vector3 offsetPos = new Vector3();
 
         public override void PoolRecycle()
         {
+            Reset();
             base.PoolRecycle();
-            UIBattleTipInfo = null;
         }
 
         void Awake()
         {
-            if (TextContent != null)
-            {
-                contextLocalPos = TextContent.transform.localPosition;
-            }
+            if (TextType) default_TextTypeLocalPos = TextType.transform.localPosition;
+            if (TextContent) default_TextContextLocalPos = TextContent.transform.localPosition;
+            if (TextElementContent) default_TextElementContextLocalPos = TextElementContent.transform.localPosition;
+            if (Icon) default_IconLocalPos = Icon.transform.localPosition;
+        }
 
-            if (TextElementContent != null)
+        void Update()
+        {
+            if (!IsRecycled)
             {
-                contextElementLocalPos = TextElementContent.transform.localPosition;
+                disappearTick += Time.deltaTime;
+                if (disappearTick > UIBattleTipInfo.DisappearTime)
+                {
+                    PoolRecycle();
+                }
+                else
+                {
+                    RefreshColor(disappearTick / UIBattleTipInfo.DisappearTime);
+                }
             }
+        }
 
-            if (TextType != null)
-            {
-                typeLocalPos = TextType.transform.localPosition;
-            }
-
-            if (Icon != null)
-            {
-                iconLocalPos = Icon.transform.localPosition;
-            }
+        private void Reset()
+        {
+            Animator.speed = 1;
+            UIBattleTipInfo = null;
+            disappearTick = 0;
+            if (TextType) TextType.transform.localPosition = default_TextTypeLocalPos;
+            if (TextContent) TextContent.transform.localPosition = default_TextContextLocalPos;
+            if (TextElementContent) TextElementContent.transform.localPosition = default_TextElementContextLocalPos;
+            if (Icon) Icon.transform.localPosition = default_IconLocalPos;
         }
 
         public void Initialize(UIBattleTipInfo info)
@@ -155,30 +167,41 @@ namespace Client
             UIBattleTipInfo = info;
             disappearTick = 0;
 
-            float scaleVal = info.Scale;
-            transform.localScale.Set(scaleVal, scaleVal, scaleVal);
+            transform.localScale = Vector3.one * info.Scale;
 
             if (info.RandomRange.magnitude > 0)
             {
-                RandomPos();
+                offsetPos.x += Random.Range(-UIBattleTipInfo.RandomRange.x, UIBattleTipInfo.RandomRange.x);
+                offsetPos.y += Random.Range(-UIBattleTipInfo.RandomRange.y, UIBattleTipInfo.RandomRange.y);
             }
 
-            PosTransformToScreen();
+            transform.localPosition = UIBattleTipInfo.StartPos;
+            transform.rotation = Quaternion.LookRotation(transform.position - CameraManager.Instance.MainCamera.transform.position);
 
-            bool changeColor = info.AttackerType != AttackerType.LocalPlayer;
+            SetTextType(TextType);
+            SetTextContext(TextContent, info.DiffHP);
+            SetElementTextContext(TextElementContent, info.ElementHP);
 
-            SetContextSprite(TextContent, info.DiffHP, changeColor);
-            SetContextElementSprite(TextElementContent, info.ElementHP);
+            Animator.SetTrigger("Play");
+            float duration_ori = ClientUtils.GetClipLength(Animator, "AttackNumberTip");
+            Animator.speed = Animator.speed * duration_ori / info.DisappearTime;
         }
 
-        private void SetContextSprite(TextMeshPro text, long diffHP, bool changeColor = true)
+        private void SetTextType(TextMeshPro text)
+        {
+            text.text = "";
+            text.color = ColorDuringLife.Evaluate(0);
+            text.transform.localPosition = default_TextContextLocalPos + offsetPos;
+        }
+
+        private void SetTextContext(TextMeshPro text, long diffHP)
         {
             text.text = diffHP.ToString();
-            text.color = changeColor ? ColorDuringLife.Evaluate(0) : Color.white;
-            text.transform.localPosition = contextLocalPos + offsetPos;
+            text.color = ColorDuringLife.Evaluate(0);
+            text.transform.localPosition = default_TextContextLocalPos + offsetPos;
         }
 
-        private void SetContextElementSprite(TextMeshPro text, long diffHP)
+        private void SetElementTextContext(TextMeshPro text, long diffHP)
         {
             if (diffHP == 0)
             {
@@ -191,29 +214,24 @@ namespace Client
             }
 
             text.color = ColorDuringLife.Evaluate(0);
-            text.transform.localPosition = contextElementLocalPos + offsetPos;
+            text.transform.localPosition = default_TextElementContextLocalPos + offsetPos;
         }
 
-        private void RandomPos()
+        private void RefreshColor(float timePortion)
         {
-            offsetPos.x += Random.Range(-UIBattleTipInfo.RandomRange.x, UIBattleTipInfo.RandomRange.x) * 0.001f;
-            offsetPos.y += Random.Range(-UIBattleTipInfo.RandomRange.y, UIBattleTipInfo.RandomRange.y) * 0.001f;
-            // UIBattleTipInfo.UIBattleTipManager.AddTipInfo(attackParam.hitIdent, attackParam.attackType, ref offsetPos);
-        }
-
-        private void PosTransformToScreen()
-        {
-            if (CameraManager.Instance.MainCamera != null && UIManager.Instance.UICamera != null)
+            if (TextType)
             {
-                if (UIBattleTipInfo != null && !UIBattleTipInfo.InScreenCenter)
-                {
-                    Vector3 pos = CameraManager.Instance.MainCamera.WorldToScreenPoint(UIBattleTipInfo.StartPos);
-                    transform.localPosition = UIManager.Instance.UICamera.ScreenToWorldPoint(pos);
-                }
-                else
-                {
-                    transform.localPosition = Vector3.zero;
-                }
+                TextType.color = ColorDuringLife.Evaluate(timePortion);
+            }
+
+            if (TextContent)
+            {
+                TextContent.color = ColorDuringLife.Evaluate(timePortion);
+            }
+
+            if (TextElementContent)
+            {
+                TextElementContent.color = ColorDuringLife.Evaluate(timePortion);
             }
         }
     }

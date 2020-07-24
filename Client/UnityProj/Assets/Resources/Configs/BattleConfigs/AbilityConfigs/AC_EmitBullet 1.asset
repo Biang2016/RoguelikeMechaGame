@@ -70,7 +70,7 @@ MonoBehaviour:
       Data: 3|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
-      Data: 1
+      Data: 5002
     - Name: Actions
       Entry: 7
       Data: 4|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
@@ -101,7 +101,7 @@ MonoBehaviour:
       Data: 6|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
-      Data: 16
+      Data: 5017
     - Name: Actions
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,

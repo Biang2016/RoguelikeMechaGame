@@ -9,22 +9,19 @@ namespace GameCore
     public class ProjectileInfo
     {
         public Action_EmitProjectile ParentAction;
-        public MechaComponentInfo ParentMechaComponentInfo;
-        public MechaInfo ParentMechaInfo;
+        public ExecuteInfo ParentExecuteInfo;
 
         public Transform ChasingTarget;
         public Vector3 ChasingPosition;
 
-        public MechaType MechaType => ParentMechaInfo.MechaType;
+        public MechaType MechaType => ParentExecuteInfo.MechaInfo.MechaType;
         public ProjectileConfig ProjectileConfig => ParentAction.ProjectileConfig;
         public ProjectileType ProjectileType => ProjectileConfig.ProjectileType;
 
-        public ProjectileInfo(Action_EmitProjectile parentAction, MechaComponentInfo parentMechaComponentInfo, MechaInfo parentMechaInfo,
-            Transform chasingTarget, Vector3 chasingPosition)
+        public ProjectileInfo(Action_EmitProjectile parentAction, ExecuteInfo executeInfo, Transform chasingTarget, Vector3 chasingPosition)
         {
             ParentAction = parentAction;
-            ParentMechaComponentInfo = parentMechaComponentInfo;
-            ParentMechaInfo = parentMechaInfo;
+            ParentExecuteInfo = executeInfo;
             ChasingTarget = chasingTarget;
             ChasingPosition = chasingPosition;
         }
@@ -37,8 +34,11 @@ namespace GameCore
             public Vector3 Velocity_Local;
             public Vector3 Velocity_Global;
             public Vector3 Accelerate;
-            public Collider HitCollider;
             public int RemainCollideTimes;
+
+            // Need to release
+            public Collider HitCollider;
+            public MechaComponentInfo HitMechaComponentInfo;
         }
     }
 

@@ -64,13 +64,13 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 3|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
-      Data: 1
+      Data: 5002
     - Name: Actions
       Entry: 7
       Data: 4|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
@@ -84,6 +84,46 @@ MonoBehaviour:
     - Name: ProjectileName
       Entry: 1
       Data: PurpleSmoke
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
+    - Name: EventType
+      Entry: 3
+      Data: 5017
+    - Name: Actions
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
+        GameCore]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 8|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
+    - Name: Target
+      Entry: 7
+      Data: 9|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
+    - Name: Target
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Damage
+      Entry: 3
+      Data: 10
     - Name: 
       Entry: 8
       Data: 

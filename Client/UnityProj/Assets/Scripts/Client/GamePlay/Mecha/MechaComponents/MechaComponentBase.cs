@@ -55,6 +55,7 @@ namespace Client
         {
             MechaComponentGridRoot.SetIsolatedIndicatorShown(true);
             MechaComponentGridRoot.SetInBattle(false);
+            MechaComponentInfo?.Reset();
             MechaComponentInfo = null;
             Mecha = null;
             isReturningToBackpack = false;
@@ -94,7 +95,6 @@ namespace Client
 
         private void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
-            mechaComponentInfo.OnDied = PoolRecycle;
             mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) =>
             {
                 OnRemoveMechaComponentBaseSuc?.Invoke(this);

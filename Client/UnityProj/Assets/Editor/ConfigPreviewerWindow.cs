@@ -10,16 +10,17 @@ public class ConfigPreviewerWindow : OdinEditorWindow
     [MenuItem("面板/配置浏览器")]
     private static void OpenConfigPreviewWindow()
     {
+        EditorUtility.DisplayProgressBar("配置","序列化技能配置",0.5f);
+
+        ConfigManager.ExportAbilityConfigs();
+
+        EditorUtility.DisplayProgressBar("配置","加载技能配置",0.7f);
+
         ConfigManager.LoadAllAbilityConfigs();
+
         InspectObject(ConfigManager.Instance);
+
+        EditorUtility.DisplayProgressBar("配置","完毕",1f);
+        EditorUtility.ClearProgressBar();
     }
-
-    //[ShowInInspector]
-    //private static Dictionary<string, Ability> AbilityConfigDict => ConfigManager.AbilityConfigDict;
-
-    //[ShowInInspector]
-    //private static Dictionary<string, AbilityGroup> AbilityGroupConfigDict => ConfigManager.AbilityGroupConfigDict;
-
-    //[ShowInInspector]
-    //private static Dictionary<string, ProjectileConfig> ProjectileConfigDict => ConfigManager.ProjectileConfigDict;
 }

@@ -25,6 +25,8 @@ namespace GameCore
 
         public MechaComponentType MechaComponentType;
 
+        public MechaInfo MechaInfo;
+
         [ReadOnly]
         [ShowInInspector]
         [DisableInEditorMode]
@@ -54,6 +56,14 @@ namespace GameCore
             {
                 originalOccupiedGridPositions = ops.Clone();
             }
+        }
+
+        public void Reset()
+        {
+            OnDied = null;
+            OnDamaged = null;
+            OnLifeChange = null;
+            OnRemoveMechaComponentInfoSuc = null;
         }
 
         public MechaComponentInfo Clone()
@@ -121,12 +131,12 @@ namespace GameCore
             return M_LeftLife > 0;
         }
 
-        public UnityAction<int> OnDamaged;
+        public UnityAction<MechaComponentInfo, int> OnDamaged;
 
-        public void Damage(int damage)
+        public void Damage(MechaComponentInfo attacker, int damage)
         {
             M_LeftLife -= damage;
-            OnDamaged?.Invoke(damage);
+            OnDamaged?.Invoke(attacker, damage);
 
             if (!IsDead && !CheckAlive())
             {

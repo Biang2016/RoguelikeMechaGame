@@ -30,7 +30,7 @@ namespace Client
 
         public void EmitProjectile(ProjectileInfo projectileInfo)
         {
-            Transform dummyPos = ClientBattleManager.Instance.FindMechaComponentBase(projectileInfo.ParentMechaComponentInfo.GUID).DummyPosDict[projectileInfo.ProjectileConfig.DummyPos];
+            Transform dummyPos = ClientBattleManager.Instance.FindMechaComponentBase(projectileInfo.ParentExecuteInfo.MechaComponentInfo.GUID).DummyPosDict[projectileInfo.ProjectileConfig.DummyPos];
             ShootProjectile(projectileInfo, dummyPos.position, dummyPos.forward);
         }
 

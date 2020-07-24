@@ -34,6 +34,8 @@ namespace Client
 
         private void Initialize_Fighting()
         {
+            MechaComponentInfo.OnDamaged += OnDamaged;
+
             foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
                 ability.cooldownTicker = 0;
@@ -48,13 +50,7 @@ namespace Client
                 {
                     foreach (GamePlayAction action in kv.Value.Actions)
                     {
-                        ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) kv.Key, (executeInfo) =>
-                        {
-                            if (ability == executeInfo.Ability)
-                            {
-                                action.Execute(executeInfo);
-                            }
-                        });
+                        action.OnRegisterEvent(ClientGameManager.Instance.BattleMessenger, kv.Key, ability);
                     }
                 }
             }
@@ -90,5 +86,10 @@ namespace Client
             }
         }
 
+        private void OnDamaged(MechaComponentInfo attacker, int damage)
+        {
+            ClientGameManager.Instance.BattleMessenger.Broadcast<AttackData>((uint) ENUM_BattleEvent.Battle_MechaComponentAttackTip,
+                new AttackData(attacker, this, damage, BattleTipType.Attack, 0, 0));
+        }
     }
 }

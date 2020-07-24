@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6724133993214674224}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,8 +42,8 @@ GameObject:
   - component: {fileID: 5443032736767425112}
   - component: {fileID: 6572016973481083784}
   - component: {fileID: 5595879655124276270}
-  m_Layer: 26
-  m_Name: AttributeTips
+  m_Layer: 18
+  m_Name: SelfAttributeTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,10 +158,10 @@ MonoBehaviour:
     maxOffsetY: 5
   ColorDuringLife:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 0, b: 0, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 1, g: 1, b: 1, a: 0}
+    key1: {r: 1, g: 1, b: 1, a: 0.90671635}
+    key2: {r: 0, g: 0, b: 0, a: 0.9720149}
+    key3: {r: 0, g: 0, b: 0, a: 1}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
@@ -175,16 +175,16 @@ MonoBehaviour:
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
+    atime1: 10148
+    atime2: 63701
+    atime3: 65535
     atime4: 0
     atime5: 0
     atime6: 0
     atime7: 0
     m_Mode: 0
     m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
+    m_NumAlphaKeys: 4
 --- !u!1 &6895459768713955007
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 6781624218761820904}
   - component: {fileID: 6181660770606242882}
   - component: {fileID: 2775319373809711302}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Label2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -51,6 +51,7 @@ namespace GameCore
 
         public void AddMechaComponentInfo(MechaComponentInfo mci, GridPosR gp_matrix)
         {
+            mci.MechaInfo = this;
             mci.OnRemoveMechaComponentInfoSuc += RemoveMechaComponentInfo;
             MechaComponentInfoDict.Add(mci.GUID, mci);
             InventoryItem item = new InventoryItem(mci, MechaEditorInventory, gp_matrix);
@@ -63,6 +64,7 @@ namespace GameCore
 
         private void RemoveMechaComponentInfo(MechaComponentInfo mci)
         {
+            mci.MechaInfo = null;
             MechaEditorInventory.RemoveItem(mci.InventoryItem);
             MechaEditorInventory.RefreshConflictAndIsolation(out List<InventoryItem> _, out List<InventoryItem> isolatedItems);
             if (MechaType == MechaType.Enemy)
@@ -87,6 +89,28 @@ namespace GameCore
         public void RemoveMechaInfo()
         {
             OnRemoveMechaInfoSuc?.Invoke(this);
+        }
+
+        public bool IsFriend(MechaInfo mechaInfo)
+        {
+            if (MechaType == mechaInfo.MechaType) return true;
+            if (mechaInfo.MechaType == MechaType.Friend && MechaType == MechaType.Player) return true;
+            if (MechaType == MechaType.Friend && mechaInfo.MechaType == MechaType.Player) return true;
+            return false;
+        }
+
+        public bool IsMainPlayerFriend()
+        {
+            return MechaType == MechaType.Friend;
+        }
+
+        public bool IsOpponent(MechaInfo mechaInfo)
+        {
+            if (mechaInfo.MechaType == MechaType.Player && MechaType == MechaType.Enemy) return true;
+            if (MechaType == MechaType.Enemy && mechaInfo.MechaType == MechaType.Player) return true;
+            if (mechaInfo.MechaType == MechaType.Friend && MechaType == MechaType.Enemy) return true;
+            if (MechaType == MechaType.Enemy && mechaInfo.MechaType == MechaType.Friend) return true;
+            return false;
         }
 
         #region Life & Power

@@ -36,12 +36,15 @@ namespace GameCore
         public static string ProjectileConfigFolder_Build = Application.streamingAssetsPath + "/" + ProjectileConfigFolder_Relative + "/";
 
         [ShowInInspector]
+        [LabelText("技能配置表")]
         public static readonly Dictionary<string, GamePlayAbility> AbilityConfigDict = new Dictionary<string, GamePlayAbility>();
 
         [ShowInInspector]
+        [LabelText("技能组配置表")]
         public static readonly Dictionary<string, GamePlayAbilityGroup> AbilityGroupConfigDict = new Dictionary<string, GamePlayAbilityGroup>();
 
         [ShowInInspector]
+        [LabelText("投掷物配置表")]
         public static readonly Dictionary<string, ProjectileConfig> ProjectileConfigDict = new Dictionary<string, ProjectileConfig>();
 
         public override void Awake()

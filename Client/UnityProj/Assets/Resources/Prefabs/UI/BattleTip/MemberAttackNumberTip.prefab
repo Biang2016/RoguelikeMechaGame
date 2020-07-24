@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8727333218600682864}
   - component: {fileID: 4964744822062160177}
   - component: {fileID: 7767045433333619751}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Label1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 5091650946127151767}
   - component: {fileID: 6644378175013637330}
   - component: {fileID: 2612467567145456396}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Label2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,7 +419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3526258477053369559}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 1369017333789354753}
   - component: {fileID: 4265674158964797267}
   - component: {fileID: 7199122126479884785}
-  m_Layer: 26
+  m_Layer: 18
   m_Name: Label0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -659,8 +659,8 @@ GameObject:
   - component: {fileID: 1788615494563730400}
   - component: {fileID: 6835651920972902271}
   - component: {fileID: 1122263166}
-  m_Layer: 26
-  m_Name: MemberAttackNumberTips
+  m_Layer: 18
+  m_Name: MemberAttackNumberTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -775,9 +775,9 @@ MonoBehaviour:
     maxOffsetY: 5
   ColorDuringLife:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 1, g: 1, b: 1, a: 0}
+    key1: {r: 1, g: 1, b: 1, a: 0.95708954}
+    key2: {r: 0, g: 0, b: 0, a: 1}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
@@ -792,8 +792,8 @@ MonoBehaviour:
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 65535
-    atime2: 0
+    atime1: 11738
+    atime2: 65535
     atime3: 0
     atime4: 0
     atime5: 0
@@ -801,4 +801,4 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
+    m_NumAlphaKeys: 3
