@@ -105,9 +105,9 @@ namespace Client
         UIBattleTipInfo UIBattleTipInfo;
 
         public Image Icon;
-        public TextMeshProUGUI TextType;
-        public TextMeshProUGUI TextContent;
-        public TextMeshProUGUI TextElementContent;
+        public TextMeshPro TextType;
+        public TextMeshPro TextContent;
+        public TextMeshPro TextElementContent;
 
         public Animator Animator;
 
@@ -168,17 +168,17 @@ namespace Client
             bool changeColor = info.AttackerType != AttackerType.LocalPlayer;
 
             SetContextSprite(TextContent, info.DiffHP, changeColor);
-            SetContextElementSprite(TextElementContent, info.ElementHP, changeColor);
+            SetContextElementSprite(TextElementContent, info.ElementHP);
         }
 
-        private void SetContextSprite(TextMeshProUGUI text, long diffHP, bool changeColor = true)
+        private void SetContextSprite(TextMeshPro text, long diffHP, bool changeColor = true)
         {
             text.text = diffHP.ToString();
             text.color = changeColor ? ColorDuringLife.Evaluate(0) : Color.white;
             text.transform.localPosition = contextLocalPos + offsetPos;
         }
 
-        private void SetContextElementSprite(TextMeshProUGUI text, long diffHP, bool changeColor = true)
+        private void SetContextElementSprite(TextMeshPro text, long diffHP)
         {
             if (diffHP == 0)
             {
@@ -190,7 +190,7 @@ namespace Client
                 text.text = diffHP.ToString();
             }
 
-            text.color = changeColor ? color : Color.white;
+            text.color = ColorDuringLife.Evaluate(0);
             text.transform.localPosition = contextElementLocalPos + offsetPos;
         }
 
