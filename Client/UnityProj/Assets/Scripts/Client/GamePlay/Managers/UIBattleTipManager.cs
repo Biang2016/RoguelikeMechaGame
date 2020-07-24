@@ -76,16 +76,6 @@ namespace Client
                 Messenger.RemoveListener<uint, BattleTipType>((uint) ENUM_BattleEvent.Battle_MechaComponentCommonTip, HandleCommonTip);
             }
 
-            private ulong GetHitActorID(MechaComponentBase hitter)
-            {
-                if (hitter != null)
-                {
-                    return hitter.MechaComponentInfo.GUID;
-                }
-
-                return 0;
-            }
-
             private void HandleAttackTip(AttackData attackData)
             {
                 UIBattleTipInfo info = new UIBattleTipInfo(

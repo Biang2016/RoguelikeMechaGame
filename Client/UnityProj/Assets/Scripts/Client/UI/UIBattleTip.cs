@@ -106,17 +106,19 @@ namespace Client
 
         public Image Icon;
         public TextMeshProUGUI TextType;
-        public TextMeshProUGUI TextContext;
-        public TextMeshProUGUI TextElementContext;
+        public TextMeshProUGUI TextContent;
+        public TextMeshProUGUI TextElementContent;
 
-        public Animator animator;
+        public Animator Animator;
 
+        public AnimCurve3D AnimCurve3D;
+        public Gradient ColorDuringLife;
+
+        protected Vector3 iconLocalPos = Vector3.zero;
+        protected Vector3 typeLocalPos = Vector3.zero;
         protected Vector3 contextLocalPos = Vector3.zero;
         protected Vector3 contextElementLocalPos = Vector3.zero;
-        protected Vector3 typeLocalPos = Vector3.zero;
-        protected Vector3 iconLocalPos = Vector3.zero;
 
-        protected Color color = new Color();
         protected Vector3 offsetPos = new Vector3();
 
         public override void PoolRecycle()
@@ -127,14 +129,14 @@ namespace Client
 
         void Awake()
         {
-            if (TextContext != null)
+            if (TextContent != null)
             {
-                contextLocalPos = TextContext.transform.localPosition;
+                contextLocalPos = TextContent.transform.localPosition;
             }
 
-            if (TextElementContext != null)
+            if (TextElementContent != null)
             {
-                contextElementLocalPos = TextElementContext.transform.localPosition;
+                contextElementLocalPos = TextElementContent.transform.localPosition;
             }
 
             if (TextType != null)
@@ -165,14 +167,14 @@ namespace Client
 
             bool changeColor = info.AttackerType != AttackerType.LocalPlayer;
 
-            SetContextSprite(TextContext, info.DiffHP, changeColor);
-            SetContextElementSprite(TextElementContext, info.ElementHP, changeColor);
+            SetContextSprite(TextContent, info.DiffHP, changeColor);
+            SetContextElementSprite(TextElementContent, info.ElementHP, changeColor);
         }
 
         private void SetContextSprite(TextMeshProUGUI text, long diffHP, bool changeColor = true)
         {
             text.text = diffHP.ToString();
-            text.color = changeColor ? color : Color.white;
+            text.color = changeColor ? ColorDuringLife.Evaluate(0) : Color.white;
             text.transform.localPosition = contextLocalPos + offsetPos;
         }
 
@@ -192,17 +194,11 @@ namespace Client
             text.transform.localPosition = contextElementLocalPos + offsetPos;
         }
 
-        private int RandomSquare(int val)
-        {
-            return Random.Range(-val, val);
-        }
-
         private void RandomPos()
         {
-            int offset = RandomSquare((int) attackParam.cfg.SquareX);
-            offsetPos.x += offset * 0.001f;
-            offsetPos.y += offset * 0.001f;
-            UIBattleTipInfo.UIBattleTipManager.AddTipInfo(attackParam.hitIdent, attackParam.attackType, ref offsetPos);
+            offsetPos.x += Random.Range(-UIBattleTipInfo.RandomRange.x, UIBattleTipInfo.RandomRange.x) * 0.001f;
+            offsetPos.y += Random.Range(-UIBattleTipInfo.RandomRange.y, UIBattleTipInfo.RandomRange.y) * 0.001f;
+            // UIBattleTipInfo.UIBattleTipManager.AddTipInfo(attackParam.hitIdent, attackParam.attackType, ref offsetPos);
         }
 
         private void PosTransformToScreen()
