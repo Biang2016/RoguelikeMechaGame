@@ -81,42 +81,51 @@ namespace Client
 
         void Update()
         {
-            MechaInfo.UpdateLifeChange();
-
-            if (IsBuilding && IsPlayer)
+            if (!IsRecycled)
             {
-                Update_Building();
-            }
+                MechaInfo.UpdateLifeChange();
 
-            if (IsFighting)
-            {
-                Update_Fighting();
+                if (IsBuilding && IsPlayer)
+                {
+                    Update_Building();
+                }
+
+                if (IsFighting)
+                {
+                    Update_Fighting();
+                }
             }
         }
 
         void FixedUpdate()
         {
-            if (IsFighting)
+            if (!IsRecycled)
             {
-                FixedUpdate_Fighting();
-            }
-            else
-            {
-                FixedUpdate_Building();
+                if (IsFighting)
+                {
+                    FixedUpdate_Fighting();
+                }
+                else
+                {
+                    FixedUpdate_Building();
+                }
             }
         }
 
         void LateUpdate()
         {
-            if (IsPlayer)
+            if (!IsRecycled)
             {
-                if (GameStateManager.Instance.GetState() == GameState.Fighting)
+                if (IsPlayer)
                 {
-                    LateUpdate_Fighting();
-                }
+                    if (GameStateManager.Instance.GetState() == GameState.Fighting)
+                    {
+                        LateUpdate_Fighting();
+                    }
 
-                if (GameStateManager.Instance.GetState() == GameState.Building)
-                {
+                    if (GameStateManager.Instance.GetState() == GameState.Building)
+                    {
+                    }
                 }
             }
         }
@@ -178,6 +187,8 @@ namespace Client
                     Die();
                 }
             }
+
+            MechaInfo?.MechaEditorInventory.RemoveItem(mcb.InventoryItem);
         }
 
         void Update_Building()

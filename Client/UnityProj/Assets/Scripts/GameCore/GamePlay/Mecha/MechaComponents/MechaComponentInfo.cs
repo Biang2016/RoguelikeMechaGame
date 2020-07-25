@@ -25,7 +25,20 @@ namespace GameCore
 
         public MechaComponentType MechaComponentType;
 
-        public MechaInfo MechaInfo;
+        private MechaInfo mechaInfo;
+
+        public MechaInfo MechaInfo
+        {
+            get { return mechaInfo; }
+            set
+            {
+                mechaInfo = value;
+                if (mechaInfo != null)
+                {
+                    logIdentityName = $"{MechaInfo.LogIdentityName}-<color=\"#7D67FF\">{ItemName}</color>-{GUID}";
+                }
+            }
+        }
 
         [ReadOnly]
         [ShowInInspector]
@@ -43,6 +56,10 @@ namespace GameCore
         public List<GridPos> OriginalOccupiedGridPositions => originalOccupiedGridPositions;
         public string ItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
         public string ItemName => "机甲组件." + MechaComponentType;
+
+        private string logIdentityName;
+
+        public string LogIdentityName => logIdentityName;
 
         public MechaComponentInfo(MechaComponentType mechaComponentType, GamePlayAbilityGroup abilityGroup, int totalLife, int dropProbability)
         {

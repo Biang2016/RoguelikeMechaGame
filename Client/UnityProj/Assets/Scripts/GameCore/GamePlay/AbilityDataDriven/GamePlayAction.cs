@@ -195,14 +195,56 @@ namespace GameCore.AbilityDataDriven
 
         public override void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, GamePlayAbility parentAbility)
         {
+            // Projectile Damage
             messenger.AddListener<ExecuteInfo, ProjectileInfo.FlyRealtimeData>((uint) abilityEvent, (executeInfo, flyRealTimeData) =>
             {
                 if (parentAbility == executeInfo.Ability)
                 {
-                    if (flyRealTimeData.HitMechaComponentInfo != null)
+                    switch (Target)
                     {
-                        flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, Damage);
-                        Debug.Log("Dealt damage: " + Damage);
+                        case SingleActionTarget singleTarget:
+                        {
+                            switch (singleTarget.Target)
+                            {
+                                case ENUM_SingleTarget.ATTACKER:
+                                {
+                                    break;
+                                }
+                                case ENUM_SingleTarget.CASTER:
+                                {
+                                    if (flyRealTimeData.HitMechaComponentInfo != null)
+                                    {
+                                        if (flyRealTimeData.HitMechaComponentInfo == executeInfo.MechaComponentInfo && flyRealTimeData.HitMechaComponentInfo.CheckAlive())
+                                        {
+                                            Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{Damage}</color> damage to <color=\"#FF74FF\">{singleTarget.Target.ToString()}</color> {flyRealTimeData.HitMechaComponentInfo.LogIdentityName}");
+                                            flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, Damage);
+                                        }
+                                    }
+
+                                    break;
+                                }
+                                case ENUM_SingleTarget.POINT:
+                                {
+                                    break;
+                                }
+                                case ENUM_SingleTarget.TARGET:
+                                {
+                                    break;
+                                }
+                                case ENUM_SingleTarget.UNIT:
+                                {
+                                    if (flyRealTimeData.HitMechaComponentInfo != null && flyRealTimeData.HitMechaComponentInfo.MechaInfo != executeInfo.MechaInfo && flyRealTimeData.HitMechaComponentInfo.CheckAlive())
+                                    {
+                                        Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{Damage}</color> damage to <color=\"#FF74FF\">{singleTarget.Target.ToString()}</color> {flyRealTimeData.HitMechaComponentInfo.LogIdentityName}");
+                                        flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, Damage);
+                                    }
+
+                                    break;
+                                }
+                            }
+
+                            break;
+                        }
                     }
                 }
             });

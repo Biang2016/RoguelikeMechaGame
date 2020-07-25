@@ -31,6 +31,8 @@ namespace GameCore
 
         public bool IsPlayer => MechaType == MechaType.Player;
 
+        public string LogIdentityName => $"<color=\"#61B2FF\">{MechaName}</color>-{GUID}";
+
         public MechaInfo(string mechaName, MechaType mechaType)
         {
             GUID = GetGUID();
@@ -64,7 +66,6 @@ namespace GameCore
 
         private void RemoveMechaComponentInfo(MechaComponentInfo mci)
         {
-            mci.MechaInfo = null;
             MechaEditorInventory.RemoveItem(mci.InventoryItem);
             MechaEditorInventory.RefreshConflictAndIsolation(out List<InventoryItem> _, out List<InventoryItem> isolatedItems);
             if (MechaType == MechaType.Enemy)
@@ -84,6 +85,7 @@ namespace GameCore
 
             mci.OnRemoveMechaComponentInfoSuc = null;
             MechaComponentInfoDict.Remove(mci.GUID);
+            mci.MechaInfo = null;
         }
 
         public void RemoveMechaInfo()
