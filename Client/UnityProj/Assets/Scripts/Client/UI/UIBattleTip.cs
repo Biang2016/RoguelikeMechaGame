@@ -156,10 +156,29 @@ namespace Client
             Animator.speed = 1;
             UIBattleTipInfo = null;
             disappearTick = 0;
-            if (TextType) TextType.transform.localPosition = default_TextTypeLocalPos;
-            if (TextContent) TextContent.transform.localPosition = default_TextContextLocalPos;
-            if (TextElementContent) TextElementContent.transform.localPosition = default_TextElementContextLocalPos;
-            if (Icon) Icon.transform.localPosition = default_IconLocalPos;
+            if (TextType)
+            {
+                TextType.transform.localPosition = default_TextTypeLocalPos;
+                TextType.color = new Color(0,0,0,0);
+            }
+
+            if (TextContent)
+            {
+                TextContent.transform.localPosition = default_TextContextLocalPos;
+                TextContent.color = new Color(0,0,0,0);
+            }
+
+            if (TextElementContent)
+            {
+                TextElementContent.transform.localPosition = default_TextElementContextLocalPos;
+                TextElementContent.color = new Color(0,0,0,0);
+            }
+
+            if (Icon)
+            {
+                Icon.transform.localPosition = default_IconLocalPos;
+                Icon.color = new Color(0,0,0,0);
+            }
         }
 
         public void Initialize(UIBattleTipInfo info)
