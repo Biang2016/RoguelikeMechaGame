@@ -140,12 +140,16 @@ namespace Client
             foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
             {
                 MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-
-                GameObject prefab = PrefabManager.Instance.GetPrefab("MechaComponent_" + mcType);
-                MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
-                mcb.Initialize_Editor(new MechaComponentInfo(mcType, new GamePlayAbilityGroup(), 10, 0));
-                mcbs.Add(mcb);
-                MechaComponentOccupiedGridPosDict.Add(mcType, mcb.MechaComponentGridRoot.GetOccupiedPositions().Clone());
+                string prefabName = "MechaComponent_" + mcType;
+                GameObject prefab = PrefabManager.Instance.GetPrefab(prefabName);
+                if (prefab != null)
+                {
+                    Debug.Log("模组占位序列化成功: " + prefabName);
+                    MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
+                    mcb.Initialize_Editor(new MechaComponentInfo(mcType, new GamePlayAbilityGroup(), 10, 0));
+                    mcbs.Add(mcb);
+                    MechaComponentOccupiedGridPosDict.Add(mcType, mcb.MechaComponentGridRoot.GetOccupiedPositions().Clone());
+                }
             }
 
             string json = JsonConvert.SerializeObject(MechaComponentOccupiedGridPosDict, Formatting.Indented);
