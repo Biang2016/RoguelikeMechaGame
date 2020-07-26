@@ -13,7 +13,6 @@ public class ClientLevel : MonoBehaviour
 
     public LevelInfo LevelInfo;
 
-
     public void Init(LevelInfo levelInfo)
     {
         LevelInfo = levelInfo;

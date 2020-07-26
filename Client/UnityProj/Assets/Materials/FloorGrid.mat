@@ -70,6 +70,6 @@ Material:
     - _TextColor: {r: 0.19852942, g: 0.13546085, b: 0.05547146, a: 1}
     - _WolrdBpattTiling: {r: 0.5, g: 0.5, b: 0, a: 0.25}
     - _WolrdCgridTiling: {r: 1, g: 1, b: 0, a: 0}
-    - _WolrdClineTiling: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - _WolrdClineTiling: {r: 0.2, g: 0.2, b: 0, a: 0}
     - _WolrdEdgeTiling: {r: 1, g: 1, b: 0, a: 0}
     - _WolrdTextTiling: {r: 0.1, g: 0.1, b: 0, a: 0}

@@ -1,6 +1,4 @@
-﻿using BiangStudio.GameDataFormat;
-using BiangStudio.ObjectPool;
-using FlowCanvas.Nodes;
+﻿using BiangStudio.ObjectPool;
 using GameCore;
 using GameCore.AbilityDataDriven;
 using UnityEngine;
@@ -31,6 +29,10 @@ namespace Client
             Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             Collider.enabled = false;
             ProjectileInfo = null;
+            FlyRealtimeData.HitMechaComponentInfo = null;
+            FlyRealtimeData.HitCollider = null;
+            transform.localScale = Vector3.one;
+            transform.rotation = Quaternion.identity;
             base.PoolRecycle();
         }
 
@@ -50,23 +52,27 @@ namespace Client
             ProjectileInfo = projectileInfo;
         }
 
-        public void Launch()
+        public void Launch(Transform dummyPos)
         {
             Rigidbody.constraints = RigidbodyConstraints.None;
             Collider.enabled = true;
+            transform.localScale = Vector3.one * (ProjectileInfo.ProjectileConfig.Scale / 1000f);
+
+            Vector3 initVelocity = new Vector3(ProjectileInfo.ProjectileConfig.Velocity.x, ProjectileInfo.ProjectileConfig.Velocity.y, ProjectileInfo.ProjectileConfig.VelocityCurve.Evaluate(0));
             FlyRealtimeData = new ProjectileInfo.FlyRealtimeData
             {
                 FlyDistance = 0,
                 FlyDuration = 0,
+                Scale = transform.localScale,
                 Position = transform.position,
-                Velocity_Local = ProjectileInfo.ProjectileConfig.Velocity,
-                Velocity_Global = transform.TransformVector(ProjectileInfo.ProjectileConfig.Velocity),
+                Velocity_Local = initVelocity,
+                Velocity_Global = transform.TransformVector(initVelocity),
                 Accelerate = ProjectileInfo.ProjectileConfig.Acceleration,
                 HitCollider = null,
-                RemainCollideTimes = ProjectileInfo.ProjectileConfig.CollideTimes,
+                RemainCollideTimes = ProjectileInfo.ProjectileConfig.CanReflect ? ProjectileInfo.ProjectileConfig.ReflectTimes : 9999,
             };
 
-            PlayFlashEffect(transform.position, transform.forward);
+            PlayFlashEffect(dummyPos);
             PlaySelfEffect();
             PoolRecycle(ParticleSystem.main.duration);
         }
@@ -84,11 +90,16 @@ namespace Client
 
                 // 朝向
 
+                // 尺寸
+                FlyRealtimeData.Scale += Vector3.one * (ProjectileInfo.ProjectileConfig.ScaleIncrease / 1000f) * Time.deltaTime;
+                transform.localScale = FlyRealtimeData.Scale;
+
                 // 加速度 Y轴世界坐标，XZ轴局部坐标
                 transform.forward = FlyRealtimeData.Velocity_Global.normalized;
-                FlyRealtimeData.Velocity_Local += Vector3.Scale(new Vector3(1, 0, 1), FlyRealtimeData.Accelerate) * Time.fixedDeltaTime;
+                FlyRealtimeData.Velocity_Local += (Vector3) FlyRealtimeData.Accelerate * Time.fixedDeltaTime;
+                FlyRealtimeData.Velocity_Local.z = ProjectileInfo.ProjectileConfig.VelocityCurve.Evaluate(FlyRealtimeData.FlyDuration);
                 FlyRealtimeData.Velocity_Global = transform.TransformVector(FlyRealtimeData.Velocity_Local);
-                FlyRealtimeData.Velocity_Global += new Vector3(0, FlyRealtimeData.Accelerate.y * Time.fixedDeltaTime, 0);
+                FlyRealtimeData.Velocity_Global += new Vector3(0, -ProjectileInfo.ProjectileConfig.Gravity * Time.fixedDeltaTime, 0);
 
                 transform.forward = FlyRealtimeData.Velocity_Global.normalized;
                 FlyRealtimeData.Velocity_Local = transform.InverseTransformVector(FlyRealtimeData.Velocity_Global);
@@ -125,30 +136,48 @@ namespace Client
                     FlyRealtimeData.HitMechaComponentInfo = mcb.MechaComponentInfo;
                 }
 
-                if (mcb && !ProjectileInfo.ProjectileConfig.IsCollideWithOwner && mcb.MechaInfo == ProjectileInfo.ParentExecuteInfo.MechaInfo)
+                bool hit = false;
+                bool recycle = false;
+                if (ProjectileInfo.ProjectileConfig.CanReflect)
                 {
-                    return;
-                }
-                else
-                {
-                    FlyRealtimeData.RemainCollideTimes--;
-                    PlayHitEffect(contact.point, contact.normal);
+                    hit = true;
                     Vector3 reflectDir = FlyRealtimeData.Velocity_Global.normalized - 2 * Vector3.Dot(FlyRealtimeData.Velocity_Global.normalized, contact.normal) * contact.normal;
                     FlyRealtimeData.Velocity_Global = reflectDir * FlyRealtimeData.Velocity_Global.magnitude;
                     transform.forward = FlyRealtimeData.Velocity_Global.normalized;
                     Rigidbody.velocity = FlyRealtimeData.Velocity_Global;
                     FlyRealtimeData.Velocity_Local = transform.InverseTransformVector(FlyRealtimeData.Velocity_Global);
 
-                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitUnit, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
-                    ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
                     if (FlyRealtimeData.RemainCollideTimes <= 0)
                     {
-                        PoolRecycle();
+                        recycle = true;
+                    }
+                    else
+                    {
+                        FlyRealtimeData.RemainCollideTimes--;
+                    }
+                }
+                else
+                {
+                    if (mcb && !mcb.IsRecycled && mcb.MechaInfo == ProjectileInfo.ParentExecuteInfo.MechaInfo)
+                    {
+                        hit = false;
+                        recycle = false;
+                    }
+                    else
+                    {
+                        hit = true;
+                        recycle = true;
                     }
                 }
 
-                FlyRealtimeData.HitMechaComponentInfo = null;
-                FlyRealtimeData.HitCollider = null;
+                if (hit)
+                {
+                    PlayHitEffect(contact.point, contact.normal);
+                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitUnit, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
+                    ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
+                }
+
+                if (recycle) PoolRecycle();
             }
         }
 
@@ -162,14 +191,15 @@ namespace Client
             ParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
-        public void PlayFlashEffect(Vector3 position, Vector3 direction)
+        public void PlayFlashEffect(Transform dummyPos)
         {
             if (GameObjectPoolManager.Instance.ProjectileFlashDict.TryGetValue(ProjectileInfo.ProjectileType, out GameObjectPool flashPool))
             {
-                ProjectileFlash flash = flashPool.AllocateGameObject<ProjectileFlash>(ClientProjectileManager.Instance.Root);
-                flash.transform.position = position;
+                ProjectileFlash flash = flashPool.AllocateGameObject<ProjectileFlash>(dummyPos);
+                flash.transform.position = dummyPos.position;
+                flash.transform.localScale = FlyRealtimeData.Scale;
                 flash.transform.rotation = Quaternion.identity;
-                flash.transform.forward = direction;
+                flash.transform.forward = dummyPos.forward;
                 flash.Play();
             }
         }
@@ -180,6 +210,7 @@ namespace Client
             {
                 ProjectileHit hit = GameObjectPoolManager.Instance.ProjectileHitDict[ProjectileInfo.ProjectileType].AllocateGameObject<ProjectileHit>(ClientProjectileManager.Instance.Root);
                 hit.transform.position = position + direction * hitOffset;
+                hit.transform.localScale = FlyRealtimeData.Scale;
                 hit.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
                 if (UseFirePointRotation)
                 {

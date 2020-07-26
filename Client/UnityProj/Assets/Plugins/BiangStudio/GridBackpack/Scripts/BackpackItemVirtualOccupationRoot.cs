@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
-using BiangStudio.GridBackpack;
 using UnityEngine;
 
-public class BackpackItemVirtualOccupationRoot : MonoBehaviour
+namespace BiangStudio.GridBackpack
 {
-    internal List<BackpackVirtualOccupationQuad> backpackVirtualOccupationQuads = new List<BackpackVirtualOccupationQuad>();
-
-    internal void Clear()
+    public class BackpackItemVirtualOccupationRoot : MonoBehaviour
     {
-        foreach (BackpackVirtualOccupationQuad quad in backpackVirtualOccupationQuads)
+        internal List<BackpackVirtualOccupationQuad> backpackVirtualOccupationQuads = new List<BackpackVirtualOccupationQuad>();
+
+        internal void Clear()
         {
-            quad.PoolRecycle();
+            foreach (BackpackVirtualOccupationQuad quad in backpackVirtualOccupationQuads)
+            {
+                quad.PoolRecycle();
+            }
         }
     }
- 
 }

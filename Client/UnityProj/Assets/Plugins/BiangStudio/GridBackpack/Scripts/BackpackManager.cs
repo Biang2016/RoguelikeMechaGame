@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.Singleton;
 using UnityEngine;
 
@@ -8,15 +10,16 @@ namespace BiangStudio.GridBackpack
     {
         private Dictionary<string, Backpack> BackpackDict = new Dictionary<string, Backpack>();
 
-        private Dictionary<string, Sprite> BackpackItemSpriteDict;
+        private Dictionary<string, Sprite> BackpackItemSpriteDict = new Dictionary<string, Sprite>();
 
-        private void LoadBackpackItemConfigs()
+        public void LoadBackpackItemConfigs(int backpackGridSize)
         {
-            GameObject[] prefabs = Resources.LoadAll<GameObject>("/Prefabs/UI/Backpack/Items");
+            GameObject[] prefabs = Resources.LoadAll("Prefabs/UI/Backpack/BackpackItems").Cast<GameObject>().ToArray();
             foreach (GameObject prefab in prefabs)
             {
                 BackpackItemDesignerHelper helper = prefab.GetComponent<BackpackItemDesignerHelper>();
-                //BackpackItemSpriteDict.Add( helper.BackpackItemSprite);
+                helper.ReadBackpackItemInfo(backpackGridSize, out List<GridPos> occupiedGridPositions, out Sprite sprite);
+                BackpackItemSpriteDict.Add(prefab.name, sprite);
             }
         }
 

@@ -23,6 +23,8 @@ namespace Client
         public ButtonState Building_MouseRight = new ButtonState() {ButtonName = ButtonNames.Building_MouseRight};
         public ButtonState Building_MouseMiddle = new ButtonState() {ButtonName = ButtonNames.Building_MouseMiddle};
 
+        public Vector2 Building_Move;
+
         private Vector2 Last_Building_MousePosition = Vector2.zero;
 
         public Vector2 Building_MousePosition
@@ -110,6 +112,8 @@ namespace Client
         public ButtonState Battle_Skill_2 = new ButtonState() {ButtonName = ButtonNames.Battle_Skill_2};
         public ButtonState Battle_Skill_3 = new ButtonState() {ButtonName = ButtonNames.Battle_Skill_3};
 
+        public ButtonState Battle_ToggleBattleTip = new ButtonState() {ButtonName = ButtonNames.Battle_ToggleBattleTip };
+
         #endregion
 
         #region Common
@@ -174,6 +178,9 @@ namespace Client
             Building_MouseRight.GetStateCallbackFromContext(MechaBuildingInputActions.MouseRightClick);
             Building_MouseMiddle.GetStateCallbackFromContext(MechaBuildingInputActions.MouseMiddleClick);
 
+            MechaBuildingInputActions.Move.performed += context => Building_Move = context.ReadValue<Vector2>();
+            MechaBuildingInputActions.Move.canceled += context => Building_Move = Vector2.zero;
+
             Building_RotateItem.GetStateCallbackFromContext(MechaBuildingInputActions.RotateItem);
             Building_ToggleBackpack.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleBackpack);
             Building_ToggleWireLines.GetStateCallbackFromContext(MechaBuildingInputActions.ToggleWireLines);
@@ -189,6 +196,7 @@ namespace Client
             Battle_Skill_1.GetStateCallbackFromContext(MechaBattleInputActions.Skill_1);
             Battle_Skill_2.GetStateCallbackFromContext(MechaBattleInputActions.Skill_2);
             Battle_Skill_3.GetStateCallbackFromContext(MechaBattleInputActions.Skill_3);
+            Battle_ToggleBattleTip.GetStateCallbackFromContext(MechaBattleInputActions.ToggleBattleTip);
 
             Common_MouseLeft.GetStateCallbackFromContext(CommonInputActions.MouseLeftClick);
             Common_MouseRight.GetStateCallbackFromContext(CommonInputActions.MouseRightClick);

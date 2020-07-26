@@ -1,5 +1,5 @@
-﻿using BiangStudio.GamePlay.UI;
-using BiangStudio.ObjectPool;
+﻿using BiangStudio.ObjectPool;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,91 +12,99 @@ namespace Client
         LocalPlayer = 1,
         Enemy = 2,
         Team = 3,
+        LocalPlayerSelfDamage = 4,
 
         NoTip = 100,
+    }
+
+    public enum BattleTipPrefabType
+    {
+        SelfAttack,
+        SelfCriticalAttack,
+        SelfDamage,
     }
 
     public enum BattleTipType
     {
         None = 0,
-        Resist = 1, //抵抗//这个无用的
-        Dodge = 2, //躲闪
-        SequenceAttack = 3, //暴击-
-        Damage = 4, //普通伤害-
-        Rampage = 5, //暴走 //这个无用的-
-        MeleekillScore = 6, //近身击杀得分//这个无用的-
-        MpTip = 7, //得到能量//这个无用的-
-        AddHp = 8, //加血 //这个无用的-
+        Attack, //攻击 +/- xxx
+        CriticalAttack, //暴击-
+        Resist, //抵抗//这个无用的
+        Dodge, //躲闪
+        Damage, //普通伤害-
+        Rampage, //暴走 //这个无用的-
+        MeleeKillScore, //近身击杀得分//这个无用的-
+        MpTip, //得到能量//这个无用的-
+        AddHp, //加血 //这个无用的-
 
-        AddLife = 9, //生命 +/- xxx
-        Stun = 10, //晕眩
-        Shield = 11, //护盾
-        Hiding = 12, //隐身
-        SpeedUp = 13, //加速
-        SlowDown = 14, //减速
-        Defense = 15, //防御 +/- xxx
-        Attack = 16, //攻击 +/- xxx
-        Invincible = 17, //无敌
-        Frozen = 18, // 冰冻
-        Poison = 19, //中毒
-        Firing = 20, //灼烧
-        SecKill = 21, //秒杀----
-        Bullet = 22, //弹药 +/- xxx
-        ExtraDamage = 24, //额外伤害 +/- xxx
-        PickWeapon = 25,
-        Parry = 26, //格挡
+        AddLife, //生命 +/- xxx
+        Stun, //晕眩
+        Shield, //护盾
+        Hiding, //隐身
+        SpeedUp, //加速
+        SlowDown, //减速
+        Defense, //防御 +/- xxx
+        Invincible, //无敌
+        Frozen, // 冰冻
+        Poison, //中毒
+        Firing, //灼烧
+        SecKill, //秒杀----
+        Bullet, //弹药 +/- xxx
+        ExtraDamage, //额外伤害 +/- xxx
+        PickWeapon,
+        Parry, //格挡
 
-        RaceDamage = 27, //种族伤害, 加深伤害
+        RaceDamage, //种族伤害, 加深伤害
 
-        GetBuff = 28, //获得Buff
-        GetBestBuff = 29, //获得强力BUFF
-        UpLevel = 31, //升级，大幅提升武器伤害
+        GetBuff, //获得Buff
+        GetBestBuff, //获得强力BUFF
+        UpLevel, //升级，大幅提升武器伤害
 
-        InvincibleSpirit = 32, //不屈意志！
-        Overloading = 33, //超载！
-        AirAttack = 34, //空袭！
-        BoomShield = 35, //防护盾！
-        Thud = 36, //震击
-        Quickness = 37, //急速
-        WarmBlood = 38, //热血
-        NerveGas = 39, //神经毒气
-        Sober = 40, //清醒
-        Discipline = 41, //惩戒
-        EleInterference = 42, //电磁干扰
-        FastHatch = 43, //快速填充
-        LevelIncrease = 44, //等级提升
-        LeaderAppeared = 45, //首领现身
-        LeaderKilled = 46, //首领已被击杀
-        WeaponOutbreak = 47, //武器爆发
-        BeFound = 48, //被发现, 【通用机制】被敌兵发现时增加飘字“被发现”
-        MpDamage = 49, //【通用机制】MP盾特殊飘字 MP伤害
+        InvincibleSpirit, //不屈意志！
+        Overloading, //超载！
+        AirAttack, //空袭！
+        BoomShield, //防护盾！
+        Thud, //震击
+        Quickness, //急速
+        WarmBlood, //热血
+        NerveGas, //神经毒气
+        Sober, //清醒
+        Discipline, //惩戒
+        EleInterference, //电磁干扰
+        FastHatch, //快速填充
+        LevelIncrease, //等级提升
+        LeaderAppeared, //首领现身
+        LeaderKilled, //首领已被击杀
+        WeaponOutbreak, //武器爆发
+        BeFound, //被发现, 【通用机制】被敌兵发现时增加飘字“被发现”
+        MpDamage, //【通用机制】MP盾特殊飘字 MP伤害
 
-        ParticalCannon = 51, //粒子炮
-        DevilBomb = 52, //恶魔炸弹
-        IonArc = 52, //离子电弧
-        AbsolutenessDomain = 53, //绝对领域
-        UW8AddGold = 56, //【水下8关】【单局】【敌兵掉落】敌兵掉落表现
-        PlaySoul = 57, //播放枪魂
-        ExpNum = 61, // Exp + xx
+        ParticalCannon, //粒子炮
+        DevilBomb, //恶魔炸弹
+        IonArc, //离子电弧
+        AbsolutenessDomain, //绝对领域
+        UW8AddGold, //【水下8关】【单局】【敌兵掉落】敌兵掉落表现
+        PlaySoul, //播放枪魂
+        ExpNum, // Exp + xx
 
-        NoDamage = 66, //1.10英雄天赋（跨版本）：固定值伤害减伤BUFF storyID:61774891 BUFF持续时间内，每次受到的伤害减少固定值例如1000（伤害最低减少到0），减少到0的时候免疫此次伤害并飘字“免疫”提示玩家
+        NoDamage, //1.10英雄天赋（跨版本）：固定值伤害减伤BUFF storyID:61774891 BUFF持续时间内，每次受到的伤害减少固定值例如1000（伤害最低减少到0），减少到0的时候免疫此次伤害并飘字“免疫”提示玩家
 
-        SafeZone = 75, // 吃鸡毒圈
+        SafeZone, // 吃鸡毒圈
 
         NoAttackSeparate = 200,
-        AddScore = 201, //得分
-        SwitchWeapon = 202, //切换武器时飘字
-        GetOverlap = 203, //获取叉乘
-        BulletTimeAttckTip = 204, //子弹时间暴击提示
-        DesignTest = 205,
+        AddScore, //得分
+        SwitchWeapon, //切换武器时飘字
+        GetOverlap, //获取叉乘
+        BulletTimeAttackTip, //子弹时间暴击提示
+        DesignTest,
 
-        ScreenCenterSeparate = 300, //不取挂点，直接获取屏幕中心
-        BulletTimeTip = 301, //子弹时间屏幕中心得示
-        ScreenCenterTest2 = 302,
-        ScreenCenterTest3 = 303,
+        ScreenCenterSeparate, //不取挂点，直接获取屏幕中心
+        BulletTimeTip, //子弹时间屏幕中心得示
+        ScreenCenterTest2,
+        ScreenCenterTest3,
 
-        FollowDummySeparate = 400, //取挂点，且一直随着挂点移动
-        BulletTimeTutorialTip = 401, //新手引导用的子弹时间
+        FollowDummySeparate, //取挂点，且一直随着挂点移动
+        BulletTimeTutorialTip, //新手引导用的子弹时间
     }
 
     public class UIBattleTip : PoolObject
@@ -104,14 +112,37 @@ namespace Client
         private float disappearTick = 0;
         UIBattleTipInfo UIBattleTipInfo;
 
+        private int sortingOrder;
+
+        public int SortingOrder
+        {
+            get { return sortingOrder; }
+            set
+            {
+                sortingOrder = value;
+                TextType.sortingOrder = sortingOrder;
+                TextContent.sortingOrder = sortingOrder;
+                TextElementContent.sortingOrder = sortingOrder;
+            }
+        }
+
+        [LabelText("图标")]
         public Image Icon;
+
+        [LabelText("类型")]
         public TextMeshPro TextType;
+
+        [LabelText("数值")]
         public TextMeshPro TextContent;
+
+        [LabelText("元素数值")]
         public TextMeshPro TextElementContent;
 
         public Animator Animator;
 
         public AnimCurve3D AnimCurve3D;
+
+        [LabelText("颜色变化")]
         public Gradient ColorDuringLife;
 
         protected Vector3 default_IconLocalPos = Vector3.zero;
@@ -123,7 +154,8 @@ namespace Client
 
         public override void PoolRecycle()
         {
-            Reset();
+            ResetTip();
+            UIBattleTipManager.Instance.UIBattleTipList.Remove(this);
             base.PoolRecycle();
         }
 
@@ -151,7 +183,7 @@ namespace Client
             }
         }
 
-        private void Reset()
+        private void ResetTip()
         {
             Animator.speed = 1;
             UIBattleTipInfo = null;
@@ -159,34 +191,35 @@ namespace Client
             if (TextType)
             {
                 TextType.transform.localPosition = default_TextTypeLocalPos;
-                TextType.color = new Color(0,0,0,0);
+                TextType.color = new Color(0, 0, 0, 0);
             }
 
             if (TextContent)
             {
                 TextContent.transform.localPosition = default_TextContextLocalPos;
-                TextContent.color = new Color(0,0,0,0);
+                TextContent.color = new Color(0, 0, 0, 0);
             }
 
             if (TextElementContent)
             {
                 TextElementContent.transform.localPosition = default_TextElementContextLocalPos;
-                TextElementContent.color = new Color(0,0,0,0);
+                TextElementContent.color = new Color(0, 0, 0, 0);
             }
 
             if (Icon)
             {
                 Icon.transform.localPosition = default_IconLocalPos;
-                Icon.color = new Color(0,0,0,0);
+                Icon.color = new Color(0, 0, 0, 0);
             }
         }
 
-        public void Initialize(UIBattleTipInfo info)
+        public void Initialize(UIBattleTipInfo info, int sortingOrder)
         {
+            SortingOrder = sortingOrder;
             UIBattleTipInfo = info;
             disappearTick = 0;
 
-            transform.localScale = Vector3.one * info.Scale;
+            transform.localScale = Vector3.one * info.Scale * CameraManager.Instance.MainCameraFollow.GetScaleForBattleUI();
 
             if (info.RandomRange.magnitude > 0)
             {
@@ -195,7 +228,12 @@ namespace Client
             }
 
             transform.localPosition = UIBattleTipInfo.StartPos;
-            transform.rotation = Quaternion.LookRotation(transform.position - CameraManager.Instance.MainCamera.transform.position);
+            Vector3 diff = transform.position - CameraManager.Instance.MainCamera.transform.position;
+            Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
+            float distance = Vector3.Dot(ray.direction, diff);
+            Vector3 cameraCenter = CameraManager.Instance.MainCamera.transform.position + ray.direction * distance;
+            Vector3 offset = transform.position - cameraCenter;
+            transform.rotation = Quaternion.LookRotation(transform.position - (CameraManager.Instance.MainCamera.transform.position + offset));
 
             SetTextType(TextType);
             SetTextContext(TextContent, info.DiffHP);

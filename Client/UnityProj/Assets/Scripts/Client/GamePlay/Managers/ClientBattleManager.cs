@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BiangStudio.GamePlay.UI;
 using BiangStudio.Singleton;
 using GameCore;
@@ -8,8 +9,6 @@ namespace Client
 {
     public class ClientBattleManager : TSingletonBaseManager<ClientBattleManager>
     {
-        public BattleInfo BattleInfo;
-
         internal Mecha PlayerMecha;
         internal SortedDictionary<uint, Mecha> MechaDict = new SortedDictionary<uint, Mecha>();
 
@@ -26,7 +25,6 @@ namespace Client
 
             MechaDict.Clear();
             PlayerMecha = null;
-            BattleInfo = null;
         }
 
         public override void Awake()
@@ -70,14 +68,11 @@ namespace Client
         public void StartBattle(BattleInfo battleInfo)
         {
             Clear();
-            BattleInfo = battleInfo;
-            BattleInfo.OnAddEnemyMechaInfoSuc = AddMecha;
+            InitBattleManagerProxy();
 
-            AddMecha(battleInfo.BattleMechaInfoData.PlayerMechaInfo);
+            battleInfo.OnAddMechaInfoSuc = AddMecha;
 
-            foreach (KeyValuePair<uint, MechaInfo> kv in battleInfo.BattleMechaInfoData.EnemyMechaInfoDict)
-            {
-            }
+            BattleManager.Instance.StartBattle(battleInfo);
 
             CameraManager.Instance.MainCameraFollow.SetTarget(PlayerMecha.transform);
             GameStateManager.Instance.SetState(GameState.Fighting);
@@ -141,5 +136,33 @@ namespace Client
                 }
             }
         }
+
+        #region Proxy
+
+        private void InitBattleManagerProxy()
+        {
+            BattleManager.Instance.SearchRangeHandler = SearchRangeDelegate;
+        }
+
+        private List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius)
+        {
+            Dictionary<uint, MechaComponentInfo> res = new Dictionary<uint, MechaComponentInfo>();
+            Collider[] colliders = Physics.OverlapSphere(center, radius, LayerManager.Instance.LayerMask_ComponentHitBox, QueryTriggerInteraction.Collide);
+            foreach (Collider collider in colliders)
+            {
+                MechaComponentBase mcb = collider.GetComponentInParent<MechaComponentBase>();
+                if (mcb.IsAlive())
+                {
+                    if (!res.ContainsKey(mcb.MechaComponentInfo.GUID))
+                    {
+                        res.Add(mcb.MechaComponentInfo.GUID, mcb.MechaComponentInfo);
+                    }
+                }
+            }
+
+            return res.Values.ToList();
+        }
+
+        #endregion
     }
 }

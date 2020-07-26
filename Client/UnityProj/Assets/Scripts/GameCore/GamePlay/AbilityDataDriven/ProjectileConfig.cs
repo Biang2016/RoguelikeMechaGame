@@ -23,17 +23,29 @@ namespace GameCore.AbilityDataDriven
         [SuffixLabel("ms", true)]
         public int MaxDuration;
 
-        [LabelText("初速度(unit/s)")]
-        public Vector3 Velocity;
+        [LabelText("初始尺寸(/1000)")]
+        public int Scale;
 
-        [LabelText("加速度(unit/s^2)")]
-        public Vector3 Acceleration;
+        [LabelText("尺寸增幅(/1000/s)")]
+        public int ScaleIncrease;
 
-        [LabelText("最大碰撞次数")]
-        public int CollideTimes = 1;
+        [LabelText("轴向速度曲线")]
+        public AnimationCurve VelocityCurve;
 
-        [LabelText("和施法者碰撞")]
-        public bool IsCollideWithOwner = false;
+        [LabelText("切向初速度(unit/s)")]
+        public Vector2 Velocity;
+
+        [LabelText("切向加速度(unit/s^2)")]
+        public Vector2 Acceleration;
+
+        [LabelText("重力加速度(unit/s^2)")]
+        public int Gravity;
+
+        [LabelText("反弹能力")]
+        public bool CanReflect;
+
+        [LabelText("最大反弹次数")]
+        public int ReflectTimes = 1;
 
         public ProjectileConfig Clone()
         {
@@ -44,10 +56,14 @@ namespace GameCore.AbilityDataDriven
                 DummyPos = DummyPos,
                 MaxRange = MaxRange,
                 MaxDuration = MaxDuration,
+                Scale = Scale,
+                ScaleIncrease = ScaleIncrease,
+                VelocityCurve = VelocityCurve,
                 Velocity = Velocity,
                 Acceleration = Acceleration,
-                IsCollideWithOwner = IsCollideWithOwner,
-                CollideTimes = CollideTimes,
+                Gravity = Gravity,
+                CanReflect = CanReflect,
+                ReflectTimes = ReflectTimes,
             };
         }
     }

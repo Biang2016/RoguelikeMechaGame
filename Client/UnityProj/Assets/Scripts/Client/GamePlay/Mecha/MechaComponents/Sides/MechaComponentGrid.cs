@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using BiangStudio.GameDataFormat.Grid;
 using GameCore;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Client
 {
+    [ExecuteInEditMode]
     public class MechaComponentGrid : MonoBehaviour
     {
         [SerializeField]
@@ -22,29 +24,29 @@ namespace Client
 
         public bool IsConflicted = false;
 
-        public SortedDictionary<GridPosR.Orientation, MechaComponentSlot> Slots = new SortedDictionary<GridPosR.Orientation, MechaComponentSlot>
-        {
-            {GridPosR.Orientation.Up, null},
-            {GridPosR.Orientation.Right, null},
-            {GridPosR.Orientation.Down, null},
-            {GridPosR.Orientation.Left, null},
-        };
+        [SerializeField]
+        private MechaComponentSlot Slot_Up;
 
-        public void Reset()
-        {
-            foreach (GridPosR.Orientation key in Slots.Keys.ToList())
-            {
-                Slots[key] = null;
-            }
-        }
+        [SerializeField]
+        private MechaComponentSlot Slot_Right;
+
+        [SerializeField]
+        private MechaComponentSlot Slot_Down;
+
+        [SerializeField]
+        private MechaComponentSlot Slot_Left;
+
+        public Dictionary<GridPosR.Orientation, MechaComponentSlot> Slots = new Dictionary<GridPosR.Orientation, MechaComponentSlot>();
 
         void Awake()
         {
-            MechaComponentSlot[] slots = GetComponentsInChildren<MechaComponentSlot>();
-            foreach (MechaComponentSlot slot in slots)
+            Slots.Add(GridPosR.Orientation.Up, Slot_Up);
+            Slots.Add(GridPosR.Orientation.Right, Slot_Right);
+            Slots.Add(GridPosR.Orientation.Down, Slot_Down);
+            Slots.Add(GridPosR.Orientation.Left, Slot_Left);
+            foreach (KeyValuePair<GridPosR.Orientation, MechaComponentSlot> kv in Slots)
             {
-                slot.Initialize();
-                Slots[slot.Orientation] = slot;
+                kv.Value.Initialize();
             }
         }
 
@@ -52,10 +54,7 @@ namespace Client
         {
             foreach (KeyValuePair<GridPosR.Orientation, MechaComponentSlot> kv in Slots)
             {
-                if (kv.Value)
-                {
-                    kv.Value.SetShown(shown);
-                }
+                kv.Value.SetShown(shown);
             }
         }
 
@@ -77,6 +76,21 @@ namespace Client
         public GridPos GetGridPos()
         {
             return GridPos.GetGridPosByLocalTransXZ(transform, ConfigManager.GridSize);
+        }
+
+        [EnumToggleButtons]
+        [HideInPlayMode]
+        [OnValueChanged("OnSlotEnumFlag_EditorChanged")]
+        [ShowInInspector]
+        [SerializeField]
+        private GridPosR.OrientationFlag SlotEnumFlag_Editor;
+
+        private void OnSlotEnumFlag_EditorChanged()
+        {
+            foreach (GridPosR.Orientation orientation in Enum.GetValues(typeof(GridPosR.Orientation)))
+            {
+                Slots[orientation].IsCandidate = SlotEnumFlag_Editor.HasFlag(orientation.ToFlag());
+            }
         }
     }
 }

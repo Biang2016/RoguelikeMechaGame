@@ -14,6 +14,8 @@ namespace Client
         [SerializeField]
         private Transform MechaComponentContainer;
 
+        public Light MechaLight;
+
         public MechaEditArea MechaEditArea;
 
         public SortedDictionary<uint, MechaComponentBase> MechaComponentDict = new SortedDictionary<uint, MechaComponentBase>();
@@ -25,6 +27,7 @@ namespace Client
         {
             Clean();
             base.PoolRecycle();
+            MechaLight.enabled = false;
         }
 
         public void Initialize(MechaInfo mechaInfo)
@@ -33,7 +36,11 @@ namespace Client
 
             MechaInfo = mechaInfo;
             MechaInfo.OnAddMechaComponentInfoSuc = (mci, gp_matrix) => AddMechaComponent(mci);
-            MechaInfo.OnRemoveMechaInfoSuc += (mi) => OnRemoveMechaSuc?.Invoke(this);
+            MechaInfo.OnRemoveMechaInfoSuc += (mi) =>
+            {
+                OnRemoveMechaSuc?.Invoke(this);
+                PoolRecycle();
+            };
             MechaInfo.OnDropMechaComponent = (mci) =>
             {
                 MechaComponentDropSprite mcds = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.MechaComponentDropSprite]
@@ -50,7 +57,7 @@ namespace Client
                 false,
                 0,
                 () => ControlManager.Instance.Building_RotateItem.Down);
-            MechaInfo.MechaEditorInventory.OnRemoveItemSucAction = (item) => ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo();
+            MechaInfo.MechaEditorInventory.OnRemoveItemSucAction = (item) => { ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo(); };
             MechaInfo.MechaEditorInventory.RefreshInventoryGrids();
             MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation();
 
@@ -64,6 +71,11 @@ namespace Client
             GridShown = false;
             SlotLightsShown = false;
             Initialize_Fighting(mechaInfo);
+        }
+
+        public bool IsAlive()
+        {
+            return !IsRecycled && MechaInfo != null && !MechaInfo.IsDead;
         }
 
         public void Clean()
@@ -83,8 +95,6 @@ namespace Client
         {
             if (!IsRecycled)
             {
-                MechaInfo.UpdateLifeChange();
-
                 if (IsBuilding && IsPlayer)
                 {
                     Update_Building();
@@ -138,19 +148,6 @@ namespace Client
             }
         }
 
-        private void Die()
-        {
-            if (IsPlayer)
-            {
-                // TODO Endgame
-            }
-            else
-            {
-                OnRemoveMechaSuc(this);
-                PoolRecycle();
-            }
-        }
-
         private MechaComponentBase AddMechaComponent(MechaComponentInfo mci)
         {
             MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mci, this);
@@ -177,18 +174,7 @@ namespace Client
             if (MechaComponentDict.ContainsKey(mcb.MechaComponentInfo.GUID))
             {
                 MechaComponentDict.Remove(mcb.MechaComponentInfo.GUID);
-                if (IsPlayer && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
-                {
-                    MechaInfo.RefreshHUDPanelCoreLifeSliderCount?.Invoke();
-                }
-
-                if (MechaComponentDict.Count == 0)
-                {
-                    Die();
-                }
             }
-
-            MechaInfo?.MechaEditorInventory.RemoveItem(mcb.InventoryItem);
         }
 
         void Update_Building()

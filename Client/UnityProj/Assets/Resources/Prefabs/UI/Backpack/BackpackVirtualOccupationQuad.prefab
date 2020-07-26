@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.19427705, a: 0.28627452}
+  m_Color: {r: 0.44495374, g: 0.9339623, b: 0.452409, a: 0.22745098}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -87,6 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf300ab8a7581f4084ea4a2bfedb97f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
   Image: {fileID: 3215156939143732101}
-  AvailableColor: {r: 1, g: 0.9957261, b: 0, a: 1}
-  ForbiddenColor: {r: 1, g: 0, b: 0, a: 1}
+  AvailableColor: {r: 0.44313726, g: 0.93333334, b: 0.4509804, a: 0.2}
+  ForbiddenColor: {r: 0.9245283, g: 0.23113208, b: 0.23113208, a: 0.28235295}

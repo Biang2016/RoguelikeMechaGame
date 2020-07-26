@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 
 namespace GameCore.AbilityDataDriven
 {

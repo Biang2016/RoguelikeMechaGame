@@ -36,6 +36,12 @@ namespace UnityToolbarExtender
             if (GUILayout.Button(new GUIContent("序列化技能配置"), ToolbarStyles.commandButtonStyle))
             {
                 ConfigManager.ExportAbilityConfigs();
+                ConfigManager.LoadAllAbilityConfigs();
+            }
+
+            if (GUILayout.Button(new GUIContent("配置面板"), ToolbarStyles.commandButtonStyle))
+            {
+                ConfigPreviewerWindow.OpenConfigPreviewWindow();
             }
         }
     }

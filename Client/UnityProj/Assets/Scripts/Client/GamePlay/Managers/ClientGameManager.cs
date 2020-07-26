@@ -11,7 +11,6 @@ using BiangStudio.ShapedInventory;
 using BiangStudio.Singleton;
 using GameCore;
 using GameCore.AbilityDataDriven;
-using ParadoxNotion;
 using UnityEngine;
 using DragAreaDefines = GameCore.DragAreaDefines;
 
@@ -58,9 +57,10 @@ namespace Client
 
         private LevelManager LevelManager => LevelManager.Instance;
         private ClientLevelManager ClientLevelManager => ClientLevelManager.Instance;
+        private BattleManager BattleManager => BattleManager.Instance;
         private ClientBattleManager ClientBattleManager => ClientBattleManager.Instance;
 
-        public Messenger BattleMessenger => ClientBattleManager.BattleInfo.BattleMessenger;
+        public Messenger BattleMessenger => BattleManager.BattleMessenger;
 
         private FXManager FXManager => FXManager.Instance;
         private UIBattleTipManager UIBattleTipManager => UIBattleTipManager.Instance;
@@ -95,7 +95,6 @@ namespace Client
             GameObjectPoolManager.Init(new GameObject("GameObjectPoolRoot").transform);
             GameObjectPoolManager.Awake();
 
-            ControlManager.Awake();
 
             RoutineManager.LogErrorHandler = Debug.LogError;
             RoutineManager.Awake();
@@ -107,6 +106,7 @@ namespace Client
                 ControlManager.Instance.EnableBuildingInputActions(!enable);
             };
 
+            BackpackManager.LoadBackpackItemConfigs(ConfigManager.BackpackGridSize);
             BackpackManager.Awake();
 
             DragManager.Awake();
@@ -116,11 +116,15 @@ namespace Client
             ClientLevelManager.Init();
             LevelManager.Init();
             ClientLevelManager.Awake();
+            BattleManager.Awake();
             ClientBattleManager.Awake();
             FXManager.Awake();
+            UIBattleTipManager.Awake();
 
             ClientProjectileManager.Init(new GameObject("ProjectileRoot").transform);
             ClientProjectileManager.Awake();
+
+            ControlManager.Awake();
         }
 
         private void Start()
@@ -130,14 +134,13 @@ namespace Client
             PrefabManager.Start();
             GameObjectPoolManager.Start();
 
-            ControlManager.Start();
             RoutineManager.Start();
             GameStateManager.Start();
 
             Backpack myBackPack = new Backpack(
                 DragAreaDefines.BattleInventory.DragAreaName,
                 DragAreaDefines.BattleInventory,
-                60,
+                ConfigManager.BackpackGridSize,
                 10,
                 10,
                 true,
@@ -192,10 +195,14 @@ namespace Client
             DragExecuteManager.Start();
 
             ClientLevelManager.Start();
+            BattleManager.Start();
             ClientBattleManager.Start();
             FXManager.Start();
+            UIBattleTipManager.Start();
             ProjectileManager.Init(ClientProjectileManager.EmitProjectile);
             ClientProjectileManager.Start();
+
+            ControlManager.Start();
 
             UIManager.Instance.ShowUIForms<DebugPanel>();
 #if !DEBUG
@@ -212,7 +219,6 @@ namespace Client
             PrefabManager.Update();
             GameObjectPoolManager.Update();
 
-            ControlManager.Update();
             RoutineManager.Update(Time.deltaTime, Time.frameCount);
             GameStateManager.Update();
 
@@ -221,9 +227,13 @@ namespace Client
             DragExecuteManager.Update();
 
             ClientLevelManager.Update();
+            BattleManager.Update();
             ClientBattleManager.Update();
             FXManager.Update();
+            UIBattleTipManager.Update();
             ClientProjectileManager.Update();
+
+            ControlManager.Update();
         }
 
         void LateUpdate()
@@ -233,7 +243,6 @@ namespace Client
             PrefabManager.LateUpdate();
             GameObjectPoolManager.LateUpdate();
 
-            ControlManager.LateUpdate();
             RoutineManager.LateUpdate();
             GameStateManager.LateUpdate();
 
@@ -242,9 +251,13 @@ namespace Client
             DragExecuteManager.LateUpdate();
 
             ClientLevelManager.LateUpdate();
+            BattleManager.LateUpdate();
             ClientBattleManager.LateUpdate();
             FXManager.LateUpdate();
+            UIBattleTipManager.LateUpdate();
             ClientProjectileManager.LateUpdate();
+
+            ControlManager.LateUpdate();
         }
 
         void FixedUpdate()
@@ -254,7 +267,6 @@ namespace Client
             PrefabManager.FixedUpdate();
             GameObjectPoolManager.FixedUpdate();
 
-            ControlManager.FixedUpdate();
             RoutineManager.FixedUpdate();
             GameStateManager.FixedUpdate();
 
@@ -263,9 +275,13 @@ namespace Client
             DragExecuteManager.FixedUpdate();
 
             ClientLevelManager.FixedUpdate();
+            BattleManager.FixedUpdate();
             ClientBattleManager.FixedUpdate();
             FXManager.FixedUpdate();
+            UIBattleTipManager.FixedUpdate();
             ClientProjectileManager.FixedUpdate();
+
+            ControlManager.FixedUpdate();
         }
 
         private void StartGame()
@@ -278,29 +294,27 @@ namespace Client
             inventoryInfo.InventoryItems.Add(ii);
             ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun2"), 100, 0), myBackPack, GridPosR.Zero);
             inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun3"), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun4"), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Block, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Block, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Block, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Block, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
             myBackPack.LoadInventoryInfo(inventoryInfo);
 
             MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player);
-            MechaInfo enemyMechaInfo = new MechaInfo("Junk Mecha", MechaType.Enemy);
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
             ClientBattleManager.Instance.StartBattle(battleInfo);
             UIBattleTipManager.Init();
 
-            battleInfo.SetPlayerMecha(playerMechaInfo);
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 300, 0), new GridPosR(9, 9));
-            battleInfo.AddEnemyMechaInfo(enemyMechaInfo);
-            for (int i = -2; i <= 2; i++)
-            {
-                for (int j = -4; j <= 4; j++)
-                {
-                    MechaComponentInfo mci;
-                    mci = new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 500, 0);
-                    enemyMechaInfo.AddMechaComponentInfo(mci, new GridPosR(i, j, GridPosR.Orientation.Up));
-                }
-            }
-
-            ClientBattleManager.MechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, new GamePlayAbilityGroup(), 300, 0), new GridPosR(9, 9));
 
             ClientLevelManager.Instance.StartLevel();
         }
@@ -314,6 +328,7 @@ namespace Client
         private void ToggleBattleInventory(bool open)
         {
             BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.gameObject.SetActive(open);
+            ClientBattleManager.Instance.PlayerMecha.MechaLight.enabled = open;
             if (open)
             {
                 ClientBattleManager.Instance.SetAllEnemyMechaShown(false);
@@ -331,14 +346,17 @@ namespace Client
                 ClientBattleManager.Instance.PlayerMecha.GridShown = false;
                 ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation(out List<InventoryItem> conflictItem, out List<InventoryItem> isolatedItem);
 
+                Backpack battleInventory = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
                 foreach (InventoryItem mcb in conflictItem)
                 {
                     ((MechaComponentInfo) mcb.ItemContentInfo).RemoveMechaComponentInfo();
+                    battleInventory.TryAddItem(new InventoryItem(mcb.ItemContentInfo, battleInventory, GridPosR.Zero));
                 }
 
                 foreach (InventoryItem mcb in isolatedItem)
                 {
                     ((MechaComponentInfo) mcb.ItemContentInfo).RemoveMechaComponentInfo();
+                    battleInventory.TryAddItem(new InventoryItem(mcb.ItemContentInfo, battleInventory, GridPosR.Zero));
                 }
 
                 CameraManager.Instance.MainCameraFollow.SetTarget(ClientBattleManager.Instance.PlayerMecha.transform);

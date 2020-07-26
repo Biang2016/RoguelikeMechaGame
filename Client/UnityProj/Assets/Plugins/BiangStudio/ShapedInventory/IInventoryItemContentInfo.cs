@@ -7,5 +7,6 @@ namespace BiangStudio.ShapedInventory
     {
         List<GridPos> OriginalOccupiedGridPositions { get; }
         string ItemName { get; }
+        string ItemSpriteKey { get; }
     }
 }

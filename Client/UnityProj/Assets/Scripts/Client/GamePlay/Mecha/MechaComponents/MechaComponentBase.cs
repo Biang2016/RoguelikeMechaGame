@@ -40,7 +40,7 @@ namespace Client
 
         [TitleGroup("GameObjectContainers")]
         [PropertyOrder(-9)]
-        public GameObject ModelRoot;
+        public MechaComponentModelRoot MechaComponentModelRoot;
 
         internal Draggable Draggable;
         private bool isReturningToBackpack = false;
@@ -55,6 +55,7 @@ namespace Client
         {
             MechaComponentGridRoot.SetIsolatedIndicatorShown(true);
             MechaComponentGridRoot.SetInBattle(false);
+            MechaComponentModelRoot.ResetColor();
             MechaComponentInfo?.Reset();
             MechaComponentInfo = null;
             Mecha = null;
@@ -85,6 +86,11 @@ namespace Client
             }
         }
 
+        public bool IsAlive()
+        {
+            return !IsRecycled && MechaComponentInfo != null && !MechaComponentInfo.IsDead;
+        }
+
         public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
             MechaComponentBase mcb = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentType]
@@ -100,6 +106,8 @@ namespace Client
                 OnRemoveMechaComponentBaseSuc?.Invoke(this);
                 PoolRecycle();
             };
+
+            mechaComponentInfo.OnDamaged += OnDamaged;
 
             {
                 mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) =>
@@ -160,7 +168,7 @@ namespace Client
 
         public void SetShown(bool shown)
         {
-            ModelRoot.SetActive(shown);
+            MechaComponentModelRoot.SetShown(shown);
         }
 
         #region IDraggable
@@ -230,7 +238,7 @@ namespace Client
                     DragManager.Instance.CurrentDrag.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<BackpackItem>());
                 }
 
-                OnRemoveMechaComponentBaseSuc?.Invoke(this);
+                MechaComponentInfo.RemoveMechaComponentInfo();
                 PoolRecycle();
             }
 
@@ -239,6 +247,7 @@ namespace Client
 
         public void Draggable_OnMouseUp(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
         {
+            if (IsRecycled) return;
             if (dragArea.Equals(DragAreaDefines.BattleInventory))
             {
                 if (!isReturningToBackpack)

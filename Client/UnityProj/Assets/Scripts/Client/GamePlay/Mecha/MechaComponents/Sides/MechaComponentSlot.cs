@@ -1,6 +1,11 @@
 ﻿using BiangStudio.GameDataFormat.Grid;
 using GameCore;
+using Sirenix.OdinInspector;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+
+#endif
 
 namespace Client
 {
@@ -13,28 +18,51 @@ namespace Client
         [SerializeField]
         private Material[] SlotLightMaterials;
 
-        [SerializeField]
-        private SlotType _slotType;
+        private bool inUse;
 
-        internal GridPosR.Orientation Orientation;
-
-        public SlotType SlotType
+        /// <summary>
+        /// 游戏中实际生效的槽位
+        /// </summary>
+        public bool InUse
         {
-            get { return _slotType; }
+            get { return inUse; }
             set
             {
-                if (_slotType != value)
-                {
-                    OnChangeSlotType(value);
-                }
-
-                _slotType = value;
+                inUse = value;
+                gameObject.SetActive(value);
             }
         }
 
-        public void OnChangeSlotType(SlotType slotType)
+        private bool isCandidate;
+
+        /// <summary>
+        /// 可作为概率随机的候选槽位
+        /// </summary>
+        public bool IsCandidate
         {
-            SlotLightRenderer.material = SlotLightMaterials[(int) slotType];
+            get { return isCandidate; }
+            set
+            {
+                isCandidate = value;
+                if (!Application.isPlaying)
+                {
+                    gameObject.SetActive(value);
+#if UNITY_EDITOR
+                    SceneView.RepaintAll();
+#endif
+                }
+            }
+        }
+
+        [SerializeField]
+        [OnValueChanged("OnChangeSlotType")]
+        public SlotType SlotType;
+
+        internal GridPosR.Orientation Orientation;
+
+        public void OnChangeSlotType()
+        {
+            SlotLightRenderer.material = SlotLightMaterials[(int) SlotType];
         }
 
         public void Initialize()
@@ -44,10 +72,6 @@ namespace Client
 
         void Update()
         {
-            if (!Application.isPlaying)
-            {
-                OnChangeSlotType(_slotType);
-            }
         }
 
         public void SetShown(bool shown)

@@ -19,6 +19,74 @@ namespace Client
             return cl;
         }
 
+        public static Color ChangeColorToWhite(Color color, float whiteRatio)
+        {
+            float r = color.r;
+            float g = color.g;
+            float b = color.b;
+
+            float max = Mathf.Max(r, g, b);
+
+            if (max - r < 0.2f && max - g < 0.2f && max - b < 0.2f) //本来就是灰色
+            {
+                max = max + 0.3f;
+                Color res = Color.Lerp(color, new Color(max, max, max, color.a), 1f);
+                return res;
+            }
+            else
+            {
+                max = max + 0.3f;
+                Color res = Color.Lerp(color, new Color(max, max, max, color.a), whiteRatio);
+                return res;
+            }
+        }
+
+        public static Color HSL_2_RGB(float H, float S, float L)
+        {
+            //H, S and L input range = 0 ÷ 1.0
+            //R, G and B output range = 0 ÷ 255
+            float R;
+            float G;
+            float B;
+            if (S.Equals(0))
+            {
+                R = L;
+                G = L;
+                B = L;
+            }
+            else
+            {
+                float var_1 = 0;
+                float var_2 = 0;
+                if (L < 0.5)
+                {
+                    var_2 = L * (1 + S);
+                }
+                else
+                {
+                    var_2 = (L + S) - (S * L);
+                }
+
+                var_1 = 2 * L - var_2;
+
+                R = Hue_2_RGB(var_1, var_2, H + (1.0f / 3));
+                G = Hue_2_RGB(var_1, var_2, H);
+                B = Hue_2_RGB(var_1, var_2, H - (1.0f / 3));
+            }
+
+            return new Color(R, G, B);
+        }
+
+        static float Hue_2_RGB(float v1, float v2, float vH) //Function Hue_2_RGB
+        {
+            if (vH < 0) vH += 1;
+            if (vH > 1) vH -= 1;
+            if ((6 * vH) < 1) return (v1 + (v2 - v1) * 6 * vH);
+            if ((2 * vH) < 1) return (v2);
+            if ((3 * vH) < 2) return (v1 + (v2 - v1) * ((2.0f / 3.0f) - vH) * 6);
+            return v1;
+        }
+
         public static Vector3 GenerateRandomPosInsideCollider(BoxCollider bc)
         {
             float x = Random.Range(bc.center.x - bc.size.x * 0.5f, bc.center.x + bc.size.x * 0.5f);
@@ -233,6 +301,41 @@ namespace Client
             };
 
             action.canceled += context => { state.Pressed = false; };
+        }
+
+        public static float Remap(this float value, float from1, float to1, float from2, float to2)
+        {
+            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+        }
+
+        public static float Remap(this int value, float from1, float to1, float from2, float to2)
+        {
+            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+        }
+
+        public static GridPosR.OrientationFlag ToFlag(this GridPosR.Orientation ori)
+        {
+            switch (ori)
+            {
+                case GridPosR.Orientation.Up:
+                {
+                    return GridPosR.OrientationFlag.Up;
+                }
+                case GridPosR.Orientation.Down:
+                {
+                    return GridPosR.OrientationFlag.Down;
+                }
+                case GridPosR.Orientation.Left:
+                {
+                    return GridPosR.OrientationFlag.Left;
+                }
+                case GridPosR.Orientation.Right:
+                {
+                    return GridPosR.OrientationFlag.Right;
+                }
+            }
+
+            return 0;
         }
     }
 }

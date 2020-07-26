@@ -1,5 +1,4 @@
 ﻿using System;
-using BiangStudio.GameDataFormat;
 using GameCore.AbilityDataDriven;
 using UnityEngine;
 
@@ -30,10 +29,11 @@ namespace GameCore
         {
             public float FlyDistance;
             public float FlyDuration;
+            public Vector3 Scale;
             public Vector3 Position;
             public Vector3 Velocity_Local;
             public Vector3 Velocity_Global;
-            public Vector3 Accelerate;
+            public Vector2 Accelerate;
             public int RemainCollideTimes;
 
             // Need to release

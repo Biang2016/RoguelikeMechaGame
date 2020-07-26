@@ -1,201 +1,203 @@
 ﻿using System;
 using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
-using BiangStudio.GridBackpack;
 using BiangStudio.ShapedInventory;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
-public class Backpack : Inventory
+namespace BiangStudio.GridBackpack
 {
-    public BackpackPanel BackpackPanel;
-
-    private KeyDownDelegate ToggleBackpackKeyDownHandler;
-
-    private InstantiatePrefabDelegate InstantiateBackpackGridHandler;
-    private InstantiatePrefabDelegate InstantiateBackpackItemHandler;
-    private InstantiatePrefabDelegate InstantiateBackpackItemVirtualOccupationQuadHandler;
-    private InstantiatePrefabDelegate InstantiateBackpackItemGridHitBoxHandler;
-
-    /// <summary>
-    /// This callback will be execute when the backpack is opened or closed
-    /// </summary>
-    public UnityAction<bool> ToggleBackpackCallback;
-
-    /// <summary>
-    /// This callback will be execute when the backpack debug mode is enable or disable
-    /// </summary>
-    public UnityAction<bool> ToggleDebugCallback;
-
-    public delegate bool DragItemOutBackpackDelegate(BackpackItem item);
-
-    /// <summary>
-    /// This callback will be execute when the backpack item is dragged out of the backpack.
-    /// </summary>
-    public DragItemOutBackpackDelegate DragItemOutBackpackCallback;
-
-    private bool isOpen = false;
-
-    private bool IsOpen
+    [Serializable]
+    public class Backpack : Inventory
     {
-        get { return isOpen; }
+        public BackpackPanel BackpackPanel;
 
-        set
+        private KeyDownDelegate ToggleBackpackKeyDownHandler;
+
+        private InstantiatePrefabDelegate InstantiateBackpackGridHandler;
+        private InstantiatePrefabDelegate InstantiateBackpackItemHandler;
+        private InstantiatePrefabDelegate InstantiateBackpackItemVirtualOccupationQuadHandler;
+        private InstantiatePrefabDelegate InstantiateBackpackItemGridHitBoxHandler;
+
+        /// <summary>
+        /// This callback will be execute when the backpack is opened or closed
+        /// </summary>
+        public UnityAction<bool> ToggleBackpackCallback;
+
+        /// <summary>
+        /// This callback will be execute when the backpack debug mode is enable or disable
+        /// </summary>
+        public UnityAction<bool> ToggleDebugCallback;
+
+        public delegate bool DragItemOutBackpackDelegate(BackpackItem item);
+
+        /// <summary>
+        /// This callback will be execute when the backpack item is dragged out of the backpack.
+        /// </summary>
+        public DragItemOutBackpackDelegate DragItemOutBackpackCallback;
+
+        private bool isOpen = false;
+
+        private bool IsOpen
         {
-            if (isOpen != value)
+            get { return isOpen; }
+
+            set
             {
-                ToggleBackpackCallback?.Invoke(value);
-                isOpen = value;
-            }
-        }
-    }
-
-    private bool isDebug = false;
-
-    private bool IsDebug
-    {
-        get { return isDebug; }
-
-        set
-        {
-            if (isDebug != value)
-            {
-                ToggleDebugCallback?.Invoke(value);
-                isDebug = value;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Initialize the backpack manager.
-    /// </summary>
-    /// <param name="inventoryName">the name of the backpack</param>
-    /// <param name="gridSize">the size (in pixel) of each grid of backpack items in UI panels.</param>
-    /// <param name="toggleBackpackKeyDownHandler">This handler should return a signal which toggles the backpack(e.g. return Input.GetKeyDown(KeyCode.B);)</param>
-    /// <param name="rotateItemKeyDownHandler">This handler should return a signal which rotates the backpack item(e.g. return Input.GetKeyDown(KeyCode.R);)</param>
-    /// <param name="instantiateBackpackGridHandler">This handler should instantiate a prefab with BackpackGrid component.</param>
-    /// <param name="instantiateBackpackItemHandler">This handler should instantiate a prefab with BackpackItem component.</param>
-    /// <param name="instantiateBackpackItemGridHitBoxHandler">This handler should instantiate a prefab with BackpackItemGridHitBox component.</param>
-    public Backpack(
-        string inventoryName, DragArea dragArea, int gridSize, int rows, int columns, bool unlockPartialGrids, int unlockedGridCount,
-        KeyDownDelegate toggleBackpackKeyDownHandler,
-        KeyDownDelegate rotateItemKeyDownHandler,
-        InstantiatePrefabDelegate instantiateBackpackGridHandler,
-        InstantiatePrefabDelegate instantiateBackpackItemHandler,
-        InstantiatePrefabDelegate instantiateBackpackItemVirtualOccupationQuadHandler,
-        InstantiatePrefabDelegate instantiateBackpackItemGridHitBoxHandler
-    ) : base(inventoryName, dragArea, gridSize, rows, columns, unlockPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
-        (gridPos) => new GridPosR(gridPos.x, -gridPos.z),
-        (gridPos_matrix) => new GridPosR(gridPos_matrix.x, -gridPos_matrix.z),
-        (gridPos) => new GridPosR(gridPos.x, -gridPos.z),
-        (gridPos_matrix) => new GridPosR(gridPos_matrix.x, -gridPos_matrix.z))
-    {
-        ToggleBackpackKeyDownHandler = toggleBackpackKeyDownHandler;
-        InstantiateBackpackGridHandler = instantiateBackpackGridHandler;
-        InstantiateBackpackItemHandler = instantiateBackpackItemHandler;
-        InstantiateBackpackItemVirtualOccupationQuadHandler = instantiateBackpackItemVirtualOccupationQuadHandler;
-        InstantiateBackpackItemGridHitBoxHandler = instantiateBackpackItemGridHitBoxHandler;
-    }
-
-    public void Update()
-    {
-        if (ToggleBackpackKeyDownHandler != null && ToggleBackpackKeyDownHandler.Invoke())
-        {
-            IsOpen = !IsOpen;
-        }
-
-        if (ToggleDebugKeyDownHandler != null && ToggleDebugKeyDownHandler.Invoke())
-        {
-            IsDebug = !IsDebug;
-        }
-    }
-
-    public BackpackGrid CreateBackpackGrid(Transform transform)
-    {
-        if (InstantiateBackpackGridHandler != null)
-        {
-            MonoBehaviour mono = InstantiateBackpackGridHandler?.Invoke(transform);
-            if (mono != null)
-            {
-                try
+                if (isOpen != value)
                 {
-                    BackpackGrid res = (BackpackGrid) mono;
-                    return res;
-                }
-                catch (Exception e)
-                {
-                    LogError(e.ToString());
+                    ToggleBackpackCallback?.Invoke(value);
+                    isOpen = value;
                 }
             }
         }
 
-        return null;
-    }
+        private bool isDebug = false;
 
-    public BackpackItem CreateBackpackItem(Transform transform)
-    {
-        if (InstantiateBackpackItemHandler != null)
+        private bool IsDebug
         {
-            MonoBehaviour mono = InstantiateBackpackItemHandler?.Invoke(transform);
-            if (mono != null)
+            get { return isDebug; }
+
+            set
             {
-                try
+                if (isDebug != value)
                 {
-                    BackpackItem res = (BackpackItem) mono;
-                    return res;
-                }
-                catch (Exception e)
-                {
-                    LogError(e.ToString());
+                    ToggleDebugCallback?.Invoke(value);
+                    isDebug = value;
                 }
             }
         }
 
-        return null;
-    }
-
-    public BackpackVirtualOccupationQuad CreateBackpackItemVirtualOccupationQuad(Transform transform)
-    {
-        if (InstantiateBackpackItemVirtualOccupationQuadHandler != null)
+        /// <summary>
+        /// Initialize the backpack manager.
+        /// </summary>
+        /// <param name="inventoryName">the name of the backpack</param>
+        /// <param name="gridSize">the size (in pixel) of each grid of backpack items in UI panels.</param>
+        /// <param name="toggleBackpackKeyDownHandler">This handler should return a signal which toggles the backpack(e.g. return Input.GetKeyDown(KeyCode.B);)</param>
+        /// <param name="rotateItemKeyDownHandler">This handler should return a signal which rotates the backpack item(e.g. return Input.GetKeyDown(KeyCode.R);)</param>
+        /// <param name="instantiateBackpackGridHandler">This handler should instantiate a prefab with BackpackGrid component.</param>
+        /// <param name="instantiateBackpackItemHandler">This handler should instantiate a prefab with BackpackItem component.</param>
+        /// <param name="instantiateBackpackItemGridHitBoxHandler">This handler should instantiate a prefab with BackpackItemGridHitBox component.</param>
+        public Backpack(
+            string inventoryName, DragArea dragArea, int gridSize, int rows, int columns, bool unlockPartialGrids, int unlockedGridCount,
+            KeyDownDelegate toggleBackpackKeyDownHandler,
+            KeyDownDelegate rotateItemKeyDownHandler,
+            InstantiatePrefabDelegate instantiateBackpackGridHandler,
+            InstantiatePrefabDelegate instantiateBackpackItemHandler,
+            InstantiatePrefabDelegate instantiateBackpackItemVirtualOccupationQuadHandler,
+            InstantiatePrefabDelegate instantiateBackpackItemGridHitBoxHandler
+        ) : base(inventoryName, dragArea, gridSize, rows, columns, unlockPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
+            (gridPos) => new GridPosR(gridPos.x, -gridPos.z),
+            (gridPos_matrix) => new GridPosR(gridPos_matrix.x, -gridPos_matrix.z),
+            (gridPos) => new GridPosR(gridPos.x, -gridPos.z),
+            (gridPos_matrix) => new GridPosR(gridPos_matrix.x, -gridPos_matrix.z))
         {
-            MonoBehaviour mono = InstantiateBackpackItemVirtualOccupationQuadHandler?.Invoke(transform);
-            if (mono != null)
+            ToggleBackpackKeyDownHandler = toggleBackpackKeyDownHandler;
+            InstantiateBackpackGridHandler = instantiateBackpackGridHandler;
+            InstantiateBackpackItemHandler = instantiateBackpackItemHandler;
+            InstantiateBackpackItemVirtualOccupationQuadHandler = instantiateBackpackItemVirtualOccupationQuadHandler;
+            InstantiateBackpackItemGridHitBoxHandler = instantiateBackpackItemGridHitBoxHandler;
+        }
+
+        public void Update()
+        {
+            if (ToggleBackpackKeyDownHandler != null && ToggleBackpackKeyDownHandler.Invoke())
             {
-                try
-                {
-                    BackpackVirtualOccupationQuad res = (BackpackVirtualOccupationQuad) mono;
-                    return res;
-                }
-                catch (Exception e)
-                {
-                    LogError(e.ToString());
-                }
+                IsOpen = !IsOpen;
+            }
+
+            if (ToggleDebugKeyDownHandler != null && ToggleDebugKeyDownHandler.Invoke())
+            {
+                IsDebug = !IsDebug;
             }
         }
 
-        return null;
-    }
-
-    public BackpackItemGridHitBox CreateBackpackItemGridHitBox(Transform transform)
-    {
-        if (InstantiateBackpackItemGridHitBoxHandler != null)
+        public BackpackGrid CreateBackpackGrid(Transform transform)
         {
-            MonoBehaviour mono = InstantiateBackpackItemGridHitBoxHandler?.Invoke(transform);
-            if (mono != null)
+            if (InstantiateBackpackGridHandler != null)
             {
-                try
+                MonoBehaviour mono = InstantiateBackpackGridHandler?.Invoke(transform);
+                if (mono != null)
                 {
-                    BackpackItemGridHitBox res = (BackpackItemGridHitBox) mono;
-                    return res;
-                }
-                catch (Exception e)
-                {
-                    LogError(e.ToString());
+                    try
+                    {
+                        BackpackGrid res = (BackpackGrid) mono;
+                        return res;
+                    }
+                    catch (Exception e)
+                    {
+                        LogError(e.ToString());
+                    }
                 }
             }
+
+            return null;
         }
 
-        return null;
+        public BackpackItem CreateBackpackItem(Transform transform)
+        {
+            if (InstantiateBackpackItemHandler != null)
+            {
+                MonoBehaviour mono = InstantiateBackpackItemHandler?.Invoke(transform);
+                if (mono != null)
+                {
+                    try
+                    {
+                        BackpackItem res = (BackpackItem) mono;
+                        return res;
+                    }
+                    catch (Exception e)
+                    {
+                        LogError(e.ToString());
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public BackpackVirtualOccupationQuad CreateBackpackItemVirtualOccupationQuad(Transform transform)
+        {
+            if (InstantiateBackpackItemVirtualOccupationQuadHandler != null)
+            {
+                MonoBehaviour mono = InstantiateBackpackItemVirtualOccupationQuadHandler?.Invoke(transform);
+                if (mono != null)
+                {
+                    try
+                    {
+                        BackpackVirtualOccupationQuad res = (BackpackVirtualOccupationQuad) mono;
+                        return res;
+                    }
+                    catch (Exception e)
+                    {
+                        LogError(e.ToString());
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public BackpackItemGridHitBox CreateBackpackItemGridHitBox(Transform transform)
+        {
+            if (InstantiateBackpackItemGridHitBoxHandler != null)
+            {
+                MonoBehaviour mono = InstantiateBackpackItemGridHitBoxHandler?.Invoke(transform);
+                if (mono != null)
+                {
+                    try
+                    {
+                        BackpackItemGridHitBox res = (BackpackItemGridHitBox) mono;
+                        return res;
+                    }
+                    catch (Exception e)
+                    {
+                        LogError(e.ToString());
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 }

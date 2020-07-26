@@ -132,7 +132,7 @@ namespace BiangStudio.ShapedInventory
         {
             foreach (InventoryItem inventoryItem in InventoryInfo.InventoryItems)
             {
-                RemoveItem(inventoryItem);
+                RemoveItem(inventoryItem, true);
             }
         }
 
@@ -260,7 +260,7 @@ namespace BiangStudio.ShapedInventory
 
         public UnityAction<InventoryItem> OnRemoveItemSucAction;
 
-        public void RemoveItem(InventoryItem item)
+        public void RemoveItem(InventoryItem item, bool needCallback)
         {
             if (InventoryInfo.InventoryItems.Contains(item))
             {
@@ -274,7 +274,7 @@ namespace BiangStudio.ShapedInventory
                 if (EnableLog) Debug.Log("RemoveItem: " + sb.ToString());
 
                 InventoryInfo.InventoryItems.Remove(item);
-                OnRemoveItemSucAction?.Invoke(item);
+                if (needCallback) OnRemoveItemSucAction?.Invoke(item);
                 RefreshConflictAndIsolation();
             }
         }

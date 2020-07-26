@@ -19,17 +19,33 @@ namespace BiangStudio.GridBackpack
 
         public InventoryGrid Data;
 
-        [SerializeField] private Image Image;
-        [SerializeField] private Text GridPosText;
-        [SerializeField] private Color LockedColor;
-        [SerializeField] private Color AvailableColor;
-        [SerializeField] private Color UnavailableColor;
-        [SerializeField] private Color TempUnavailableColor;
-        [SerializeField] private Color PreviewColor;
+        [SerializeField]
+        private Image Image;
+
+        [SerializeField]
+        private Text GridPosText;
+
+        [SerializeField]
+        private Color LockedColor;
+
+        [SerializeField]
+        private Color AvailableColor;
+
+        [SerializeField]
+        private Color UnavailableColor;
+
+        [SerializeField]
+        private Color TempUnavailableColor;
+
+        [SerializeField]
+        private Color PreviewColor;
 
         internal bool Available => Data.Available;
 
         internal bool Locked => Data.Locked;
+
+        [SerializeField]
+        private bool ShowGridPosDebugText;
 
         internal InventoryGrid.States State
         {
@@ -41,11 +57,14 @@ namespace BiangStudio.GridBackpack
         {
             Data = data;
             Data.SetStateHandler = OnSetState;
-#if UNITY_EDITOR
-            GridPosText.text = gp.ToString();
-#else
-            GridPosText.text = "";
-#endif
+            if (ShowGridPosDebugText)
+            {
+                GridPosText.text = gp.ToString();
+            }
+            else
+            {
+                GridPosText.text = "";
+            }
         }
 
         internal void OnSetState(InventoryGrid.States newValue)

@@ -11,6 +11,8 @@ namespace Client
         {
             Stop();
             base.PoolRecycle();
+            transform.localScale = Vector3.one;
+            transform.rotation = Quaternion.identity;
         }
 
         void Awake()

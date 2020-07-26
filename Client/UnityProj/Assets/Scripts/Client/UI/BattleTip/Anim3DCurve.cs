@@ -43,7 +43,6 @@ namespace Client
             get { return isAnimating; }
         }
 
-
         public void StartAnim(int unitNum, Action onAnimFinish)
         {
             this.onAnimFinish = onAnimFinish;

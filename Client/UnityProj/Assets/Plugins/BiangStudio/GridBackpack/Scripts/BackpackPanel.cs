@@ -30,7 +30,7 @@ namespace BiangStudio.GridBackpack
         {
         }
 
-        void Reset()
+        void ResetPanel()
         {
             foreach (KeyValuePair<uint, BackpackItem> kv in backpackItems)
             {

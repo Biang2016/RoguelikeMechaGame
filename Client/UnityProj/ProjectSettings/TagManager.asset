@@ -24,7 +24,7 @@ TagManager:
   - ItemDroppedSprite
   - BackpackItemHitBox
   - BattleUI
-  - 
+  - Slot
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Debug
     uniqueID: 2735402123
+    locked: 0
+  - name: BattleUI
+    uniqueID: 900515743
     locked: 0

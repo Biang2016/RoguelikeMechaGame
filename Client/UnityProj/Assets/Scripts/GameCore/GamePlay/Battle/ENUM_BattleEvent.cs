@@ -1,5 +1,4 @@
-﻿
-namespace GameCore
+﻿namespace GameCore
 {
     public enum ENUM_BattleEvent
     {

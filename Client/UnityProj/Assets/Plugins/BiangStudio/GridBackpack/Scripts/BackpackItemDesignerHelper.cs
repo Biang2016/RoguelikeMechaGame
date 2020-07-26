@@ -1,25 +1,28 @@
-﻿using UnityEngine;
-using System.Collections;
-using BiangStudio.GridBackpack;
-using BiangStudio.ShapedInventory;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using BiangStudio.GameDataFormat.Grid;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
-public class BackpackItemDesignerHelper : MonoBehaviour
+namespace BiangStudio.GridBackpack
 {
-    private RectTransform rectTransform;
-    public InventoryItem Data;
-
-    [SerializeField] private Image Image;
-    [SerializeField] private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
-
-    void Awake()
+    [ExecuteInEditMode]
+    public class BackpackItemDesignerHelper : MonoBehaviour
     {
-        rectTransform = transform as RectTransform;
-    }
+        public Image Image;
+        public GameObject BoxesRoot;
 
-    void Update()
-    {
-        //BackpackItemGridHitBoxRoot.
+        public void ReadBackpackItemInfo(int backpackGridSize, out List<GridPos> occupiedGridPositions, out Sprite sprite)
+        {
+            BackpackItemGridHitBox[] boxes = BoxesRoot.GetComponentsInChildren<BackpackItemGridHitBox>();
+            occupiedGridPositions = new List<GridPos>();
+            foreach (BackpackItemGridHitBox box in boxes)
+            {
+                Vector2 localPosition = ((RectTransform)box.transform).anchoredPosition;
+                GridPos gp = GridPos.GetGridPosByPointXY(localPosition, backpackGridSize);
+                occupiedGridPositions.Add(gp);
+            }
+
+            sprite = Image.sprite;
+        }
     }
 }

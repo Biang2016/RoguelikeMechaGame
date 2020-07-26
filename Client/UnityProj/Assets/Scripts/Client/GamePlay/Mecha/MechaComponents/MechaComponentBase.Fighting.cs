@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using GameCore;
 using GameCore.AbilityDataDriven;
-using Google.Protobuf.WellKnownTypes;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Enum = System.Enum;
 
 namespace Client
 {
@@ -90,6 +88,7 @@ namespace Client
         {
             ClientGameManager.Instance.BattleMessenger.Broadcast<AttackData>((uint) ENUM_BattleEvent.Battle_MechaComponentAttackTip,
                 new AttackData(attacker, this, damage, BattleTipType.Attack, 0, 0));
+            MechaComponentModelRoot.OnDamage((float) MechaComponentInfo.M_LeftLife / MechaComponentInfo.M_TotalLife);
         }
     }
 }

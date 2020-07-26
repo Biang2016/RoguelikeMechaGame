@@ -1,4 +1,5 @@
-﻿using BiangStudio.GameDataFormat.Grid;
+﻿using System.Linq;
+using BiangStudio.GameDataFormat.Grid;
 using Client;
 using GameCore;
 using UnityEditor.SceneManagement;
@@ -28,15 +29,11 @@ public class AssetHelper : UnityEditor.AssetModificationProcessor
         component.transform.position = Vector3.zero;
         component.transform.rotation = Quaternion.identity;
         MechaComponentGridRoot root = component.MechaComponentGridRoot;
+        root.RefreshConfig();
         GridPos center = root.GetOccupiedPositions().GetBoundingRectFromListGridPos().center;
-        foreach (MechaComponentHitBox hb in component.MechaComponentGridRoot.HitBoxes)
+        foreach (MechaComponentGrid grid in root.mechaComponentGrids)
         {
-            hb.transform.Translate(new Vector3(-center.x * ConfigManager.GridSize, 0, -center.z * ConfigManager.GridSize));
-        }
-
-        foreach (MechaComponentGrid mcg in component.GetComponentsInChildren<MechaComponentGrid>())
-        {
-            mcg.transform.Translate(new Vector3(-center.x * ConfigManager.GridSize, 0, -center.z * ConfigManager.GridSize));
+            grid.transform.Translate(new Vector3(-center.x * ConfigManager.GridSize, 0, -center.z * ConfigManager.GridSize));
         }
 
         foreach (MechaComponentModel model in component.GetComponentsInChildren<MechaComponentModel>())

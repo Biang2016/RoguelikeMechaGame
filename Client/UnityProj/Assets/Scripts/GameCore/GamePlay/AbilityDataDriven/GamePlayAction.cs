@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using BiangStudio.Messenger;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -237,6 +237,24 @@ namespace GameCore.AbilityDataDriven
                                     {
                                         Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{Damage}</color> damage to <color=\"#FF74FF\">{singleTarget.Target.ToString()}</color> {flyRealTimeData.HitMechaComponentInfo.LogIdentityName}");
                                         flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, Damage);
+                                    }
+
+                                    break;
+                                }
+                            }
+
+                            break;
+                        }
+                        case MultipleActionTarget multipleTarget:
+                        {
+                            switch (multipleTarget.Center)
+                            {
+                                case ENUM_MultipleTargetCenter.PROJECTILE:
+                                {
+                                    List<MechaComponentInfo> hitMCIs = BattleManager.Instance.SearchRangeHandler(flyRealTimeData.Position, multipleTarget.Radius);
+                                    foreach (MechaComponentInfo mci in hitMCIs)
+                                    {
+                                        mci.Damage(executeInfo.MechaComponentInfo, Damage);
                                     }
 
                                     break;

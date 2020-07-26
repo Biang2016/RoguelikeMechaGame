@@ -64,6 +64,7 @@ namespace GameCore
         Battle_Skill_1,
         Battle_Skill_2,
         Battle_Skill_3,
+        Battle_ToggleBattleTip,
 
         BATTLE_MAX_FLAG = 400,
 

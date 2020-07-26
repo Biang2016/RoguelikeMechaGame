@@ -23,9 +23,11 @@ namespace BiangStudio.GridBackpack
         private Draggable Draggable;
         public RectTransform PanelRectTransform => (RectTransform) Backpack.BackpackPanel.ItemContainer;
 
-        [SerializeField] private Image Image;
+        [SerializeField]
+        private Image Image;
 
-        [SerializeField] private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
+        [SerializeField]
+        private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
 
         public RectTransform RectTransform => (RectTransform) transform;
 
@@ -40,7 +42,6 @@ namespace BiangStudio.GridBackpack
         public void Initialize(Backpack backpack, InventoryItem inventoryItem)
         {
             Backpack = backpack;
-            //Image.sprite = BackpackManager.Instance.GetBackpackItemSprite(Data.ItemContentInfo.ItemSpriteKey);
             SetInventoryItem(inventoryItem);
             size = new Vector2(InventoryItem.BoundingRect.size.x * Backpack.GridSize, InventoryItem.BoundingRect.size.z * Backpack.GridSize);
             sizeRev = new Vector2(size.y, size.x);
@@ -51,6 +52,7 @@ namespace BiangStudio.GridBackpack
         {
             InventoryItem = inventoryItem;
             InventoryItem.OnSetGridPosHandler = SetVirtualGridPos;
+            Image.sprite = BackpackManager.Instance.GetBackpackItemSprite(inventoryItem.ItemContentInfo.ItemSpriteKey);
         }
 
         #region IDraggable
@@ -117,7 +119,7 @@ namespace BiangStudio.GridBackpack
                     if (Backpack.DragItemOutBackpackCallback.Invoke(this))
                     {
                         InventoryItem.GridPos_Matrix = dragStartGridPos_Matrix;
-                        Backpack.RemoveItem(InventoryItem);
+                        Backpack.RemoveItem(InventoryItem, true);
                         PoolRecycle();
                     }
                 }

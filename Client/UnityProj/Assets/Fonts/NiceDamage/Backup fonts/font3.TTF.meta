@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 8dc333e201b3e2d4f8ac80b5bed24fff
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: '!Basket of Hammers'
+  fontNames:
+  - '!Basket of Hammers'
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a4eb5cbd5f2385445ba0b609e9d152af, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -11,7 +11,6 @@ namespace Client
     public class @PlayerInput : IInputActionCollection, IDisposable
     {
         public InputActionAsset asset { get; }
-
         public @PlayerInput()
         {
             asset = InputActionAsset.FromJson(@"{
@@ -81,6 +80,14 @@ namespace Client
                     ""name"": ""Skill_3"",
                     ""type"": ""Button"",
                     ""id"": ""f027c168-eca3-48e2-be31-6edf44e526b2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""ToggleBattleTip"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc2fed5a-0d95-47bd-b476-ece2648b9499"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
@@ -317,6 +324,17 @@ namespace Client
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27cf3453-9af4-41fd-9ab4-deae6e3b6533"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""ToggleBattleTip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -331,6 +349,14 @@ namespace Client
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""3e484d28-18ca-4c8e-a899-7cdaff5fab1d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""MouseRightClick"",
@@ -458,6 +484,72 @@ namespace Client
                     ""action"": ""ToggleWireLines"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""054689b7-60de-4224-8ea7-a74cd32b3c3c"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""17d857f9-cc87-416c-b57c-72e8d84ae6a1"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""3b986b9f-f881-43da-9d46-24b198c0411a"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""cc3cfbc1-9f05-4f9a-a2e8-4d31cf4b5ba6"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""978feba3-2e79-49c8-9001-7ee444c4500f"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""853fe531-968f-48f1-b307-1e18488081a9"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -655,35 +747,37 @@ namespace Client
     ]
 }");
             // MechaBattleInput
-            m_MechaBattleInput = asset.FindActionMap("MechaBattleInput", true);
-            m_MechaBattleInput_MouseLeftClick = m_MechaBattleInput.FindAction("MouseLeftClick", true);
-            m_MechaBattleInput_MouseRightClick = m_MechaBattleInput.FindAction("MouseRightClick", true);
-            m_MechaBattleInput_MouseMiddleClick = m_MechaBattleInput.FindAction("MouseMiddleClick", true);
-            m_MechaBattleInput_Move = m_MechaBattleInput.FindAction("Move", true);
-            m_MechaBattleInput_Skill_0 = m_MechaBattleInput.FindAction("Skill_0", true);
-            m_MechaBattleInput_Skill_1 = m_MechaBattleInput.FindAction("Skill_1", true);
-            m_MechaBattleInput_Skill_2 = m_MechaBattleInput.FindAction("Skill_2", true);
-            m_MechaBattleInput_Skill_3 = m_MechaBattleInput.FindAction("Skill_3", true);
+            m_MechaBattleInput = asset.FindActionMap("MechaBattleInput", throwIfNotFound: true);
+            m_MechaBattleInput_MouseLeftClick = m_MechaBattleInput.FindAction("MouseLeftClick", throwIfNotFound: true);
+            m_MechaBattleInput_MouseRightClick = m_MechaBattleInput.FindAction("MouseRightClick", throwIfNotFound: true);
+            m_MechaBattleInput_MouseMiddleClick = m_MechaBattleInput.FindAction("MouseMiddleClick", throwIfNotFound: true);
+            m_MechaBattleInput_Move = m_MechaBattleInput.FindAction("Move", throwIfNotFound: true);
+            m_MechaBattleInput_Skill_0 = m_MechaBattleInput.FindAction("Skill_0", throwIfNotFound: true);
+            m_MechaBattleInput_Skill_1 = m_MechaBattleInput.FindAction("Skill_1", throwIfNotFound: true);
+            m_MechaBattleInput_Skill_2 = m_MechaBattleInput.FindAction("Skill_2", throwIfNotFound: true);
+            m_MechaBattleInput_Skill_3 = m_MechaBattleInput.FindAction("Skill_3", throwIfNotFound: true);
+            m_MechaBattleInput_ToggleBattleTip = m_MechaBattleInput.FindAction("ToggleBattleTip", throwIfNotFound: true);
             // MechaBuildingInput
-            m_MechaBuildingInput = asset.FindActionMap("MechaBuildingInput", true);
-            m_MechaBuildingInput_MouseLeftClick = m_MechaBuildingInput.FindAction("MouseLeftClick", true);
-            m_MechaBuildingInput_MouseRightClick = m_MechaBuildingInput.FindAction("MouseRightClick", true);
-            m_MechaBuildingInput_MouseMiddleClick = m_MechaBuildingInput.FindAction("MouseMiddleClick", true);
-            m_MechaBuildingInput_RotateItem = m_MechaBuildingInput.FindAction("RotateItem", true);
-            m_MechaBuildingInput_ToggleBackpack = m_MechaBuildingInput.FindAction("ToggleBackpack", true);
-            m_MechaBuildingInput_ToggleWireLines = m_MechaBuildingInput.FindAction("ToggleWireLines", true);
-            m_MechaBuildingInput_ToggleDebug = m_MechaBuildingInput.FindAction("ToggleDebug", true);
+            m_MechaBuildingInput = asset.FindActionMap("MechaBuildingInput", throwIfNotFound: true);
+            m_MechaBuildingInput_MouseLeftClick = m_MechaBuildingInput.FindAction("MouseLeftClick", throwIfNotFound: true);
+            m_MechaBuildingInput_Move = m_MechaBuildingInput.FindAction("Move", throwIfNotFound: true);
+            m_MechaBuildingInput_MouseRightClick = m_MechaBuildingInput.FindAction("MouseRightClick", throwIfNotFound: true);
+            m_MechaBuildingInput_MouseMiddleClick = m_MechaBuildingInput.FindAction("MouseMiddleClick", throwIfNotFound: true);
+            m_MechaBuildingInput_RotateItem = m_MechaBuildingInput.FindAction("RotateItem", throwIfNotFound: true);
+            m_MechaBuildingInput_ToggleBackpack = m_MechaBuildingInput.FindAction("ToggleBackpack", throwIfNotFound: true);
+            m_MechaBuildingInput_ToggleWireLines = m_MechaBuildingInput.FindAction("ToggleWireLines", throwIfNotFound: true);
+            m_MechaBuildingInput_ToggleDebug = m_MechaBuildingInput.FindAction("ToggleDebug", throwIfNotFound: true);
             // Common
-            m_Common = asset.FindActionMap("Common", true);
-            m_Common_MouseLeftClick = m_Common.FindAction("MouseLeftClick", true);
-            m_Common_MouseRightClick = m_Common.FindAction("MouseRightClick", true);
-            m_Common_MouseMiddleClick = m_Common.FindAction("MouseMiddleClick", true);
-            m_Common_MousePosition = m_Common.FindAction("MousePosition", true);
-            m_Common_MouseWheel = m_Common.FindAction("MouseWheel", true);
-            m_Common_Exit = m_Common.FindAction("Exit", true);
-            m_Common_Tab = m_Common.FindAction("Tab", true);
-            m_Common_Confirm = m_Common.FindAction("Confirm", true);
-            m_Common_Debug = m_Common.FindAction("Debug", true);
+            m_Common = asset.FindActionMap("Common", throwIfNotFound: true);
+            m_Common_MouseLeftClick = m_Common.FindAction("MouseLeftClick", throwIfNotFound: true);
+            m_Common_MouseRightClick = m_Common.FindAction("MouseRightClick", throwIfNotFound: true);
+            m_Common_MouseMiddleClick = m_Common.FindAction("MouseMiddleClick", throwIfNotFound: true);
+            m_Common_MousePosition = m_Common.FindAction("MousePosition", throwIfNotFound: true);
+            m_Common_MouseWheel = m_Common.FindAction("MouseWheel", throwIfNotFound: true);
+            m_Common_Exit = m_Common.FindAction("Exit", throwIfNotFound: true);
+            m_Common_Tab = m_Common.FindAction("Tab", throwIfNotFound: true);
+            m_Common_Confirm = m_Common.FindAction("Confirm", throwIfNotFound: true);
+            m_Common_Debug = m_Common.FindAction("Debug", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -741,16 +835,11 @@ namespace Client
         private readonly InputAction m_MechaBattleInput_Skill_1;
         private readonly InputAction m_MechaBattleInput_Skill_2;
         private readonly InputAction m_MechaBattleInput_Skill_3;
-
+        private readonly InputAction m_MechaBattleInput_ToggleBattleTip;
         public struct MechaBattleInputActions
         {
             private @PlayerInput m_Wrapper;
-
-            public MechaBattleInputActions(@PlayerInput wrapper)
-            {
-                m_Wrapper = wrapper;
-            }
-
+            public MechaBattleInputActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @MouseLeftClick => m_Wrapper.m_MechaBattleInput_MouseLeftClick;
             public InputAction @MouseRightClick => m_Wrapper.m_MechaBattleInput_MouseRightClick;
             public InputAction @MouseMiddleClick => m_Wrapper.m_MechaBattleInput_MouseMiddleClick;
@@ -759,29 +848,12 @@ namespace Client
             public InputAction @Skill_1 => m_Wrapper.m_MechaBattleInput_Skill_1;
             public InputAction @Skill_2 => m_Wrapper.m_MechaBattleInput_Skill_2;
             public InputAction @Skill_3 => m_Wrapper.m_MechaBattleInput_Skill_3;
-
-            public InputActionMap Get()
-            {
-                return m_Wrapper.m_MechaBattleInput;
-            }
-
-            public void Enable()
-            {
-                Get().Enable();
-            }
-
-            public void Disable()
-            {
-                Get().Disable();
-            }
-
+            public InputAction @ToggleBattleTip => m_Wrapper.m_MechaBattleInput_ToggleBattleTip;
+            public InputActionMap Get() { return m_Wrapper.m_MechaBattleInput; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
-
-            public static implicit operator InputActionMap(MechaBattleInputActions set)
-            {
-                return set.Get();
-            }
-
+            public static implicit operator InputActionMap(MechaBattleInputActions set) { return set.Get(); }
             public void SetCallbacks(IMechaBattleInputActions instance)
             {
                 if (m_Wrapper.m_MechaBattleInputActionsCallbackInterface != null)
@@ -810,8 +882,10 @@ namespace Client
                     @Skill_3.started -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnSkill_3;
                     @Skill_3.performed -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnSkill_3;
                     @Skill_3.canceled -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnSkill_3;
+                    @ToggleBattleTip.started -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnToggleBattleTip;
+                    @ToggleBattleTip.performed -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnToggleBattleTip;
+                    @ToggleBattleTip.canceled -= m_Wrapper.m_MechaBattleInputActionsCallbackInterface.OnToggleBattleTip;
                 }
-
                 m_Wrapper.m_MechaBattleInputActionsCallbackInterface = instance;
                 if (instance != null)
                 {
@@ -839,62 +913,42 @@ namespace Client
                     @Skill_3.started += instance.OnSkill_3;
                     @Skill_3.performed += instance.OnSkill_3;
                     @Skill_3.canceled += instance.OnSkill_3;
+                    @ToggleBattleTip.started += instance.OnToggleBattleTip;
+                    @ToggleBattleTip.performed += instance.OnToggleBattleTip;
+                    @ToggleBattleTip.canceled += instance.OnToggleBattleTip;
                 }
             }
         }
-
         public MechaBattleInputActions @MechaBattleInput => new MechaBattleInputActions(this);
 
         // MechaBuildingInput
         private readonly InputActionMap m_MechaBuildingInput;
         private IMechaBuildingInputActions m_MechaBuildingInputActionsCallbackInterface;
         private readonly InputAction m_MechaBuildingInput_MouseLeftClick;
+        private readonly InputAction m_MechaBuildingInput_Move;
         private readonly InputAction m_MechaBuildingInput_MouseRightClick;
         private readonly InputAction m_MechaBuildingInput_MouseMiddleClick;
         private readonly InputAction m_MechaBuildingInput_RotateItem;
         private readonly InputAction m_MechaBuildingInput_ToggleBackpack;
         private readonly InputAction m_MechaBuildingInput_ToggleWireLines;
         private readonly InputAction m_MechaBuildingInput_ToggleDebug;
-
         public struct MechaBuildingInputActions
         {
             private @PlayerInput m_Wrapper;
-
-            public MechaBuildingInputActions(@PlayerInput wrapper)
-            {
-                m_Wrapper = wrapper;
-            }
-
+            public MechaBuildingInputActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @MouseLeftClick => m_Wrapper.m_MechaBuildingInput_MouseLeftClick;
+            public InputAction @Move => m_Wrapper.m_MechaBuildingInput_Move;
             public InputAction @MouseRightClick => m_Wrapper.m_MechaBuildingInput_MouseRightClick;
             public InputAction @MouseMiddleClick => m_Wrapper.m_MechaBuildingInput_MouseMiddleClick;
             public InputAction @RotateItem => m_Wrapper.m_MechaBuildingInput_RotateItem;
             public InputAction @ToggleBackpack => m_Wrapper.m_MechaBuildingInput_ToggleBackpack;
             public InputAction @ToggleWireLines => m_Wrapper.m_MechaBuildingInput_ToggleWireLines;
             public InputAction @ToggleDebug => m_Wrapper.m_MechaBuildingInput_ToggleDebug;
-
-            public InputActionMap Get()
-            {
-                return m_Wrapper.m_MechaBuildingInput;
-            }
-
-            public void Enable()
-            {
-                Get().Enable();
-            }
-
-            public void Disable()
-            {
-                Get().Disable();
-            }
-
+            public InputActionMap Get() { return m_Wrapper.m_MechaBuildingInput; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
-
-            public static implicit operator InputActionMap(MechaBuildingInputActions set)
-            {
-                return set.Get();
-            }
-
+            public static implicit operator InputActionMap(MechaBuildingInputActions set) { return set.Get(); }
             public void SetCallbacks(IMechaBuildingInputActions instance)
             {
                 if (m_Wrapper.m_MechaBuildingInputActionsCallbackInterface != null)
@@ -902,6 +956,9 @@ namespace Client
                     @MouseLeftClick.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseLeftClick;
                     @MouseLeftClick.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseLeftClick;
                     @MouseLeftClick.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseLeftClick;
+                    @Move.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMove;
+                    @Move.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMove;
+                    @Move.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMove;
                     @MouseRightClick.started -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseRightClick;
                     @MouseRightClick.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseRightClick;
                     @MouseRightClick.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnMouseRightClick;
@@ -921,13 +978,15 @@ namespace Client
                     @ToggleDebug.performed -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleDebug;
                     @ToggleDebug.canceled -= m_Wrapper.m_MechaBuildingInputActionsCallbackInterface.OnToggleDebug;
                 }
-
                 m_Wrapper.m_MechaBuildingInputActionsCallbackInterface = instance;
                 if (instance != null)
                 {
                     @MouseLeftClick.started += instance.OnMouseLeftClick;
                     @MouseLeftClick.performed += instance.OnMouseLeftClick;
                     @MouseLeftClick.canceled += instance.OnMouseLeftClick;
+                    @Move.started += instance.OnMove;
+                    @Move.performed += instance.OnMove;
+                    @Move.canceled += instance.OnMove;
                     @MouseRightClick.started += instance.OnMouseRightClick;
                     @MouseRightClick.performed += instance.OnMouseRightClick;
                     @MouseRightClick.canceled += instance.OnMouseRightClick;
@@ -949,7 +1008,6 @@ namespace Client
                 }
             }
         }
-
         public MechaBuildingInputActions @MechaBuildingInput => new MechaBuildingInputActions(this);
 
         // Common
@@ -964,16 +1022,10 @@ namespace Client
         private readonly InputAction m_Common_Tab;
         private readonly InputAction m_Common_Confirm;
         private readonly InputAction m_Common_Debug;
-
         public struct CommonActions
         {
             private @PlayerInput m_Wrapper;
-
-            public CommonActions(@PlayerInput wrapper)
-            {
-                m_Wrapper = wrapper;
-            }
-
+            public CommonActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @MouseLeftClick => m_Wrapper.m_Common_MouseLeftClick;
             public InputAction @MouseRightClick => m_Wrapper.m_Common_MouseRightClick;
             public InputAction @MouseMiddleClick => m_Wrapper.m_Common_MouseMiddleClick;
@@ -983,29 +1035,11 @@ namespace Client
             public InputAction @Tab => m_Wrapper.m_Common_Tab;
             public InputAction @Confirm => m_Wrapper.m_Common_Confirm;
             public InputAction @Debug => m_Wrapper.m_Common_Debug;
-
-            public InputActionMap Get()
-            {
-                return m_Wrapper.m_Common;
-            }
-
-            public void Enable()
-            {
-                Get().Enable();
-            }
-
-            public void Disable()
-            {
-                Get().Disable();
-            }
-
+            public InputActionMap Get() { return m_Wrapper.m_Common; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
-
-            public static implicit operator InputActionMap(CommonActions set)
-            {
-                return set.Get();
-            }
-
+            public static implicit operator InputActionMap(CommonActions set) { return set.Get(); }
             public void SetCallbacks(ICommonActions instance)
             {
                 if (m_Wrapper.m_CommonActionsCallbackInterface != null)
@@ -1038,7 +1072,6 @@ namespace Client
                     @Debug.performed -= m_Wrapper.m_CommonActionsCallbackInterface.OnDebug;
                     @Debug.canceled -= m_Wrapper.m_CommonActionsCallbackInterface.OnDebug;
                 }
-
                 m_Wrapper.m_CommonActionsCallbackInterface = instance;
                 if (instance != null)
                 {
@@ -1072,10 +1105,8 @@ namespace Client
                 }
             }
         }
-
         public CommonActions @Common => new CommonActions(this);
         private int m_KeyboardMouseSchemeIndex = -1;
-
         public InputControlScheme KeyboardMouseScheme
         {
             get
@@ -1084,9 +1115,7 @@ namespace Client
                 return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
             }
         }
-
         private int m_GamepadSchemeIndex = -1;
-
         public InputControlScheme GamepadScheme
         {
             get
@@ -1095,7 +1124,6 @@ namespace Client
                 return asset.controlSchemes[m_GamepadSchemeIndex];
             }
         }
-
         public interface IMechaBattleInputActions
         {
             void OnMouseLeftClick(InputAction.CallbackContext context);
@@ -1106,11 +1134,12 @@ namespace Client
             void OnSkill_1(InputAction.CallbackContext context);
             void OnSkill_2(InputAction.CallbackContext context);
             void OnSkill_3(InputAction.CallbackContext context);
+            void OnToggleBattleTip(InputAction.CallbackContext context);
         }
-
         public interface IMechaBuildingInputActions
         {
             void OnMouseLeftClick(InputAction.CallbackContext context);
+            void OnMove(InputAction.CallbackContext context);
             void OnMouseRightClick(InputAction.CallbackContext context);
             void OnMouseMiddleClick(InputAction.CallbackContext context);
             void OnRotateItem(InputAction.CallbackContext context);
@@ -1118,7 +1147,6 @@ namespace Client
             void OnToggleWireLines(InputAction.CallbackContext context);
             void OnToggleDebug(InputAction.CallbackContext context);
         }
-
         public interface ICommonActions
         {
             void OnMouseLeftClick(InputAction.CallbackContext context);

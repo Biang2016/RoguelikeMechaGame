@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BiangStudio.Singleton;
 using GameCore;
-using GameCore.AbilityDataDriven;
 using UnityEngine;
 
 namespace Client
@@ -31,16 +29,16 @@ namespace Client
         public void EmitProjectile(ProjectileInfo projectileInfo)
         {
             Transform dummyPos = ClientBattleManager.Instance.FindMechaComponentBase(projectileInfo.ParentExecuteInfo.MechaComponentInfo.GUID).DummyPosDict[projectileInfo.ProjectileConfig.DummyPos];
-            ShootProjectile(projectileInfo, dummyPos.position, dummyPos.forward);
+            ShootProjectile(projectileInfo, dummyPos.position, dummyPos.forward, dummyPos);
         }
 
-        private Projectile ShootProjectile(ProjectileInfo projectileInfo, Vector3 from, Vector3 dir)
+        private Projectile ShootProjectile(ProjectileInfo projectileInfo, Vector3 from, Vector3 dir, Transform dummyPos)
         {
             Projectile projectile = GameObjectPoolManager.Instance.ProjectileDict[projectileInfo.ProjectileType].AllocateGameObject<Projectile>(Root);
             projectile.transform.position = from;
             projectile.transform.LookAt(from + dir);
             projectile.Initialize(projectileInfo);
-            projectile.Launch();
+            projectile.Launch(dummyPos);
             return projectile;
         }
     }

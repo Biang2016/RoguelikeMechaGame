@@ -38,9 +38,13 @@ namespace Client
         {
             if (targetMecha)
             {
-                targetMecha.MechaInfo.RefreshHUDPanelCoreLifeSliderCount = null;
-                targetMecha.MechaInfo.OnLifeChange = null;
-                targetMecha.MechaInfo.OnPowerChange = null;
+                if (targetMecha.MechaInfo != null)
+                {
+                    targetMecha.MechaInfo.RefreshHUDPanelCoreLifeSliderCount = null;
+                    targetMecha.MechaInfo.OnLifeChange = null;
+                    targetMecha.MechaInfo.OnPowerChange = null;
+                }
+
                 targetMecha = null;
             }
 
@@ -93,18 +97,21 @@ namespace Client
         {
             if (ClientBattleManager.Instance.PlayerMecha)
             {
-                List<MechaComponentInfo> mcis = targetMecha.MechaInfo.GetCoreLifeChangeDelegates();
-
                 foreach (HUDSlider coreHudSlider in Core_HUDSliders)
                 {
                     coreHudSlider.PoolRecycle();
                 }
 
-                Core_HUDSliders.Clear();
-
-                foreach (MechaComponentInfo mci in mcis)
+                if (targetMecha?.MechaInfo != null)
                 {
-                    AddCoreLifeSlider(mci);
+                    List<MechaComponentInfo> mcis = targetMecha.MechaInfo.GetCoreLifeChangeDelegates();
+
+                    Core_HUDSliders.Clear();
+
+                    foreach (MechaComponentInfo mci in mcis)
+                    {
+                        AddCoreLifeSlider(mci);
+                    }
                 }
             }
         }

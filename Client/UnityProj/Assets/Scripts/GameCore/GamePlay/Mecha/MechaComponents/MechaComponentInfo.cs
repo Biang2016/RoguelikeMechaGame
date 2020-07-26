@@ -54,7 +54,7 @@ namespace GameCore
         private List<GridPos> originalOccupiedGridPositions;
 
         public List<GridPos> OriginalOccupiedGridPositions => originalOccupiedGridPositions;
-        public string ItemSpriteKey => typeof(MechaComponentType).FullName + "." + MechaComponentType;
+        public string ItemSpriteKey => "MechaComponent." + MechaComponentType;
         public string ItemName => "机甲组件." + MechaComponentType;
 
         private string logIdentityName;
@@ -66,7 +66,7 @@ namespace GameCore
             GUID = GetGUID();
             MechaComponentType = mechaComponentType;
             AbilityGroup = abilityGroup;
-            TotalLife = totalLife;
+            M_TotalLife = totalLife;
             M_LeftLife = totalLife;
             DropProbability = dropProbability;
             if (ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(mechaComponentType, out List<GridPos> ops))
@@ -85,7 +85,7 @@ namespace GameCore
 
         public MechaComponentInfo Clone()
         {
-            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType, AbilityGroup.Clone(), TotalLife, DropProbability);
+            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType, AbilityGroup.Clone(), M_TotalLife, DropProbability);
             return mci;
         }
 
@@ -102,9 +102,8 @@ namespace GameCore
         #region Life
 
         public int DropProbability;
-        public int TotalLife;
 
-        internal bool IsDead = false;
+        public bool IsDead = false;
 
         public UnityAction<int, int> OnLifeChange;
 

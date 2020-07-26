@@ -10,7 +10,8 @@ namespace GameCore
     {
         private static uint guidGenerator = 10000;
 
-        [HideInInspector] public uint GUID;
+        [HideInInspector]
+        public uint GUID;
 
         private uint GetGUID()
         {

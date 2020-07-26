@@ -30,6 +30,8 @@ namespace GameCore
         public MechaEditorInventory MechaEditorInventory;
 
         public bool IsPlayer => MechaType == MechaType.Player;
+        public bool IsBuilding => GameStateManager.Instance.GetState() == GameState.Building;
+        public bool IsFighting => GameStateManager.Instance.GetState() == GameState.Fighting;
 
         public string LogIdentityName => $"<color=\"#61B2FF\">{MechaName}</color>-{GUID}";
 
@@ -53,6 +55,7 @@ namespace GameCore
 
         public void AddMechaComponentInfo(MechaComponentInfo mci, GridPosR gp_matrix)
         {
+            if (IsBuilding) _totalLife = 0;
             mci.MechaInfo = this;
             mci.OnRemoveMechaComponentInfoSuc += RemoveMechaComponentInfo;
             MechaComponentInfoDict.Add(mci.GUID, mci);
@@ -66,7 +69,8 @@ namespace GameCore
 
         private void RemoveMechaComponentInfo(MechaComponentInfo mci)
         {
-            MechaEditorInventory.RemoveItem(mci.InventoryItem);
+            if (IsBuilding) _totalLife = 0;
+            MechaEditorInventory.RemoveItem(mci.InventoryItem, false);
             MechaEditorInventory.RefreshConflictAndIsolation(out List<InventoryItem> _, out List<InventoryItem> isolatedItems);
             if (MechaType == MechaType.Enemy)
             {
@@ -83,8 +87,14 @@ namespace GameCore
                 }
             }
 
-            mci.OnRemoveMechaComponentInfoSuc = null;
             MechaComponentInfoDict.Remove(mci.GUID);
+            if (MechaComponentInfoDict.Count == 0)
+            {
+                Die();
+            }
+
+            RefreshHUDPanelCoreLifeSliderCount?.Invoke();
+            mci.OnRemoveMechaComponentInfoSuc = null;
             mci.MechaInfo = null;
         }
 
@@ -116,6 +126,8 @@ namespace GameCore
         }
 
         #region Life & Power
+
+        public bool IsDead;
 
         public void UpdateLifeChange()
         {
@@ -154,7 +166,7 @@ namespace GameCore
         public int M_LeftLife
         {
             get { return _leftLife; }
-            set
+            private set
             {
                 if (value < 0)
                 {
@@ -174,7 +186,7 @@ namespace GameCore
         public int M_TotalLife
         {
             get { return _totalLife; }
-            set
+            private set
             {
                 if (_totalLife != value)
                 {
@@ -191,7 +203,7 @@ namespace GameCore
         public int M_LeftPower
         {
             get { return _leftPower; }
-            set
+            private set
             {
                 if (_leftPower != value)
                 {
@@ -206,13 +218,26 @@ namespace GameCore
         public int M_TotalPower
         {
             get { return _totalPower; }
-            set
+            private set
             {
                 if (_totalPower != value)
                 {
                     _totalPower = value;
                     OnPowerChange?.Invoke(M_LeftPower, _totalPower);
                 }
+            }
+        }
+
+        private void Die()
+        {
+            IsDead = true;
+            if (IsPlayer)
+            {
+                // TODO Endgame
+            }
+            else
+            {
+                OnRemoveMechaInfoSuc(this);
             }
         }
 

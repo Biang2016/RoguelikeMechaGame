@@ -65,7 +65,7 @@ namespace Client
         {
             Color colorRet = colorOrigin;
             float percent = Mathf.Clamp01((animateTime - index * interval - delay) / duration);
-            foreach (var c in curves)
+            foreach (CurveDefine c in curves)
             {
                 float value = 0;
                 if (c.curve != null)

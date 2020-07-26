@@ -1,5 +1,6 @@
 using BiangStudio.GameDataFormat.Grid;
 using DG.Tweening;
+using GameCore;
 using UnityEngine;
 
 namespace Client
@@ -8,6 +9,9 @@ namespace Client
     {
         [SerializeField]
         private Camera Camera;
+
+        [SerializeField]
+        private Camera BattleUICamera;
 
         private Transform target;
         private Vector3 targetingPoint;
@@ -50,15 +54,22 @@ namespace Client
                 {
                     _fov_Level = Mathf.Clamp(value, 0, FOVs.Length - 1);
                     Camera.DOFieldOfView(FOVs[_fov_Level], 0.2f);
+                    BattleUICamera.DOFieldOfView(FOVs[_fov_Level], 0.2f);
                 }
             }
         }
 
-        private float[] FOVs = new float[] {10, 15, 25, 35, 50, 75};
+        public float[] FOVs = new float[] {10, 15, 25, 35, 50, 75};
+        public float[] FOVs_ScaleForBattleUI = new float[] {1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+
+        public float GetScaleForBattleUI()
+        {
+            return FOVs_ScaleForBattleUI[FOV_Level];
+        }
 
         private Vector3 offset_Manually;
 
-        private void LateUpdate()
+        private void Update()
         {
             RefreshTargetingPosition();
             if (target)
@@ -84,7 +95,7 @@ namespace Client
             }
 
             float movement = 5f;
-            offset_Manually = ControlManager.Instance.Battle_Move.x * new Vector3(movement, 0, movement) + ControlManager.Instance.Battle_Move.y * new Vector3(-movement, 0, movement);
+            offset_Manually = ControlManager.Instance.Building_Move.x * new Vector3(movement, 0, movement) + ControlManager.Instance.Building_Move.y * new Vector3(-movement, 0, movement);
 
             if (ControlManager.Instance.Battle_MouseWheel.y < 0)
             {
@@ -92,6 +103,19 @@ namespace Client
             }
 
             if (ControlManager.Instance.Battle_MouseWheel.y > 0)
+            {
+                FOV_Level--;
+            }
+
+            if (ControlManager.Instance.Building_MouseWheel.y < 0)
+            {
+                if (FOV_Level <= 1)
+                {
+                    FOV_Level++;
+                }
+            }
+
+            if (ControlManager.Instance.Building_MouseWheel.y > 0)
             {
                 FOV_Level--;
             }

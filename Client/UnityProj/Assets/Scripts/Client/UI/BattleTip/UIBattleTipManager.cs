@@ -7,14 +7,25 @@ using UnityEngine;
 
 namespace Client
 {
-    public class UIBattleTipManager : TSingleton<UIBattleTipManager>
+    public class UIBattleTipManager : TSingletonBaseManager<UIBattleTipManager>
     {
         private Messenger Messenger => ClientGameManager.Instance.BattleMessenger;
-        private List<UIBattleTip> UIBattleTipList = new List<UIBattleTip>();
+        public List<UIBattleTip> UIBattleTipList = new List<UIBattleTip>();
+
+        public bool EnableUIBattleTip = true;
 
         public void Init()
         {
             RegisterEvent();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (ControlManager.Instance.Battle_ToggleBattleTip.Up)
+            {
+                EnableUIBattleTip = !EnableUIBattleTip;
+            }
         }
 
         public void ShutDown()
@@ -42,25 +53,26 @@ namespace Client
 
         private void HandleAttackTip(AttackData attackData)
         {
+            if (!EnableUIBattleTip) return;
             UIBattleTipInfo info = new UIBattleTipInfo(
                 0,
                 attackData.BattleTipType,
                 GetAttackerType(attackData.AttackerMCI.MechaInfo, attackData.HitterMCB.Mecha.MechaInfo, attackData.BattleTipType),
                 attackData.DecHp,
                 attackData.ElementHP,
-                0.5f,
+                0.2f,
                 attackData.ElementType,
                 "",
-                Color.red,
-                attackData.HitterMCB.transform.position + Vector3.up * 3f,
+                attackData.HitterMCB.transform.position + Vector3.up * 1f,
                 Vector2.zero,
-                Vector2.zero,
-                1.0f);
+                Vector2.one,
+                0.5f);
             CreateTip(info);
         }
 
         private void HandleCommonTip(uint mcbGUID, BattleTipType battleTipType)
         {
+            if (!EnableUIBattleTip) return;
             if ((int) battleTipType >= (int) BattleTipType.FollowDummySeparate)
             {
                 return;
@@ -88,18 +100,48 @@ namespace Client
                 0.5f,
                 0,
                 "",
-                Color.red,
-                mcb_owner.transform.position + Vector3.up * 3f,
+                mcb_owner.transform.position + Vector3.up * 1f,
                 Vector2.zero,
-                Vector2.zero,
-                1.0f);
+                Vector2.one,
+                0.5f);
             CreateTip(info);
         }
 
         private void CreateTip(UIBattleTipInfo info)
         {
-            UIBattleTip tip = GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.UIBattleTip].AllocateGameObject<UIBattleTip>(UIManager.Instance.UI3DRoot);
-            tip.Initialize(info);
+            int maxSortingOrder = 0;
+            foreach (UIBattleTip uiBattleTip in UIBattleTipList)
+            {
+                if (uiBattleTip.SortingOrder > maxSortingOrder)
+                {
+                    maxSortingOrder = uiBattleTip.SortingOrder;
+                }
+            }
+
+            BattleTipPrefabType btType = BattleTipPrefabType.SelfAttack;
+
+            if (info.AttackerType == AttackerType.LocalPlayer)
+            {
+                if (info.BattleTipType == BattleTipType.CriticalAttack)
+                {
+                    btType = BattleTipPrefabType.SelfCriticalAttack;
+                }
+                else if (info.BattleTipType == BattleTipType.Attack)
+                {
+                    btType = BattleTipPrefabType.SelfAttack;
+                }
+            }
+            else if (info.AttackerType == AttackerType.LocalPlayerSelfDamage)
+            {
+                if (info.BattleTipType == BattleTipType.Attack)
+                {
+                    btType = BattleTipPrefabType.SelfDamage;
+                }
+            }
+
+            UIBattleTip tip = GameObjectPoolManager.Instance.BattleUIDict[btType].AllocateGameObject<UIBattleTip>(UIManager.Instance.UI3DRoot);
+            tip.Initialize(info, maxSortingOrder + 1);
+            UIBattleTipList.Add(tip);
         }
 
         private AttackerType GetAttackerType(MechaInfo attacker, MechaInfo hitter, BattleTipType battleTipType)
@@ -115,7 +157,14 @@ namespace Client
                 //主角
                 if (attacker.IsPlayer)
                 {
-                    return AttackerType.LocalPlayer;
+                    if (hitter.IsPlayer)
+                    {
+                        return AttackerType.LocalPlayerSelfDamage;
+                    }
+                    else
+                    {
+                        return AttackerType.LocalPlayer;
+                    }
                 }
 
                 //同个阵营

@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 0
     - Name: AbilityCooldown
       Entry: 3
-      Data: 3000
+      Data: 300
     - Name: AbilityPowerCost
       Entry: 3
       Data: 0
@@ -114,16 +114,40 @@ MonoBehaviour:
       Data: 8|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
     - Name: Target
       Entry: 7
-      Data: 9|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
-    - Name: Target
+      Data: 9|GameCore.AbilityDataDriven.MultipleActionTarget, GameCore
+    - Name: Center
       Entry: 3
-      Data: 3
+      Data: 5
+    - Name: Radius
+      Entry: 3
+      Data: 2
+    - Name: Team
+      Entry: 3
+      Data: 0
+    - Name: Types
+      Entry: 3
+      Data: 0
+    - Name: ExcludeTypes
+      Entry: 3
+      Data: 0
+    - Name: Flags
+      Entry: 3
+      Data: 0
+    - Name: ExcludeFlags
+      Entry: 3
+      Data: 0
+    - Name: MaxTargets
+      Entry: 3
+      Data: 999
+    - Name: Random
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 8
       Data: 
     - Name: Damage
       Entry: 3
-      Data: 10
+      Data: 20
     - Name: 
       Entry: 8
       Data: 

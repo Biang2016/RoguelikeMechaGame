@@ -11,7 +11,7 @@ namespace Client
     public class MechaComponentGridRoot : ForbidLocalMoveRoot
     {
         internal MechaComponentBase MechaComponentBase;
-        private List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
+        public List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
 
         [NonSerialized]
         public List<MechaComponentHitBox> HitBoxes = new List<MechaComponentHitBox>();
@@ -49,14 +49,15 @@ namespace Client
         }
 
 #if UNITY_EDITOR
+        public void RefreshConfig()
+        {
+            mechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
+            HitBoxes = GetComponentsInChildren<MechaComponentHitBox>().ToList();
+        }
+
         public List<GridPos> GetOccupiedPositions()
         {
             List<GridPos> res = new List<GridPos>();
-            if (mechaComponentGrids.Count == 0)
-            {
-                mechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
-            }
-
             foreach (MechaComponentGrid mcg in mechaComponentGrids)
             {
                 res.Add(mcg.GetGridPos());
