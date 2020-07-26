@@ -32,6 +32,10 @@ namespace Client
 
         public void OnPowerChange(float portion)
         {
+            foreach (MechaComponentModel model in Models)
+            {
+                model.OnPowerChange(portion);
+            }
         }
 
         public void ResetColor()

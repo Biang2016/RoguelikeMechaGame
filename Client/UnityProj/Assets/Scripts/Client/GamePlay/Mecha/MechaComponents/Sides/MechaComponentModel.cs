@@ -10,10 +10,7 @@ namespace Client
         private Material BasicMaterial;
         private Material HighLightMaterial;
 
-        public Gradient DamageGradient;
-        public AnimationCurve DamageIntensityCurve;
-        public Gradient PowerGradient;
-        public AnimationCurve PowerIntensityCurve;
+        public MechaComponentModelTwinkleConfigSSO MechaComponentModelTwinkleConfigSSO;
 
         private Color DefaultBasicMaterialEmissionColor;
         private Color DefaultHighLightMaterialEmissionColor;
@@ -44,50 +41,38 @@ namespace Client
             onDamageCoroutine = StartCoroutine(Co_OnDamage(portion));
         }
 
-        private Coroutine onPowerChangeCoroutine;
-
         public void OnPowerChange(float portion)
         {
-            if (onPowerChangeCoroutine != null)
-            {
-                StopCoroutine(onPowerChangeCoroutine);
-            }
-
-            StartCoroutine(Co_OnPowerChange(portion));
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            Renderer.GetPropertyBlock(mpb, 1);
+            mpb.SetColor("_EmissionColor", DefaultHighLightMaterialEmissionColor * MechaComponentModelTwinkleConfigSSO.PowerIntensityCurve.Evaluate(portion));
+            Renderer.SetPropertyBlock(mpb, 1);
         }
 
         IEnumerator Co_OnDamage(float portion)
         {
             MaterialPropertyBlock mpb = new MaterialPropertyBlock();
             Renderer.GetPropertyBlock(mpb, 0);
-            mpb.SetColor("_EmissionColor", DamageGradient.Evaluate(portion) * DamageIntensityCurve.Evaluate(portion));
+            mpb.SetColor("_EmissionColor", MechaComponentModelTwinkleConfigSSO.DamageGradient.Evaluate(portion) * MechaComponentModelTwinkleConfigSSO.DamageIntensityCurve.Evaluate(portion));
             Renderer.SetPropertyBlock(mpb, 0);
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(MechaComponentModelTwinkleConfigSSO.DamageTwinkleDuration);
 
             Renderer.GetPropertyBlock(mpb, 0);
-            mpb.SetColor("_EmissionColor", DefaultBasicMaterialEmissionColor * 1f);
+            mpb.SetColor("_EmissionColor", DefaultBasicMaterialEmissionColor);
             Renderer.SetPropertyBlock(mpb, 0);
-        }
-
-        IEnumerator Co_OnPowerChange(float portion)
-        {
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-            Renderer.GetPropertyBlock(mpb, 1);
-            mpb.SetColor("_EmissionColor", PowerGradient.Evaluate(portion) * PowerIntensityCurve.Evaluate(portion));
-            Renderer.SetPropertyBlock(mpb, 1);
-
-            yield return new WaitForSeconds(0.1f);
-
-            Renderer.GetPropertyBlock(mpb, 1);
-            mpb.SetColor("_EmissionColor", DefaultHighLightMaterialEmissionColor * 1f);
-            Renderer.SetPropertyBlock(mpb, 1);
         }
 
         public void ResetColor()
         {
             StopAllCoroutines();
-            BasicMaterial.SetColor("_EmissionColor", DefaultBasicMaterialEmissionColor);
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            Renderer.GetPropertyBlock(mpb, 0);
+            mpb.SetColor("_EmissionColor", DefaultBasicMaterialEmissionColor);
+            Renderer.SetPropertyBlock(mpb, 0);
+            Renderer.GetPropertyBlock(mpb, 1);
+            mpb.SetColor("_EmissionColor", DefaultHighLightMaterialEmissionColor);
+            Renderer.SetPropertyBlock(mpb, 1);
         }
     }
 }
