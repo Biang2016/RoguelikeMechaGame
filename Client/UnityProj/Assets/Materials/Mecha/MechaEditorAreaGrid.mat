@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Grid_Customized
+  m_Name: MechaEditorAreaGrid
   m_Shader: {fileID: 4800000, guid: cb5124dde26e46e4189cd9ce6f196b06, type: 3}
   m_ShaderKeywords: WPOS_OFF
   m_LightmapFlags: 5

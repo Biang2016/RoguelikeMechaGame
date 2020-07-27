@@ -118,7 +118,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 0}
+  m_SizeDelta: {x: 196.14, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3472058488324730568
 CanvasRenderer:
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.68235296}
+  m_Color: {r: 0.07012856, g: 0.26415092, b: 0, a: 0.68235296}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -417,7 +417,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 8a25b3e22ed0160438f951cbb4fb5e64, type: 3}
+    m_Font: {fileID: 12800000, guid: c668e0890b306834186b54e80311d18c, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
