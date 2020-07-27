@@ -63,6 +63,7 @@ namespace GameCore
             MechaComponentOccupiedGridPosDict = JsonConvert.DeserializeObject<SortedDictionary<MechaComponentType, List<GridPos>>>(content);
         }
 
+        [MenuItem("开发工具/序列化技能配置")]
         public static void ExportAbilityConfigs()
         {
             // http://www.sirenix.net/odininspector/faq?Search=&t-11=on#faq
@@ -117,6 +118,7 @@ namespace GameCore
 
         public static bool IsLoaded = false;
 
+        [MenuItem("开发工具/加载技能配置")]
         public static void LoadAllAbilityConfigs()
         {
             DataFormat dataFormat = DataFormat.Binary;

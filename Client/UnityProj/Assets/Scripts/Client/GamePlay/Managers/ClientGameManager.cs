@@ -306,6 +306,12 @@ namespace Client
             inventoryInfo.InventoryItems.Add(ii);
             ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Block, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
             inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Engine, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Engine, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
+            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Engine, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
+            inventoryInfo.InventoryItems.Add(ii);
             myBackPack.LoadInventoryInfo(inventoryInfo);
 
             MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player);

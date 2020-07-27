@@ -1,4 +1,5 @@
-﻿using GameCore;
+﻿using Client;
+using GameCore;
 using UnityEngine;
 using UnityEditor;
 
@@ -26,10 +27,21 @@ namespace UnityToolbarExtender
 
         static SceneSwitchLeftButton()
         {
-            ToolbarExtender.RightToolbarGUI.Add(OnToolbarGUI);
+            ToolbarExtender.LeftToolbarGUI.Add(OnLeftToolbarGUI);
+            ToolbarExtender.RightToolbarGUI.Add(OnRightToolbarGUI);
         }
 
-        static void OnToolbarGUI()
+        private static void OnLeftToolbarGUI()
+        {
+            if (GUILayout.Button(new GUIContent("序列化模块占位"), ToolbarStyles.commandButtonStyle))
+            {
+                MechaComponentBase.SerializeMechaComponentOccupiedPositions();
+            }
+
+            GUILayout.FlexibleSpace();
+        }
+
+        private static void OnRightToolbarGUI()
         {
             GUILayout.FlexibleSpace();
 
