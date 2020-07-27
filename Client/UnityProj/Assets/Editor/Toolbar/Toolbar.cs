@@ -10,17 +10,32 @@ namespace UnityToolbarExtender
     {
         static class ToolbarStyles
         {
-            public static readonly GUIStyle commandButtonStyle;
+            public static readonly GUIStyle toolbarbuttonLeft;
+            public static readonly GUIStyle toolbarbuttonRight;
+            public static readonly GUIStyle toolbarbutton;
 
             static ToolbarStyles()
             {
-                commandButtonStyle = new GUIStyle("Command")
+                toolbarbuttonLeft = new GUIStyle("toolbarbuttonLeft")
                 {
                     fontSize = 11,
                     alignment = TextAnchor.MiddleCenter,
                     imagePosition = ImagePosition.ImageAbove,
                     fontStyle = FontStyle.Normal,
-                    fixedWidth = 120,
+                };
+                toolbarbuttonRight = new GUIStyle("toolbarbuttonRight")
+                {
+                    fontSize = 11,
+                    alignment = TextAnchor.MiddleCenter,
+                    imagePosition = ImagePosition.ImageAbove,
+                    fontStyle = FontStyle.Normal,
+                };
+                toolbarbutton = new GUIStyle("toolbarbutton")
+                {
+                    fontSize = 11,
+                    alignment = TextAnchor.MiddleCenter,
+                    imagePosition = ImagePosition.ImageAbove,
+                    fontStyle = FontStyle.Normal,
                 };
             }
         }
@@ -33,7 +48,7 @@ namespace UnityToolbarExtender
 
         private static void OnLeftToolbarGUI()
         {
-            if (GUILayout.Button(new GUIContent("序列化模块占位"), ToolbarStyles.commandButtonStyle))
+            if (GUILayout.Button(new GUIContent("序列化模块占位"), ToolbarStyles.toolbarbutton))
             {
                 MechaComponentBase.SerializeMechaComponentOccupiedPositions();
             }
@@ -45,13 +60,13 @@ namespace UnityToolbarExtender
         {
             GUILayout.FlexibleSpace();
 
-            if (GUILayout.Button(new GUIContent("序列化技能配置"), ToolbarStyles.commandButtonStyle))
+            if (GUILayout.Button(new GUIContent("序列化技能配置"), ToolbarStyles.toolbarbuttonLeft))
             {
                 ConfigManager.ExportAbilityConfigs();
                 ConfigManager.LoadAllAbilityConfigs();
             }
 
-            if (GUILayout.Button(new GUIContent("配置面板"), ToolbarStyles.commandButtonStyle))
+            if (GUILayout.Button(new GUIContent("配置面板"), ToolbarStyles.toolbarbuttonRight))
             {
                 ConfigPreviewerWindow.OpenConfigPreviewWindow();
             }
