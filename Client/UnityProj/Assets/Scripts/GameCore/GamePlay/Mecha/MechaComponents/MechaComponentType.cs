@@ -11,5 +11,6 @@
         JetPack = 6,
         MirrorShield = 7,
         Sword = 8,
+        Battery = 9,
     }
 }

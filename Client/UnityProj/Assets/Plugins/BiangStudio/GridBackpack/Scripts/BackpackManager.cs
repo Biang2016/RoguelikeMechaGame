@@ -14,12 +14,10 @@ namespace BiangStudio.GridBackpack
 
         public void LoadBackpackItemConfigs(int backpackGridSize)
         {
-            GameObject[] prefabs = Resources.LoadAll("Prefabs/UI/Backpack/BackpackItems").Cast<GameObject>().ToArray();
-            foreach (GameObject prefab in prefabs)
+            Sprite[] sprites = Resources.LoadAll<Sprite>("BackpackItemPics/MechaComponent");
+            foreach (Sprite sprite in sprites)
             {
-                BackpackItemDesignerHelper helper = prefab.GetComponent<BackpackItemDesignerHelper>();
-                helper.ReadBackpackItemInfo(backpackGridSize, out List<GridPos> occupiedGridPositions, out Sprite sprite);
-                BackpackItemSpriteDict.Add(prefab.name, sprite);
+                BackpackItemSpriteDict.Add(sprite.name, sprite);
             }
         }
 

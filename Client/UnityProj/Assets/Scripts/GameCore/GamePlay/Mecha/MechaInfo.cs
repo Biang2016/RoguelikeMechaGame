@@ -78,12 +78,12 @@ namespace GameCore
                 {
                     MechaComponentInfo _mci = (MechaComponentInfo) item.ItemContentInfo;
 
-                    int ran = LevelManager.SRandom.Range(0, 100);
-                    bool drop = ran < _mci.DropProbability;
-                    if (drop)
-                    {
-                        OnDropMechaComponent?.Invoke(_mci);
-                    }
+                    //int ran = LevelManager.SRandom.Range(0, 100);
+                    //bool drop = ran < _mci.DropProbability;
+                    //if (drop)
+                    //{
+                    //    OnDropMechaComponent?.Invoke(_mci);
+                    //}
                 }
             }
 

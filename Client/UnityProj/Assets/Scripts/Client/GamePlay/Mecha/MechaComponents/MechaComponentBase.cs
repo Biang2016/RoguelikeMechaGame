@@ -93,7 +93,7 @@ namespace Client
 
         public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
-            MechaComponentBase mcb = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentType]
+            MechaComponentBase mcb = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentConfig.MechaComponentKey]
                 .AllocateGameObject<MechaComponentBase>(parentMecha ? parentMecha.transform : null);
             mcb.Initialize(mechaComponentInfo, parentMecha);
             return mcb;
@@ -134,21 +134,18 @@ namespace Client
         public static void SerializeMechaComponentOccupiedPositions()
         {
             PrefabManager.Instance.LoadPrefabs();
-            SortedDictionary<MechaComponentType, List<GridPos>> MechaComponentOccupiedGridPosDict = new SortedDictionary<MechaComponentType, List<GridPos>>();
+            SortedDictionary<string, List<GridPos>> MechaComponentOccupiedGridPosDict = new SortedDictionary<string, List<GridPos>>();
             List<MechaComponentBase> mcbs = new List<MechaComponentBase>();
-
-            foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
+            ConfigManager.LoadAllConfigs();
+            foreach (KeyValuePair<string, MechaComponentConfig> kv in ConfigManager.MechaComponentConfigDict)
             {
-                MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-                string prefabName = "MechaComponent_" + mcType;
-                GameObject prefab = PrefabManager.Instance.GetPrefab(prefabName);
+                GameObject prefab = PrefabManager.Instance.GetPrefab(kv.Key);
                 if (prefab != null)
                 {
-                    Debug.Log("模组占位序列化成功: " + prefabName);
+                    Debug.Log("模组占位序列化成功: " + kv.Key);
                     MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
-                    mcb.Initialize_Editor(new MechaComponentInfo(mcType, new GamePlayAbilityGroup(), 10, 0));
                     mcbs.Add(mcb);
-                    MechaComponentOccupiedGridPosDict.Add(mcType, mcb.MechaComponentGridRoot.GetOccupiedPositions().Clone());
+                    MechaComponentOccupiedGridPosDict.Add(kv.Key, mcb.MechaComponentGridRoot.GetOccupiedPositions().Clone());
                 }
             }
 
@@ -163,11 +160,6 @@ namespace Client
             }
         }
 
-        private void Initialize_Editor(MechaComponentInfo mechaComponentInfo)
-        {
-            MechaComponentInfo = mechaComponentInfo;
-            GridPos.ApplyGridPosToLocalTransXZ(GridPos.Zero, transform, ConfigManager.GridSize);
-        }
 #endif
 
         public void SetShown(bool shown)

@@ -11,11 +11,11 @@ namespace GameCore.AbilityDataDriven
 {
     public struct ExecuteInfo
     {
-        public GamePlayAbility Ability;
+        public Ability Ability;
         public MechaInfo MechaInfo;
         public MechaComponentInfo MechaComponentInfo;
 
-        public ExecuteInfo(GamePlayAbility ability, MechaInfo mechaInfo, MechaComponentInfo mechaComponentInfo)
+        public ExecuteInfo(Ability ability, MechaInfo mechaInfo, MechaComponentInfo mechaComponentInfo)
         {
             Ability = ability;
             MechaInfo = mechaInfo;
@@ -31,16 +31,16 @@ namespace GameCore.AbilityDataDriven
         public GamePlayAction Clone()
         {
             Type type = GetType();
-            GamePlayAction newAction = (GamePlayAction) Activator.CreateInstance(type);
-            ChildClone(newAction);
-            return newAction;
+            GamePlayAction newConfig = (GamePlayAction) Activator.CreateInstance(type);
+            ChildClone(newConfig);
+            return newConfig;
         }
 
-        protected virtual void ChildClone(GamePlayAction newAction)
+        protected virtual void ChildClone(GamePlayAction newConfig)
         {
         }
 
-        public virtual void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, GamePlayAbility parentAbility)
+        public virtual void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, Ability parentAbility)
         {
             messenger.AddListener<ExecuteInfo>((uint) abilityEvent, (executeInfo) =>
             {
@@ -59,10 +59,10 @@ namespace GameCore.AbilityDataDriven
         [LabelText("技能名称")]
         public string AbilityName;
 
-        protected override void ChildClone(GamePlayAction newAction)
+        protected override void ChildClone(GamePlayAction newConfig)
         {
-            base.ChildClone(newAction);
-            Action_AddAbility action = ((Action_AddAbility) newAction);
+            base.ChildClone(newConfig);
+            Action_AddAbility action = ((Action_AddAbility)newConfig);
             action.Target = Target.Clone();
             action.AbilityName = AbilityName;
         }
@@ -74,10 +74,10 @@ namespace GameCore.AbilityDataDriven
 
         public GamePlayAction Action;
 
-        protected override void ChildClone(GamePlayAction newAction)
+        protected override void ChildClone(GamePlayAction newConfig)
         {
-            base.ChildClone(newAction);
-            Action_ActOnTargets action = ((Action_ActOnTargets) newAction);
+            base.ChildClone(newConfig);
+            Action_ActOnTargets action = ((Action_ActOnTargets) newConfig);
             action.Target = Target.Clone();
             action.Action = Action.Clone();
         }
@@ -91,10 +91,10 @@ namespace GameCore.AbilityDataDriven
         [LabelText("Modifier名称")]
         public string ModifierName;
 
-        protected override void ChildClone(GamePlayAction newAction)
+        protected override void ChildClone(GamePlayAction newConfig)
         {
-            base.ChildClone(newAction);
-            Action_ApplyModifier action = ((Action_ApplyModifier) newAction);
+            base.ChildClone(newConfig);
+            Action_ApplyModifier action = ((Action_ApplyModifier) newConfig);
             action.Target = Target.Clone();
             action.ModifierName = ModifierName;
         }
@@ -137,13 +137,13 @@ namespace GameCore.AbilityDataDriven
         {
             if (!ConfigManager.IsLoaded)
             {
-                ConfigManager.LoadAllAbilityConfigs();
+                ConfigManager.LoadAllConfigs();
             }
 
             return ConfigManager.ProjectileConfigDict.Keys;
         }
 
-        public override void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, GamePlayAbility parentAbility)
+        public override void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, Ability parentAbility)
         {
             messenger.AddListener<ExecuteInfo>((uint) abilityEvent, (executeInfo) =>
             {
@@ -161,10 +161,10 @@ namespace GameCore.AbilityDataDriven
             ProjectileManager.Instance.EmitProjectileHandler(pi);
         }
 
-        protected override void ChildClone(GamePlayAction newAction)
+        protected override void ChildClone(GamePlayAction newConfig)
         {
-            base.ChildClone(newAction);
-            Action_EmitProjectile action = ((Action_EmitProjectile) newAction);
+            base.ChildClone(newConfig);
+            Action_EmitProjectile action = ((Action_EmitProjectile) newConfig);
             action.ProjectileName = ProjectileName;
         }
 
@@ -185,15 +185,15 @@ namespace GameCore.AbilityDataDriven
         [LabelText("伤害量")]
         public int Damage;
 
-        protected override void ChildClone(GamePlayAction newAction)
+        protected override void ChildClone(GamePlayAction newConfig)
         {
-            base.ChildClone(newAction);
-            Action_DealDamage action = ((Action_DealDamage) newAction);
+            base.ChildClone(newConfig);
+            Action_DealDamage action = ((Action_DealDamage) newConfig);
             action.Target = Target.Clone();
             action.Damage = Damage;
         }
 
-        public override void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, GamePlayAbility parentAbility)
+        public override void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, Ability parentAbility)
         {
             // Projectile Damage
             messenger.AddListener<ExecuteInfo, ProjectileInfo.FlyRealtimeData>((uint) abilityEvent, (executeInfo, flyRealTimeData) =>

@@ -60,10 +60,10 @@ namespace UnityToolbarExtender
         {
             GUILayout.FlexibleSpace();
 
-            if (GUILayout.Button(new GUIContent("序列化技能配置"), ToolbarStyles.toolbarbuttonLeft))
+            if (GUILayout.Button(new GUIContent("序列化配置"), ToolbarStyles.toolbarbuttonLeft))
             {
-                ConfigManager.ExportAbilityConfigs();
-                ConfigManager.LoadAllAbilityConfigs();
+                ConfigManager.ExportConfigs();
+                ConfigManager.LoadAllConfigs();
             }
 
             if (GUILayout.Button(new GUIContent("配置面板"), ToolbarStyles.toolbarbuttonRight))

@@ -1,17 +1,17 @@
 {
-  "Core": [
+  "MechaComponent_BasicBlock": [
     {
       "x": 0,
       "z": 0
     }
   ],
-  "Block": [
+  "MechaComponent_BasicCore": [
     {
       "x": 0,
       "z": 0
     }
   ],
-  "Gun": [
+  "MechaComponent_BasicGun": [
     {
       "x": 0,
       "z": 1
@@ -23,12 +23,6 @@
     {
       "x": 0,
       "z": -1
-    }
-  ],
-  "Engine": [
-    {
-      "x": 0,
-      "z": 0
     }
   ]
 }

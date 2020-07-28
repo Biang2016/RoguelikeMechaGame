@@ -5,19 +5,20 @@ using UnityEngine;
 
 namespace GameCore.AbilityDataDriven
 {
-    public class GamePlayAbilityGroup : IClone<GamePlayAbilityGroup>
+    public class AbilityGroup : IClone<AbilityGroup>
     {
         public string AbilityGroupName;
 
         [HideInInspector]
         public List<string> AbilityNames = new List<string>();
 
+        [LabelText("技能列表")]
         [ListDrawerSettings(ListElementLabelName = "AbilityName")]
-        public List<GamePlayAbility> Abilities = new List<GamePlayAbility>();
+        public List<Ability> Abilities = new List<Ability>();
 
-        public GamePlayAbilityGroup Clone()
+        public AbilityGroup Clone()
         {
-            GamePlayAbilityGroup ag = new GamePlayAbilityGroup();
+            AbilityGroup ag = new AbilityGroup();
             ag.AbilityGroupName = AbilityGroupName;
             ag.AbilityNames = AbilityNames.Clone();
             ag.Abilities = Abilities.Clone();

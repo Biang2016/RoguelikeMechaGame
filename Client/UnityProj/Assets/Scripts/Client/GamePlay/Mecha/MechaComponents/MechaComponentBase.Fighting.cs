@@ -34,7 +34,7 @@ namespace Client
         {
             MechaComponentInfo.OnDamaged += OnDamaged;
 
-            foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
+            foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
                 ability.cooldownTicker = 0;
                 ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, (executeInfo) =>
@@ -56,7 +56,7 @@ namespace Client
 
         private void Update_Fighting()
         {
-            foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
+            foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
                 if (ability.cooldownTicker <= ability.AbilityCooldown)
                 {
@@ -66,7 +66,7 @@ namespace Client
 
             if (ControlManager.Instance.CheckButtonAction(TriggerButtonState))
             {
-                foreach (GamePlayAbility ability in MechaComponentInfo.AbilityGroup.Abilities)
+                foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
                 {
                     if (ability.canTriggered)
                     {

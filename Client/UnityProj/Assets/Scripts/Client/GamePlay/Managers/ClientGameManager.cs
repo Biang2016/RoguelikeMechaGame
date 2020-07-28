@@ -95,7 +95,6 @@ namespace Client
             GameObjectPoolManager.Init(new GameObject("GameObjectPoolRoot").transform);
             GameObjectPoolManager.Awake();
 
-
             RoutineManager.LogErrorHandler = Debug.LogError;
             RoutineManager.Awake();
             GameStateManager.Awake();
@@ -290,29 +289,14 @@ namespace Client
         {
             Backpack myBackPack = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
             InventoryInfo inventoryInfo = new InventoryInfo();
-            InventoryItem ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 100, 0), myBackPack, GridPosR.Zero);
+            InventoryItem ii;
+            ii = new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicGun"), Quality.Poor), myBackPack, GridPosR.Zero);
             inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun1"), 100, 0), myBackPack, GridPosR.Zero);
+            ii = new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicGun"), Quality.Poor), myBackPack, GridPosR.Zero);
             inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun2"), 100, 0), myBackPack, GridPosR.Zero);
+            ii = new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicBlock"), Quality.Poor), myBackPack, GridPosR.Zero);
             inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun3"), 100, 0), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Gun, ConfigManager.Instance.GetAbilityGroup("BasicGun4"), 100, 0), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Block, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Block, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Block, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Block, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Engine, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Engine, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(MechaComponentType.Engine, new GamePlayAbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
+            ii = new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicBlock"), Quality.Poor), myBackPack, GridPosR.Zero);
             inventoryInfo.InventoryItems.Add(ii);
             myBackPack.LoadInventoryInfo(inventoryInfo);
 
@@ -322,7 +306,7 @@ namespace Client
             ClientBattleManager.Instance.StartBattle(battleInfo);
             UIBattleTipManager.Init();
 
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(MechaComponentType.Core, new GamePlayAbilityGroup(), 300, 0), new GridPosR(9, 9));
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicCore"), Quality.Poor), new GridPosR(9, 9));
 
             ClientLevelManager.Instance.StartLevel();
         }

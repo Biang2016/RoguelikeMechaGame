@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using BiangStudio.GameDataFormat.Grid;
+using BiangStudio.GamePlay;
 using BiangStudio.ShapedInventory;
 using GameCore.AbilityDataDriven;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace GameCore
@@ -23,7 +26,13 @@ namespace GameCore
             return guidGenerator++;
         }
 
-        public MechaComponentType MechaComponentType;
+        #region GamePlay Info
+
+        public MechaComponentConfig MechaComponentConfig;
+
+        [LabelText("品质")]
+        [HideInEditorMode]
+        public Quality Quality;
 
         private MechaInfo mechaInfo;
 
@@ -42,34 +51,49 @@ namespace GameCore
 
         [ReadOnly]
         [ShowInInspector]
-        [DisableInEditorMode]
-        [ListDrawerSettings(ListElementLabelName = "AbilityName")]
-        public GamePlayAbilityGroup AbilityGroup;
+        [HideInEditorMode]
+        [LabelText("技能组")]
+        public AbilityGroup AbilityGroup;
+
+        [ReadOnly]
+        [ShowInInspector]
+        [HideInEditorMode]
+        [LabelText("品质配置")]
+        public MechaComponentQualityConfig MechaComponentQualityConfig;
+
+        public QualityUpgradeDataBase CurrentQualityUpgradeData;
+        public PowerUpgradeDataBase CurrentPowerUpgradeData;
+
+        #endregion
 
         [HideInEditorMode]
         public InventoryItem InventoryItem;
 
-        public UnityAction<MechaComponentInfo> OnRemoveMechaComponentInfoSuc;
-
         private List<GridPos> originalOccupiedGridPositions;
-
         public List<GridPos> OriginalOccupiedGridPositions => originalOccupiedGridPositions;
-        public string ItemSpriteKey => "MechaComponent." + MechaComponentType;
-        public string ItemName => "机甲组件." + MechaComponentType;
+
+        public string ItemName => "机甲组件." + ItemSpriteKey;
+        public MechaComponentType MechaComponentType => MechaComponentConfig.MechaComponentType;
+        public string ItemSpriteKey => MechaComponentConfig.ItemSpriteKey;
 
         private string logIdentityName;
-
         public string LogIdentityName => logIdentityName;
 
-        public MechaComponentInfo(MechaComponentType mechaComponentType, GamePlayAbilityGroup abilityGroup, int totalLife, int dropProbability)
+        public UnityAction<MechaComponentInfo> OnRemoveMechaComponentInfoSuc;
+
+        public MechaComponentInfo(MechaComponentConfig mechaComponentConfig, Quality quality)
         {
             GUID = GetGUID();
-            MechaComponentType = mechaComponentType;
-            AbilityGroup = abilityGroup;
-            M_TotalLife = totalLife;
-            M_LeftLife = totalLife;
-            DropProbability = dropProbability;
-            if (ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(mechaComponentType, out List<GridPos> ops))
+            MechaComponentConfig = mechaComponentConfig;
+            Quality = quality;
+            AbilityGroup = ConfigManager.Instance.GetAbilityGroup(MechaComponentConfig.AbilityGroupConfigKey);
+            MechaComponentQualityConfig = ConfigManager.Instance.GetMechaComponentQualityConfig(MechaComponentConfig.MechaComponentQualityConfigKey);
+
+            CurrentQualityUpgradeData = MechaComponentQualityConfig.GetQualityUpgradeData(quality);
+
+            M_TotalLife = CurrentQualityUpgradeData.Life;
+            M_LeftLife = CurrentQualityUpgradeData.Life;
+            if (ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(mechaComponentConfig.MechaComponentKey, out List<GridPos> ops))
             {
                 originalOccupiedGridPositions = ops.Clone();
             }
@@ -85,7 +109,7 @@ namespace GameCore
 
         public MechaComponentInfo Clone()
         {
-            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentType, AbilityGroup.Clone(), M_TotalLife, DropProbability);
+            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentConfig, Quality);
             return mci;
         }
 
@@ -101,8 +125,7 @@ namespace GameCore
 
         #region Life
 
-        public int DropProbability;
-
+        [HideInInspector]
         public bool IsDead = false;
 
         public UnityAction<int, int> OnLifeChange;

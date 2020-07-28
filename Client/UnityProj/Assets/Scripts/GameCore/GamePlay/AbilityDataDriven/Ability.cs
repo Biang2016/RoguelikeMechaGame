@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 
 namespace GameCore.AbilityDataDriven
 {
-    public class GamePlayAbility : IClone<GamePlayAbility>
+    public class Ability : IClone<Ability>
     {
         [LabelText("技能名称")]
         public string AbilityName;
@@ -37,7 +37,7 @@ namespace GameCore.AbilityDataDriven
 
         [LabelText("Modifier定义列表")]
         [ListDrawerSettings(ListElementLabelName = "ModifierName")]
-        public List<GamePlayModifier> Modifiers = new List<GamePlayModifier>();
+        public List<Modifier> Modifiers = new List<Modifier>();
 
         [LabelText("触发事件列表")]
         [ListDrawerSettings(ListElementLabelName = "EventName")]
@@ -63,9 +63,9 @@ namespace GameCore.AbilityDataDriven
 
         private SortedDictionary<ENUM_AbilityEvent, GamePlayEvent> eventDict = null;
 
-        public GamePlayAbility Clone()
+        public Ability Clone()
         {
-            return new GamePlayAbility
+            return new Ability
             {
                 AbilityName = AbilityName,
                 AbilityBehaviors = AbilityBehaviors,

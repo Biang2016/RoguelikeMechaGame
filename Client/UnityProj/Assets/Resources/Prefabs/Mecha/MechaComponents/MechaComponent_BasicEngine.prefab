@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 8787363159894584536}
   - component: {fileID: -2509402043850843953}
   m_Layer: 12
-  m_Name: MechaComponent_Engine
+  m_Name: MechaComponent_BaiscEngine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,13 +74,16 @@ MonoBehaviour:
   MechaComponentInfo:
     GUID: 0
     MechaComponentType: 4
+    Quality: 0
+    AbilityGroupSSO: {fileID: 11400000, guid: 3fbaada5b97b4934aaed11b650964ef7, type: 2}
+    MechaComponentQualityConfigSSO: {fileID: 11400000, guid: 3c4267f0e4d6cff42b62731ba07e1af6,
+      type: 2}
     InventoryItem:
       GUID: 0
       GridPos_Matrix:
         x: 0
         z: 0
         orientation: 0
-    DropProbability: 0
     IsDead: 0
   MechaComponentGridRoot: {fileID: 4618707353109224937}
   MechaComponentModelRoot: {fileID: 8018876574517878512}

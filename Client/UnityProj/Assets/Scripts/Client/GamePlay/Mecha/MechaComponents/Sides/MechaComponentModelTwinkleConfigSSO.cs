@@ -2,7 +2,7 @@
 
 namespace Client
 {
-    [CreateAssetMenu(menuName = "MechaComponentConfig/ModelTwinkleConfig")]
+    [CreateAssetMenu(menuName = "Model/ModelTwinkleConfig")]
     public class MechaComponentModelTwinkleConfigSSO : ScriptableObject
     {
         public Gradient DamageGradient;

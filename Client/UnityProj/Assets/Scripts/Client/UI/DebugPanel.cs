@@ -38,7 +38,7 @@ namespace Client
                 for (int j = -4; j <= 4; j++)
                 {
                     MechaComponentInfo mci;
-                    mci = new MechaComponentInfo(MechaComponentType.Core, ConfigManager.Instance.GetAbilityGroup("BasicGun"), 100, 0);
+                    mci = new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicCore"), Quality.Poor);
                     enemyMechaInfo.AddMechaComponentInfo(mci, new GridPosR(i, j, GridPosR.Orientation.Up));
                 }
             }

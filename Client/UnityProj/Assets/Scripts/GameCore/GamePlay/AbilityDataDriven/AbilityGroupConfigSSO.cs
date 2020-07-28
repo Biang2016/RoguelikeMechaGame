@@ -12,9 +12,9 @@ namespace GameCore.AbilityDataDriven
         [ListDrawerSettings(ListElementLabelName = "AbilityName")]
         public List<AbilityConfigSSO> AbilityConfigs = new List<AbilityConfigSSO>();
 
-        public GamePlayAbilityGroup GetAbilityGroup_NoData()
+        public AbilityGroup GetAbilityGroup_NoData()
         {
-            GamePlayAbilityGroup ag = new GamePlayAbilityGroup();
+            AbilityGroup ag = new AbilityGroup();
             ag.AbilityGroupName = AbilityGroupName;
             foreach (AbilityConfigSSO acsso in AbilityConfigs)
             {
@@ -26,11 +26,11 @@ namespace GameCore.AbilityDataDriven
 
         [ReadOnly]
         [ShowInInspector]
-        private GamePlayAbilityGroup AbilityGroup
+        public AbilityGroup AbilityGroup
         {
             get
             {
-                GamePlayAbilityGroup ag = new GamePlayAbilityGroup();
+                AbilityGroup ag = new AbilityGroup();
                 ag.AbilityGroupName = AbilityGroupName;
                 foreach (AbilityConfigSSO acsso in AbilityConfigs)
                 {

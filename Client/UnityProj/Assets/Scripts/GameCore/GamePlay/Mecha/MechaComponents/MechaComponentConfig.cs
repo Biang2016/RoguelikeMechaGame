@@ -1,18 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace GameCore
 {
-    public class MechaComponentConfig
+    public class MechaComponentConfig : IClone<MechaComponentConfig>
     {
-        [LabelText("品质")]
-        public Quality Quality;
+        [ReadOnly]
+        [LabelText("机甲组件名称")]
+        public string MechaComponentKey;
 
-        [LabelText("生命值")]
-        public int Life;
+        public MechaComponentType MechaComponentType;
+        public string ItemSpriteKey;
+        public string MechaComponentQualityConfigKey;
+        public string AbilityGroupConfigKey;
 
-        [LabelText("消耗功率")]
-        public int PowerConsume;
+        public MechaComponentConfig Clone()
+        {
+            MechaComponentConfig newConfig = new MechaComponentConfig();
+            newConfig.MechaComponentKey = MechaComponentKey;
+            newConfig.MechaComponentQualityConfigKey = MechaComponentQualityConfigKey;
+            newConfig.AbilityGroupConfigKey = AbilityGroupConfigKey;
+            return newConfig;
+        }
     }
 }

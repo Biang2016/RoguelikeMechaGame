@@ -27,32 +27,46 @@ namespace GameCore
         public const int BackpackGridSize = 60;
 
         public static string BlockOccupiedGridPosJsonFilePath = Application.streamingAssetsPath + "/Configs/BlockConfigs/BlockOccupiedGridPos.json";
-        public static SortedDictionary<MechaComponentType, List<GridPos>> MechaComponentOccupiedGridPosDict = new SortedDictionary<MechaComponentType, List<GridPos>>();
+        public static SortedDictionary<string, List<GridPos>> MechaComponentOccupiedGridPosDict = new SortedDictionary<string, List<GridPos>>();
 
         public static string AbilityConfigFolder_Relative = "Configs/BattleConfigs/AbilityConfigs";
         public static string AbilityGroupConfigFolder_Relative = "Configs/BattleConfigs/AbilityGroupConfigs";
         public static string ProjectileConfigFolder_Relative = "Configs/BattleConfigs/ProjectileConfigs";
+        public static string MechaComponentQualityConfigFolder_Relative = "Configs/BattleConfigs/MechaComponentQualityConfigs";
+
+        public static string AllMechaComponentConfigPath_Relative = "Configs/BattleConfigs/AllMechaComponentConfig";
 
         public static string AbilityConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityConfigFolder_Relative + "/";
         public static string AbilityGroupConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityGroupConfigFolder_Relative + "/";
         public static string ProjectileConfigFolder_Build = Application.streamingAssetsPath + "/" + ProjectileConfigFolder_Relative + "/";
+        public static string MechaComponentQualityConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaComponentQualityConfigFolder_Relative + "/";
+
+        public static string AllMechaComponentConfigPath_Build = Application.streamingAssetsPath + "/" + AllMechaComponentConfigPath_Relative + ".config";
 
         [ShowInInspector]
         [LabelText("技能配置表")]
-        public static readonly Dictionary<string, GamePlayAbility> AbilityConfigDict = new Dictionary<string, GamePlayAbility>();
+        public static readonly Dictionary<string, Ability> AbilityConfigDict = new Dictionary<string, Ability>();
 
         [ShowInInspector]
         [LabelText("技能组配置表")]
-        public static readonly Dictionary<string, GamePlayAbilityGroup> AbilityGroupConfigDict = new Dictionary<string, GamePlayAbilityGroup>();
+        public static readonly Dictionary<string, AbilityGroup> AbilityGroupConfigDict = new Dictionary<string, AbilityGroup>();
 
         [ShowInInspector]
         [LabelText("投掷物配置表")]
         public static readonly Dictionary<string, ProjectileConfig> ProjectileConfigDict = new Dictionary<string, ProjectileConfig>();
 
+        [ShowInInspector]
+        [LabelText("机甲组件配置表")]
+        public static readonly Dictionary<string, MechaComponentConfig> MechaComponentConfigDict = new Dictionary<string, MechaComponentConfig>();
+
+        [ShowInInspector]
+        [LabelText("机甲组件品质配置表")]
+        public static readonly Dictionary<string, MechaComponentQualityConfig> MechaComponentQualityConfigDict = new Dictionary<string, MechaComponentQualityConfig>();
+
         public override void Awake()
         {
             LoadMechaComponentOccupiedGridPosDict();
-            LoadAllAbilityConfigs();
+            LoadAllConfigs();
         }
 
         private void LoadMechaComponentOccupiedGridPosDict()
@@ -60,11 +74,11 @@ namespace GameCore
             StreamReader sr = new StreamReader(BlockOccupiedGridPosJsonFilePath);
             string content = sr.ReadToEnd();
             sr.Close();
-            MechaComponentOccupiedGridPosDict = JsonConvert.DeserializeObject<SortedDictionary<MechaComponentType, List<GridPos>>>(content);
+            MechaComponentOccupiedGridPosDict = JsonConvert.DeserializeObject<SortedDictionary<string, List<GridPos>>>(content);
         }
 
-        [MenuItem("开发工具/序列化技能配置")]
-        public static void ExportAbilityConfigs()
+        [MenuItem("开发工具/序列化配置")]
+        public static void ExportConfigs()
         {
             // http://www.sirenix.net/odininspector/faq?Search=&t-11=on#faq
 
@@ -76,9 +90,10 @@ namespace GameCore
                 Directory.CreateDirectory(folder);
                 foreach (Object obj in configObjs)
                 {
-                    AbilityConfigSSO config = (AbilityConfigSSO) obj;
-                    string path = folder + config.name + ".config";
-                    byte[] bytes = SerializationUtility.SerializeValue(config.Ability, dataFormat);
+                    AbilityConfigSSO configSSO = (AbilityConfigSSO) obj;
+                    Ability config = configSSO.Ability;
+                    string path = folder + configSSO.name + ".config";
+                    byte[] bytes = SerializationUtility.SerializeValue(config, dataFormat);
                     File.WriteAllBytes(path, bytes);
                 }
             }
@@ -90,10 +105,10 @@ namespace GameCore
                 Directory.CreateDirectory(folder);
                 foreach (Object obj in configObjs)
                 {
-                    AbilityGroupConfigSSO config = (AbilityGroupConfigSSO) obj;
-                    GamePlayAbilityGroup ag = config.GetAbilityGroup_NoData();
-                    string path = folder + config.name + ".config";
-                    byte[] bytes = SerializationUtility.SerializeValue(ag, dataFormat);
+                    AbilityGroupConfigSSO configSSO = (AbilityGroupConfigSSO) obj;
+                    AbilityGroup config = configSSO.GetAbilityGroup_NoData();
+                    string path = folder + configSSO.name + ".config";
+                    byte[] bytes = SerializationUtility.SerializeValue(config, dataFormat);
                     File.WriteAllBytes(path, bytes);
                 }
             }
@@ -105,12 +120,45 @@ namespace GameCore
                 Directory.CreateDirectory(folder);
                 foreach (Object obj in configObjs)
                 {
-                    ProjectileConfigSSO config = (ProjectileConfigSSO) obj;
-                    ProjectileConfig pc = config.ProjectileConfig;
-                    string path = folder + config.name + ".config";
-                    byte[] bytes = SerializationUtility.SerializeValue(pc, dataFormat);
+                    ProjectileConfigSSO configSSO = (ProjectileConfigSSO) obj;
+                    ProjectileConfig config = configSSO.ProjectileConfig;
+                    string path = folder + configSSO.name + ".config";
+                    byte[] bytes = SerializationUtility.SerializeValue(config, dataFormat);
                     File.WriteAllBytes(path, bytes);
                 }
+            }
+
+            {
+                Object[] configObjs = Resources.LoadAll(MechaComponentQualityConfigFolder_Relative, typeof(Object));
+                string folder = MechaComponentQualityConfigFolder_Build;
+                if (Directory.Exists(folder)) Directory.Delete(folder, true);
+                Directory.CreateDirectory(folder);
+                foreach (Object obj in configObjs)
+                {
+                    MechaComponentQualityConfigSSO configSSO = (MechaComponentQualityConfigSSO) obj;
+                    MechaComponentQualityConfig config = configSSO.MechaComponentQualityConfig;
+                    if (string.IsNullOrEmpty(configSSO.MechaComponentQualityConfigName))
+                    {
+                        Debug.LogError("机甲组件品质配置未绑定机甲组件Prefab，无法序列化");
+                    }
+                    else
+                    {
+                        string path = folder + configSSO.name + ".config";
+                        byte[] bytes = SerializationUtility.SerializeValue(config, dataFormat);
+                        File.WriteAllBytes(path, bytes);
+                    }
+                }
+            }
+
+            {
+                Object configObj = Resources.Load(AllMechaComponentConfigPath_Relative, typeof(Object));
+                string path = AllMechaComponentConfigPath_Build;
+                FileInfo fi = new FileInfo(path);
+                if (fi.Exists) fi.Delete();
+                AllMechaComponentConfigSSO configSSO = (AllMechaComponentConfigSSO) configObj;
+                configSSO.RefreshConfigList();
+                byte[] bytes = SerializationUtility.SerializeValue(configSSO.MechaComponentConfigList, dataFormat);
+                File.WriteAllBytes(path, bytes);
             }
 
             AssetDatabase.Refresh();
@@ -118,8 +166,8 @@ namespace GameCore
 
         public static bool IsLoaded = false;
 
-        [MenuItem("开发工具/加载技能配置")]
-        public static void LoadAllAbilityConfigs()
+        [MenuItem("开发工具/加载配置")]
+        public static void LoadAllConfigs()
         {
             DataFormat dataFormat = DataFormat.Binary;
 
@@ -132,14 +180,14 @@ namespace GameCore
                     foreach (FileInfo fi in di.GetFiles("*.config", SearchOption.AllDirectories))
                     {
                         byte[] bytes = File.ReadAllBytes(fi.FullName);
-                        GamePlayAbility ability = SerializationUtility.DeserializeValue<GamePlayAbility>(bytes, dataFormat);
-                        if (AbilityConfigDict.ContainsKey(ability.AbilityName))
+                        Ability config = SerializationUtility.DeserializeValue<Ability>(bytes, dataFormat);
+                        if (AbilityConfigDict.ContainsKey(config.AbilityName))
                         {
-                            Debug.LogError($"技能重名:{ability.AbilityName}");
+                            Debug.LogError($"技能重名:{config.AbilityName}");
                         }
                         else
                         {
-                            AbilityConfigDict.Add(ability.AbilityName, ability);
+                            AbilityConfigDict.Add(config.AbilityName, config);
                         }
                     }
                 }
@@ -157,22 +205,22 @@ namespace GameCore
                     foreach (FileInfo fi in di.GetFiles("*.config", SearchOption.AllDirectories))
                     {
                         byte[] bytes = File.ReadAllBytes(fi.FullName);
-                        GamePlayAbilityGroup abilityGroup = SerializationUtility.DeserializeValue<GamePlayAbilityGroup>(bytes, dataFormat);
-                        if (AbilityConfigDict.ContainsKey(abilityGroup.AbilityGroupName))
+                        AbilityGroup config = SerializationUtility.DeserializeValue<AbilityGroup>(bytes, dataFormat);
+                        if (AbilityConfigDict.ContainsKey(config.AbilityGroupName))
                         {
-                            Debug.LogError($"技能组重名:{abilityGroup.AbilityGroupName}");
+                            Debug.LogError($"技能组重名:{config.AbilityGroupName}");
                         }
                         else
                         {
-                            foreach (string ac_name in abilityGroup.AbilityNames)
+                            foreach (string ac_name in config.AbilityNames)
                             {
-                                if (AbilityConfigDict.TryGetValue(ac_name, out GamePlayAbility ability))
+                                if (AbilityConfigDict.TryGetValue(ac_name, out Ability ability))
                                 {
-                                    abilityGroup.Abilities.Add(ability);
+                                    config.Abilities.Add(ability);
                                 }
                             }
 
-                            AbilityGroupConfigDict.Add(abilityGroup.AbilityGroupName, abilityGroup);
+                            AbilityGroupConfigDict.Add(config.AbilityGroupName, config);
                         }
                     }
                 }
@@ -191,14 +239,14 @@ namespace GameCore
                     foreach (FileInfo fi in di.GetFiles("*.config", SearchOption.AllDirectories))
                     {
                         byte[] bytes = File.ReadAllBytes(fi.FullName);
-                        ProjectileConfig pc = SerializationUtility.DeserializeValue<ProjectileConfig>(bytes, dataFormat);
-                        if (ProjectileConfigDict.ContainsKey(pc.ProjectileName))
+                        ProjectileConfig config = SerializationUtility.DeserializeValue<ProjectileConfig>(bytes, dataFormat);
+                        if (ProjectileConfigDict.ContainsKey(config.ProjectileName))
                         {
-                            Debug.LogError($"投掷物重名:{pc.ProjectileName}");
+                            Debug.LogError($"投掷物重名:{config.ProjectileName}");
                         }
                         else
                         {
-                            ProjectileConfigDict.Add(pc.ProjectileName, pc);
+                            ProjectileConfigDict.Add(config.ProjectileName, config);
                         }
                     }
                 }
@@ -207,28 +255,95 @@ namespace GameCore
                     Debug.LogError("投掷物表不存在");
                 }
             }
+
+            {
+                MechaComponentQualityConfigDict.Clear();
+
+                DirectoryInfo di = new DirectoryInfo(MechaComponentQualityConfigFolder_Build);
+                if (di.Exists)
+                {
+                    foreach (FileInfo fi in di.GetFiles("*.config", SearchOption.AllDirectories))
+                    {
+                        byte[] bytes = File.ReadAllBytes(fi.FullName);
+                        MechaComponentQualityConfig config = SerializationUtility.DeserializeValue<MechaComponentQualityConfig>(bytes, dataFormat);
+                        if (MechaComponentQualityConfigDict.ContainsKey(config.MechaComponentQualityConfigName))
+                        {
+                            Debug.LogError($"机甲组件品质配置重名:{config.MechaComponentQualityConfigName}");
+                        }
+                        else
+                        {
+                            MechaComponentQualityConfigDict.Add(config.MechaComponentQualityConfigName, config);
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogError("机甲组件品质配置表不存在");
+                }
+            }
+
+            {
+                MechaComponentConfigDict.Clear();
+
+                FileInfo fi = new FileInfo(AllMechaComponentConfigPath_Build);
+                if (fi.Exists)
+                {
+                    byte[] bytes = File.ReadAllBytes(fi.FullName);
+                    List<MechaComponentConfig> configs = SerializationUtility.DeserializeValue<List<MechaComponentConfig>>(bytes, dataFormat);
+                    foreach (MechaComponentConfig config in configs)
+                    {
+                        if (MechaComponentConfigDict.ContainsKey(config.MechaComponentKey))
+                        {
+                            Debug.LogError($"机甲组件配置重名:{config.MechaComponentKey}");
+                        }
+                        else
+                        {
+                            MechaComponentConfigDict.Add(config.MechaComponentKey, config);
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogError("机甲组件配置表不存在");
+                }
+            }
+
             IsLoaded = true;
         }
 
-        public GamePlayAbility GetAbility(string abilityName)
+        public Ability GetAbility(string abilityName)
         {
-            if (!IsLoaded) LoadAllAbilityConfigs();
-            AbilityConfigDict.TryGetValue(abilityName, out GamePlayAbility ability);
+            if (!IsLoaded) LoadAllConfigs();
+            AbilityConfigDict.TryGetValue(abilityName, out Ability ability);
             return ability?.Clone();
         }
 
-        public GamePlayAbilityGroup GetAbilityGroup(string abilityGroupName)
+        public AbilityGroup GetAbilityGroup(string abilityGroupName)
         {
-            if (!IsLoaded) LoadAllAbilityConfigs();
-            AbilityGroupConfigDict.TryGetValue(abilityGroupName, out GamePlayAbilityGroup abilityGroup);
+            if (!IsLoaded) LoadAllConfigs();
+            AbilityGroupConfigDict.TryGetValue(abilityGroupName, out AbilityGroup abilityGroup);
             return abilityGroup?.Clone();
         }
 
         public ProjectileConfig GetProjectileConfig(string projectileConfigName)
         {
-            if (!IsLoaded) LoadAllAbilityConfigs();
+            if (!IsLoaded) LoadAllConfigs();
             ProjectileConfigDict.TryGetValue(projectileConfigName, out ProjectileConfig projectileConfig);
             return projectileConfig?.Clone();
+        }
+
+        public MechaComponentConfig GetMechaComponentConfig(string mechaComponentConfigName)
+        {
+            if (!IsLoaded) LoadAllConfigs();
+            MechaComponentConfigDict.TryGetValue(mechaComponentConfigName, out MechaComponentConfig mechaComponentConfig);
+            return mechaComponentConfig;
+        }
+
+        public MechaComponentQualityConfig GetMechaComponentQualityConfig(string mechaComponentQualityConfigName)
+        {
+            if (!IsLoaded) LoadAllConfigs();
+            MechaComponentQualityConfigDict.TryGetValue(mechaComponentQualityConfigName, out MechaComponentQualityConfig mechaComponentQualityConfig);
+            return mechaComponentQualityConfig?.Clone();
         }
     }
 }

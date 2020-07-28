@@ -41,7 +41,7 @@ namespace Client
         };
 
         public Dictionary<PrefabNames, GameObjectPool> PoolDict = new Dictionary<PrefabNames, GameObjectPool>();
-        public Dictionary<MechaComponentType, GameObjectPool> MechaComponentPoolDict = new Dictionary<MechaComponentType, GameObjectPool>();
+        public Dictionary<string, GameObjectPool> MechaComponentPoolDict = new Dictionary<string, GameObjectPool>();
         public Dictionary<ProjectileType, GameObjectPool> ProjectileDict = new Dictionary<ProjectileType, GameObjectPool>();
         public Dictionary<ProjectileType, GameObjectPool> ProjectileHitDict = new Dictionary<ProjectileType, GameObjectPool>();
         public Dictionary<ProjectileType, GameObjectPool> ProjectileFlashDict = new Dictionary<ProjectileType, GameObjectPool>();
@@ -72,17 +72,15 @@ namespace Client
                 }
             }
 
-            foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
+            foreach (KeyValuePair<string, MechaComponentConfig> kv in ConfigManager.MechaComponentConfigDict)
             {
-                string prefabName = "MechaComponent_" + s;
-                MechaComponentType mechaComponentType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-                GameObject go_Prefab = PrefabManager.Instance.GetPrefab(prefabName);
+                GameObject go_Prefab = PrefabManager.Instance.GetPrefab(kv.Value.MechaComponentKey);
                 if (go_Prefab)
                 {
-                    GameObject go = new GameObject("Pool_" + prefabName);
+                    GameObject go = new GameObject("Pool_" + kv.Value.MechaComponentKey);
                     GameObjectPool pool = go.AddComponent<GameObjectPool>();
                     pool.transform.SetParent(Root);
-                    MechaComponentPoolDict.Add(mechaComponentType, pool);
+                    MechaComponentPoolDict.Add(kv.Value.MechaComponentKey, pool);
                     PoolObject po = go_Prefab.GetComponent<PoolObject>();
                     pool.Initiate(po, 20);
                 }

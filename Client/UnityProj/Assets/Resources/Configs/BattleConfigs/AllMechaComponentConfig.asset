@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad3de66c1152b541a92a6aaf7c997f9, type: 3}
+  m_Name: AllMechaComponentConfig
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 2936411875950737291, guid: 072337d035f52bd448e345658436cecf, type: 3}
+    - {fileID: 21300000, guid: 68e535512aa2add4d9445f345391cfac, type: 3}
+    - {fileID: 11400000, guid: 3fbaada5b97b4934aaed11b650964ef7, type: 2}
+    - {fileID: 11400000, guid: 3c4267f0e4d6cff42b62731ba07e1af6, type: 2}
+    - {fileID: 2936411875950737291, guid: f5b5ff501b7e044f09afb208e34504cc, type: 3}
+    - {fileID: 21300000, guid: 079a85fb43f13284992191098e855a3e, type: 3}
+    - {fileID: 11400000, guid: 0e190606f345ebd46b8ee3b0e4784dd6, type: 2}
+    - {fileID: 11400000, guid: e373da448d4efe146af33384ace303dc, type: 2}
+    - {fileID: 2936411875950737291, guid: 08807f6e846898b47a094b9959061dcb, type: 3}
+    - {fileID: 21300000, guid: 465c1ba3d5d384a4993afaf4ddb96ff1, type: 3}
+    - {fileID: 11400000, guid: 6a8767c769887da4bbc7dc5c249c127b, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: MechaComponentConfigRawList
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw,
+        GameCore]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 1|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 0
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 0
+    - Name: ItemSprite
+      Entry: 10
+      Data: 1
+    - Name: AbilityGroupConfigSSO
+      Entry: 10
+      Data: 2
+    - Name: MechaComponentQualityConfigSSO
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 4
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 2
+    - Name: ItemSprite
+      Entry: 10
+      Data: 5
+    - Name: AbilityGroupConfigSSO
+      Entry: 10
+      Data: 6
+    - Name: MechaComponentQualityConfigSSO
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 8
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 1
+    - Name: ItemSprite
+      Entry: 10
+      Data: 9
+    - Name: AbilityGroupConfigSSO
+      Entry: 10
+      Data: 2
+    - Name: MechaComponentQualityConfigSSO
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: MechaComponentConfigList
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[GameCore.MechaComponentConfig, GameCore]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 5|GameCore.MechaComponentConfig, GameCore
+    - Name: MechaComponentKey
+      Entry: 1
+      Data: MechaComponent_BasicCore
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 0
+    - Name: ItemSpriteKey
+      Entry: 1
+      Data: BasicCore
+    - Name: MechaComponentQualityConfigKey
+      Entry: 1
+      Data: MechaComponent_BasicCore
+    - Name: AbilityGroupConfigKey
+      Entry: 1
+      Data: BasicCore
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|GameCore.MechaComponentConfig, GameCore
+    - Name: MechaComponentKey
+      Entry: 1
+      Data: MechaComponent_BasicGun
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 0
+    - Name: ItemSpriteKey
+      Entry: 1
+      Data: BasicGun
+    - Name: MechaComponentQualityConfigKey
+      Entry: 1
+      Data: MechaComponent_BasicGun
+    - Name: AbilityGroupConfigKey
+      Entry: 1
+      Data: BasicGun1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 7|GameCore.MechaComponentConfig, GameCore
+    - Name: MechaComponentKey
+      Entry: 1
+      Data: MechaComponent_BasicBlock
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 0
+    - Name: ItemSpriteKey
+      Entry: 1
+      Data: BasicBlock
+    - Name: MechaComponentQualityConfigKey
+      Entry: 1
+      Data: MechaComponent_BasicBlock
+    - Name: AbilityGroupConfigKey
+      Entry: 1
+      Data: BasicCore
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
