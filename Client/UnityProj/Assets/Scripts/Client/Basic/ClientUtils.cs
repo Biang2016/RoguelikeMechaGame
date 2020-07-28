@@ -12,13 +12,6 @@ namespace Client
 {
     public static class ClientUtils
     {
-        public static Color HTMLColorToColor(string htmlColor)
-        {
-            Color cl = new Color();
-            ColorUtility.TryParseHtmlString(htmlColor, out cl);
-            return cl;
-        }
-
         public static Color ChangeColorToWhite(Color color, float whiteRatio)
         {
             float r = color.r;

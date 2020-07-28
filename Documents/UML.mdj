@@ -30008,7 +30008,7 @@
 											"font": "Arial;13;1",
 											"left": 365,
 											"top": 663,
-											"width": 192.81640625,
+											"width": 205.1689453125,
 											"height": 13,
 											"text": "MechaComponentGroupConfig"
 										},
@@ -30022,7 +30022,7 @@
 											"font": "Arial;13;0",
 											"left": -16,
 											"top": -112,
-											"width": 182.076171875,
+											"width": 199.43701171875,
 											"height": 13,
 											"text": "(from MechaComponentConfig)"
 										},
@@ -30043,7 +30043,7 @@
 									"font": "Arial;13;0",
 									"left": 360,
 									"top": 656,
-									"width": 202.81640625,
+									"width": 215.1689453125,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFzkOsebtuy/eg="
@@ -30070,7 +30070,7 @@
 									"font": "Arial;13;0",
 									"left": 360,
 									"top": 681,
-									"width": 202.81640625,
+									"width": 215.1689453125,
 									"height": 10
 								},
 								{
@@ -30085,7 +30085,7 @@
 									"font": "Arial;13;0",
 									"left": 360,
 									"top": 691,
-									"width": 202.81640625,
+									"width": 215.1689453125,
 									"height": 10
 								},
 								{
@@ -30125,7 +30125,7 @@
 							"containerChangeable": true,
 							"left": 360,
 							"top": 656,
-							"width": 202.81640625,
+							"width": 215.1689453125,
 							"height": 45,
 							"nameCompartment": {
 								"$ref": "AAAAAAFzkOsebtuxFHU="
@@ -30184,7 +30184,7 @@
 											"font": "Arial;13;1",
 											"left": 373,
 											"top": 511,
-											"width": 179.1181640625,
+											"width": 187.97314453125,
 											"height": 13,
 											"text": "MechaComponentGroupSSO"
 										},
@@ -30198,7 +30198,7 @@
 											"font": "Arial;13;0",
 											"left": -528,
 											"top": -64,
-											"width": 182.076171875,
+											"width": 199.43701171875,
 											"height": 13,
 											"text": "(from MechaComponentConfig)"
 										},
@@ -30219,7 +30219,7 @@
 									"font": "Arial;13;0",
 									"left": 368,
 									"top": 504,
-									"width": 189.1181640625,
+									"width": 197.97314453125,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFzkOtE/tveVQg="
@@ -30246,7 +30246,7 @@
 									"font": "Arial;13;0",
 									"left": 368,
 									"top": 529,
-									"width": 189.1181640625,
+									"width": 197.97314453125,
 									"height": 10
 								},
 								{
@@ -30261,7 +30261,7 @@
 									"font": "Arial;13;0",
 									"left": 368,
 									"top": 539,
-									"width": 189.1181640625,
+									"width": 197.97314453125,
 									"height": 10
 								},
 								{
@@ -30301,7 +30301,7 @@
 							"containerChangeable": true,
 							"left": 368,
 							"top": 504,
-							"width": 189.1181640625,
+							"width": 197.97314453125,
 							"height": 45,
 							"nameCompartment": {
 								"$ref": "AAAAAAFzkOtE/tvdSRM="
@@ -30340,7 +30340,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 446,
+									"left": 451,
 									"top": 595,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -30361,7 +30361,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 431,
+									"left": 436,
 									"top": 595,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -30382,7 +30382,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 475,
+									"left": 480,
 									"top": 596,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -30403,8 +30403,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 445,
-									"top": 622,
+									"left": 451,
+									"top": 623,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -30424,7 +30424,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 432,
+									"left": 438,
 									"top": 620,
 									"height": 13,
 									"alpha": 0.7853981633974483,
@@ -30445,7 +30445,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 472,
+									"left": 479,
 									"top": 627,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -30466,8 +30466,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 446,
-									"top": 568,
+									"left": 451,
+									"top": 569,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -30486,8 +30486,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 433,
-									"top": 570,
+									"left": 437,
+									"top": 571,
 									"height": 13,
 									"alpha": -0.7853981633974483,
 									"distance": 40,
@@ -30506,7 +30506,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 474,
+									"left": 478,
 									"top": 564,
 									"height": 13,
 									"alpha": 0.5235987755982988,
@@ -30554,7 +30554,7 @@
 								"$ref": "AAAAAAFzkOsebtuwL8w="
 							},
 							"lineStyle": 1,
-							"points": "460:655;462:549",
+							"points": "467:655;466:549",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFzkOtxMdwL0NM="
@@ -30631,7 +30631,7 @@
 											"font": "Arial;13;1",
 											"left": 725,
 											"top": 663,
-											"width": 194.28271484375,
+											"width": 207.9111328125,
 											"height": 13,
 											"text": "MechaComponentConfigHelper"
 										},
@@ -30645,7 +30645,7 @@
 											"font": "Arial;13;0",
 											"left": -80,
 											"top": -288,
-											"width": 182.076171875,
+											"width": 199.43701171875,
 											"height": 13,
 											"text": "(from MechaComponentConfig)"
 										},
@@ -30666,7 +30666,7 @@
 									"font": "Arial;13;0",
 									"left": 720,
 									"top": 656,
-									"width": 204.28271484375,
+									"width": 217.9111328125,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFzkOt/xNxscqo="
@@ -30693,7 +30693,7 @@
 									"font": "Arial;13;0",
 									"left": 720,
 									"top": 681,
-									"width": 204.28271484375,
+									"width": 217.9111328125,
 									"height": 10
 								},
 								{
@@ -30708,7 +30708,7 @@
 									"font": "Arial;13;0",
 									"left": 720,
 									"top": 691,
-									"width": 204.28271484375,
+									"width": 217.9111328125,
 									"height": 10
 								},
 								{
@@ -30748,7 +30748,7 @@
 							"containerChangeable": true,
 							"left": 720,
 							"top": 656,
-							"width": 204.28271484375,
+							"width": 217.9111328125,
 							"height": 45,
 							"nameCompartment": {
 								"$ref": "AAAAAAFzkOt/xNxrY10="
@@ -30799,8 +30799,8 @@
 								"$ref": "AAAAAAFzkOqlO9snnnY="
 							},
 							"font": "Arial;13;0",
-							"left": 336,
-							"top": 776,
+							"left": 288,
+							"top": 760,
 							"width": 60,
 							"height": 25,
 							"text": "决定了"
@@ -30827,7 +30827,7 @@
 							"font": "Arial;13;0",
 							"left": 264,
 							"top": 928,
-							"width": 113.28271484375,
+							"width": 113.96826171875,
 							"height": 25,
 							"text": "敌兵挂一个敌兵AI"
 						},
@@ -30840,7 +30840,7 @@
 							"font": "Arial;13;0",
 							"left": 264,
 							"top": 952,
-							"width": 243.28271484375,
+							"width": 243.96826171875,
 							"height": 25,
 							"text": "同一个敌兵配置可能有多个难度不同的AI"
 						},
@@ -30853,7 +30853,7 @@
 							"font": "Arial;13;0",
 							"left": 848,
 							"top": 880,
-							"width": 296.01904296875,
+							"width": 298.78662109375,
 							"height": 25,
 							"text": "Mecha组件组装后的逻辑应该是自动组装的逻辑链"
 						},
@@ -30898,7 +30898,7 @@
 											"font": "Arial;13;1",
 											"left": 517,
 											"top": 839,
-											"width": 164.70263671875,
+											"width": 174.50341796875,
 											"height": 13,
 											"text": "EnemyMechaConfigHelper"
 										},
@@ -30912,7 +30912,7 @@
 											"font": "Arial;13;0",
 											"left": 112,
 											"top": -480,
-											"width": 182.076171875,
+											"width": 199.43701171875,
 											"height": 13,
 											"text": "(from MechaComponentConfig)"
 										},
@@ -30933,7 +30933,7 @@
 									"font": "Arial;13;0",
 									"left": 512,
 									"top": 832,
-									"width": 174.70263671875,
+									"width": 184.50341796875,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFzkP9tc+BKwM4="
@@ -30960,7 +30960,7 @@
 									"font": "Arial;13;0",
 									"left": 512,
 									"top": 857,
-									"width": 174.70263671875,
+									"width": 184.50341796875,
 									"height": 10
 								},
 								{
@@ -30975,7 +30975,7 @@
 									"font": "Arial;13;0",
 									"left": 512,
 									"top": 867,
-									"width": 174.70263671875,
+									"width": 184.50341796875,
 									"height": 10
 								},
 								{
@@ -31015,7 +31015,7 @@
 							"containerChangeable": true,
 							"left": 512,
 							"top": 832,
-							"width": 174.70263671875,
+							"width": 184.50341796875,
 							"height": 45,
 							"nameCompartment": {
 								"$ref": "AAAAAAFzkP9tc+BJj/c="
@@ -31042,7 +31042,7 @@
 							"font": "Arial;13;0",
 							"left": 208,
 							"top": 848,
-							"width": 215.86083984375,
+							"width": 219.6376953125,
 							"height": 25,
 							"text": "拼装过程中部件的prefab不允许变化"
 						},

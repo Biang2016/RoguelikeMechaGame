@@ -125,6 +125,8 @@ namespace Client
             ClientProjectileManager.Awake();
 
             ControlManager.Awake();
+
+            QualityManager.Initialize();
         }
 
         private void Start()

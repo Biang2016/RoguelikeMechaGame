@@ -7,6 +7,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using BiangStudio.GameDataFormat;
 using Newtonsoft.Json;
+using UnityEngine;
+using Random = System.Random;
 
 namespace GameCore
 {
@@ -18,6 +20,13 @@ namespace GameCore
 
         public static DebugLogDelegate DebugLog;
         public static NoticeCenterMsgDelegate NoticeCenterMsg;
+
+        public static Color HTMLColorToColor(string htmlColor)
+        {
+            Color cl = new Color();
+            ColorUtility.TryParseHtmlString(htmlColor, out cl);
+            return cl;
+        }
 
         public static List<Type> GetClassesByNameSpace(string nameSpace, Assembly assembly)
         {

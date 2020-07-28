@@ -1,9 +1,10 @@
 ﻿using System;
+using GameCore.AbilityDataDriven;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 
-namespace GameCore.AbilityDataDriven
+namespace GameCore
 {
     [CreateAssetMenu(menuName = "BattleConfig/MechaComponentGroup")]
     public class MechaComponentGroupConfigSSO : SerializedScriptableObject
