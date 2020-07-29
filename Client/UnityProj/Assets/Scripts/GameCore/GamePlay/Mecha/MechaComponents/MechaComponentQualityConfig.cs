@@ -46,6 +46,9 @@ namespace GameCore
         [LabelText("生命值")]
         public int Life;
 
+        [LabelText("荧光颜色")]
+        public Color HighLightColor;
+
         [LabelText("输入功率能力差异表")]
         [ListDrawerSettings(ListElementLabelName = "PowerConsume")]
         public List<PowerUpgradeDataBase> PowerUpgradeDataList = new List<PowerUpgradeDataBase>();
@@ -59,18 +62,20 @@ namespace GameCore
                 tempDict.Add(p.PowerConsume, p);
             }
 
-            PowerUpgradeDataBase last = null;
+            PowerUpgradeDataBase lastMatch = null;
             foreach (KeyValuePair<int, PowerUpgradeDataBase> kv in tempDict)
             {
                 if (kv.Key > inputPower)
                 {
-                    return last;
+                    return lastMatch;
                 }
-
-                last = kv.Value;
+                else
+                {
+                    lastMatch = kv.Value;
+                }
             }
 
-            return null;
+            return lastMatch;
         }
 
         public QualityUpgradeDataBase Clone()
@@ -79,6 +84,7 @@ namespace GameCore
             QualityUpgradeDataBase newConfig = (QualityUpgradeDataBase) Activator.CreateInstance(type);
             newConfig.Quality = Quality;
             newConfig.Life = Life;
+            newConfig.HighLightColor = HighLightColor;
             newConfig.PowerUpgradeDataList = PowerUpgradeDataList.Clone();
             ChildClone(newConfig);
             return newConfig;
@@ -94,6 +100,9 @@ namespace GameCore
         [LabelText("输入功率阈值(MW)")]
         public int PowerConsume;
 
+        [LabelText("荧光强度")]
+        public float HighLightColorIntensity;
+
         [LabelText("额外获得能力列表")]
         public List<string> AddOnAbilityList = new List<string>();
 
@@ -102,6 +111,7 @@ namespace GameCore
             Type type = GetType();
             PowerUpgradeDataBase newConfig = (PowerUpgradeDataBase) Activator.CreateInstance(type);
             newConfig.PowerConsume = PowerConsume;
+            newConfig.HighLightColorIntensity = HighLightColorIntensity;
             newConfig.AddOnAbilityList = AddOnAbilityList.Clone();
             ChildClone(newConfig);
             return newConfig;

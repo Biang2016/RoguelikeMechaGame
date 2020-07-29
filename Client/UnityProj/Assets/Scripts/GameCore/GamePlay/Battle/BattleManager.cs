@@ -8,8 +8,8 @@ namespace GameCore
     public class BattleManager : TSingletonBaseManager<BattleManager>
     {
         private BattleInfo BattleInfo;
-        internal MechaInfo PlayerMechaInfo;
-        internal SortedDictionary<uint, MechaInfo> MechaInfoDict = new SortedDictionary<uint, MechaInfo>();
+        public MechaInfo PlayerMechaInfo;
+        public SortedDictionary<uint, MechaInfo> MechaInfoDict = new SortedDictionary<uint, MechaInfo>();
 
         public Messenger BattleMessenger = new Messenger();
 

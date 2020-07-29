@@ -24,6 +24,21 @@ namespace Client
             DefaultHighLightMaterialEmissionColor = HighLightMaterial.GetColor("_EmissionColor");
         }
 
+        /// <summary>
+        /// 组件品质、能量发生变化后，其默认的荧光颜色、强度也会发生变化
+        /// </summary>
+        // /// <param name="basicEmissionColor"></param>
+        /// <param name="highLightEmissionColor"></param>
+        public void ResetDefaultEmissionColor(Color highLightEmissionColor)
+        {
+            // DefaultBasicMaterialEmissionColor = basicEmissionColor;
+            DefaultHighLightMaterialEmissionColor = highLightEmissionColor;
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            Renderer.GetPropertyBlock(mpb, 1);
+            mpb.SetColor("_EmissionColor", highLightEmissionColor);
+            Renderer.SetPropertyBlock(mpb, 1);
+        }
+
         public void SetShown(bool shown)
         {
             Renderer.enabled = shown;

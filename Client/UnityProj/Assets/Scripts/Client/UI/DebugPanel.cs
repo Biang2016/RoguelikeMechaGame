@@ -1,4 +1,5 @@
-﻿using BiangStudio.GameDataFormat.Grid;
+﻿using System.Collections.Generic;
+using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay.UI;
 using GameCore;
 using UnityEngine;
@@ -44,6 +45,14 @@ namespace Client
             }
 
             ClientBattleManager.Instance.MechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
+        }
+
+        public void AddPower()
+        {
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in BattleManager.Instance.PlayerMechaInfo.MechaComponentInfoDict)
+            {
+                kv.Value.M_InputPower += 50;
+            }
         }
     }
 }

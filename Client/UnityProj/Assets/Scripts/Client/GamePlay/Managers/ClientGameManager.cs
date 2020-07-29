@@ -306,7 +306,7 @@ namespace Client
             ClientBattleManager.Instance.StartBattle(battleInfo);
             UIBattleTipManager.Init();
 
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicCore"), Quality.Poor), new GridPosR(9, 9));
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicCore"), Quality.Legendary), new GridPosR(9, 9));
 
             ClientLevelManager.Instance.StartLevel();
         }

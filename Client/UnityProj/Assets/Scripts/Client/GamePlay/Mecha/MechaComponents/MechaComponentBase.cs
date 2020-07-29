@@ -108,6 +108,8 @@ namespace Client
             };
 
             mechaComponentInfo.OnDamaged += OnDamaged;
+            mechaComponentInfo.OnHighLightColorChange += HighLightColorChange;
+            HighLightColorChange(mechaComponentInfo.CurrentQualityUpgradeData.HighLightColor, mechaComponentInfo.CurrentPowerUpgradeData.HighLightColorIntensity);
 
             {
                 mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) =>
@@ -126,6 +128,11 @@ namespace Client
             MechaComponentGridRoot.SetInBattle(true);
 
             Initialize_Fighting();
+        }
+
+        private void HighLightColorChange(Color highLightColor, float intensity)
+        {
+            MechaComponentModelRoot.ResetDefaultEmissionColor(highLightColor * intensity);
         }
 
 #if UNITY_EDITOR
