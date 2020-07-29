@@ -73,7 +73,7 @@ MonoBehaviour:
       Data: 4|GameCore.PowerUpgradeData_Gun, GameCore
     - Name: PowerConsume
       Entry: 3
-      Data: 50
+      Data: 0
     - Name: HighLightColorIntensity
       Entry: 4
       Data: 2
