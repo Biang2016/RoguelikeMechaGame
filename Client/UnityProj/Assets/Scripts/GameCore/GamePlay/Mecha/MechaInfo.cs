@@ -105,9 +105,14 @@ namespace GameCore
 
         public bool IsFriend(MechaInfo mechaInfo)
         {
-            if (MechaType == mechaInfo.MechaType) return true;
-            if (mechaInfo.MechaType == MechaType.Friend && MechaType == MechaType.Player) return true;
-            if (MechaType == MechaType.Friend && mechaInfo.MechaType == MechaType.Player) return true;
+            return IsFriend(mechaInfo.MechaType);
+        }
+
+        public bool IsFriend(MechaType targetMechaType)
+        {
+            if (MechaType == targetMechaType) return true;
+            if (targetMechaType == MechaType.Friend && MechaType == MechaType.Player) return true;
+            if (MechaType == MechaType.Friend && targetMechaType == MechaType.Player) return true;
             return false;
         }
 
@@ -118,10 +123,15 @@ namespace GameCore
 
         public bool IsOpponent(MechaInfo mechaInfo)
         {
-            if (mechaInfo.MechaType == MechaType.Player && MechaType == MechaType.Enemy) return true;
-            if (MechaType == MechaType.Enemy && mechaInfo.MechaType == MechaType.Player) return true;
-            if (mechaInfo.MechaType == MechaType.Friend && MechaType == MechaType.Enemy) return true;
-            if (MechaType == MechaType.Enemy && mechaInfo.MechaType == MechaType.Friend) return true;
+            return IsOpponent(mechaInfo.MechaType);
+        }
+
+        public bool IsOpponent(MechaType targetMechaType)
+        {
+            if (targetMechaType == MechaType.Player && MechaType == MechaType.Enemy) return true;
+            if (MechaType == MechaType.Enemy && targetMechaType == MechaType.Player) return true;
+            if (targetMechaType == MechaType.Friend && MechaType == MechaType.Enemy) return true;
+            if (MechaType == MechaType.Enemy && targetMechaType == MechaType.Friend) return true;
             return false;
         }
 

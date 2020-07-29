@@ -21,12 +21,12 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Ability
+    - Name: ability
       Entry: 7
       Data: 0|GameCore.AbilityDataDriven.Ability, GameCore
     - Name: AbilityName
       Entry: 1
-      Data: EmitBullet1
+      Data: AC_EmitBullet_Leaves
     - Name: AbilityBehaviors
       Entry: 3
       Data: 0
@@ -35,13 +35,13 @@ MonoBehaviour:
       Data: false
     - Name: CastDummyPosition
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: AbilityCastRange
       Entry: 3
       Data: 0
     - Name: AbilityCooldown
       Entry: 3
-      Data: 100
+      Data: 300
     - Name: AbilityPowerCost
       Entry: 3
       Data: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: NormalBullet
+      Data: PC_Leaves
     - Name: 
       Entry: 8
       Data: 
@@ -123,7 +123,7 @@ MonoBehaviour:
       Data: 
     - Name: Damage
       Entry: 3
-      Data: 20
+      Data: 1
     - Name: 
       Entry: 8
       Data: 

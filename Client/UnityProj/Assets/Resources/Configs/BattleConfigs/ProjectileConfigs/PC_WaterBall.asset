@@ -21,12 +21,12 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: ProjectileConfig
+    - Name: projectileConfig
       Entry: 7
       Data: 0|GameCore.AbilityDataDriven.ProjectileConfig, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: WaterBall
+      Data: PC_WaterBall
     - Name: ProjectileType
       Entry: 3
       Data: 13
@@ -35,7 +35,7 @@ MonoBehaviour:
       Data: 1
     - Name: MaxRange
       Entry: 3
-      Data: 15
+      Data: 3
     - Name: MaxDuration
       Entry: 3
       Data: 3000
@@ -44,7 +44,7 @@ MonoBehaviour:
       Data: 1000
     - Name: ScaleIncrease
       Entry: 3
-      Data: 1000
+      Data: 200
     - Name: VelocityCurve
       Entry: 7
       Data: 1|UnityEngine.AnimationCurve, UnityEngine.CoreModule
@@ -53,7 +53,7 @@ MonoBehaviour:
       Data: 2|UnityEngine.Keyframe[], UnityEngine.CoreModule
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 4
     - Name: 
       Entry: 7
       Data: UnityEngine.Keyframe, UnityEngine.CoreModule
@@ -62,10 +62,10 @@ MonoBehaviour:
       Data: 1
     - Name: m_Time
       Entry: 4
-      Data: -0.0158081055
+      Data: 0.108795166
     - Name: m_Value
       Entry: 4
-      Data: 19.8739777
+      Data: 5.73216248
     - Name: m_InTangent
       Entry: 4
       Data: 0.212205976
@@ -95,82 +95,16 @@ MonoBehaviour:
       Data: 1
     - Name: m_Time
       Entry: 4
-      Data: 0.141285241
+      Data: 0.470157623
     - Name: m_Value
       Entry: 4
-      Data: 2.16042614
+      Data: 1.70184517
     - Name: m_InTangent
       Entry: 4
-      Data: -6.73051
+      Data: -1.80303693
     - Name: m_OutTangent
       Entry: 4
-      Data: -6.73051
-    - Name: m_TangentMode
-      Entry: 3
-      Data: 0
-    - Name: m_WeightedMode
-      Entry: 3
-      Data: 0
-    - Name: m_InWeight
-      Entry: 4
-      Data: 0.333333343
-    - Name: m_OutWeight
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: UnityEngine.Keyframe, UnityEngine.CoreModule
-    - Name: ver
-      Entry: 3
-      Data: 1
-    - Name: m_Time
-      Entry: 4
-      Data: 0.6818636
-    - Name: m_Value
-      Entry: 4
-      Data: 1.20566285
-    - Name: m_InTangent
-      Entry: 4
-      Data: 0.361981273
-    - Name: m_OutTangent
-      Entry: 4
-      Data: 0.361981273
-    - Name: m_TangentMode
-      Entry: 3
-      Data: 0
-    - Name: m_WeightedMode
-      Entry: 3
-      Data: 0
-    - Name: m_InWeight
-      Entry: 4
-      Data: 0.714008749
-    - Name: m_OutWeight
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: UnityEngine.Keyframe, UnityEngine.CoreModule
-    - Name: ver
-      Entry: 3
-      Data: 1
-    - Name: m_Time
-      Entry: 4
-      Data: 1.08980131
-    - Name: m_Value
-      Entry: 4
-      Data: 2.607259
-    - Name: m_InTangent
-      Entry: 4
-      Data: 14.5595579
-    - Name: m_OutTangent
-      Entry: 4
-      Data: 14.5595579
+      Data: -1.80303693
     - Name: m_TangentMode
       Entry: 3
       Data: 34
@@ -194,16 +128,16 @@ MonoBehaviour:
       Data: 1
     - Name: m_Time
       Entry: 4
-      Data: 3.06400084
+      Data: 2.31638122
     - Name: m_Value
       Entry: 4
-      Data: 53.31123
+      Data: 15.6353712
     - Name: m_InTangent
       Entry: 4
-      Data: 15.943821
+      Data: 6.92275333
     - Name: m_OutTangent
       Entry: 4
-      Data: 15.943821
+      Data: 6.92275333
     - Name: m_TangentMode
       Entry: 3
       Data: 34
@@ -216,39 +150,6 @@ MonoBehaviour:
     - Name: m_OutWeight
       Entry: 4
       Data: 0.333333343
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: UnityEngine.Keyframe, UnityEngine.CoreModule
-    - Name: ver
-      Entry: 3
-      Data: 1
-    - Name: m_Time
-      Entry: 4
-      Data: 4.51796436
-    - Name: m_Value
-      Entry: 4
-      Data: 62.3321075
-    - Name: m_InTangent
-      Entry: 4
-      Data: 1.81435728
-    - Name: m_OutTangent
-      Entry: 4
-      Data: 1.81435728
-    - Name: m_TangentMode
-      Entry: 3
-      Data: 0
-    - Name: m_WeightedMode
-      Entry: 3
-      Data: 0
-    - Name: m_InWeight
-      Entry: 4
-      Data: 0.333333343
-    - Name: m_OutWeight
-      Entry: 4
-      Data: 0.128342032
     - Name: 
       Entry: 8
       Data: 
@@ -266,10 +167,10 @@ MonoBehaviour:
       Data: 64.5166
     - Name: m_InTangent
       Entry: 4
-      Data: 0.392948776
+      Data: 6.298465
     - Name: m_OutTangent
       Entry: 4
-      Data: 0.392948776
+      Data: 6.298465
     - Name: m_TangentMode
       Entry: 3
       Data: 34
@@ -332,7 +233,7 @@ MonoBehaviour:
       Data: false
     - Name: ReflectTimes
       Entry: 3
-      Data: 0
+      Data: 1
     - Name: 
       Entry: 8
       Data: 

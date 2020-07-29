@@ -1,0 +1,185 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b5aa72451bd05f4b8c472131ad5a6aa, type: 3}
+  m_Name: Q_BasicEngine
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: mechaComponentQualityConfig
+      Entry: 7
+      Data: 0|GameCore.MechaComponentQualityConfig, GameCore
+    - Name: MechaComponentQualityConfigName
+      Entry: 1
+      Data: Q_BasicEngine
+    - Name: QualityUpgradeDataList
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[GameCore.QualityUpgradeDataBase,
+        GameCore]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 2|GameCore.QualityUpgradeData_Core, GameCore
+    - Name: Quality
+      Entry: 3
+      Data: 0
+    - Name: Life
+      Entry: 3
+      Data: 50
+    - Name: HighLightColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.9716981
+    - Name: 
+      Entry: 4
+      Data: 0.637104
+    - Name: 
+      Entry: 4
+      Data: 0.637104
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: PowerUpgradeDataList
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[GameCore.PowerUpgradeDataBase, GameCore]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 4|GameCore.PowerUpgradeData_Core, GameCore
+    - Name: PowerConsume
+      Entry: 3
+      Data: 0
+    - Name: HighLightColorIntensity
+      Entry: 4
+      Data: 2
+    - Name: AddOnAbilityList
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: AbilityCooldownDecreasePercent
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|GameCore.QualityUpgradeData_Core, GameCore
+    - Name: Quality
+      Entry: 3
+      Data: 5
+    - Name: Life
+      Entry: 3
+      Data: 500
+    - Name: HighLightColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.9622642
+    - Name: 
+      Entry: 4
+      Data: 0.924773633
+    - Name: 
+      Entry: 4
+      Data: 0.394891471
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: PowerUpgradeDataList
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[GameCore.PowerUpgradeDataBase, GameCore]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 8|GameCore.PowerUpgradeData_Core, GameCore
+    - Name: PowerConsume
+      Entry: 3
+      Data: 0
+    - Name: HighLightColorIntensity
+      Entry: 4
+      Data: 10
+    - Name: AddOnAbilityList
+      Entry: 7
+      Data: 9|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: AbilityCooldownDecreasePercent
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 

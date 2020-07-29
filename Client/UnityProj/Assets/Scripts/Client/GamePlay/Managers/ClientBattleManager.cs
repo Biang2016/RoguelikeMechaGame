@@ -3,6 +3,7 @@ using System.Linq;
 using BiangStudio.GamePlay.UI;
 using BiangStudio.Singleton;
 using GameCore;
+using GameCore.AbilityDataDriven;
 using UnityEngine;
 
 namespace Client
@@ -144,23 +145,61 @@ namespace Client
             BattleManager.Instance.SearchRangeHandler = SearchRangeDelegate;
         }
 
-        private List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius)
+        private List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius, MechaType mechaType, ENUM_MultipleTargetTeam team, int maxTargets, bool random)
         {
+            if (maxTargets <= 0) return new List<MechaComponentInfo>();
             Dictionary<uint, MechaComponentInfo> res = new Dictionary<uint, MechaComponentInfo>();
             Collider[] colliders = Physics.OverlapSphere(center, radius, LayerManager.Instance.LayerMask_ComponentHitBox, QueryTriggerInteraction.Collide);
+            if (!random) colliders = colliders.OrderBy(c => Vector3.Distance(center, c.transform.position)).ToArray();
             foreach (Collider collider in colliders)
             {
+                if (!random && res.Count == maxTargets) return res.Values.ToList();
                 MechaComponentBase mcb = collider.GetComponentInParent<MechaComponentBase>();
                 if (mcb.IsAlive())
                 {
                     if (!res.ContainsKey(mcb.MechaComponentInfo.GUID))
                     {
-                        res.Add(mcb.MechaComponentInfo.GUID, mcb.MechaComponentInfo);
+                        bool match = true;
+                        switch (team)
+                        {
+                            case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_NONE:
+                            {
+                                match = false;
+                                break;
+                            }
+                            case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_BOTH:
+                            {
+                                match = true;
+                                break;
+                            }
+                            case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_ENEMY:
+                            {
+                                match = mcb.MechaInfo.IsOpponent(mechaType);
+                                break;
+                            }
+                            case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_FRIENDLY:
+                            {
+                                match = mcb.MechaInfo.IsFriend(mechaType);
+                                break;
+                            }
+                        }
+
+                        if (match)
+                        {
+                            res.Add(mcb.MechaComponentInfo.GUID, mcb.MechaComponentInfo);
+                        }
                     }
                 }
             }
 
-            return res.Values.ToList();
+            if (random)
+            {
+                return Utils.GetRandomFromList(res.Values.ToList(), maxTargets);
+            }
+            else
+            {
+                return res.Values.ToList();
+            }
         }
 
         #endregion

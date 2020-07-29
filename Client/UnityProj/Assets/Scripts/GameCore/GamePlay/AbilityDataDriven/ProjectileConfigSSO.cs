@@ -10,8 +10,17 @@ namespace GameCore.AbilityDataDriven
     {
         [NonSerialized]
         [OdinSerialize]
-        public ProjectileConfig ProjectileConfig = new ProjectileConfig();
+        [ShowInInspector]
+        [LabelText("投掷物配置")]
+        private ProjectileConfig projectileConfig = new ProjectileConfig();
 
-        public string ProjectileName => ProjectileConfig.ProjectileName;
+        public ProjectileConfig ProjectileConfig
+        {
+            get
+            {
+                projectileConfig.ProjectileName = name;
+                return projectileConfig;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BiangStudio.Messenger;
 using BiangStudio.Singleton;
+using GameCore.AbilityDataDriven;
 using UnityEngine;
 
 namespace GameCore
@@ -87,7 +88,7 @@ namespace GameCore
 
         #region Proxy
 
-        public delegate List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius);
+        public delegate List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius, MechaType mechaType, ENUM_MultipleTargetTeam Team, int maxTargets, bool random);
 
         public SearchRangeDelegate SearchRangeHandler;
 

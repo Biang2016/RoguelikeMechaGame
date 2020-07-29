@@ -106,7 +106,6 @@ namespace Client
                 PoolRecycle();
             };
 
-            mechaComponentInfo.OnDamaged += OnDamaged;
             mechaComponentInfo.OnHighLightColorChange += HighLightColorChange;
             HighLightColorChange(mechaComponentInfo.CurrentQualityUpgradeData.HighLightColor, mechaComponentInfo.CurrentPowerUpgradeData.HighLightColorIntensity);
 

@@ -6,6 +6,7 @@ namespace GameCore.AbilityDataDriven
 {
     public class ProjectileConfig : IClone<ProjectileConfig>
     {
+        [ReadOnly]
         [LabelText("投掷物名称")]
         public string ProjectileName;
 

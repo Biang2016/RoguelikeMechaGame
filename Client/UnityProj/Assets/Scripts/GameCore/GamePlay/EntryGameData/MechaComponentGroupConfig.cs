@@ -6,6 +6,7 @@ namespace GameCore
 {
     public class MechaComponentGroupConfig : IClone<MechaComponentGroupConfig>
     {
+        [ReadOnly]
         [LabelText("机甲组件组名称")]
         public string MechaComponentGroupConfigName;
 

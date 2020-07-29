@@ -187,10 +187,7 @@ namespace GameCore.AbilityDataDriven
         public override void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, Ability parentAbility)
         {
             // Projectile Damage
-            messenger.AddListener<ExecuteInfo, ProjectileInfo.FlyRealtimeData>((uint) abilityEvent, (executeInfo, flyRealTimeData) =>
-            {
-                ExecuteProjectileDamage(parentAbility, executeInfo, flyRealTimeData);
-            });
+            messenger.AddListener<ExecuteInfo, ProjectileInfo.FlyRealtimeData>((uint) abilityEvent, (executeInfo, flyRealTimeData) => { ExecuteProjectileDamage(parentAbility, executeInfo, flyRealTimeData); });
         }
 
         public void ExecuteProjectileDamage(Ability parentAbility, ExecuteInfo executeInfo, ProjectileInfo.FlyRealtimeData flyRealTimeData)
@@ -254,13 +251,26 @@ namespace GameCore.AbilityDataDriven
                     }
                     case MultipleActionTarget multipleTarget:
                     {
+                        int finalRadius = multipleTarget.Radius;
+                        int finalMaxTargets = multipleTarget.MaxTargets;
+                        switch (executeInfo.MechaComponentInfo.CurrentPowerUpgradeData)
+                        {
+                            case PowerUpgradeData_Gun pud_Gun:
+                            {
+                                finalRadius += Mathf.FloorToInt(pud_Gun.DamageRangeIncreasePercent / 100f * multipleTarget.Radius);
+                                finalMaxTargets = pud_Gun.DamageMaxTargetsOverride;
+                                break;
+                            }
+                        }
+
                         switch (multipleTarget.Center)
                         {
                             case ENUM_MultipleTargetCenter.PROJECTILE:
                             {
-                                List<MechaComponentInfo> hitMCIs = BattleManager.Instance.SearchRangeHandler(flyRealTimeData.Position, multipleTarget.Radius);
+                                List<MechaComponentInfo> hitMCIs = BattleManager.Instance.SearchRangeHandler(flyRealTimeData.Position, finalRadius, executeInfo.MechaInfo.MechaType, multipleTarget.Team, finalMaxTargets, multipleTarget.Random);
                                 foreach (MechaComponentInfo mci in hitMCIs)
                                 {
+                                    Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{finalDamage}</color> damage to {mci.LogIdentityName}");
                                     mci.Damage(executeInfo.MechaComponentInfo, finalDamage);
                                 }
 

@@ -21,12 +21,12 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Ability
+    - Name: ability
       Entry: 7
       Data: 0|GameCore.AbilityDataDriven.Ability, GameCore
     - Name: AbilityName
       Entry: 1
-      Data: EmitBullet
+      Data: AC_EmitBullet_WaterBall
     - Name: AbilityBehaviors
       Entry: 3
       Data: 0
@@ -35,13 +35,13 @@ MonoBehaviour:
       Data: false
     - Name: CastDummyPosition
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: AbilityCastRange
       Entry: 3
       Data: 0
     - Name: AbilityCooldown
       Entry: 3
-      Data: 1000
+      Data: 300
     - Name: AbilityPowerCost
       Entry: 3
       Data: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: WaterBall
+      Data: PC_WaterBall
     - Name: 
       Entry: 8
       Data: 
@@ -120,10 +120,10 @@ MonoBehaviour:
       Data: 5
     - Name: Radius
       Entry: 3
-      Data: 10
+      Data: 0
     - Name: Team
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: Types
       Entry: 3
       Data: 0
@@ -138,16 +138,16 @@ MonoBehaviour:
       Data: 0
     - Name: MaxTargets
       Entry: 3
-      Data: 999
+      Data: 3
     - Name: Random
       Entry: 5
-      Data: false
+      Data: true
     - Name: 
       Entry: 8
       Data: 
     - Name: Damage
       Entry: 3
-      Data: 20
+      Data: 10
     - Name: 
       Entry: 8
       Data: 

@@ -1,4 +1,18 @@
 {
+  "MechaComponent_ArcLeaveGun": [
+    {
+      "x": 0,
+      "z": 1
+    },
+    {
+      "x": 0,
+      "z": 0
+    },
+    {
+      "x": 0,
+      "z": -1
+    }
+  ],
   "MechaComponent_BasicBlock": [
     {
       "x": 0,
@@ -17,7 +31,7 @@
       "z": 0
     }
   ],
-  "MechaComponent_BasicGun": [
+  "MechaComponent_LeaveGun": [
     {
       "x": 0,
       "z": 1

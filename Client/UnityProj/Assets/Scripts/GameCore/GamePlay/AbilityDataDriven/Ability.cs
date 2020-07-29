@@ -7,6 +7,7 @@ namespace GameCore.AbilityDataDriven
 {
     public class Ability : IClone<Ability>
     {
+        [ReadOnly]
         [LabelText("技能名称")]
         public string AbilityName;
 

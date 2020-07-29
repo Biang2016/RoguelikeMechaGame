@@ -7,6 +7,8 @@ namespace GameCore.AbilityDataDriven
 {
     public class AbilityGroup : IClone<AbilityGroup>
     {
+        [ReadOnly]
+        [LabelText("技能组名称")]
         public string AbilityGroupName;
 
         [HideInInspector]

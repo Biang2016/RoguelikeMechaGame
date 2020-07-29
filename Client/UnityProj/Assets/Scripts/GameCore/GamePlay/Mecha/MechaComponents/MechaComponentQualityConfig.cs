@@ -131,6 +131,12 @@ namespace GameCore
         [LabelText("伤害增幅(%)")]
         public int DamageIncreasePercent;
 
+        [LabelText("伤害范围增幅(%)")]
+        public int DamageRangeIncreasePercent;
+
+        [LabelText("范围伤害目标上限覆写")]
+        public int DamageMaxTargetsOverride;
+
         [LabelText("冷却时间减免(%)")]
         public int AbilityCooldownDecreasePercent;
 
@@ -157,6 +163,8 @@ namespace GameCore
             base.ChildClone(newConfig);
             PowerUpgradeData_Gun config = ((PowerUpgradeData_Gun) newConfig);
             config.DamageIncreasePercent = DamageIncreasePercent;
+            config.DamageRangeIncreasePercent = DamageRangeIncreasePercent;
+            config.DamageMaxTargetsOverride = DamageMaxTargetsOverride;
             config.AbilityCooldownDecreasePercent = AbilityCooldownDecreasePercent;
             config.MaxRangeIncreasePercent = MaxRangeIncreasePercent;
             config.MaxDurationIncreasePercent = MaxDurationIncreasePercent;

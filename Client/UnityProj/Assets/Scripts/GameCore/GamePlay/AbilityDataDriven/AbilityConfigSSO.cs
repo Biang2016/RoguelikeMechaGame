@@ -10,8 +10,19 @@ namespace GameCore.AbilityDataDriven
     {
         [NonSerialized]
         [OdinSerialize]
-        public Ability Ability = new Ability();
+        [ShowInInspector]
+        [LabelText("技能")]
+        private Ability ability;
 
-        public string AbilityName => Ability.AbilityName;
+        public Ability Ability
+        {
+            get
+            {
+                ability.AbilityName = name;
+                return ability;
+            }
+        }
+
+        private string AbilityName => name;
     }
 }

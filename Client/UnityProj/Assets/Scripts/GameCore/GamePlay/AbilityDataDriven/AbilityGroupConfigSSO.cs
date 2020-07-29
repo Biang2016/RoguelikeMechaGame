@@ -7,22 +7,11 @@ namespace GameCore.AbilityDataDriven
     [CreateAssetMenu(menuName = "BattleConfig/AbilityGroup")]
     public class AbilityGroupConfigSSO : SerializedScriptableObject
     {
-        public string AbilityGroupName;
+        public string AbilityGroupName => name;
 
+        [LabelText("技能配置列表（工具）")]
         [ListDrawerSettings(ListElementLabelName = "AbilityName")]
         public List<AbilityConfigSSO> AbilityConfigs = new List<AbilityConfigSSO>();
-
-        public AbilityGroup GetAbilityGroup_NoData()
-        {
-            AbilityGroup ag = new AbilityGroup();
-            ag.AbilityGroupName = AbilityGroupName;
-            foreach (AbilityConfigSSO acsso in AbilityConfigs)
-            {
-                ag.AbilityNames.Add(acsso.Ability.AbilityName);
-            }
-
-            return ag;
-        }
 
         [ReadOnly]
         [ShowInInspector]
@@ -40,6 +29,18 @@ namespace GameCore.AbilityDataDriven
 
                 return ag;
             }
+        }
+
+        public AbilityGroup GetAbilityGroup_NoData()
+        {
+            AbilityGroup ag = new AbilityGroup();
+            ag.AbilityGroupName = AbilityGroupName;
+            foreach (AbilityConfigSSO acsso in AbilityConfigs)
+            {
+                ag.AbilityNames.Add(acsso.Ability.AbilityName);
+            }
+
+            return ag;
         }
     }
 }
