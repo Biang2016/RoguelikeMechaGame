@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8787363159894584536}
   - component: {fileID: 905932602189980698}
   m_Layer: 12
-  m_Name: MechaComponent_BaiscCore
+  m_Name: MechaComponent_BasicCore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,19 +58,15 @@ MonoBehaviour:
   AnotherSampleDummyPos: {fileID: 0}
   Mecha: {fileID: 0}
   MechaComponentInfo:
-    GUID: 0
-    MechaComponentType: 0
     Quality: 0
-    AbilityGroupSSO: {fileID: 11400000, guid: 3fbaada5b97b4934aaed11b650964ef7, type: 2}
-    MechaComponentQualityConfigSSO: {fileID: 11400000, guid: 3c4267f0e4d6cff42b62731ba07e1af6,
-      type: 2}
+    IsDead: 0
+    GUID: 0
     InventoryItem:
       GUID: 0
       GridPos_Matrix:
         x: 0
         z: 0
         orientation: 0
-    IsDead: 0
   MechaComponentGridRoot: {fileID: 4618707353109224937}
   MechaComponentModelRoot: {fileID: 3738118023760436128}
 --- !u!114 &8787363159894584536
@@ -213,17 +209,17 @@ PrefabInstance:
     - target: {fileID: 1636669293193448876, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: SlotEnumFlag_Editor
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3032901071877361709, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3615917235215650031, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4537220519913810940, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
@@ -288,7 +284,7 @@ PrefabInstance:
     - target: {fileID: 5342625609451499930, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5458413493394818293, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
@@ -298,7 +294,7 @@ PrefabInstance:
     - target: {fileID: 6979953286152409997, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6505c5b1f033442c4bf82c6641ecccf0, type: 3}

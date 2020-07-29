@@ -19,6 +19,8 @@ MonoBehaviour:
     - {fileID: 2936411875950737291, guid: 08807f6e846898b47a094b9959061dcb, type: 3}
     - {fileID: 2936411875950737291, guid: 072337d035f52bd448e345658436cecf, type: 3}
     - {fileID: 2936411875950737291, guid: f5b5ff501b7e044f09afb208e34504cc, type: 3}
+    - {fileID: 2936411875950737291, guid: f36e0474dea271b4f9ef4a813e4ebfc4, type: 3}
+    - {fileID: 2936411875950737291, guid: 4aba09d2d08a3304e9fd6096e06ecf3f, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -36,7 +38,7 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 10
     - Name: 
       Entry: 7
       Data: GameCore.MechaComponentGroupConfig+Config, GameCore
@@ -122,6 +124,42 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: GameCore.MechaComponentGroupConfig+Config, GameCore
+    - Name: MechaComponentKey
+      Entry: 1
+      Data: MechaComponent_BasicEngine
+    - Name: Quality
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: GameCore.MechaComponentGroupConfig+Config, GameCore
+    - Name: MechaComponentKey
+      Entry: 1
+      Data: MechaComponent_WaterBallGun
+    - Name: Quality
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: GameCore.MechaComponentGroupConfig+Config, GameCore
+    - Name: MechaComponentKey
+      Entry: 1
+      Data: MechaComponent_WaterBallGun
+    - Name: Quality
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -136,7 +174,7 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 10
     - Name: 
       Entry: 7
       Data: 3|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
@@ -218,6 +256,42 @@ MonoBehaviour:
     - Name: Quality
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 3
+    - Name: Quality
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 4
+    - Name: Quality
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 12|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 4
+    - Name: Quality
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 

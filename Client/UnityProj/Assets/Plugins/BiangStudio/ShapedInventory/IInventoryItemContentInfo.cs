@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BiangStudio.GameDataFormat.Grid;
+using UnityEngine;
 
 namespace BiangStudio.ShapedInventory
 {
@@ -8,5 +9,6 @@ namespace BiangStudio.ShapedInventory
         List<GridPos> OriginalOccupiedGridPositions { get; }
         string ItemName { get; }
         string ItemSpriteKey { get; }
+        Color ItemColor { get; }
     }
 }

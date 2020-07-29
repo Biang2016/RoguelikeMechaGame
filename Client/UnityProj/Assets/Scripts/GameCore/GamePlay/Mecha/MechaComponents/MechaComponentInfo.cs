@@ -35,6 +35,7 @@ namespace GameCore
         public string ItemName => "机甲组件." + ItemSpriteKey;
         public MechaComponentType MechaComponentType => MechaComponentConfig.MechaComponentType;
         public string ItemSpriteKey => MechaComponentConfig.ItemSpriteKey;
+        public Color ItemColor => QualityManager.GetQuality(Quality).Color;
 
         private string logIdentityName;
         public string LogIdentityName => logIdentityName;

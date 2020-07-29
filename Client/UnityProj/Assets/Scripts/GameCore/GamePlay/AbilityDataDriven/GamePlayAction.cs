@@ -156,7 +156,6 @@ namespace GameCore.AbilityDataDriven
 
         public void Execute(ExecuteInfo executeInfo)
         {
-            OnHit += flyRealTimeData => { };
             ProjectileInfo pi = new ProjectileInfo(this, executeInfo, null, Vector3.zero);
             ProjectileManager.Instance.EmitProjectileHandler(pi);
         }
@@ -167,14 +166,6 @@ namespace GameCore.AbilityDataDriven
             Action_EmitProjectile action = ((Action_EmitProjectile) newConfig);
             action.ProjectileName = ProjectileName;
         }
-
-        [HideInInspector]
-        [NonSerialized]
-        public UnityAction<ProjectileInfo.FlyRealtimeData> OnHit;
-
-        [HideInInspector]
-        [NonSerialized]
-        public UnityAction<ProjectileInfo.FlyRealtimeData> OnMiss;
     }
 
     [LabelText("行为_造成伤害")]

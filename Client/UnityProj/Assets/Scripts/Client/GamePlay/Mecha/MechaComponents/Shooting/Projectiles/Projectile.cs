@@ -50,15 +50,50 @@ namespace Client
         public void Initialize(ProjectileInfo projectileInfo)
         {
             ProjectileInfo = projectileInfo;
+            CalculateOverrideParams();
         }
+
+        #region OverrideParams
+
+        private int Override_MaxRange;
+        private int Override_MaxDuration;
+        private int Override_Scale;
+        private float Override_VelocityFactor;
+        private bool Override_CanReflect;
+        private int Override_ReflectTimes;
+
+        private void CalculateOverrideParams()
+        {
+            Override_MaxRange = ProjectileInfo.ProjectileConfig.MaxRange;
+            Override_MaxDuration = ProjectileInfo.ProjectileConfig.MaxDuration;
+            Override_Scale = ProjectileInfo.ProjectileConfig.Scale;
+            Override_VelocityFactor = 1f;
+            Override_CanReflect = ProjectileInfo.ProjectileConfig.CanReflect;
+            Override_ReflectTimes = ProjectileInfo.ProjectileConfig.ReflectTimes;
+            switch (ProjectileInfo.ParentExecuteInfo.MechaComponentInfo.CurrentPowerUpgradeData)
+            {
+                case PowerUpgradeData_Gun pud_Gun:
+                {
+                    Override_MaxRange += Mathf.FloorToInt(ProjectileInfo.ProjectileConfig.MaxRange * pud_Gun.MaxRangeIncreasePercent / 100f);
+                    Override_MaxDuration += Mathf.FloorToInt(ProjectileInfo.ProjectileConfig.MaxDuration * pud_Gun.MaxDurationIncreasePercent / 100f);
+                    Override_Scale += Mathf.FloorToInt(ProjectileInfo.ProjectileConfig.Scale * pud_Gun.ScaleIncreasePercent / 100f);
+                    Override_VelocityFactor += pud_Gun.VelocityIncreasePercent / 100f;
+                    Override_CanReflect = pud_Gun.CanReflectOverride;
+                    Override_ReflectTimes = pud_Gun.ReflectTimesOverride;
+                    break;
+                }
+            }
+        }
+
+        #endregion
 
         public void Launch(Transform dummyPos)
         {
             Rigidbody.constraints = RigidbodyConstraints.None;
             Collider.enabled = true;
-            transform.localScale = Vector3.one * (ProjectileInfo.ProjectileConfig.Scale / 1000f);
+            transform.localScale = Vector3.one * (Override_Scale / 1000f);
 
-            Vector3 initVelocity = new Vector3(ProjectileInfo.ProjectileConfig.Velocity.x, ProjectileInfo.ProjectileConfig.Velocity.y, ProjectileInfo.ProjectileConfig.VelocityCurve.Evaluate(0));
+            Vector3 initVelocity = new Vector3(ProjectileInfo.ProjectileConfig.Velocity.x, ProjectileInfo.ProjectileConfig.Velocity.y, ProjectileInfo.ProjectileConfig.VelocityCurve.Evaluate(0) * Override_VelocityFactor);
             FlyRealtimeData = new ProjectileInfo.FlyRealtimeData
             {
                 FlyDistance = 0,
@@ -69,7 +104,7 @@ namespace Client
                 Velocity_Global = transform.TransformVector(initVelocity),
                 Accelerate = ProjectileInfo.ProjectileConfig.Acceleration,
                 HitCollider = null,
-                RemainCollideTimes = ProjectileInfo.ProjectileConfig.CanReflect ? ProjectileInfo.ProjectileConfig.ReflectTimes : 9999,
+                RemainCollideTimes = Override_CanReflect ? Override_ReflectTimes : 9999,
             };
 
             PlayFlashEffect(dummyPos);
@@ -97,7 +132,7 @@ namespace Client
                 // 加速度 Y轴世界坐标，XZ轴局部坐标
                 transform.forward = FlyRealtimeData.Velocity_Global.normalized;
                 FlyRealtimeData.Velocity_Local += (Vector3) FlyRealtimeData.Accelerate * Time.fixedDeltaTime;
-                FlyRealtimeData.Velocity_Local.z = ProjectileInfo.ProjectileConfig.VelocityCurve.Evaluate(FlyRealtimeData.FlyDuration);
+                FlyRealtimeData.Velocity_Local.z = ProjectileInfo.ProjectileConfig.VelocityCurve.Evaluate(FlyRealtimeData.FlyDuration) * Override_VelocityFactor;
                 FlyRealtimeData.Velocity_Global = transform.TransformVector(FlyRealtimeData.Velocity_Local);
                 FlyRealtimeData.Velocity_Global += new Vector3(0, -ProjectileInfo.ProjectileConfig.Gravity * Time.fixedDeltaTime, 0);
 
@@ -108,18 +143,13 @@ namespace Client
                 Rigidbody.velocity = FlyRealtimeData.Velocity_Global;
 
                 // 消亡检查
-                if (ProjectileInfo.ProjectileConfig.MaxRange > 0 && FlyRealtimeData.FlyDistance > ProjectileInfo.ProjectileConfig.MaxRange)
-                {
-                    ProjectileInfo.ParentAction.OnMiss?.Invoke(FlyRealtimeData);
-                    PoolRecycle();
-                    return;
-                }
+                bool recycleByDistance = Override_MaxRange > 0 && FlyRealtimeData.FlyDistance > Override_MaxRange;
+                bool recycleByDuration = Override_MaxDuration > 0 && FlyRealtimeData.FlyDuration * 1000 > Override_MaxDuration;
 
-                if (ProjectileInfo.ProjectileConfig.MaxDuration > 0 && FlyRealtimeData.FlyDuration * 1000 > ProjectileInfo.ProjectileConfig.MaxDuration)
+                if (recycleByDistance || recycleByDuration)
                 {
-                    ProjectileInfo.ParentAction.OnMiss?.Invoke(FlyRealtimeData);
+                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileFinish, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
                     PoolRecycle();
-                    return;
                 }
             }
         }
@@ -138,7 +168,7 @@ namespace Client
 
                 bool hit = false;
                 bool recycle = false;
-                if (ProjectileInfo.ProjectileConfig.CanReflect)
+                if (Override_CanReflect)
                 {
                     hit = true;
                     Vector3 reflectDir = FlyRealtimeData.Velocity_Global.normalized - 2 * Vector3.Dot(FlyRealtimeData.Velocity_Global.normalized, contact.normal) * contact.normal;
@@ -174,7 +204,7 @@ namespace Client
                 {
                     PlayHitEffect(contact.point, contact.normal);
                     ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitUnit, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
-                    ProjectileInfo.ParentAction.OnHit?.Invoke(FlyRealtimeData);
+                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileFinish, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
                 }
 
                 if (recycle) PoolRecycle();

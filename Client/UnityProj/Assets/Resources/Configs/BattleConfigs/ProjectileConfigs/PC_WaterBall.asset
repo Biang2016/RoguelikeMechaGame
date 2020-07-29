@@ -35,7 +35,7 @@ MonoBehaviour:
       Data: 1
     - Name: MaxRange
       Entry: 3
-      Data: 50
+      Data: 15
     - Name: MaxDuration
       Entry: 3
       Data: 3000

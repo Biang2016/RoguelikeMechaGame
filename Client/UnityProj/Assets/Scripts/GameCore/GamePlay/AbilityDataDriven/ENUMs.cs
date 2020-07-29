@@ -1,5 +1,6 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace GameCore.AbilityDataDriven
 {
@@ -150,6 +151,7 @@ namespace GameCore.AbilityDataDriven
     /// </summary>
     public enum ENUM_AbilityEvent
     {
+        [HideInInspector]
         ENUM_AbilityEvent_MIN = 5000,
 
         [LabelText("技能阶段开始时")]

@@ -41,7 +41,7 @@ namespace Client
             foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
                 ability.cooldownTicker = 0;
-                ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint)ENUM_AbilityEvent.OnAbilityStart, (executeInfo) =>
+                ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, (executeInfo) =>
                 {
                     if (ability == executeInfo.Ability)
                     {
@@ -65,11 +65,21 @@ namespace Client
 
         private void Update_Fighting()
         {
+            float abilityCooldownFactor = 1f;
+            switch (MechaComponentInfo.CurrentPowerUpgradeData)
+            {
+                case PowerUpgradeData_Gun pud_Gun:
+                {
+                    abilityCooldownFactor -= (pud_Gun.AbilityCooldownDecreasePercent / 100f);
+                    break;
+                }
+            }
+
             foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
                 if (ability.cooldownTicker <= ability.AbilityCooldown)
                 {
-                    ability.cooldownTicker += Mathf.RoundToInt(Time.deltaTime * 1000);
+                    ability.cooldownTicker += Mathf.RoundToInt(Time.deltaTime * 1000 * (1f / abilityCooldownFactor)) ;
                 }
             }
 
@@ -77,7 +87,7 @@ namespace Client
             {
                 foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
                 {
-                    if (ability.canTriggered)
+                    if (ability.canTriggered && !ability.Passive)
                     {
                         if (!ability.Passive && ability.AbilityPowerCost < 100) // todo power
                         {

@@ -53,6 +53,7 @@ namespace BiangStudio.GridBackpack
             InventoryItem = inventoryItem;
             InventoryItem.OnSetGridPosHandler = SetVirtualGridPos;
             Image.sprite = BackpackManager.Instance.GetBackpackItemSprite(inventoryItem.ItemContentInfo.ItemSpriteKey);
+            Image.color = inventoryItem.ItemContentInfo.ItemColor;
         }
 
         #region IDraggable

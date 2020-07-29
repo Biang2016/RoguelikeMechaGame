@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a3221cbe1ff0a849bca96ff1e7bce7b, type: 3}
-  m_Name: AC_EmitBullet 1
+  m_Name: AC_EmitBullet_WaterBall
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -23,10 +23,10 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Ability
       Entry: 7
-      Data: 0|GameCore.AbilityDataDriven.GamePlayAbility, GameCore
+      Data: 0|GameCore.AbilityDataDriven.Ability, GameCore
     - Name: AbilityName
       Entry: 1
-      Data: EmitBullet1
+      Data: EmitBullet
     - Name: AbilityBehaviors
       Entry: 3
       Data: 0
@@ -41,13 +41,13 @@ MonoBehaviour:
       Data: 0
     - Name: AbilityCooldown
       Entry: 3
-      Data: 100
+      Data: 1000
     - Name: AbilityPowerCost
       Entry: 3
       Data: 0
     - Name: Modifiers
       Entry: 7
-      Data: 1|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayModifier,
+      Data: 1|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.Modifier,
         GameCore]], mscorlib
     - Name: 
       Entry: 12
@@ -83,7 +83,7 @@ MonoBehaviour:
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: NormalBullet
+      Data: WaterBall
     - Name: 
       Entry: 8
       Data: 
@@ -101,7 +101,7 @@ MonoBehaviour:
       Data: 6|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
-      Data: 5017
+      Data: 5016
     - Name: Actions
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
@@ -114,10 +114,34 @@ MonoBehaviour:
       Data: 8|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
     - Name: Target
       Entry: 7
-      Data: 9|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
-    - Name: Target
+      Data: 9|GameCore.AbilityDataDriven.MultipleActionTarget, GameCore
+    - Name: Center
       Entry: 3
-      Data: 3
+      Data: 5
+    - Name: Radius
+      Entry: 3
+      Data: 10
+    - Name: Team
+      Entry: 3
+      Data: 0
+    - Name: Types
+      Entry: 3
+      Data: 0
+    - Name: ExcludeTypes
+      Entry: 3
+      Data: 0
+    - Name: Flags
+      Entry: 3
+      Data: 0
+    - Name: ExcludeFlags
+      Entry: 3
+      Data: 0
+    - Name: MaxTargets
+      Entry: 3
+      Data: 999
+    - Name: Random
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 8
       Data: 
