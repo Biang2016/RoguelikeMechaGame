@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace GameCore
 {
@@ -12,15 +10,28 @@ namespace GameCore
         [LabelText("机甲组件名称")]
         public string MechaComponentKey;
 
+        [ReadOnly]
+        [LabelText("机甲组件类型")]
         public MechaComponentType MechaComponentType;
+
+        [ReadOnly]
+        [LabelText("物品图片Key")]
         public string ItemSpriteKey;
+
+        [ReadOnly]
+        [LabelText("机甲组件品质配置Key")]
         public string MechaComponentQualityConfigKey;
+
+        [ReadOnly]
+        [LabelText("机甲组件技能组配置Key")]
         public string AbilityGroupConfigKey;
 
         public MechaComponentConfig Clone()
         {
             MechaComponentConfig newConfig = new MechaComponentConfig();
             newConfig.MechaComponentKey = MechaComponentKey;
+            newConfig.MechaComponentType = MechaComponentType;
+            newConfig.ItemSpriteKey = ItemSpriteKey;
             newConfig.MechaComponentQualityConfigKey = MechaComponentQualityConfigKey;
             newConfig.AbilityGroupConfigKey = AbilityGroupConfigKey;
             return newConfig;

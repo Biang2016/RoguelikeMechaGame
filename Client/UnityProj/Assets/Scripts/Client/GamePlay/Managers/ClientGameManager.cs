@@ -184,13 +184,6 @@ namespace Client
             backpackPanel.Init(myBackPack);
             BackpackManager.AddBackPack(myBackPack);
 
-            //foreach (string s in Enum.GetNames(typeof(MechaComponentType)))
-            //{
-            //    MechaComponentType mcType = (MechaComponentType) Enum.Parse(typeof(MechaComponentType), s);
-            //    InventoryItem ii = new InventoryItem(new MechaComponentInfo(mcType, new AbilityGroup(), 100, 0), myBackPack, GridPosR.Zero);
-            //    myBackPack.TryAddItem(ii);
-            //}
-
             BackpackManager.Start();
             DragManager.Start();
             DragExecuteManager.Start();
@@ -289,15 +282,12 @@ namespace Client
         {
             Backpack myBackPack = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
             InventoryInfo inventoryInfo = new InventoryInfo();
-            InventoryItem ii;
-            ii = new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicGun"), Quality.Poor), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicGun"), Quality.Poor), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicBlock"), Quality.Poor), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
-            ii = new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicBlock"), Quality.Poor), myBackPack, GridPosR.Zero);
-            inventoryInfo.InventoryItems.Add(ii);
+            MechaComponentGroupConfig mcg_config = ConfigManager.Instance.GetMechaComponentGroupConfig("EntryPlayerBattleInventory");
+            foreach (MechaComponentGroupConfig.Config config in mcg_config.MechaComponentList)
+            {
+                inventoryInfo.InventoryItems.Add(new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig(config.MechaComponentKey), config.Quality), myBackPack, GridPosR.Zero));
+            }
+
             myBackPack.LoadInventoryInfo(inventoryInfo);
 
             MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player);

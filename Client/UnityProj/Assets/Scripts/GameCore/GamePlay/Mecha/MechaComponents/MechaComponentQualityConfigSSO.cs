@@ -26,7 +26,5 @@ namespace GameCore
         [NonSerialized]
         [OdinSerialize]
         public MechaComponentQualityConfig MechaComponentQualityConfig = new MechaComponentQualityConfig();
-
-        public string MechaComponentQualityConfigName => MechaComponentQualityConfig.MechaComponentQualityConfigName;
     }
 }

@@ -32,6 +32,7 @@ namespace GameCore
         public static string AbilityConfigFolder_Relative = "Configs/BattleConfigs/AbilityConfigs";
         public static string AbilityGroupConfigFolder_Relative = "Configs/BattleConfigs/AbilityGroupConfigs";
         public static string ProjectileConfigFolder_Relative = "Configs/BattleConfigs/ProjectileConfigs";
+        public static string MechaComponentGroupConfigFolder_Relative = "Configs/BattleConfigs/MechaComponentGroupConfigs";
         public static string MechaComponentQualityConfigFolder_Relative = "Configs/BattleConfigs/MechaComponentQualityConfigs";
 
         public static string AllMechaComponentConfigPath_Relative = "Configs/BattleConfigs/AllMechaComponentConfig";
@@ -39,6 +40,7 @@ namespace GameCore
         public static string AbilityConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityConfigFolder_Relative + "/";
         public static string AbilityGroupConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityGroupConfigFolder_Relative + "/";
         public static string ProjectileConfigFolder_Build = Application.streamingAssetsPath + "/" + ProjectileConfigFolder_Relative + "/";
+        public static string MechaComponentGroupConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaComponentGroupConfigFolder_Relative + "/";
         public static string MechaComponentQualityConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaComponentQualityConfigFolder_Relative + "/";
 
         public static string AllMechaComponentConfigPath_Build = Application.streamingAssetsPath + "/" + AllMechaComponentConfigPath_Relative + ".config";
@@ -58,6 +60,10 @@ namespace GameCore
         [ShowInInspector]
         [LabelText("机甲组件配置表")]
         public static readonly Dictionary<string, MechaComponentConfig> MechaComponentConfigDict = new Dictionary<string, MechaComponentConfig>();
+
+        [ShowInInspector]
+        [LabelText("机甲组件组配置表")]
+        public static readonly Dictionary<string, MechaComponentGroupConfig> MechaComponentGroupConfigDict = new Dictionary<string, MechaComponentGroupConfig>();
 
         [ShowInInspector]
         [LabelText("机甲组件品质配置表")]
@@ -129,6 +135,29 @@ namespace GameCore
             }
 
             {
+                Object[] configObjs = Resources.LoadAll(MechaComponentGroupConfigFolder_Relative, typeof(Object));
+                string folder = MechaComponentGroupConfigFolder_Build;
+                if (Directory.Exists(folder)) Directory.Delete(folder, true);
+                Directory.CreateDirectory(folder);
+                foreach (Object obj in configObjs)
+                {
+                    MechaComponentGroupConfigSSO configSSO = (MechaComponentGroupConfigSSO) obj;
+                    configSSO.RefreshConfigList();
+                    MechaComponentGroupConfig config = configSSO.MechaComponentGroupConfig;
+                    if (string.IsNullOrEmpty(configSSO.MechaComponentGroupConfig.MechaComponentGroupConfigName))
+                    {
+                        Debug.LogError("机甲组件组配置无名称，无法序列化");
+                    }
+                    else
+                    {
+                        string path = folder + configSSO.name + ".config";
+                        byte[] bytes = SerializationUtility.SerializeValue(config, dataFormat);
+                        File.WriteAllBytes(path, bytes);
+                    }
+                }
+            }
+
+            {
                 Object[] configObjs = Resources.LoadAll(MechaComponentQualityConfigFolder_Relative, typeof(Object));
                 string folder = MechaComponentQualityConfigFolder_Build;
                 if (Directory.Exists(folder)) Directory.Delete(folder, true);
@@ -137,7 +166,7 @@ namespace GameCore
                 {
                     MechaComponentQualityConfigSSO configSSO = (MechaComponentQualityConfigSSO) obj;
                     MechaComponentQualityConfig config = configSSO.MechaComponentQualityConfig;
-                    if (string.IsNullOrEmpty(configSSO.MechaComponentQualityConfigName))
+                    if (string.IsNullOrEmpty(configSSO.MechaComponentQualityConfig.MechaComponentQualityConfigName))
                     {
                         Debug.LogError("机甲组件品质配置未绑定机甲组件Prefab，无法序列化");
                     }
@@ -257,6 +286,32 @@ namespace GameCore
             }
 
             {
+                MechaComponentGroupConfigDict.Clear();
+
+                DirectoryInfo di = new DirectoryInfo(MechaComponentGroupConfigFolder_Build);
+                if (di.Exists)
+                {
+                    foreach (FileInfo fi in di.GetFiles("*.config", SearchOption.AllDirectories))
+                    {
+                        byte[] bytes = File.ReadAllBytes(fi.FullName);
+                        MechaComponentGroupConfig config = SerializationUtility.DeserializeValue<MechaComponentGroupConfig>(bytes, dataFormat);
+                        if (MechaComponentGroupConfigDict.ContainsKey(config.MechaComponentGroupConfigName))
+                        {
+                            Debug.LogError($"机甲组件组配置重名:{config.MechaComponentGroupConfigName}");
+                        }
+                        else
+                        {
+                            MechaComponentGroupConfigDict.Add(config.MechaComponentGroupConfigName, config);
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogError("机甲组件组配置表不存在");
+                }
+            }
+
+            {
                 MechaComponentQualityConfigDict.Clear();
 
                 DirectoryInfo di = new DirectoryInfo(MechaComponentQualityConfigFolder_Build);
@@ -337,6 +392,13 @@ namespace GameCore
             if (!IsLoaded) LoadAllConfigs();
             MechaComponentConfigDict.TryGetValue(mechaComponentConfigName, out MechaComponentConfig mechaComponentConfig);
             return mechaComponentConfig;
+        }
+
+        public MechaComponentGroupConfig GetMechaComponentGroupConfig(string mechaComponentGroupConfigName)
+        {
+            if (!IsLoaded) LoadAllConfigs();
+            MechaComponentGroupConfigDict.TryGetValue(mechaComponentGroupConfigName, out MechaComponentGroupConfig mechaComponentGroupConfig);
+            return mechaComponentGroupConfig;
         }
 
         public MechaComponentQualityConfig GetMechaComponentQualityConfig(string mechaComponentQualityConfigName)

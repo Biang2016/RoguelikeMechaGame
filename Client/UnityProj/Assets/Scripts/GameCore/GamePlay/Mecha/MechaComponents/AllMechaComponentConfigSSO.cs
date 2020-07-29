@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace GameCore
 {
-    [CreateAssetMenu(menuName = "BattleConfig/AllMechaComponentConfigSSO")]
+    [CreateAssetMenu(menuName = "BattleConfig/AllMechaComponentConfig")]
     public class AllMechaComponentConfigSSO : SerializedScriptableObject
     {
         [OnValueChanged("OnMechaComponentConfigRawListChanged")]
@@ -48,9 +48,10 @@ namespace GameCore
                     MechaComponentConfigList.Add(new MechaComponentConfig
                     {
                         MechaComponentKey = raw.MechaComponentPrefab.name,
+                        MechaComponentType = raw.MechaComponentType,
                         ItemSpriteKey = raw.ItemSprite.name,
                         AbilityGroupConfigKey = raw.AbilityGroupConfigSSO.AbilityGroupName,
-                        MechaComponentQualityConfigKey = raw.MechaComponentQualityConfigSSO.MechaComponentQualityConfigName,
+                        MechaComponentQualityConfigKey = raw.MechaComponentQualityConfigSSO.MechaComponentQualityConfig.MechaComponentQualityConfigName,
                     });
                 }
             }

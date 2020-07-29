@@ -11,6 +11,12 @@
       "z": 0
     }
   ],
+  "MechaComponent_BasicEngine": [
+    {
+      "x": 0,
+      "z": 0
+    }
+  ],
   "MechaComponent_BasicGun": [
     {
       "x": 0,

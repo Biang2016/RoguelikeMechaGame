@@ -38,11 +38,27 @@ namespace Client
             }
         }
 
-        public void ResetDefaultEmissionColor(Color highLightEmissionColor)
+        public void SetBuildingBasicEmissionColor(Color basicEmissionColor)
         {
             foreach (MechaComponentModel model in Models)
             {
-                model.ResetDefaultEmissionColor(highLightEmissionColor);
+                model.SetBuildingBasicEmissionColor(basicEmissionColor);
+            }
+        }
+
+        public void ResetBuildingBasicEmissionColor()
+        {
+            foreach (MechaComponentModel model in Models)
+            {
+                model.ResetBuildingBasicEmissionColor();
+            }
+        }
+
+        public void SetDefaultHighLightEmissionColor(Color highLightEmissionColor)
+        {
+            foreach (MechaComponentModel model in Models)
+            {
+                model.SetDefaultHighLightEmissionColor(highLightEmissionColor);
             }
         }
 

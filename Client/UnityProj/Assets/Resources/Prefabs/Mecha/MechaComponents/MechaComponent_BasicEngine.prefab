@@ -14,6 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MechaComponentModelTwinkleConfigSSO: {fileID: 11400000, guid: 6fb189ed1e44b364e96d249f357c4053,
     type: 2}
+--- !u!95 &4590269187123902930
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179278084216352732}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1b247e2e650fd934a87bf9351f9df0b7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2936411875950737291
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +46,7 @@ GameObject:
   - component: {fileID: 8787363159894584536}
   - component: {fileID: -2509402043850843953}
   m_Layer: 12
-  m_Name: MechaComponent_BaiscEngine
+  m_Name: MechaComponent_BasicEngine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,19 +91,15 @@ MonoBehaviour:
   AnotherSampleDummyPos: {fileID: 0}
   Mecha: {fileID: 0}
   MechaComponentInfo:
-    GUID: 0
-    MechaComponentType: 4
     Quality: 0
-    AbilityGroupSSO: {fileID: 11400000, guid: 3fbaada5b97b4934aaed11b650964ef7, type: 2}
-    MechaComponentQualityConfigSSO: {fileID: 11400000, guid: 3c4267f0e4d6cff42b62731ba07e1af6,
-      type: 2}
+    IsDead: 0
+    GUID: 0
     InventoryItem:
       GUID: 0
       GridPos_Matrix:
         x: 0
         z: 0
         orientation: 0
-    IsDead: 0
   MechaComponentGridRoot: {fileID: 4618707353109224937}
   MechaComponentModelRoot: {fileID: 8018876574517878512}
 --- !u!114 &8787363159894584536
@@ -275,11 +290,41 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 7f5f33bcfb0dd4937b34312e8e1be70e, type: 2}
+    - target: {fileID: -4206750277443251200, guid: 459dd216c12bb994a880a95d207201b2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9c33a7db1b1686d48af7f0b88685f974, type: 2}
+    - target: {fileID: -4206750277443251200, guid: 459dd216c12bb994a880a95d207201b2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f5f33bcfb0dd4937b34312e8e1be70e, type: 2}
+    - target: {fileID: -30253431264799246, guid: 459dd216c12bb994a880a95d207201b2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f5f33bcfb0dd4937b34312e8e1be70e, type: 2}
+    - target: {fileID: -30253431264799246, guid: 459dd216c12bb994a880a95d207201b2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9c33a7db1b1686d48af7f0b88685f974, type: 2}
     - target: {fileID: 919132149155446097, guid: 459dd216c12bb994a880a95d207201b2,
         type: 3}
       propertyPath: m_Name
       value: BasicEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4070889676315652812, guid: 459dd216c12bb994a880a95d207201b2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9c33a7db1b1686d48af7f0b88685f974, type: 2}
+    - target: {fileID: 4070889676315652812, guid: 459dd216c12bb994a880a95d207201b2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f5f33bcfb0dd4937b34312e8e1be70e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 459dd216c12bb994a880a95d207201b2, type: 3}
 --- !u!1 &1179278084216352732 stripped

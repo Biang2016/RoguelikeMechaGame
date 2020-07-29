@@ -12,6 +12,8 @@ namespace Client
 
         public MechaComponentModelTwinkleConfigSSO MechaComponentModelTwinkleConfigSSO;
 
+        private Color BuildingBasicMaterialEmissionColor;
+
         private Color DefaultBasicMaterialEmissionColor;
         private Color DefaultHighLightMaterialEmissionColor;
 
@@ -25,11 +27,32 @@ namespace Client
         }
 
         /// <summary>
+        /// 主要用于更改机甲建造时的孤立、冲突颜色
+        /// </summary>
+        /// <param name="basicEmissionColor"></param>
+        public void SetBuildingBasicEmissionColor(Color basicEmissionColor)
+        {
+            BuildingBasicMaterialEmissionColor = basicEmissionColor;
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            Renderer.GetPropertyBlock(mpb, 0);
+            mpb.SetColor("_EmissionColor", BuildingBasicMaterialEmissionColor);
+            Renderer.SetPropertyBlock(mpb, 0);
+        }
+
+        public void ResetBuildingBasicEmissionColor()
+        {
+            BuildingBasicMaterialEmissionColor = DefaultBasicMaterialEmissionColor;
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            Renderer.GetPropertyBlock(mpb, 0);
+            mpb.SetColor("_EmissionColor", BuildingBasicMaterialEmissionColor);
+            Renderer.SetPropertyBlock(mpb, 0);
+        }
+
+        /// <summary>
         /// 组件品质、能量发生变化后，其默认的荧光颜色、强度也会发生变化
         /// </summary>
-        // /// <param name="basicEmissionColor"></param>
         /// <param name="highLightEmissionColor"></param>
-        public void ResetDefaultEmissionColor(Color highLightEmissionColor)
+        public void SetDefaultHighLightEmissionColor(Color highLightEmissionColor)
         {
             // DefaultBasicMaterialEmissionColor = basicEmissionColor;
             DefaultHighLightMaterialEmissionColor = highLightEmissionColor;

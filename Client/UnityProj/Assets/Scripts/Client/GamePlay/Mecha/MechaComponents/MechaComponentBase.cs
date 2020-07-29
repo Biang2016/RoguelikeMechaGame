@@ -116,7 +116,19 @@ namespace Client
                     GridPosR.ApplyGridPosToLocalTrans(gridPos_World, transform, ConfigManager.GridSize);
                     MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation();
                 };
-                mechaComponentInfo.InventoryItem.OnIsolatedHandler = MechaComponentGridRoot.SetIsolatedIndicatorShown;
+                mechaComponentInfo.InventoryItem.OnIsolatedHandler = (shown) =>
+                {
+                    if (shown)
+                    {
+                        MechaComponentModelRoot.SetBuildingBasicEmissionColor(Utils.HTMLColorToColor("#E42835"));
+                    }
+                    else
+                    {
+                        MechaComponentModelRoot.ResetBuildingBasicEmissionColor();
+                    }
+
+                    MechaComponentGridRoot.SetIsolatedIndicatorShown(shown);
+                };
                 mechaComponentInfo.InventoryItem.OnConflictedHandler = MechaComponentGridRoot.SetGridConflicted;
                 mechaComponentInfo.InventoryItem.OnResetConflictHandler = MechaComponentGridRoot.ResetAllGridConflict;
             }
@@ -131,7 +143,7 @@ namespace Client
 
         private void HighLightColorChange(Color highLightColor, float intensity)
         {
-            MechaComponentModelRoot.ResetDefaultEmissionColor(highLightColor * intensity);
+            MechaComponentModelRoot.SetDefaultHighLightEmissionColor(highLightColor * intensity);
         }
 
 #if UNITY_EDITOR
