@@ -62,7 +62,7 @@ namespace GameCore.AbilityDataDriven
         protected override void ChildClone(GamePlayAction newConfig)
         {
             base.ChildClone(newConfig);
-            Action_AddAbility action = ((Action_AddAbility)newConfig);
+            Action_AddAbility action = ((Action_AddAbility) newConfig);
             action.Target = Target.Clone();
             action.AbilityName = AbilityName;
         }
@@ -198,74 +198,89 @@ namespace GameCore.AbilityDataDriven
             // Projectile Damage
             messenger.AddListener<ExecuteInfo, ProjectileInfo.FlyRealtimeData>((uint) abilityEvent, (executeInfo, flyRealTimeData) =>
             {
-                if (parentAbility == executeInfo.Ability)
+                ExecuteProjectileDamage(parentAbility, executeInfo, flyRealTimeData);
+            });
+        }
+
+        public void ExecuteProjectileDamage(Ability parentAbility, ExecuteInfo executeInfo, ProjectileInfo.FlyRealtimeData flyRealTimeData)
+        {
+            if (parentAbility == executeInfo.Ability)
+            {
+                int finalDamage = Damage;
+                switch (executeInfo.MechaComponentInfo.CurrentPowerUpgradeData)
                 {
-                    switch (Target)
+                    case PowerUpgradeData_Gun pud_Gun:
                     {
-                        case SingleActionTarget singleTarget:
-                        {
-                            switch (singleTarget.Target)
-                            {
-                                case ENUM_SingleTarget.ATTACKER:
-                                {
-                                    break;
-                                }
-                                case ENUM_SingleTarget.CASTER:
-                                {
-                                    if (flyRealTimeData.HitMechaComponentInfo != null)
-                                    {
-                                        if (flyRealTimeData.HitMechaComponentInfo == executeInfo.MechaComponentInfo && flyRealTimeData.HitMechaComponentInfo.CheckAlive())
-                                        {
-                                            Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{Damage}</color> damage to <color=\"#FF74FF\">{singleTarget.Target.ToString()}</color> {flyRealTimeData.HitMechaComponentInfo.LogIdentityName}");
-                                            flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, Damage);
-                                        }
-                                    }
-
-                                    break;
-                                }
-                                case ENUM_SingleTarget.POINT:
-                                {
-                                    break;
-                                }
-                                case ENUM_SingleTarget.TARGET:
-                                {
-                                    break;
-                                }
-                                case ENUM_SingleTarget.UNIT:
-                                {
-                                    if (flyRealTimeData.HitMechaComponentInfo != null && flyRealTimeData.HitMechaComponentInfo.MechaInfo != executeInfo.MechaInfo && flyRealTimeData.HitMechaComponentInfo.CheckAlive())
-                                    {
-                                        Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{Damage}</color> damage to <color=\"#FF74FF\">{singleTarget.Target.ToString()}</color> {flyRealTimeData.HitMechaComponentInfo.LogIdentityName}");
-                                        flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, Damage);
-                                    }
-
-                                    break;
-                                }
-                            }
-
-                            break;
-                        }
-                        case MultipleActionTarget multipleTarget:
-                        {
-                            switch (multipleTarget.Center)
-                            {
-                                case ENUM_MultipleTargetCenter.PROJECTILE:
-                                {
-                                    List<MechaComponentInfo> hitMCIs = BattleManager.Instance.SearchRangeHandler(flyRealTimeData.Position, multipleTarget.Radius);
-                                    foreach (MechaComponentInfo mci in hitMCIs)
-                                    {
-                                        mci.Damage(executeInfo.MechaComponentInfo, Damage);
-                                    }
-
-                                    break;
-                                }
-                            }
-
-                            break;
-                        }
+                        finalDamage += Mathf.FloorToInt(pud_Gun.DamageIncreasePercent / 100f * Damage);
+                        break;
                     }
                 }
-            });
+
+                switch (Target)
+                {
+                    case SingleActionTarget singleTarget:
+                    {
+                        switch (singleTarget.Target)
+                        {
+                            case ENUM_SingleTarget.ATTACKER:
+                            {
+                                break;
+                            }
+                            case ENUM_SingleTarget.CASTER:
+                            {
+                                if (flyRealTimeData.HitMechaComponentInfo != null)
+                                {
+                                    if (flyRealTimeData.HitMechaComponentInfo == executeInfo.MechaComponentInfo && flyRealTimeData.HitMechaComponentInfo.CheckAlive())
+                                    {
+                                        Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{finalDamage}</color> damage to <color=\"#FF74FF\">{singleTarget.Target.ToString()}</color> {flyRealTimeData.HitMechaComponentInfo.LogIdentityName}");
+                                        flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, finalDamage);
+                                    }
+                                }
+
+                                break;
+                            }
+                            case ENUM_SingleTarget.POINT:
+                            {
+                                break;
+                            }
+                            case ENUM_SingleTarget.TARGET:
+                            {
+                                break;
+                            }
+                            case ENUM_SingleTarget.UNIT:
+                            {
+                                if (flyRealTimeData.HitMechaComponentInfo != null && flyRealTimeData.HitMechaComponentInfo.MechaInfo != executeInfo.MechaInfo && flyRealTimeData.HitMechaComponentInfo.CheckAlive())
+                                {
+                                    Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{finalDamage}</color> damage to <color=\"#FF74FF\">{singleTarget.Target.ToString()}</color> {flyRealTimeData.HitMechaComponentInfo.LogIdentityName}");
+                                    flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, finalDamage);
+                                }
+
+                                break;
+                            }
+                        }
+
+                        break;
+                    }
+                    case MultipleActionTarget multipleTarget:
+                    {
+                        switch (multipleTarget.Center)
+                        {
+                            case ENUM_MultipleTargetCenter.PROJECTILE:
+                            {
+                                List<MechaComponentInfo> hitMCIs = BattleManager.Instance.SearchRangeHandler(flyRealTimeData.Position, multipleTarget.Radius);
+                                foreach (MechaComponentInfo mci in hitMCIs)
+                                {
+                                    mci.Damage(executeInfo.MechaComponentInfo, finalDamage);
+                                }
+
+                                break;
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
         }
     }
 }

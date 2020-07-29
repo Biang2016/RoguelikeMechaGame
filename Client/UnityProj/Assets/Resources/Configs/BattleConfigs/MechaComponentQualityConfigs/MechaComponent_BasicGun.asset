@@ -139,7 +139,7 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 50
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
       Data: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 100
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
       Data: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 300
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
       Data: 0
@@ -283,16 +283,16 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.493306965
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.8113208
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.4094874
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 1
     - Name: 
       Entry: 8
       Data: 

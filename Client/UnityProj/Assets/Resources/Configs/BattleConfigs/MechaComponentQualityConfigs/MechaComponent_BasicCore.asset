@@ -48,13 +48,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.3443396
+      Data: 0.9433962
     - Name: 
       Entry: 4
-      Data: 0.679010153
+      Data: 0.351548582
     - Name: 
       Entry: 4
-      Data: 1
+      Data: 0.351548582
     - Name: 
       Entry: 4
       Data: 1
@@ -76,7 +76,7 @@ MonoBehaviour:
       Data: 0
     - Name: HighLightColorIntensity
       Entry: 4
-      Data: 1
+      Data: 2
     - Name: AddOnAbilityList
       Entry: 7
       Data: 5|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -112,19 +112,19 @@ MonoBehaviour:
       Data: 5
     - Name: Life
       Entry: 3
-      Data: 500
+      Data: 2222
     - Name: HighLightColor
       Entry: 7
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1
+      Data: 0.8746373
     - Name: 
       Entry: 4
-      Data: 0.71237
+      Data: 0.8773585
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 0.128292978
     - Name: 
       Entry: 4
       Data: 1
@@ -137,7 +137,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 1
     - Name: 
       Entry: 7
       Data: 8|GameCore.PowerUpgradeData_Core, GameCore
@@ -146,91 +146,10 @@ MonoBehaviour:
       Data: 0
     - Name: HighLightColorIntensity
       Entry: 4
-      Data: 3
+      Data: 55
     - Name: AddOnAbilityList
       Entry: 7
       Data: 9|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: AbilityCooldownDecreasePercent
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 10|GameCore.PowerUpgradeData_Core, GameCore
-    - Name: PowerConsume
-      Entry: 3
-      Data: 50
-    - Name: HighLightColorIntensity
-      Entry: 4
-      Data: 5
-    - Name: AddOnAbilityList
-      Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: AbilityCooldownDecreasePercent
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 12|GameCore.PowerUpgradeData_Core, GameCore
-    - Name: PowerConsume
-      Entry: 3
-      Data: 100
-    - Name: HighLightColorIntensity
-      Entry: 4
-      Data: 7
-    - Name: AddOnAbilityList
-      Entry: 7
-      Data: 13|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: AbilityCooldownDecreasePercent
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 14|GameCore.PowerUpgradeData_Core, GameCore
-    - Name: PowerConsume
-      Entry: 3
-      Data: 200
-    - Name: HighLightColorIntensity
-      Entry: 4
-      Data: 10
-    - Name: AddOnAbilityList
-      Entry: 7
-      Data: 15|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0

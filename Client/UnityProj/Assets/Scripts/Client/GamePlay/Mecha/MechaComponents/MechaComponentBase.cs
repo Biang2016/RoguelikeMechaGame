@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using BiangStudio.CloneVariant;
 using BiangStudio.DragHover;
@@ -9,7 +8,6 @@ using BiangStudio.GridBackpack;
 using BiangStudio.ObjectPool;
 using BiangStudio.ShapedInventory;
 using GameCore;
-using GameCore.AbilityDataDriven;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -53,6 +51,7 @@ namespace Client
 
         public override void PoolRecycle()
         {
+            UnregisterAbilityEvents();
             MechaComponentGridRoot.SetIsolatedIndicatorShown(true);
             MechaComponentGridRoot.SetInBattle(false);
             MechaComponentModelRoot.ResetColor();

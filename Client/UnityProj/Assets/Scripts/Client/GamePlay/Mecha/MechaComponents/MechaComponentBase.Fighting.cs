@@ -33,11 +33,15 @@ namespace Client
         private void Initialize_Fighting()
         {
             MechaComponentInfo.OnDamaged += OnDamaged;
+            RegisterAbilityEvents();
+        }
 
+        private void RegisterAbilityEvents()
+        {
             foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
                 ability.cooldownTicker = 0;
-                ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, (executeInfo) =>
+                ClientGameManager.Instance.BattleMessenger.AddListener<ExecuteInfo>((uint)ENUM_AbilityEvent.OnAbilityStart, (executeInfo) =>
                 {
                     if (ability == executeInfo.Ability)
                     {
@@ -52,6 +56,11 @@ namespace Client
                     }
                 }
             }
+        }
+
+        private void UnregisterAbilityEvents()
+        {
+            // todo
         }
 
         private void Update_Fighting()
