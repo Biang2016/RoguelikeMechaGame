@@ -298,7 +298,7 @@ MonoBehaviour:
       Data: 13|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
-      Data: MechaComponent_ArcLeaveGun
+      Data: MechaComponent_ArcPurpleGravBallCanon
     - Name: MechaComponentType
       Entry: 3
       Data: 2
@@ -307,10 +307,10 @@ MonoBehaviour:
       Data: BasicGun
     - Name: MechaComponentQualityConfigKey
       Entry: 1
-      Data: Q_ArcLeaveGun
+      Data: Q_ArcPurpleGravBallCanon
     - Name: AbilityGroupConfigKey
       Entry: 1
-      Data: AGC_ArcLeaveGun
+      Data: AGC_ArcPurpleGravBallCanon
     - Name: 
       Entry: 8
       Data: 

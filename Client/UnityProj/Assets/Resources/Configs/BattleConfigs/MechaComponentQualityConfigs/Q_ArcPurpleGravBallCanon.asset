@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b5aa72451bd05f4b8c472131ad5a6aa, type: 3}
-  m_Name: Q_ArcLeaveGun
+  m_Name: Q_ArcPurpleGravBallCanon
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -26,7 +26,7 @@ MonoBehaviour:
       Data: 0|GameCore.MechaComponentQualityConfig, GameCore
     - Name: MechaComponentQualityConfigName
       Entry: 1
-      Data: Q_ArcLeaveGun
+      Data: Q_ArcPurpleGravBallCanon
     - Name: QualityUpgradeDataList
       Entry: 7
       Data: 1|System.Collections.Generic.List`1[[GameCore.QualityUpgradeDataBase,
@@ -97,7 +97,7 @@ MonoBehaviour:
       Data: 0
     - Name: DamageMaxTargetsOverride
       Entry: 3
-      Data: 3
+      Data: 999
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
       Data: 0
@@ -194,7 +194,7 @@ MonoBehaviour:
       Data: 0
     - Name: DamageMaxTargetsOverride
       Entry: 3
-      Data: 3
+      Data: 999
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
       Data: 0
@@ -242,13 +242,13 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 200
     - Name: DamageRangeIncreasePercent
       Entry: 3
       Data: 0
     - Name: DamageMaxTargetsOverride
       Entry: 3
-      Data: 3
+      Data: 999
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
       Data: 80
@@ -263,7 +263,7 @@ MonoBehaviour:
       Data: 0
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 500
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true

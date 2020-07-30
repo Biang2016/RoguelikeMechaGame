@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35c8926ff715f014698824889fcf097e, type: 3}
-  m_Name: PC_ArcLeaves
+  m_Name: PC_ArcPurpleGravBall
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -26,16 +26,16 @@ MonoBehaviour:
       Data: 0|GameCore.AbilityDataDriven.ProjectileConfig, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: PC_ArcLeaves
+      Data: PC_ArcPurpleGravBall
     - Name: ProjectileType
       Entry: 3
-      Data: 0
+      Data: 7
     - Name: DummyPos
       Entry: 3
       Data: 1
     - Name: MaxRange
       Entry: 3
-      Data: 30
+      Data: 50
     - Name: MaxDuration
       Entry: 3
       Data: 5000
@@ -161,7 +161,7 @@ MonoBehaviour:
       Data: 
     - Name: Gravity
       Entry: 3
-      Data: -100
+      Data: 100
     - Name: CanReflect
       Entry: 5
       Data: true

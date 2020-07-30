@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a3221cbe1ff0a849bca96ff1e7bce7b, type: 3}
-  m_Name: AC_EmitBullet_ArcLeaves
+  m_Name: AC_EmitBullet_ArcPurpleGravBall
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -26,13 +26,10 @@ MonoBehaviour:
       Data: 0|GameCore.AbilityDataDriven.Ability, GameCore
     - Name: AbilityName
       Entry: 1
-      Data: AC_EmitBullet_ArcLeaves
+      Data: AC_EmitBullet_ArcPurpleGravBall
     - Name: AbilityBehaviors
       Entry: 3
       Data: 0
-    - Name: Passive
-      Entry: 5
-      Data: false
     - Name: CastDummyPosition
       Entry: 3
       Data: 0
@@ -83,7 +80,7 @@ MonoBehaviour:
       Data: 5|GameCore.AbilityDataDriven.Action_EmitProjectile, GameCore
     - Name: ProjectileName
       Entry: 1
-      Data: PC_ArcLeaves
+      Data: PC_ArcPurpleGravBall
     - Name: 
       Entry: 8
       Data: 
@@ -101,7 +98,7 @@ MonoBehaviour:
       Data: 6|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
-      Data: 5017
+      Data: 5016
     - Name: Actions
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
@@ -114,16 +111,40 @@ MonoBehaviour:
       Data: 8|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
     - Name: Target
       Entry: 7
-      Data: 9|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
-    - Name: Target
+      Data: 9|GameCore.AbilityDataDriven.MultipleActionTarget, GameCore
+    - Name: Center
       Entry: 3
-      Data: 3
+      Data: 5
+    - Name: Radius
+      Entry: 3
+      Data: 2
+    - Name: Team
+      Entry: 3
+      Data: 2
+    - Name: Types
+      Entry: 3
+      Data: 0
+    - Name: ExcludeTypes
+      Entry: 3
+      Data: 0
+    - Name: Flags
+      Entry: 3
+      Data: 0
+    - Name: ExcludeFlags
+      Entry: 3
+      Data: 0
+    - Name: MaxTargets
+      Entry: 3
+      Data: 999
+    - Name: Random
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 8
       Data: 
     - Name: Damage
       Entry: 3
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 8
       Data: 

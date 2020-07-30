@@ -148,6 +148,7 @@ namespace Client
 
                 if (recycleByDistance || recycleByDuration)
                 {
+                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitAndFinish, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
                     ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileFinish, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
                     PoolRecycle();
                 }
@@ -204,7 +205,7 @@ namespace Client
                 {
                     PlayHitEffect(contact.point, contact.normal);
                     ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitUnit, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
-                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileFinish, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
+                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitAndFinish, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
                 }
 
                 if (recycle) PoolRecycle();

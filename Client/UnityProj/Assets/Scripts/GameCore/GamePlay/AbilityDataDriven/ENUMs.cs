@@ -76,7 +76,7 @@ namespace GameCore.AbilityDataDriven
         /// <summary>
         /// Can be cast automatically.
         /// </summary>
-        [LabelText("自动释放√")]
+        [LabelText("自动释放 [已实现]")]
         ABILITY_BEHAVIOR_AUTOCAST = 1 << 11,
 
         /// <summary>
@@ -142,10 +142,10 @@ namespace GameCore.AbilityDataDriven
 
     public enum ENUM_ProjectileDummyPosition
     {
-        [LabelText("无√")]
+        [LabelText("无 [已实现]")]
         None = 0,
 
-        [LabelText("射击点√")]
+        [LabelText("射击点 [已实现]")]
         ShooterDummyPos,
     }
 
@@ -160,7 +160,7 @@ namespace GameCore.AbilityDataDriven
         [LabelText("技能阶段开始时")]
         OnAbilityPhaseStart, // Triggers when the ability is cast (before the unit turns toward the target)
 
-        [LabelText("技能开始时√")]
+        [LabelText("技能开始时 [已实现]")]
         OnAbilityStart,
 
         [LabelText("攻击时")]
@@ -202,11 +202,14 @@ namespace GameCore.AbilityDataDriven
         [LabelText("投掷物被阻挡时")]
         OnProjectileDodge,
 
-        [LabelText("投掷物飞行结束时√")]
-        OnProjectileFinish,
+        [LabelText("投掷物击中或飞行结束时 [已实现]")]
+        OnProjectileHitAndFinish,
 
-        [LabelText("投掷物击中单位时√")]
-        OnProjectileHitUnit, //Adding the KV pair "DeleteOnHit" "0" in this block will cause the projectile to not disappear when it hits a unit.
+        [LabelText("投掷物击中单位时 [已实现]")]
+        OnProjectileHitUnit,
+
+        [LabelText("投掷物飞行结束时 [已实现]")]
+        OnProjectileFinish,
 
         [LabelText("复活时")]
         OnRespawn,
@@ -237,7 +240,7 @@ namespace GameCore.AbilityDataDriven
 
     public enum ENUM_SingleTarget
     {
-        [LabelText("施法者√")]
+        [LabelText("施法者 [已实现]")]
         CASTER,
 
         [LabelText("施法对象")]
@@ -246,7 +249,7 @@ namespace GameCore.AbilityDataDriven
         [LabelText("目标点")]
         POINT,
 
-        [LabelText("目标单位√")]
+        [LabelText("目标单位 [已实现]")]
         UNIT,
 
         [LabelText("攻击者")]
@@ -270,22 +273,22 @@ namespace GameCore.AbilityDataDriven
         [LabelText("攻击者")]
         ATTACKER,
 
-        [LabelText("投掷物√")]
+        [LabelText("投掷物 [已实现]")]
         PROJECTILE,
     }
 
     public enum ENUM_MultipleTargetTeam
     {
-        [LabelText("无√")]
+        [LabelText("无 [已实现]")]
         UNIT_TARGET_TEAM_NONE,
 
-        [LabelText("全部√")]
+        [LabelText("全部 [已实现]")]
         UNIT_TARGET_TEAM_BOTH,
 
-        [LabelText("敌方√")]
+        [LabelText("敌方 [已实现]")]
         UNIT_TARGET_TEAM_ENEMY,
 
-        [LabelText("友方√")]
+        [LabelText("友方 [已实现]")]
         UNIT_TARGET_TEAM_FRIENDLY,
     }
 
