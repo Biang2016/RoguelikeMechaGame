@@ -29,10 +29,7 @@ MonoBehaviour:
       Data: AC_EmitBullet_Leaves
     - Name: AbilityBehaviors
       Entry: 3
-      Data: 0
-    - Name: Passive
-      Entry: 5
-      Data: false
+      Data: 2048
     - Name: CastDummyPosition
       Entry: 3
       Data: 0

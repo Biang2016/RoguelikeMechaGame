@@ -63,7 +63,7 @@ namespace Client
             // todo
         }
 
-        private void Update_Fighting()
+        public void Update_Fighting()
         {
             float abilityCooldownFactor = 1f;
             switch (MechaComponentInfo.CurrentPowerUpgradeData)
@@ -79,7 +79,19 @@ namespace Client
             {
                 if (ability.cooldownTicker <= ability.AbilityCooldown)
                 {
-                    ability.cooldownTicker += Mathf.RoundToInt(Time.deltaTime * 1000 * (1f / abilityCooldownFactor)) ;
+                    ability.cooldownTicker += Mathf.RoundToInt(Time.deltaTime * 1000 * (1f / abilityCooldownFactor));
+                }
+                else
+                {
+                    if (!ability.Passive && ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_AUTOCAST))
+                    {
+                        ClientGameManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, new ExecuteInfo
+                        {
+                            MechaInfo = MechaInfo,
+                            MechaComponentInfo = MechaComponentInfo,
+                            Ability = ability
+                        });
+                    }
                 }
             }
 
@@ -89,8 +101,13 @@ namespace Client
                 {
                     if (ability.canTriggered && !ability.Passive)
                     {
-                        if (!ability.Passive && ability.AbilityPowerCost < 100) // todo power
+                        if (!ability.Passive && !ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_AUTOCAST))
                         {
+                            if (ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_FORBID_MOVEMENT))
+                            {
+                                Mecha.AbilityForbidMovement = true;
+                            }
+
                             ClientGameManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, new ExecuteInfo
                             {
                                 MechaInfo = MechaInfo,

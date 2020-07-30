@@ -71,17 +71,10 @@ namespace Client
 
         protected virtual void Update()
         {
-            if (!IsRecycled)
+            if (!Application.isPlaying) // 编辑器中不允许调整位置
             {
-                if (!Application.isPlaying)
-                {
-                    transform.localPosition = Vector3.zero;
-                    transform.localRotation = Quaternion.identity;
-                }
-                else
-                {
-                    Update_Fighting();
-                }
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
             }
         }
 

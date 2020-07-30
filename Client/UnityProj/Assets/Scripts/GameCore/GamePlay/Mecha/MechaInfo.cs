@@ -103,6 +103,8 @@ namespace GameCore
             OnRemoveMechaInfoSuc?.Invoke(this);
         }
 
+        #region Relationships
+
         public bool IsFriend(MechaInfo mechaInfo)
         {
             return IsFriend(mechaInfo.MechaType);
@@ -134,6 +136,9 @@ namespace GameCore
             if (MechaType == MechaType.Enemy && targetMechaType == MechaType.Friend) return true;
             return false;
         }
+
+        #endregion
+
 
         #region Life & Power
 

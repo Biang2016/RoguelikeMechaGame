@@ -1,4 +1,5 @@
-﻿using BiangStudio.GameDataFormat.Grid;
+﻿using System.Collections.Generic;
+using BiangStudio.GameDataFormat.Grid;
 using GameCore;
 using UnityEngine;
 
@@ -10,15 +11,29 @@ namespace Client
         {
         }
 
+        public bool AbilityForbidMovement = false;
         public float Speed = 6f;
 
         void Update_Fighting()
         {
+            AbilityForbidMovement = false;
+            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
+            {
+                if (!kv.Value.IsRecycled)
+                {
+                    kv.Value.Update_Fighting();
+                }
+            }
+
             if (MechaInfo.MechaType == MechaType.Player)
             {
-                Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
-                speed = Quaternion.Euler(0f, 0f, 45f) * speed;
-                transform.position += new Vector3(speed.x, 0, speed.y);
+                if (!AbilityForbidMovement)
+                {
+                    Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
+                    speed = Quaternion.Euler(0f, 0f, 45f) * speed;
+                    transform.position += new Vector3(speed.x, 0, speed.y);
+                }
+
                 RotateToMouseDirection();
             }
         }

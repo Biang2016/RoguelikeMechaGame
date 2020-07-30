@@ -11,13 +11,13 @@ namespace GameCore.AbilityDataDriven
         /// Can be owned by a unit but can't be cast and won't show up on the HUD.
         /// </summary>
         [LabelText("隐式被动")]
-        ABILITY_BEHAVIOR_HIDDEN = 1 << 0,
+        ABILITY_BEHAVIOR_PASSIVE_IMPLICIT = 1 << 0,
 
         /// <summary>
         /// Cannot be cast like above but this one shows up on the ability HUD.
         /// </summary>
         [LabelText("显式被动")]
-        ABILITY_BEHAVIOR_PASSIVE = 1 << 1,
+        ABILITY_BEHAVIOR_PASSIVE_EXPLICIT = 1 << 1,
 
         /// <summary>
         /// Doesn't need a target to be cast, ability fires off as soon as the button is pressed.
@@ -76,7 +76,7 @@ namespace GameCore.AbilityDataDriven
         /// <summary>
         /// Can be cast automatically.
         /// </summary>
-        [LabelText("自动释放")]
+        [LabelText("自动释放√")]
         ABILITY_BEHAVIOR_AUTOCAST = 1 << 11,
 
         /// <summary>
@@ -98,10 +98,10 @@ namespace GameCore.AbilityDataDriven
         ABILITY_BEHAVIOR_ATTACK = 1 << 14,
 
         /// <summary>
-        /// Should not resume movement when it completes. Only applicable to no-target, non-immediate abilities.
+        /// Forbid movement during ability phase.
         /// </summary>
         [LabelText("阻断自身移动")]
-        ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT = 1 << 15,
+        ABILITY_BEHAVIOR_FORBID_MOVEMENT = 1 << 15,
 
         /// <summary>
         /// Ability ignores backswing pseudoqueue.
@@ -142,7 +142,10 @@ namespace GameCore.AbilityDataDriven
 
     public enum ENUM_ProjectileDummyPosition
     {
+        [LabelText("无√")]
         None = 0,
+
+        [LabelText("射击点√")]
         ShooterDummyPos,
     }
 
@@ -157,7 +160,7 @@ namespace GameCore.AbilityDataDriven
         [LabelText("技能阶段开始时")]
         OnAbilityPhaseStart, // Triggers when the ability is cast (before the unit turns toward the target)
 
-        [LabelText("技能开始时")]
+        [LabelText("技能开始时√")]
         OnAbilityStart,
 
         [LabelText("攻击时")]
@@ -199,10 +202,10 @@ namespace GameCore.AbilityDataDriven
         [LabelText("投掷物被阻挡时")]
         OnProjectileDodge,
 
-        [LabelText("投掷物飞行结束时")]
+        [LabelText("投掷物飞行结束时√")]
         OnProjectileFinish,
 
-        [LabelText("投掷物击中单位时")]
+        [LabelText("投掷物击中单位时√")]
         OnProjectileHitUnit, //Adding the KV pair "DeleteOnHit" "0" in this block will cause the projectile to not disappear when it hits a unit.
 
         [LabelText("复活时")]
@@ -234,7 +237,7 @@ namespace GameCore.AbilityDataDriven
 
     public enum ENUM_SingleTarget
     {
-        [LabelText("施法者")]
+        [LabelText("施法者√")]
         CASTER,
 
         [LabelText("施法对象")]
@@ -243,7 +246,7 @@ namespace GameCore.AbilityDataDriven
         [LabelText("目标点")]
         POINT,
 
-        [LabelText("目标单位")]
+        [LabelText("目标单位√")]
         UNIT,
 
         [LabelText("攻击者")]
@@ -267,22 +270,22 @@ namespace GameCore.AbilityDataDriven
         [LabelText("攻击者")]
         ATTACKER,
 
-        [LabelText("投掷物")]
+        [LabelText("投掷物√")]
         PROJECTILE,
     }
 
     public enum ENUM_MultipleTargetTeam
     {
-        [LabelText("无")]
+        [LabelText("无√")]
         UNIT_TARGET_TEAM_NONE,
 
-        [LabelText("全部")]
+        [LabelText("全部√")]
         UNIT_TARGET_TEAM_BOTH,
 
-        [LabelText("敌方")]
+        [LabelText("敌方√")]
         UNIT_TARGET_TEAM_ENEMY,
 
-        [LabelText("友方")]
+        [LabelText("友方√")]
         UNIT_TARGET_TEAM_FRIENDLY,
     }
 

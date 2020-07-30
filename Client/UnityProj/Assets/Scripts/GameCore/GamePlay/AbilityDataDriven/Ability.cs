@@ -14,8 +14,7 @@ namespace GameCore.AbilityDataDriven
         [LabelText("技能特征")]
         public ENUM_AbilityBehavior AbilityBehaviors;
 
-        [LabelText("被动")]
-        public bool Passive;
+        public bool Passive => AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_PASSIVE_IMPLICIT) || AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_PASSIVE_EXPLICIT);
 
         [LabelText("施法点")]
         public ENUM_ProjectileDummyPosition CastDummyPosition;
@@ -70,7 +69,6 @@ namespace GameCore.AbilityDataDriven
             {
                 AbilityName = AbilityName,
                 AbilityBehaviors = AbilityBehaviors,
-                Passive = Passive,
                 CastDummyPosition = CastDummyPosition,
                 AbilityCastRange = AbilityCastRange,
                 AbilityCooldown = AbilityCooldown,
