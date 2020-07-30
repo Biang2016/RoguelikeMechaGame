@@ -117,7 +117,7 @@ MonoBehaviour:
       Data: 5
     - Name: Radius
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: Team
       Entry: 3
       Data: 2

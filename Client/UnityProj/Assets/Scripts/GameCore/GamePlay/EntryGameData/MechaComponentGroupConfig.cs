@@ -12,18 +12,24 @@ namespace GameCore
 
         [ReadOnly]
         [LabelText("机甲组件列表")]
-        [ListDrawerSettings(ListElementLabelName = "DisplayName")]
+        [TableList]
         public List<Config> MechaComponentList = new List<Config>();
 
         public struct Config
         {
-            [LabelText("机甲组件Key")]
+            [PropertyOrder(-1)]
+            [VerticalGroup("简称")]
+            [HideLabel]
+            [ShowInInspector]
+            private string EditorDisplayName => Quality + "@" + (MechaComponentKey != null ? MechaComponentKey.Replace("MechaComponent_", "") : "");
+
+            [VerticalGroup("机甲组件Key")]
+            [HideLabel]
             public string MechaComponentKey;
 
-            [LabelText("机甲组件品质")]
+            [VerticalGroup("机甲组件品质")]
+            [HideLabel]
             public Quality Quality;
-
-            public string DisplayName => Quality + "@" + MechaComponentKey;
         }
 
         public MechaComponentGroupConfig Clone()

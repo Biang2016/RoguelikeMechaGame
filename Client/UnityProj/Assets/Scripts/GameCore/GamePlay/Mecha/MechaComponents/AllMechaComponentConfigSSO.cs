@@ -10,9 +10,12 @@ namespace GameCore
     [CreateAssetMenu(menuName = "BattleConfig/AllMechaComponentConfig")]
     public class AllMechaComponentConfigSSO : SerializedScriptableObject
     {
+        [LabelText("机甲组件配置列表（工具）")]
         [OnValueChanged("OnMechaComponentConfigRawListChanged")]
+        [ListDrawerSettings(ListElementLabelName = "EditorDisplayName", ShowIndexLabels = false)]
         public List<MechaComponentConfigRaw> MechaComponentConfigRawList = new List<MechaComponentConfigRaw>();
 
+        [LabelText("机甲组件配置列表")]
         public List<MechaComponentConfig> MechaComponentConfigList = new List<MechaComponentConfig>();
 
         public class MechaComponentConfigRaw
@@ -31,6 +34,8 @@ namespace GameCore
 
             [LabelText("机甲组件品质配置")]
             public MechaComponentQualityConfigSSO MechaComponentQualityConfigSSO;
+
+            private string EditorDisplayName => MechaComponentPrefab != null ? MechaComponentPrefab.name.Replace("MechaComponent_", "") : "";
         }
 
         [Button("刷新")]

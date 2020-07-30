@@ -47,10 +47,12 @@ namespace GameCore
         public int Life;
 
         [LabelText("荧光颜色")]
+        [ColorPalette("MechaComponentQualityColor")]
         public Color HighLightColor;
 
         [LabelText("输入功率能力差异表")]
         [ListDrawerSettings(ListElementLabelName = "PowerConsume")]
+        [TableList]
         public List<PowerUpgradeDataBase> PowerUpgradeDataList = new List<PowerUpgradeDataBase>();
 
         [SerializeField]
@@ -97,13 +99,19 @@ namespace GameCore
 
     public abstract class PowerUpgradeDataBase : IClone<PowerUpgradeDataBase>
     {
-        [LabelText("输入功率阈值(MW)")]
+        [TableColumnWidth(10)]
+        [VerticalGroup("输入功率阈值(MW)")]
+        [HideLabel]
         public int PowerConsume;
 
-        [LabelText("荧光强度")]
+        [TableColumnWidth(7)]
+        [VerticalGroup("荧光强度")]
+        [HideLabel]
         public float HighLightColorIntensity;
 
-        [LabelText("额外获得能力列表")]
+        [TableColumnWidth(13)]
+        [VerticalGroup("额外获得能力列表")]
+        [HideLabel]
         public List<string> AddOnAbilityList = new List<string>();
 
         public PowerUpgradeDataBase Clone()
@@ -128,34 +136,54 @@ namespace GameCore
 
     public class PowerUpgradeData_Gun : PowerUpgradeDataBase
     {
-        [LabelText("伤害增幅(%)")]
+        [TableColumnWidth(7)]
+        [VerticalGroup("伤害增幅(%)")]
+        [HideLabel]
         public int DamageIncreasePercent;
 
-        [LabelText("伤害范围增幅(%)")]
+        [TableColumnWidth(8)]
+        [VerticalGroup("伤害范围增幅(%)")]
+        [HideLabel]
         public int DamageRangeIncreasePercent;
 
-        [LabelText("范围伤害目标上限覆写")]
+        [TableColumnWidth(12)]
+        [VerticalGroup("范围伤害目标上限覆写")]
+        [HideLabel]
         public int DamageMaxTargetsOverride;
 
-        [LabelText("冷却时间减免(%)")]
+        [TableColumnWidth(7)]
+        [VerticalGroup("冷却时间减免(%)")]
+        [HideLabel]
         public int AbilityCooldownDecreasePercent;
 
-        [LabelText("射程增幅(%)")]
+        [TableColumnWidth(7)]
+        [VerticalGroup("射程增幅(%)")]
+        [HideLabel]
         public int MaxRangeIncreasePercent;
 
-        [LabelText("生存最大时间增幅(%)")]
+        [TableColumnWidth(10)]
+        [VerticalGroup("生存最大时间增幅(%)")]
+        [HideLabel]
         public int MaxDurationIncreasePercent;
 
-        [LabelText("初始尺寸增幅(%)")]
+        [TableColumnWidth(8)]
+        [VerticalGroup("初始尺寸增幅(%)")]
+        [HideLabel]
         public int ScaleIncreasePercent;
 
-        [LabelText("轴向速度增幅(%)")]
+        [TableColumnWidth(8)]
+        [VerticalGroup("轴向速度增幅(%)")]
+        [HideLabel]
         public int VelocityIncreasePercent;
 
-        [LabelText("反弹能力覆写")]
+        [TableColumnWidth(8)]
+        [VerticalGroup("反弹能力覆写")]
+        [HideLabel]
         public bool CanReflectOverride;
 
-        [LabelText("最大反弹次数覆写")]
+        [TableColumnWidth(10)]
+        [VerticalGroup("最大反弹次数覆写")]
+        [HideLabel]
         public int ReflectTimesOverride;
 
         protected override void ChildClone(PowerUpgradeDataBase newConfig)
@@ -181,7 +209,9 @@ namespace GameCore
 
     public class PowerUpgradeData_Core : PowerUpgradeDataBase
     {
-        [LabelText("冷却时间减免(%)")]
+        [TableColumnWidth(8)]
+        [VerticalGroup("冷却时间减免(%)")]
+        [HideLabel]
         public int AbilityCooldownDecreasePercent;
 
         protected override void ChildClone(PowerUpgradeDataBase newConfig)

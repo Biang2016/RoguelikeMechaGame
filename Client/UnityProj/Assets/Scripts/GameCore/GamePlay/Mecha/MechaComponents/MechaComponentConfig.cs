@@ -26,6 +26,8 @@ namespace GameCore
         [LabelText("机甲组件技能组配置Key")]
         public string AbilityGroupConfigKey;
 
+        private string EditorDisplayName => MechaComponentKey != null ? MechaComponentKey.Replace("MechaComponent_", "") : "";
+
         public MechaComponentConfig Clone()
         {
             MechaComponentConfig newConfig = new MechaComponentConfig();

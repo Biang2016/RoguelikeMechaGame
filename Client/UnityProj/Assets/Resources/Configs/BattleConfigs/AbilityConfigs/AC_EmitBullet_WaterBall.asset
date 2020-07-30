@@ -29,7 +29,7 @@ MonoBehaviour:
       Data: AC_EmitBullet_WaterBall
     - Name: AbilityBehaviors
       Entry: 3
-      Data: 32768
+      Data: 0
     - Name: CastDummyPosition
       Entry: 3
       Data: 0

@@ -29,7 +29,7 @@ MonoBehaviour:
       Data: AC_EmitBullet_Leaves
     - Name: AbilityBehaviors
       Entry: 3
-      Data: 2048
+      Data: 0
     - Name: CastDummyPosition
       Entry: 3
       Data: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
       Data: 6|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
-      Data: 5015
+      Data: 5014
     - Name: Actions
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,

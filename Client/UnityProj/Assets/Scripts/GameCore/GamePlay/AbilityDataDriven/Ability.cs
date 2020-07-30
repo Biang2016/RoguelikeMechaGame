@@ -16,13 +16,6 @@ namespace GameCore.AbilityDataDriven
 
         public bool Passive => AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_PASSIVE_IMPLICIT) || AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_PASSIVE_EXPLICIT);
 
-        [LabelText("施法点")]
-        public ENUM_ProjectileDummyPosition CastDummyPosition;
-
-        [LabelText("释放范围")]
-        [SuffixLabel("unit", true)]
-        public int AbilityCastRange;
-
         [LabelText("冷却时间")]
         [SuffixLabel("ms", true)]
         public int AbilityCooldown;
@@ -32,7 +25,7 @@ namespace GameCore.AbilityDataDriven
 
         public bool canTriggered => cooldownTicker > AbilityCooldown;
 
-        [LabelText("能量消耗")]
+        [LabelText("能量消耗（负数为能量输出）")]
         public int AbilityPowerCost;
 
         [LabelText("Modifier定义列表")]
@@ -69,8 +62,6 @@ namespace GameCore.AbilityDataDriven
             {
                 AbilityName = AbilityName,
                 AbilityBehaviors = AbilityBehaviors,
-                CastDummyPosition = CastDummyPosition,
-                AbilityCastRange = AbilityCastRange,
                 AbilityCooldown = AbilityCooldown,
                 AbilityPowerCost = AbilityPowerCost,
                 Modifiers = Modifiers.Clone(),

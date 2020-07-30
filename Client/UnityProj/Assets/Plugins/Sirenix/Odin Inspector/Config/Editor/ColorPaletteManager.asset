@@ -13,6 +13,16 @@ MonoBehaviour:
   m_Name: ColorPaletteManager
   m_EditorClassIdentifier: 
   colorPalettes:
+  - name: MechaComponentQualityColor
+    showAlpha: 0
+    colors:
+    - {r: 0.6156863, g: 0.6156863, b: 0.6156863, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 0.11764706, g: 1, b: 0, a: 1}
+    - {r: 0, g: 0.4392157, b: 0.8666667, a: 1}
+    - {r: 0.6392157, g: 0.20784314, b: 0.93333334, a: 1}
+    - {r: 1, g: 0.5019608, b: 0, a: 1}
+    - {r: 0.9019608, g: 0.8, b: 0.5019608, a: 1}
   - name: Country
     showAlpha: 0
     colors:

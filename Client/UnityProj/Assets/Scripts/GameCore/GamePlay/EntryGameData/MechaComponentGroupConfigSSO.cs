@@ -11,6 +11,7 @@ namespace GameCore
     {
         [LabelText("机甲组件列表（工具）")]
         [OnValueChanged("OnMechaComponentGroupRawListChanged")]
+        [TableList]
         public List<ConfigRaw> MechaComponentGroupRawList = new List<ConfigRaw>();
 
         [NonSerialized]
@@ -30,10 +31,18 @@ namespace GameCore
 
         public class ConfigRaw
         {
-            [LabelText("机甲组件Prefab")]
+            [PropertyOrder(-1)]
+            [VerticalGroup("简称")]
+            [HideLabel]
+            [ShowInInspector]
+            private string EditorDisplayName => Quality + "@" + (MechaComponentPrefab != null ? MechaComponentPrefab.name.Replace("MechaComponent_", "") : "");
+
+            [VerticalGroup("机甲组件Prefab")]
+            [HideLabel]
             public GameObject MechaComponentPrefab;
 
-            [LabelText("机甲组件品质")]
+            [VerticalGroup("机甲组件品质")]
+            [HideLabel]
             public Quality Quality;
         }
 

@@ -48,13 +48,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.505593359
+      Data: 0.6156863
     - Name: 
       Entry: 4
-      Data: 0.5283019
+      Data: 0.6156863
     - Name: 
       Entry: 4
-      Data: 0.301530778
+      Data: 0.6156863
     - Name: 
       Entry: 4
       Data: 1
@@ -118,13 +118,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.505593359
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.5283019
+      Data: 0.5019608
     - Name: 
       Entry: 4
-      Data: 0.301530778
+      Data: 0
     - Name: 
       Entry: 4
       Data: 1
