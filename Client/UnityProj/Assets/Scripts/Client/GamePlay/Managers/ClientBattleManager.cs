@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay.UI;
 using BiangStudio.Singleton;
 using GameCore;
@@ -143,6 +144,7 @@ namespace Client
         private void InitBattleManagerProxy()
         {
             BattleManager.Instance.SearchRangeHandler = SearchRangeDelegate;
+            BattleManager.Instance.GetAllSlotGridPositions_Local = GetAllSlotGridPositions_Local;
         }
 
         private List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius, MechaType mechaType, ENUM_MultipleTargetTeam team, int maxTargets, bool random)
@@ -199,6 +201,19 @@ namespace Client
             else
             {
                 return res.Values.ToList();
+            }
+        }
+
+        private List<GridPos> GetAllSlotGridPositions_Local(MechaComponentInfo mci)
+        {
+            MechaComponentBase mcb = FindMechaComponentBase(mci.GUID);
+            if (mcb)
+            {
+                return mcb.MechaComponentGridRoot.GetAllSlotPositions_Local();
+            }
+            else
+            {
+                return new List<GridPos>();
             }
         }
 

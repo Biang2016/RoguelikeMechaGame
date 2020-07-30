@@ -221,4 +221,11 @@ namespace GameCore
             config.AbilityCooldownDecreasePercent = AbilityCooldownDecreasePercent;
         }
     }
+
+    public class QualityUpgradeData_Engine : QualityUpgradeDataBase
+    {
+        [LabelText("输出功率")]
+        public int OutputPower;
+    }
+
 }

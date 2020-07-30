@@ -21,6 +21,22 @@ namespace Client
             {
                 if (!kv.Value.IsRecycled)
                 {
+                    kv.Value.PreUpdate_Fighting();
+                }
+            }
+
+            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
+            {
+                if (!kv.Value.IsRecycled)
+                {
+                    kv.Value.PowerUpdate_Fighting();
+                }
+            }
+
+            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
+            {
+                if (!kv.Value.IsRecycled)
+                {
                     kv.Value.Update_Fighting();
                 }
             }
@@ -35,6 +51,14 @@ namespace Client
                 }
 
                 RotateToMouseDirection();
+            }
+
+            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
+            {
+                if (!kv.Value.IsRecycled)
+                {
+                    kv.Value.LateUpdate_Fighting();
+                }
             }
         }
 

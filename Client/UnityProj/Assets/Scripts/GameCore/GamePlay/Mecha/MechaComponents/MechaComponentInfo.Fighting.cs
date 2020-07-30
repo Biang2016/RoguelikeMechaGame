@@ -122,6 +122,8 @@ namespace GameCore
 
         public UnityAction<int> OnInputPowerChange;
 
+        public int AccumulatedPowerInsideThisFrame;
+
         private int _inputPower;
 
         public int M_InputPower

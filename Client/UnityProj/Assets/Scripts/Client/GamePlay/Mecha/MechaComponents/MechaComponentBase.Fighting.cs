@@ -63,6 +63,27 @@ namespace Client
             // todo
         }
 
+        public void PreUpdate_Fighting()
+        {
+            MechaComponentInfo.AccumulatedPowerInsideThisFrame = 0;
+        }
+
+        public void PowerUpdate_Fighting()
+        {
+            foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
+            {
+                if (ability.Passive)
+                {
+                    ClientGameManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_AbilityEvent.OnPowerCalculate, new ExecuteInfo
+                    {
+                        MechaInfo = MechaInfo,
+                        MechaComponentInfo = MechaComponentInfo,
+                        Ability = ability
+                    });
+                }
+            }
+        }
+
         public void Update_Fighting()
         {
             float abilityCooldownFactor = 1f;
@@ -77,7 +98,7 @@ namespace Client
 
             foreach (Ability ability in MechaComponentInfo.AbilityGroup.Abilities)
             {
-                if (ability.cooldownTicker <= ability.AbilityCooldown)
+                if (ability.cooldownTicker < ability.AbilityCooldown)
                 {
                     ability.cooldownTicker += Mathf.RoundToInt(Time.deltaTime * 1000 * (1f / abilityCooldownFactor));
                 }
@@ -118,6 +139,10 @@ namespace Client
                     }
                 }
             }
+        }
+
+        public void LateUpdate_Fighting()
+        {
         }
 
         private void OnDamaged(MechaComponentInfo attacker, int damage)

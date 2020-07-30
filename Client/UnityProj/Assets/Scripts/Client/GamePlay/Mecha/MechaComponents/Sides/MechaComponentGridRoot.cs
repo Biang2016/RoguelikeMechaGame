@@ -48,6 +48,36 @@ namespace Client
             return null;
         }
 
+        public List<GridPos> GetAllSlotPositions_Local()
+        {
+            List<GridPos> res = new List<GridPos>();
+            foreach (MechaComponentGrid grid in mechaComponentGrids)
+            {
+                GridPos gp = grid.GetGridPos();
+                if (grid.Slots[GridPosR.Orientation.Left].IsCandidate)
+                {
+                    res.Add(gp + new GridPos(-1, 0));
+                }
+
+                if (grid.Slots[GridPosR.Orientation.Right].IsCandidate)
+                {
+                    res.Add(gp + new GridPos(1, 0));
+                }
+
+                if (grid.Slots[GridPosR.Orientation.Up].IsCandidate)
+                {
+                    res.Add(gp + new GridPos(0, 1));
+                }
+
+                if (grid.Slots[GridPosR.Orientation.Down].IsCandidate)
+                {
+                    res.Add(gp + new GridPos(0, -1));
+                }
+            }
+
+            return res;
+        }
+
 #if UNITY_EDITOR
         public void RefreshConfig()
         {

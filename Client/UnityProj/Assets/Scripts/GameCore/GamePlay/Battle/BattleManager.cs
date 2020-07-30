@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.Messenger;
 using BiangStudio.Singleton;
 using GameCore.AbilityDataDriven;
@@ -91,6 +92,10 @@ namespace GameCore
         public delegate List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius, MechaType mechaType, ENUM_MultipleTargetTeam Team, int maxTargets, bool random);
 
         public SearchRangeDelegate SearchRangeHandler;
+
+        public delegate List<GridPos> GetAllSlotGridPositions_Local_Delegate(MechaComponentInfo mci);
+
+        public GetAllSlotGridPositions_Local_Delegate GetAllSlotGridPositions_Local;
 
         #endregion
     }

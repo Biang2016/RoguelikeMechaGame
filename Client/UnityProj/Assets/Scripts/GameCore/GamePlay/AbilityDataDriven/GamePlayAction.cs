@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using BiangStudio.CloneVariant;
+using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.Messenger;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -190,7 +191,7 @@ namespace GameCore.AbilityDataDriven
             messenger.AddListener<ExecuteInfo, ProjectileInfo.FlyRealtimeData>((uint) abilityEvent, (executeInfo, flyRealTimeData) => { ExecuteProjectileDamage(parentAbility, executeInfo, flyRealTimeData); });
         }
 
-        public void ExecuteProjectileDamage(Ability parentAbility, ExecuteInfo executeInfo, ProjectileInfo.FlyRealtimeData flyRealTimeData)
+        private void ExecuteProjectileDamage(Ability parentAbility, ExecuteInfo executeInfo, ProjectileInfo.FlyRealtimeData flyRealTimeData)
         {
             if (parentAbility == executeInfo.Ability)
             {
@@ -282,6 +283,44 @@ namespace GameCore.AbilityDataDriven
                     }
                 }
             }
+        }
+    }
+
+    [LabelText("行为_输出功率")]
+    public class Action_OutputPower : GamePlayAction
+    {
+        [LabelText("输出功率")]
+        public int OutputPower;
+
+        protected override void ChildClone(GamePlayAction newConfig)
+        {
+            base.ChildClone(newConfig);
+            Action_OutputPower action = ((Action_OutputPower) newConfig);
+            action.OutputPower = OutputPower;
+        }
+
+        public override void OnRegisterEvent(Messenger messenger, ENUM_AbilityEvent abilityEvent, Ability parentAbility)
+        {
+            messenger.AddListener<ExecuteInfo>((uint) abilityEvent, (executeInfo) => { ExecuteOutputPower(parentAbility, executeInfo); });
+        }
+
+        private void ExecuteOutputPower(Ability parentAbility, ExecuteInfo executeInfo)
+        {
+            int finalOutputPower = OutputPower;
+            switch (executeInfo.MechaComponentInfo.CurrentQualityUpgradeData)
+            {
+                case QualityUpgradeData_Engine pud_Engine:
+                {
+                    finalOutputPower = pud_Engine.OutputPower;
+                    break;
+                }
+            }
+
+            GridPosR gpr = executeInfo.MechaComponentInfo.InventoryItem.GridPos_Matrix;
+            List<GridPos> allSlotGridPositions_Local = BattleManager.Instance.GetAllSlotGridPositions_Local(executeInfo.MechaComponentInfo);
+
+
+            //executeInfo.MechaInfo.ProvidePower();
         }
     }
 }
