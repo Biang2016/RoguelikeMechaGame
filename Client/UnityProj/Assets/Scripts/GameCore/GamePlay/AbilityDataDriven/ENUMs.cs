@@ -175,12 +175,6 @@ namespace GameCore.AbilityDataDriven
         [LabelText("技能吟唱结束时")]
         OnChannelFinish,
 
-        [LabelText("创建时")]
-        OnCreated,
-
-        [LabelText("装备时")]
-        OnEquip,
-
         [LabelText("受治疗时")]
         OnHealReceived,
 

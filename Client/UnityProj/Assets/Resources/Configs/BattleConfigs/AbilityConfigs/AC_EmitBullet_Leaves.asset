@@ -98,7 +98,7 @@ MonoBehaviour:
       Data: 6|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
-      Data: 5017
+      Data: 5015
     - Name: Actions
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
