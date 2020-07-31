@@ -1,5 +1,5 @@
 {
-  "MechaComponent_BasicCore": {
+  "MC_BasicCore": {
     "MechaComponentOccupiedGridPositionList": [
       {
         "x": 0,
@@ -8,24 +8,7 @@
     ],
     "MechaComponentAllSlotLocalPositionsList": []
   },
-  "MechaComponent_LeaveGun": {
-    "MechaComponentOccupiedGridPositionList": [
-      {
-        "x": 0,
-        "z": 1
-      },
-      {
-        "x": 0,
-        "z": 0
-      },
-      {
-        "x": 0,
-        "z": -1
-      }
-    ],
-    "MechaComponentAllSlotLocalPositionsList": []
-  },
-  "MechaComponent_BasicBlock": {
+  "MC_BasicBlock": {
     "MechaComponentOccupiedGridPositionList": [
       {
         "x": 0,
@@ -34,7 +17,7 @@
     ],
     "MechaComponentAllSlotLocalPositionsList": []
   },
-  "MechaComponent_BasicEngine": {
+  "MC_ArcPurpleGravBallCanon": {
     "MechaComponentOccupiedGridPositionList": [
       {
         "x": 0,
@@ -60,7 +43,7 @@
       }
     ]
   },
-  "MechaComponent_WaterBallGun": {
+  "MC_LeaveGun": {
     "MechaComponentOccupiedGridPositionList": [
       {
         "x": 0,
@@ -77,7 +60,24 @@
     ],
     "MechaComponentAllSlotLocalPositionsList": []
   },
-  "MechaComponent_ArcPurpleGravBallCanon": {
+  "MC_WaterBallGun": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 1
+      },
+      {
+        "x": 0,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": -1
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": []
+  },
+  "MC_BasicEngine": {
     "MechaComponentOccupiedGridPositionList": [
       {
         "x": 0,

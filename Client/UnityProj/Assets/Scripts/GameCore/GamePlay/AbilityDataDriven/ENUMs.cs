@@ -208,7 +208,7 @@ namespace GameCore.AbilityDataDriven
         [LabelText("复活时")]
         OnRespawn,
 
-        [LabelText("能量预计算时")]
+        [LabelText("能量预计算时 [已实现]")]
         OnPowerCalculate,
 
         [LabelText("消耗能量时")]

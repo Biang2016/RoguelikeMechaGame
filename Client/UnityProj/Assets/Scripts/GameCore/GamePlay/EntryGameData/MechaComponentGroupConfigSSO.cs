@@ -9,7 +9,7 @@ namespace GameCore
     [CreateAssetMenu(menuName = "BattleConfig/MechaComponentGroupConfig")]
     public class MechaComponentGroupConfigSSO : SerializedScriptableObject
     {
-        [TableList(ShowPaging = false)]
+        [TableList(ShowPaging = false, ShowIndexLabels = true)]
         [LabelText("机甲组件列表（工具）")]
         [OnValueChanged("OnMechaComponentGroupRawListChanged")]
         public List<ConfigRaw> MechaComponentGroupRawList = new List<ConfigRaw>();
@@ -52,6 +52,7 @@ namespace GameCore
             [Required]
             [AssetSelector(Filter = "MC_", Paths = "Assets/Resources/Prefabs/MechaComponents", FlattenTreeView = false)]
             [AssetsOnly]
+            [OnValueChanged("OnMechaComponentPrefabChanged")]
             public MechaComponentBase MechaComponentPrefab;
 
             [VerticalGroup("机甲组件品质")]
@@ -60,7 +61,18 @@ namespace GameCore
             [ValidateInput("ValidateQuality", "$qualityMessage")]
             public Quality Quality;
 
+            [VerticalGroup("数量")]
+            [HideLabel]
+            [TableColumnWidth(50, true)]
+            [ValidateInput("ValidateCount", "$countMessage")]
+            public int Count;
+
             public bool Valid => MechaComponentPrefab != null;
+
+            private void OnMechaComponentPrefabChanged()
+            {
+                Quality = Quality.None;
+            }
 
             public bool ValidateQuality(Quality quality)
             {
@@ -86,9 +98,25 @@ namespace GameCore
                 }
             }
 
+            private bool ValidateCount(int count)
+            {
+                if (count < 0)
+                {
+                    countMessage = "数量不能为负";
+                    return false;
+                }
+                else
+                {
+                    countMessage = "";
+                    return true;
+                }
+            }
+
             [NonSerialized]
             [HideInInspector]
             public string qualityMessage = "";
+
+            private string countMessage = "";
         }
 
         [Button("刷新、排序")]
@@ -113,11 +141,14 @@ namespace GameCore
             {
                 if (raw.MechaComponentPrefab != null)
                 {
-                    mechaComponentGroupConfig.MechaComponentList.Add(new MechaComponentGroupConfig.Config
+                    for (int i = 0; i < raw.Count; i++)
                     {
-                        MechaComponentKey = raw.MechaComponentPrefab.name,
-                        Quality = raw.Quality
-                    });
+                        mechaComponentGroupConfig.MechaComponentList.Add(new MechaComponentGroupConfig.Config
+                        {
+                            MechaComponentKey = raw.MechaComponentPrefab.name,
+                            Quality = raw.Quality
+                        });
+                    }
                 }
             }
         }

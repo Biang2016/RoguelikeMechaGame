@@ -6,6 +6,9 @@ namespace GameCore
 {
     public enum Quality
     {
+        [LabelText("空")]
+        None,
+
         [LabelText("破旧")]
         Poor,
 

@@ -318,6 +318,7 @@ namespace GameCore.AbilityDataDriven
                     }
                 }
 
+                executeInfo.MechaComponentInfo.AccumulatedPowerInsideThisFrame = finalOutputPower;
                 List<GridPos> allSlotLocalPositions_Local = executeInfo.MechaComponentInfo.OriginalAllSlotLocalPositions;
                 List<GridPos> allSlotLocalPositions_Matrix = GridPos.TransformOccupiedPositions(executeInfo.MechaComponentInfo.InventoryItem.GridPos_Matrix, allSlotLocalPositions_Local.Clone());
                 foreach (GridPos gp in allSlotLocalPositions_Matrix)

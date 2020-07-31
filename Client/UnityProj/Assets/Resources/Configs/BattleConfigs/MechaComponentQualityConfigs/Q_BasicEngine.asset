@@ -39,7 +39,7 @@ MonoBehaviour:
       Data: 2|GameCore.QualityUpgradeData_Engine, GameCore
     - Name: Quality
       Entry: 3
-      Data: 0
+      Data: 1
     - Name: Life
       Entry: 3
       Data: 50
@@ -157,7 +157,7 @@ MonoBehaviour:
       Data: 10|GameCore.QualityUpgradeData_Engine, GameCore
     - Name: Quality
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: Life
       Entry: 3
       Data: 50
@@ -275,7 +275,7 @@ MonoBehaviour:
       Data: 18|GameCore.QualityUpgradeData_Engine, GameCore
     - Name: Quality
       Entry: 3
-      Data: 5
+      Data: 6
     - Name: Life
       Entry: 3
       Data: 50
