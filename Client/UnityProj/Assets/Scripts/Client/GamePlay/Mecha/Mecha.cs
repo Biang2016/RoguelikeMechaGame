@@ -18,7 +18,7 @@ namespace Client
 
         public MechaEditArea MechaEditArea;
 
-        public SortedDictionary<uint, MechaComponentBase> MechaComponentDict = new SortedDictionary<uint, MechaComponentBase>();
+        public SortedDictionary<uint, MechaComponent> MechaComponentDict = new SortedDictionary<uint, MechaComponent>();
         public bool IsPlayer => MechaInfo.IsPlayer;
         public bool IsBuilding => GameStateManager.Instance.GetState() == GameState.Building;
         public bool IsFighting => GameStateManager.Instance.GetState() == GameState.Fighting;
@@ -81,7 +81,7 @@ namespace Client
         public void Clean()
         {
             MechaEditArea.Clear();
-            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
+            foreach (KeyValuePair<uint, MechaComponent> kv in MechaComponentDict)
             {
                 kv.Value.PoolRecycle();
             }
@@ -142,38 +142,38 @@ namespace Client
 
         public void SetShown(bool shown)
         {
-            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
+            foreach (KeyValuePair<uint, MechaComponent> kv in MechaComponentDict)
             {
                 kv.Value.SetShown(shown);
             }
         }
 
-        private MechaComponentBase AddMechaComponent(MechaComponentInfo mci)
+        private MechaComponent AddMechaComponent(MechaComponentInfo mci)
         {
-            MechaComponentBase mcb = MechaComponentBase.BaseInitialize(mci, this);
-            mcb.OnRemoveMechaComponentBaseSuc = RemoveMechaComponent;
-            MechaComponentDict.Add(mci.GUID, mcb);
+            MechaComponent mc = MechaComponent.BaseInitialize(mci, this);
+            mc.OnRemoveMechaComponentSuc = RemoveMechaComponent;
+            MechaComponentDict.Add(mci.GUID, mc);
 
-            if (IsPlayer && mcb.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
+            if (IsPlayer && mc.MechaComponentInfo.MechaComponentType == MechaComponentType.Core)
             {
                 MechaInfo.RefreshHUDPanelCoreLifeSliderCount?.Invoke();
             }
 
-            mcb.transform.SetParent(MechaComponentContainer);
-            mcb.MechaComponentGridRoot.SetGridShown(GridShown);
-            mcb.MechaComponentGridRoot.SetSlotLightsShown(SlotLightsShown);
-            mcb.MechaComponentGridRoot.ResetAllGridConflict();
-            mcb.MechaComponentGridRoot.SetIsolatedIndicatorShown(false);
-            return mcb;
+            mc.transform.SetParent(MechaComponentContainer);
+            mc.MechaComponentGridRoot.SetGridShown(GridShown);
+            mc.MechaComponentGridRoot.SetSlotLightsShown(SlotLightsShown);
+            mc.MechaComponentGridRoot.ResetAllGridConflict();
+            mc.MechaComponentGridRoot.SetIsolatedIndicatorShown(false);
+            return mc;
         }
 
-        private void RemoveMechaComponent(MechaComponentBase mcb)
+        private void RemoveMechaComponent(MechaComponent mc)
         {
-            mcb.OnRemoveMechaComponentBaseSuc = null;
+            mc.OnRemoveMechaComponentSuc = null;
 
-            if (MechaComponentDict.ContainsKey(mcb.MechaComponentInfo.GUID))
+            if (MechaComponentDict.ContainsKey(mc.MechaComponentInfo.GUID))
             {
-                MechaComponentDict.Remove(mcb.MechaComponentInfo.GUID);
+                MechaComponentDict.Remove(mc.MechaComponentInfo.GUID);
             }
         }
 
@@ -199,7 +199,7 @@ namespace Client
             {
                 if (_slotLightsShown != value)
                 {
-                    foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
+                    foreach (KeyValuePair<uint, MechaComponent> kv in MechaComponentDict)
                     {
                         kv.Value.MechaComponentGridRoot.SetSlotLightsShown(value);
                     }
@@ -218,7 +218,7 @@ namespace Client
             {
                 if (_gridShown != value)
                 {
-                    foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
+                    foreach (KeyValuePair<uint, MechaComponent> kv in MechaComponentDict)
                     {
                         kv.Value.MechaComponentGridRoot.SetGridShown(value);
                     }

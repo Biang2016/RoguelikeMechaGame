@@ -50,7 +50,7 @@ namespace UnityToolbarExtender
         {
             if (GUILayout.Button(new GUIContent("序列化模块占位"), ToolbarStyles.toolbarbutton))
             {
-                MechaComponentBase.SerializeMechaComponentOccupiedPositions();
+                MechaComponent.SerializeMechaComponentOccupiedPositions();
             }
 
             GUILayout.FlexibleSpace();

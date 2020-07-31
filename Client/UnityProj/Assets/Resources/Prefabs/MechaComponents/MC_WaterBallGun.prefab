@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8787363159894584536}
   - component: {fileID: -2509402043850843953}
   m_Layer: 12
-  m_Name: MechaComponent_BaiscGun
-  m_TagString: Untagged
+  m_Name: MechaComponent_WaterBallGun
+  m_TagString: MechaComponent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,19 +59,17 @@ MonoBehaviour:
   AnotherSampleDummyPos: {fileID: 0}
   Mecha: {fileID: 0}
   MechaComponentInfo:
-    GUID: 0
-    MechaComponentType: 0
     Quality: 0
-    AbilityGroupSSO: {fileID: 11400000, guid: 0e190606f345ebd46b8ee3b0e4784dd6, type: 2}
-    MechaComponentQualityConfigSSO: {fileID: 11400000, guid: e373da448d4efe146af33384ace303dc,
-      type: 2}
+    IsDead: 0
+    AccumulatedPowerInsideThisFrame: 0
+    TriggerButtonThisFrame: 0
+    GUID: 0
     InventoryItem:
       GUID: 0
       GridPos_Matrix:
         x: 0
         z: 0
         orientation: 0
-    IsDead: 0
   MechaComponentGridRoot: {fileID: 4618707353109224937}
   MechaComponentModelRoot: {fileID: 8018876574517878512}
 --- !u!114 &8787363159894584536

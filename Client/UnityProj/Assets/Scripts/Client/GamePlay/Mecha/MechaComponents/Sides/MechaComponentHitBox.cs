@@ -7,7 +7,7 @@ namespace Client
     {
         internal MechaComponentGridRoot ParentGridRootRoot;
 
-        internal Mecha Mecha => ParentGridRootRoot.MechaComponentBase.Mecha;
+        internal Mecha Mecha => ParentGridRootRoot.MechaComponent.Mecha;
 
         internal BoxCollider BoxCollider;
 
@@ -36,9 +36,9 @@ namespace Client
             if (InBattle)
             {
                 Projectile p = collision.gameObject.GetComponent<Projectile>();
-                if (p && !p.IsRecycled && p.ProjectileInfo.MechaType != ParentGridRootRoot.MechaComponentBase.MechaType)
+                if (p && !p.IsRecycled && p.ProjectileInfo.MechaType != ParentGridRootRoot.MechaComponent.MechaType)
                 {
-                    //ParentGridRootRoot.MechaComponentBase.MechaComponentInfo.Damage(p.ProjectileInfo.FinalDamage);
+                    //ParentGridRootRoot.MechaComponent.MechaComponentInfo.Damage(p.ProjectileInfo.FinalDamage);
                     return;
                 }
             }

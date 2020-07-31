@@ -15,7 +15,7 @@ namespace Client
 
         void Update_Fighting()
         {
-            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
+            foreach (KeyValuePair<uint, MechaComponent> kv in MechaComponentDict)
             {
                 if (!kv.Value.IsRecycled)
                 {

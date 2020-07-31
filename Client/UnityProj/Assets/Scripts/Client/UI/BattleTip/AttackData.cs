@@ -5,13 +5,13 @@ namespace Client
     public struct AttackData
     {
         public MechaComponentInfo AttackerMCI;
-        public MechaComponentBase HitterMCB;
+        public MechaComponent HitterMCB;
         public int DecHp;
         public BattleTipType BattleTipType;
         public int ElementType;
         public int ElementHP;
 
-        public AttackData(MechaComponentInfo attackerMCI, MechaComponentBase hitterMcb, int decHp, BattleTipType battleTipType, int elementType, int elementHp)
+        public AttackData(MechaComponentInfo attackerMCI, MechaComponent hitterMcb, int decHp, BattleTipType battleTipType, int elementType, int elementHp)
         {
             AttackerMCI = attackerMCI;
             HitterMCB = hitterMcb;

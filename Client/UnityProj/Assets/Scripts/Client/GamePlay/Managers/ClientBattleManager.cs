@@ -107,13 +107,13 @@ namespace Client
             return mecha;
         }
 
-        public MechaComponentBase FindMechaComponentBase(uint guid)
+        public MechaComponent FindMechaComponent(uint guid)
         {
             foreach (KeyValuePair<uint, Mecha> kv in MechaDict)
             {
-                if (kv.Value.MechaComponentDict.TryGetValue(guid, out MechaComponentBase mcb))
+                if (kv.Value.MechaComponentDict.TryGetValue(guid, out MechaComponent mc))
                 {
-                    return mcb;
+                    return mc;
                 }
             }
 
@@ -155,10 +155,10 @@ namespace Client
             foreach (Collider collider in colliders)
             {
                 if (!random && res.Count == maxTargets) return res.Values.ToList();
-                MechaComponentBase mcb = collider.GetComponentInParent<MechaComponentBase>();
-                if (mcb.IsAlive())
+                MechaComponent mc = collider.GetComponentInParent<MechaComponent>();
+                if (mc.IsAlive())
                 {
-                    if (!res.ContainsKey(mcb.MechaComponentInfo.GUID))
+                    if (!res.ContainsKey(mc.MechaComponentInfo.GUID))
                     {
                         bool match = true;
                         switch (team)
@@ -175,19 +175,19 @@ namespace Client
                             }
                             case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_ENEMY:
                             {
-                                match = mcb.MechaInfo.IsOpponent(mechaType);
+                                match = mc.MechaInfo.IsOpponent(mechaType);
                                 break;
                             }
                             case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_FRIENDLY:
                             {
-                                match = mcb.MechaInfo.IsFriend(mechaType);
+                                match = mc.MechaInfo.IsFriend(mechaType);
                                 break;
                             }
                         }
 
                         if (match)
                         {
-                            res.Add(mcb.MechaComponentInfo.GUID, mcb.MechaComponentInfo);
+                            res.Add(mc.MechaComponentInfo.GUID, mc.MechaComponentInfo);
                         }
                     }
                 }

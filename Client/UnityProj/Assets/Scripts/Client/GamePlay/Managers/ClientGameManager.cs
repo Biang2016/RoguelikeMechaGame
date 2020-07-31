@@ -168,10 +168,10 @@ namespace Client
                         GridPosR gp_matrix = ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorInventory.CoordinateTransformationHandler_FromPosToMatrixIndex(gp);
                         MechaComponentInfo mci = mechaComponentInfo.Clone();
                         ClientBattleManager.Instance.PlayerMecha.MechaInfo.AddMechaComponentInfo(mci, gp_matrix);
-                        MechaComponentBase mcb = ClientBattleManager.Instance.PlayerMecha.MechaComponentDict[mci.GUID];
+                        MechaComponent mc = ClientBattleManager.Instance.PlayerMecha.MechaComponentDict[mci.GUID];
                         mci.InventoryItem.SetGridPosition(gp_matrix);
-                        DragManager.Instance.CurrentDrag = mcb.Draggable;
-                        mcb.Draggable.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<MechaComponentBase>());
+                        DragManager.Instance.CurrentDrag = mc.Draggable;
+                        mc.Draggable.SetOnDrag(true, null, DragManager.Instance.GetDragProcessor<MechaComponent>());
                         return true;
                     }
                 }
@@ -329,16 +329,16 @@ namespace Client
                 ClientBattleManager.Instance.PlayerMecha.MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation(out List<InventoryItem> conflictItem, out List<InventoryItem> isolatedItem);
 
                 Backpack battleInventory = BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName);
-                foreach (InventoryItem mcb in conflictItem)
+                foreach (InventoryItem mc in conflictItem)
                 {
-                    ((MechaComponentInfo) mcb.ItemContentInfo).RemoveMechaComponentInfo();
-                    battleInventory.TryAddItem(new InventoryItem(mcb.ItemContentInfo, battleInventory, GridPosR.Zero));
+                    ((MechaComponentInfo) mc.ItemContentInfo).RemoveMechaComponentInfo();
+                    battleInventory.TryAddItem(new InventoryItem(mc.ItemContentInfo, battleInventory, GridPosR.Zero));
                 }
 
-                foreach (InventoryItem mcb in isolatedItem)
+                foreach (InventoryItem mc in isolatedItem)
                 {
-                    ((MechaComponentInfo) mcb.ItemContentInfo).RemoveMechaComponentInfo();
-                    battleInventory.TryAddItem(new InventoryItem(mcb.ItemContentInfo, battleInventory, GridPosR.Zero));
+                    ((MechaComponentInfo) mc.ItemContentInfo).RemoveMechaComponentInfo();
+                    battleInventory.TryAddItem(new InventoryItem(mc.ItemContentInfo, battleInventory, GridPosR.Zero));
                 }
 
                 CameraManager.Instance.MainCameraFollow.SetTarget(ClientBattleManager.Instance.PlayerMecha.transform);

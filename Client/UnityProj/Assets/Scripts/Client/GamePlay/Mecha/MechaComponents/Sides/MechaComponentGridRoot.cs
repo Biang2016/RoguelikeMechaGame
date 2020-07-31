@@ -10,7 +10,7 @@ namespace Client
     [ExecuteInEditMode]
     public class MechaComponentGridRoot : ForbidLocalMoveRoot
     {
-        internal MechaComponentBase MechaComponentBase;
+        internal MechaComponent MechaComponent;
         public List<MechaComponentGrid> mechaComponentGrids = new List<MechaComponentGrid>();
 
         [NonSerialized]
@@ -19,7 +19,7 @@ namespace Client
         void Awake()
         {
             mechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
-            MechaComponentBase = GetComponentInParent<MechaComponentBase>();
+            MechaComponent = GetComponentInParent<MechaComponent>();
             HitBoxes = GetComponentsInChildren<MechaComponentHitBox>().ToList();
             foreach (MechaComponentHitBox hitBox in HitBoxes)
             {

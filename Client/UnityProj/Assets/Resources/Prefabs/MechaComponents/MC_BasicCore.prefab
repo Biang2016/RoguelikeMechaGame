@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 905932602189980698}
   m_Layer: 12
   m_Name: MechaComponent_BasicCore
-  m_TagString: Untagged
+  m_TagString: MechaComponent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,6 +60,8 @@ MonoBehaviour:
   MechaComponentInfo:
     Quality: 0
     IsDead: 0
+    AccumulatedPowerInsideThisFrame: 0
+    TriggerButtonThisFrame: 0
     GUID: 0
     InventoryItem:
       GUID: 0

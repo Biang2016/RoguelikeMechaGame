@@ -33,7 +33,7 @@ namespace Client
 
         public void Init(MechaInfo mechaInfo)
         {
-            DragProcessor = DragManager.Instance.GetDragProcessor<MechaComponentBase>();
+            DragProcessor = DragManager.Instance.GetDragProcessor<MechaComponent>();
             Clear();
             gameObject.SetActive(mechaInfo.IsPlayer);
             SetShown(false);

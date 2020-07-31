@@ -70,7 +70,7 @@ namespace Client
             CreateTip(info);
         }
 
-        private void HandleCommonTip(uint mcbGUID, BattleTipType battleTipType)
+        private void HandleCommonTip(uint mcGUID, BattleTipType battleTipType)
         {
             if (!EnableUIBattleTip) return;
             if ((int) battleTipType >= (int) BattleTipType.FollowDummySeparate)
@@ -80,10 +80,10 @@ namespace Client
 
             AttackerType attackerType = AttackerType.None;
 
-            MechaComponentBase mcb_owner = ClientBattleManager.Instance.FindMechaComponentBase(mcbGUID);
-            if (ClientBattleManager.Instance.PlayerMecha != null && mcb_owner != null)
+            MechaComponent mc_owner = ClientBattleManager.Instance.FindMechaComponent(mcGUID);
+            if (ClientBattleManager.Instance.PlayerMecha != null && mc_owner != null)
             {
-                attackerType = GetAttackerType(mcb_owner.Mecha.MechaInfo, ClientBattleManager.Instance.PlayerMecha.MechaInfo, battleTipType);
+                attackerType = GetAttackerType(mc_owner.Mecha.MechaInfo, ClientBattleManager.Instance.PlayerMecha.MechaInfo, battleTipType);
             }
 
             if (attackerType == AttackerType.NoTip)
@@ -100,7 +100,7 @@ namespace Client
                 0.13f,
                 0,
                 "",
-                mcb_owner.transform.position + Vector3.up * 1f,
+                mc_owner.transform.position + Vector3.up * 1f,
                 Vector2.zero,
                 Vector2.one,
                 0.5f);

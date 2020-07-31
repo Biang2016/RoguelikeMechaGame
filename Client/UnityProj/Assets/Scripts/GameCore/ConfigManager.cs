@@ -143,7 +143,7 @@ namespace GameCore
                 foreach (Object obj in configObjs)
                 {
                     MechaComponentGroupConfigSSO configSSO = (MechaComponentGroupConfigSSO) obj;
-                    configSSO.RefreshConfigList();
+                    configSSO.RefreshConfigListBeforeExport();
                     MechaComponentGroupConfig config = configSSO.MechaComponentGroupConfig;
                     if (string.IsNullOrEmpty(configSSO.MechaComponentGroupConfig.MechaComponentGroupConfigName))
                     {

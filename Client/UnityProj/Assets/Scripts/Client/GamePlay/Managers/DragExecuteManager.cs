@@ -57,10 +57,10 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
                 Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Building_MousePosition);
                 MechaComponentInfo mci = mcds.MechaComponentInfo.Clone();
                 ClientBattleManager.Instance.PlayerMecha.MechaInfo.AddMechaComponentInfo(mci, GridPosR.Zero);
-                MechaComponentBase mcb = ClientBattleManager.Instance.PlayerMecha.MechaComponentDict[mci.GUID];
+                MechaComponent mc = ClientBattleManager.Instance.PlayerMecha.MechaComponentDict[mci.GUID];
                 GridPos gp = GridUtils.GetGridPosByMousePos(ClientBattleManager.Instance.PlayerMecha.transform, ray, Vector3.up, ConfigManager.GridSize);
                 mci.InventoryItem.SetGridPosition(gp);
-                DragManager.Instance.CurrentDrag = mcb.GetComponent<Draggable>();
+                DragManager.Instance.CurrentDrag = mc.GetComponent<Draggable>();
                 DragManager.Instance.CurrentDrag.SetOnDrag(true, collider, dragProcessor);
                 mcds.PoolRecycle();
             },
@@ -72,8 +72,8 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
             () => ControlManager.Instance.Building_MouseLeft.Up,
             Debug.LogError,
             LayerManager.Instance.LayerMask_DragAreas);
-        DragProcessor<MechaComponentBase> dragProcessor_MechaComponentBase = new DragProcessor<MechaComponentBase>();
-        dragProcessor_MechaComponentBase.Init(
+        DragProcessor<MechaComponent> dragProcessor_MechaComponent = new DragProcessor<MechaComponent>();
+        dragProcessor_MechaComponent.Init(
             CameraManager.Instance.MainCamera,
             LayerManager.Instance.LayerMask_ComponentHitBox,
             (out Vector2 mouseScreenPos) =>
@@ -91,8 +91,8 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
             }
             ,
             ScreenMousePositionToWorld_MechaEditorInventory,
-            delegate(MechaComponentBase mcb, Collider collider, DragProcessor dragProcessor) { },
-            delegate(MechaComponentBase mcb, Collider collider, DragProcessor dragProcessor) { }
+            delegate(MechaComponent mc, Collider collider, DragProcessor dragProcessor) { },
+            delegate(MechaComponent mc, Collider collider, DragProcessor dragProcessor) { }
         );
     }
 

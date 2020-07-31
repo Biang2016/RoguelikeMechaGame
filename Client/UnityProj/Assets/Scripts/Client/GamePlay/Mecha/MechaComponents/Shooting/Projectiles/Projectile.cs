@@ -161,10 +161,10 @@ namespace Client
             {
                 ContactPoint contact = collision.contacts[0];
                 FlyRealtimeData.HitCollider = collision.collider;
-                MechaComponentBase mcb = collision.collider.GetComponentInParent<MechaComponentBase>();
-                if (mcb)
+                MechaComponent mc = collision.collider.GetComponentInParent<MechaComponent>();
+                if (mc)
                 {
-                    FlyRealtimeData.HitMechaComponentInfo = mcb.MechaComponentInfo;
+                    FlyRealtimeData.HitMechaComponentInfo = mc.MechaComponentInfo;
                 }
 
                 bool hit = false;
@@ -189,7 +189,7 @@ namespace Client
                 }
                 else
                 {
-                    if (mcb && !mcb.IsRecycled && mcb.MechaInfo == ProjectileInfo.ParentExecuteInfo.MechaInfo)
+                    if (mc && !mc.IsRecycled && mc.MechaInfo == ProjectileInfo.ParentExecuteInfo.MechaInfo)
                     {
                         hit = false;
                         recycle = false;

@@ -13,8 +13,8 @@ public class AssetHelper : UnityEditor.AssetModificationProcessor
         {
             if (path.Contains("MechaComponent_"))
             {
-                MechaComponentBase[] components = StageUtility.GetCurrentStageHandle().FindComponentsOfType<MechaComponentBase>();
-                foreach (MechaComponentBase component in components)
+                MechaComponent[] components = StageUtility.GetCurrentStageHandle().FindComponentsOfType<MechaComponent>();
+                foreach (MechaComponent component in components)
                 {
                     ProcessMechaComponentPrefab(component);
                 }
@@ -24,7 +24,7 @@ public class AssetHelper : UnityEditor.AssetModificationProcessor
         return paths;
     }
 
-    private static bool ProcessMechaComponentPrefab(MechaComponentBase component)
+    private static bool ProcessMechaComponentPrefab(MechaComponent component)
     {
         component.transform.position = Vector3.zero;
         component.transform.rotation = Quaternion.identity;

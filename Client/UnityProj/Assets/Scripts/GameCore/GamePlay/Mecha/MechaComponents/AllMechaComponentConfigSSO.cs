@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using GameCore.AbilityDataDriven;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
+using static System.String;
 
 namespace GameCore
 {
@@ -12,35 +12,78 @@ namespace GameCore
     {
         [LabelText("机甲组件配置列表（工具）")]
         [OnValueChanged("OnMechaComponentConfigRawListChanged")]
-        [ListDrawerSettings(ListElementLabelName = "EditorDisplayName", ShowIndexLabels = false)]
+        [ListDrawerSettings(ListElementLabelName = "EditorDisplayName", ShowIndexLabels = false, AddCopiesLastElement = true)]
+        [TableList(ShowPaging = false)]
         public List<MechaComponentConfigRaw> MechaComponentConfigRawList = new List<MechaComponentConfigRaw>();
 
         [LabelText("机甲组件配置列表")]
+        [TableList(ShowPaging = false)]
         public List<MechaComponentConfig> MechaComponentConfigList = new List<MechaComponentConfig>();
 
         public class MechaComponentConfigRaw
         {
-            [LabelText("机甲组件Prefab")]
-            public GameObject MechaComponentPrefab;
+            [VerticalGroup("机甲组件")]
+            [TableColumnWidth(300, true)]
+            [HideLabel]
+            [Required]
+            [AssetSelector(Filter = "MC_", Paths = "Assets/Resources/Prefabs/MechaComponents", FlattenTreeView = false)]
+            [AssetsOnly]
+            public MechaComponentBase MechaComponentPrefab;
 
-            [LabelText("机甲组件类型")]
+            [VerticalGroup("机甲组件类型")]
+            [HideLabel]
+            [TableColumnWidth(80, true)]
             public MechaComponentType MechaComponentType;
 
-            [LabelText("物品图片")]
+            [VerticalGroup("物品图片")]
+            [HideLabel]
+            [Required]
+            [AssetsOnly]
+            [TableColumnWidth(110, true)]
             public Sprite ItemSprite;
 
-            [LabelText("技能组配置")]
+            [VerticalGroup("技能组配置")]
+            [HideLabel]
+            [Required]
+            [AssetsOnly]
+            [TableColumnWidth(120, true)]
             public AbilityGroupConfigSSO AbilityGroupConfigSSO;
 
-            [LabelText("机甲组件品质配置")]
+            [VerticalGroup("机甲组件品质配置")]
+            [HideLabel]
+            [Required]
+            [AssetsOnly]
+            [TableColumnWidth(120, true)]
             public MechaComponentQualityConfigSSO MechaComponentQualityConfigSSO;
 
-            private string EditorDisplayName => MechaComponentPrefab != null ? MechaComponentPrefab.name.Replace("MechaComponent_", "") : "";
+            private string EditorDisplayName
+            {
+                get
+                {
+                    string shortName = MechaComponentPrefab != null ? MechaComponentPrefab.name.Replace("MC_", "") : "";
+                    return $"{shortName}";
+                }
+            }
+
+            public bool Valid => MechaComponentPrefab && ItemSprite && AbilityGroupConfigSSO && MechaComponentQualityConfigSSO;
         }
 
-        [Button("刷新")]
+        [Button("刷新、排序")]
         private void OnMechaComponentConfigRawListChanged()
         {
+            MechaComponentConfigRawList.Sort((x, y) =>
+            {
+                if (x.Valid && !y.Valid) return 1;
+                if (!x.Valid && y.Valid) return -1;
+                if (!x.Valid && !y.Valid) return 0;
+                int result = x.MechaComponentType.CompareTo(y.MechaComponentType);
+                if (result == 0)
+                {
+                    result = Compare(x.MechaComponentPrefab.name, y.MechaComponentPrefab.name, StringComparison.Ordinal);
+                }
+
+                return result;
+            });
             MechaComponentConfigList.Clear();
             foreach (MechaComponentConfigRaw raw in MechaComponentConfigRawList)
             {

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Client
 {
-    public partial class MechaComponentBase
+    public partial class MechaComponent
     {
         [LabelText("触发按键")]
         [PropertyOrder(9)]

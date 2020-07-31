@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using BiangStudio.CloneVariant;
 using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay;
 using BiangStudio.GridBackpack;
-using BiangStudio.ObjectPool;
 using BiangStudio.ShapedInventory;
 using GameCore;
 using Newtonsoft.Json;
@@ -22,7 +20,7 @@ using UnityEditor;
 namespace Client
 {
     [ExecuteInEditMode]
-    public partial class MechaComponentBase : PoolObject, IDraggable
+    public partial class MechaComponent : MechaComponentBase, IDraggable
     {
         [ReadOnly]
         [PropertyOrder(-10)]
@@ -43,7 +41,7 @@ namespace Client
 
         internal Draggable Draggable;
         private bool isReturningToBackpack = false;
-        internal UnityAction<MechaComponentBase> OnRemoveMechaComponentBaseSuc;
+        internal UnityAction<MechaComponent> OnRemoveMechaComponentSuc;
 
         internal MechaInfo MechaInfo => Mecha.MechaInfo;
         internal Inventory Inventory => MechaComponentInfo.InventoryItem.Inventory;
@@ -60,7 +58,7 @@ namespace Client
             MechaComponentInfo = null;
             Mecha = null;
             isReturningToBackpack = false;
-            OnRemoveMechaComponentBaseSuc = null;
+            OnRemoveMechaComponentSuc = null;
             base.PoolRecycle();
         }
 
@@ -84,19 +82,19 @@ namespace Client
             return !IsRecycled && MechaComponentInfo != null && !MechaComponentInfo.IsDead;
         }
 
-        public static MechaComponentBase BaseInitialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
+        public static MechaComponent BaseInitialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
-            MechaComponentBase mcb = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentConfig.MechaComponentKey]
-                .AllocateGameObject<MechaComponentBase>(parentMecha ? parentMecha.transform : null);
-            mcb.Initialize(mechaComponentInfo, parentMecha);
-            return mcb;
+            MechaComponent mc = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentConfig.MechaComponentKey]
+                .AllocateGameObject<MechaComponent>(parentMecha ? parentMecha.transform : null);
+            mc.Initialize(mechaComponentInfo, parentMecha);
+            return mc;
         }
 
         private void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
             mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) =>
             {
-                OnRemoveMechaComponentBaseSuc?.Invoke(this);
+                OnRemoveMechaComponentSuc?.Invoke(this);
                 PoolRecycle();
             };
 
@@ -146,7 +144,7 @@ namespace Client
         {
             PrefabManager.Instance.LoadPrefabs();
             Dictionary<string, MechaComponentOriginalOccupiedGridInfo> dict = new Dictionary<string, MechaComponentOriginalOccupiedGridInfo>();
-            List<MechaComponentBase> mcbs = new List<MechaComponentBase>();
+            List<MechaComponent> mcs = new List<MechaComponent>();
             ConfigManager.LoadAllConfigs();
             try
             {
@@ -156,11 +154,11 @@ namespace Client
                     if (prefab != null)
                     {
                         Debug.Log($"模组占位序列化成功: <color=\"#00ADFF\">{kv.Key}</color>");
-                        MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
-                        mcbs.Add(mcb);
+                        MechaComponent mc = Instantiate(prefab).GetComponent<MechaComponent>();
+                        mcs.Add(mc);
                         MechaComponentOriginalOccupiedGridInfo info = new MechaComponentOriginalOccupiedGridInfo();
-                        info.MechaComponentOccupiedGridPositionList = mcb.MechaComponentGridRoot.GetOccupiedPositions();
-                        info.MechaComponentAllSlotLocalPositionsList = mcb.MechaComponentGridRoot.GetAllSlotPositions_Local();
+                        info.MechaComponentOccupiedGridPositionList = mc.MechaComponentGridRoot.GetOccupiedPositions();
+                        info.MechaComponentAllSlotLocalPositionsList = mc.MechaComponentGridRoot.GetAllSlotPositions_Local();
                         dict.Add(kv.Key, info);
                     }
                 }
@@ -176,9 +174,9 @@ namespace Client
             }
             finally
             {
-                foreach (MechaComponentBase mcb in mcbs)
+                foreach (MechaComponent mc in mcs)
                 {
-                    DestroyImmediate(mcb.gameObject);
+                    DestroyImmediate(mc.gameObject);
                 }
             }
         }
