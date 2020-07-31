@@ -167,49 +167,6 @@ namespace Client
             return (Vector3.Dot(S_P, S_E) / S_E.magnitude * S_E.normalized - S_P).magnitude;
         }
 
-        public static List<T> GetRandomFromList<T>(List<T> OriList, int number, List<T> exceptList = null)
-        {
-            if (OriList == null || OriList.Count == 0) return new List<T>();
-
-            List<T> ori = OriList.ToArray().ToList();
-            if (exceptList != null)
-            {
-                List<T> remove = new List<T>();
-                foreach (T t in ori)
-                {
-                    if (exceptList.Contains(t))
-                    {
-                        remove.Add(t);
-                    }
-                }
-
-                foreach (T removeT in remove)
-                {
-                    ori.Remove(removeT);
-                }
-            }
-
-            if (number > ori.Count) number = ori.Count;
-
-            HashSet<int> indices = new HashSet<int>();
-            while (indices.Count < number)
-            {
-                int index = Random.Range(0, ori.Count);
-                if (!indices.Contains(index))
-                {
-                    indices.Add(index);
-                }
-            }
-
-            List<T> res = new List<T>();
-            foreach (int i in indices)
-            {
-                res.Add(ori[i]);
-            }
-
-            return res;
-        }
-
         public static string TimeToString(float timeTick)
         {
             return Mathf.FloorToInt(timeTick / 60f) + ":" + Mathf.FloorToInt(timeTick % 60).ToString().PadLeft(2, '0');

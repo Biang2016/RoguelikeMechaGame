@@ -306,21 +306,25 @@ namespace GameCore.AbilityDataDriven
 
         private void ExecuteOutputPower(Ability parentAbility, ExecuteInfo executeInfo)
         {
-            int finalOutputPower = OutputPower;
-            switch (executeInfo.MechaComponentInfo.CurrentQualityUpgradeData)
+            if (parentAbility == executeInfo.Ability)
             {
-                case QualityUpgradeData_Engine pud_Engine:
+                int finalOutputPower = OutputPower;
+                switch (executeInfo.MechaComponentInfo.CurrentQualityUpgradeData)
                 {
-                    finalOutputPower = pud_Engine.OutputPower;
-                    break;
+                    case QualityUpgradeData_Engine pud_Engine:
+                    {
+                        finalOutputPower = pud_Engine.OutputPower;
+                        break;
+                    }
+                }
+
+                List<GridPos> allSlotLocalPositions_Local = executeInfo.MechaComponentInfo.OriginalAllSlotLocalPositions;
+                List<GridPos> allSlotLocalPositions_Matrix = GridPos.TransformOccupiedPositions(executeInfo.MechaComponentInfo.InventoryItem.GridPos_Matrix, allSlotLocalPositions_Local.Clone());
+                foreach (GridPos gp in allSlotLocalPositions_Matrix)
+                {
+                    executeInfo.MechaInfo.ProvidePower(gp, finalOutputPower);
                 }
             }
-
-            GridPosR gpr = executeInfo.MechaComponentInfo.InventoryItem.GridPos_Matrix;
-            List<GridPos> allSlotGridPositions_Local = BattleManager.Instance.GetAllSlotGridPositions_Local(executeInfo.MechaComponentInfo);
-
-
-            //executeInfo.MechaInfo.ProvidePower();
         }
     }
 }

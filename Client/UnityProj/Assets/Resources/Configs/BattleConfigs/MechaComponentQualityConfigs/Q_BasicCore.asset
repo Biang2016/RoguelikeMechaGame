@@ -146,7 +146,7 @@ MonoBehaviour:
       Data: 0
     - Name: HighLightColorIntensity
       Entry: 4
-      Data: 20
+      Data: 10
     - Name: AddOnAbilityList
       Entry: 7
       Data: 9|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib

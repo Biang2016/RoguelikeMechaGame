@@ -85,7 +85,7 @@ namespace Client
         [SerializeField]
         private GridPosR.OrientationFlag SlotEnumFlag_Editor;
 
-        private void OnSlotEnumFlag_EditorChanged()
+        public void OnSlotEnumFlag_EditorChanged()
         {
             foreach (GridPosR.Orientation orientation in Enum.GetValues(typeof(GridPosR.Orientation)))
             {

@@ -142,5 +142,92 @@ namespace GameCore
         }
 
         #endregion
+
+        public bool TriggerButtonThisFrame = false;
+
+        public void PreUpdate_Fighting()
+        {
+        }
+
+        public void PowerUpdate_Fighting()
+        {
+            foreach (Ability ability in AbilityGroup.Abilities)
+            {
+                if (ability.Passive)
+                {
+                    BattleManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_AbilityEvent.OnPowerCalculate, new ExecuteInfo
+                    {
+                        MechaInfo = MechaInfo,
+                        MechaComponentInfo = this,
+                        Ability = ability
+                    });
+                }
+            }
+        }
+
+        public void Update_Fighting()
+        {
+            float abilityCooldownFactor = 1f;
+            switch (CurrentPowerUpgradeData)
+            {
+                case PowerUpgradeData_Gun pud_Gun:
+                {
+                    abilityCooldownFactor -= (pud_Gun.AbilityCooldownDecreasePercent / 100f);
+                    break;
+                }
+            }
+
+            foreach (Ability ability in AbilityGroup.Abilities)
+            {
+                if (ability.cooldownTicker < ability.AbilityCooldown)
+                {
+                    ability.cooldownTicker += Mathf.RoundToInt(Time.deltaTime * 1000 * (1f / abilityCooldownFactor));
+                }
+                else
+                {
+                    if (!ability.Passive && ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_AUTOCAST))
+                    {
+                        BattleManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, new ExecuteInfo
+                        {
+                            MechaInfo = MechaInfo,
+                            MechaComponentInfo = this,
+                            Ability = ability
+                        });
+                    }
+                }
+            }
+
+            if (TriggerButtonThisFrame)
+            {
+                foreach (Ability ability in AbilityGroup.Abilities)
+                {
+                    if (ability.canTriggered && !ability.Passive)
+                    {
+                        if (!ability.Passive && !ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_AUTOCAST))
+                        {
+                            if (ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_FORBID_MOVEMENT))
+                            {
+                                MechaInfo.AbilityForbidMovement = true;
+                            }
+
+                            BattleManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, new ExecuteInfo
+                            {
+                                MechaInfo = MechaInfo,
+                                MechaComponentInfo = this,
+                                Ability = ability
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        public void LateUpdate_Fighting()
+        {
+        }
+
+        public void FixedUpdate_Fighting()
+        {
+        }
     }
 }

@@ -14,6 +14,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using DragAreaDefines = GameCore.DragAreaDefines;
 #if UNITY_EDITOR
+using System;
 using UnityEditor;
 
 #endif
@@ -144,29 +145,41 @@ namespace Client
         public static void SerializeMechaComponentOccupiedPositions()
         {
             PrefabManager.Instance.LoadPrefabs();
-            SortedDictionary<string, List<GridPos>> MechaComponentOccupiedGridPosDict = new SortedDictionary<string, List<GridPos>>();
+            Dictionary<string, MechaComponentOriginalOccupiedGridInfo> dict = new Dictionary<string, MechaComponentOriginalOccupiedGridInfo>();
             List<MechaComponentBase> mcbs = new List<MechaComponentBase>();
             ConfigManager.LoadAllConfigs();
-            foreach (KeyValuePair<string, MechaComponentConfig> kv in ConfigManager.MechaComponentConfigDict)
+            try
             {
-                GameObject prefab = PrefabManager.Instance.GetPrefab(kv.Key);
-                if (prefab != null)
+                foreach (KeyValuePair<string, MechaComponentConfig> kv in ConfigManager.MechaComponentConfigDict)
                 {
-                    Debug.Log("模组占位序列化成功: " + kv.Key);
-                    MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
-                    mcbs.Add(mcb);
-                    MechaComponentOccupiedGridPosDict.Add(kv.Key, mcb.MechaComponentGridRoot.GetOccupiedPositions().Clone());
+                    GameObject prefab = PrefabManager.Instance.GetPrefab(kv.Key);
+                    if (prefab != null)
+                    {
+                        Debug.Log($"模组占位序列化成功: <color=\"#00ADFF\">{kv.Key}</color>");
+                        MechaComponentBase mcb = Instantiate(prefab).GetComponent<MechaComponentBase>();
+                        mcbs.Add(mcb);
+                        MechaComponentOriginalOccupiedGridInfo info = new MechaComponentOriginalOccupiedGridInfo();
+                        info.MechaComponentOccupiedGridPositionList = mcb.MechaComponentGridRoot.GetOccupiedPositions();
+                        info.MechaComponentAllSlotLocalPositionsList = mcb.MechaComponentGridRoot.GetAllSlotPositions_Local();
+                        dict.Add(kv.Key, info);
+                    }
                 }
+
+                string json = JsonConvert.SerializeObject(dict, Formatting.Indented);
+                StreamWriter sw = new StreamWriter(ConfigManager.MechaComponentOriginalOccupiedGridInfoJsonFilePath);
+                sw.Write(json);
+                sw.Close();
             }
-
-            string json = JsonConvert.SerializeObject(MechaComponentOccupiedGridPosDict, Formatting.Indented);
-            StreamWriter sw = new StreamWriter(ConfigManager.BlockOccupiedGridPosJsonFilePath);
-            sw.Write(json);
-            sw.Close();
-
-            foreach (MechaComponentBase mcb in mcbs)
+            catch (Exception e)
             {
-                DestroyImmediate(mcb.gameObject);
+                Debug.LogError(e.ToString());
+            }
+            finally
+            {
+                foreach (MechaComponentBase mcb in mcbs)
+                {
+                    DestroyImmediate(mcb.gameObject);
+                }
             }
         }
 

@@ -48,12 +48,31 @@ namespace Client
             return null;
         }
 
+#if UNITY_EDITOR
+        public void RefreshConfig()
+        {
+            mechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
+            HitBoxes = GetComponentsInChildren<MechaComponentHitBox>().ToList();
+        }
+
+        public List<GridPos> GetOccupiedPositions()
+        {
+            List<GridPos> res = new List<GridPos>();
+            foreach (MechaComponentGrid mcg in mechaComponentGrids)
+            {
+                res.Add(mcg.GetGridPos());
+            }
+
+            return res;
+        }
+
         public List<GridPos> GetAllSlotPositions_Local()
         {
             List<GridPos> res = new List<GridPos>();
             foreach (MechaComponentGrid grid in mechaComponentGrids)
             {
                 GridPos gp = grid.GetGridPos();
+                grid.OnSlotEnumFlag_EditorChanged();
                 if (grid.Slots[GridPosR.Orientation.Left].IsCandidate)
                 {
                     res.Add(gp + new GridPos(-1, 0));
@@ -77,25 +96,8 @@ namespace Client
 
             return res;
         }
-
-#if UNITY_EDITOR
-        public void RefreshConfig()
-        {
-            mechaComponentGrids = GetComponentsInChildren<MechaComponentGrid>().ToList();
-            HitBoxes = GetComponentsInChildren<MechaComponentHitBox>().ToList();
-        }
-
-        public List<GridPos> GetOccupiedPositions()
-        {
-            List<GridPos> res = new List<GridPos>();
-            foreach (MechaComponentGrid mcg in mechaComponentGrids)
-            {
-                res.Add(mcg.GetGridPos());
-            }
-
-            return res;
-        }
 #endif
+
         public void SetSlotLightsShown(bool shown)
         {
             foreach (MechaComponentGrid mcg in mechaComponentGrids)

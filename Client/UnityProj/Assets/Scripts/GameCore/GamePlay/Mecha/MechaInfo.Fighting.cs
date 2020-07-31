@@ -8,13 +8,80 @@ namespace GameCore
 {
     public partial class MechaInfo
     {
+        public bool AbilityForbidMovement = false;
+
+        public void Update_Fighting()
+        {
+            AbilityForbidMovement = false;
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
+            {
+                if (!kv.Value.IsDead)
+                {
+                    kv.Value.PreUpdate_Fighting();
+                }
+            }
+
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
+            {
+                if (!kv.Value.IsDead)
+                {
+                    kv.Value.PowerUpdate_Fighting();
+                }
+            }
+
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
+            {
+                if (!kv.Value.IsDead)
+                {
+                    kv.Value.M_InputPower = kv.Value.AccumulatedPowerInsideThisFrame;
+                    kv.Value.AccumulatedPowerInsideThisFrame = 0;
+                }
+            }
+
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
+            {
+                if (!kv.Value.IsDead)
+                {
+                    kv.Value.Update_Fighting();
+                }
+            }
+        }
+
+        public void LateUpdate_Fighting()
+        {
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
+            {
+                if (!kv.Value.IsDead)
+                {
+                    kv.Value.LateUpdate_Fighting();
+                }
+            }
+        }
+
+        public void FixedUpdate_Fighting()
+        {
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
+            {
+                if (!kv.Value.IsDead)
+                {
+                    kv.Value.FixedUpdate_Fighting();
+                }
+            }
+        }
+
         #region PowerCalculation
 
         public void ProvidePower(GridPos destinationGP, int power)
         {
-            InventoryItem item = MechaEditorInventory.InventoryItemMatrix[destinationGP.x, destinationGP.z];
-            MechaComponentInfo mci = ((MechaComponentInfo) item.ItemContentInfo);
-            mci.M_InputPower += power;
+            if (destinationGP.x >= 0 && destinationGP.x < MechaEditorInventory.InventoryItemMatrix.GetLength(0) && destinationGP.z >= 0 && destinationGP.z < MechaEditorInventory.InventoryItemMatrix.GetLength(1))
+            {
+                InventoryItem item = MechaEditorInventory.InventoryItemMatrix[destinationGP.x, destinationGP.z];
+                if (item != null)
+                {
+                    MechaComponentInfo mci = ((MechaComponentInfo) item.ItemContentInfo);
+                    mci.AccumulatedPowerInsideThisFrame += power;
+                }
+            }
         }
 
         #endregion

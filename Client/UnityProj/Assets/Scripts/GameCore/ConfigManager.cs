@@ -23,11 +23,12 @@ namespace GameCore
 
         public const int EDIT_AREA_HALF_SIZE = 9;
         public static int EDIT_AREA_FULL_SIZE => EDIT_AREA_HALF_SIZE * 2 + 1;
+        public static bool ShowMechaEditorAreaGridPosText = true;
 
         public const int BackpackGridSize = 60;
 
-        public static string BlockOccupiedGridPosJsonFilePath = Application.streamingAssetsPath + "/Configs/BlockConfigs/BlockOccupiedGridPos.json";
-        public static SortedDictionary<string, List<GridPos>> MechaComponentOccupiedGridPosDict = new SortedDictionary<string, List<GridPos>>();
+        public static string MechaComponentOriginalOccupiedGridInfoJsonFilePath = Application.streamingAssetsPath + "/Configs/MechaComponentPrefabConfigs/MechaComponentOriginalOccupiedGridInfo.json";
+        public static Dictionary<string, MechaComponentOriginalOccupiedGridInfo> MechaComponentOriginalOccupiedGridInfoDict = new Dictionary<string, MechaComponentOriginalOccupiedGridInfo>();
 
         public static string AbilityConfigFolder_Relative = "Configs/BattleConfigs/AbilityConfigs";
         public static string AbilityGroupConfigFolder_Relative = "Configs/BattleConfigs/AbilityGroupConfigs";
@@ -77,10 +78,10 @@ namespace GameCore
 
         private void LoadMechaComponentOccupiedGridPosDict()
         {
-            StreamReader sr = new StreamReader(BlockOccupiedGridPosJsonFilePath);
+            StreamReader sr = new StreamReader(MechaComponentOriginalOccupiedGridInfoJsonFilePath);
             string content = sr.ReadToEnd();
             sr.Close();
-            MechaComponentOccupiedGridPosDict = JsonConvert.DeserializeObject<SortedDictionary<string, List<GridPos>>>(content);
+            MechaComponentOriginalOccupiedGridInfoDict = JsonConvert.DeserializeObject<Dictionary<string, MechaComponentOriginalOccupiedGridInfo>>(content);
         }
 
         [MenuItem("开发工具/序列化配置")]

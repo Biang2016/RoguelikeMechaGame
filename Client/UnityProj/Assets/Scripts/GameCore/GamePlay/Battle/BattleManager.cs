@@ -93,10 +93,6 @@ namespace GameCore
 
         public SearchRangeDelegate SearchRangeHandler;
 
-        public delegate List<GridPos> GetAllSlotGridPositions_Local_Delegate(MechaComponentInfo mci);
-
-        public GetAllSlotGridPositions_Local_Delegate GetAllSlotGridPositions_Local;
-
         #endregion
     }
 }

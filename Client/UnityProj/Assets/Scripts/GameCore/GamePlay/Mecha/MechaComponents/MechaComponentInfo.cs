@@ -29,14 +29,15 @@ namespace GameCore
         [HideInEditorMode]
         public InventoryItem InventoryItem;
 
-        private List<GridPos> originalOccupiedGridPositions;
-        public List<GridPos> OriginalOccupiedGridPositions => originalOccupiedGridPositions;
+        private MechaComponentOriginalOccupiedGridInfo MechaComponentOriginalOccupiedGridInfo;
+        public List<GridPos> OriginalOccupiedGridPositions => MechaComponentOriginalOccupiedGridInfo.MechaComponentOccupiedGridPositionList;
+        public List<GridPos> OriginalAllSlotLocalPositions => MechaComponentOriginalOccupiedGridInfo.MechaComponentAllSlotLocalPositionsList;
 
         public string ItemName => "机甲组件." + ItemSpriteKey;
         public MechaComponentType MechaComponentType => MechaComponentConfig.MechaComponentType;
         public string ItemSpriteKey => MechaComponentConfig.ItemSpriteKey;
         public Color ItemColor => QualityManager.GetQuality(Quality).Color;
-
+            
         private string logIdentityName;
         public string LogIdentityName => logIdentityName;
 
@@ -52,13 +53,20 @@ namespace GameCore
             MechaComponentQualityConfig = ConfigManager.Instance.GetMechaComponentQualityConfig(MechaComponentConfig.MechaComponentQualityConfigKey);
 
             CurrentQualityUpgradeData = MechaComponentQualityConfig.GetQualityUpgradeData(quality);
-            CurrentPowerUpgradeData = CurrentQualityUpgradeData.GetPowerUpgradeData(0);
+            if (CurrentQualityUpgradeData == null)
+            {
+                Debug.LogError($"未配置品质为{quality}的{MechaComponentType}");
+            }
+            else
+            {
+                CurrentPowerUpgradeData = CurrentQualityUpgradeData.GetPowerUpgradeData(0);
+            }
 
             M_TotalLife = CurrentQualityUpgradeData.Life;
             M_LeftLife = CurrentQualityUpgradeData.Life;
-            if (ConfigManager.MechaComponentOccupiedGridPosDict.TryGetValue(mechaComponentConfig.MechaComponentKey, out List<GridPos> ops))
+            if (ConfigManager.MechaComponentOriginalOccupiedGridInfoDict.TryGetValue(mechaComponentConfig.MechaComponentKey, out MechaComponentOriginalOccupiedGridInfo info))
             {
-                originalOccupiedGridPositions = ops.Clone();
+                MechaComponentOriginalOccupiedGridInfo = info.Clone();
             }
         }
 

@@ -30,18 +30,12 @@ MonoBehaviour:
     - Name: AbilityBehaviors
       Entry: 3
       Data: 1
-    - Name: CastDummyPosition
-      Entry: 3
-      Data: 0
-    - Name: AbilityCastRange
-      Entry: 3
-      Data: 0
     - Name: AbilityCooldown
       Entry: 3
       Data: 0
     - Name: AbilityPowerCost
       Entry: 3
-      Data: -50
+      Data: 0
     - Name: Modifiers
       Entry: 7
       Data: 1|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.Modifier,
@@ -61,7 +55,38 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 3|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
+    - Name: EventType
+      Entry: 3
+      Data: 5018
+    - Name: Actions
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
+        GameCore]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 5|GameCore.AbilityDataDriven.Action_OutputPower, GameCore
+    - Name: OutputPower
+      Entry: 3
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 

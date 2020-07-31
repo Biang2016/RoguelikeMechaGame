@@ -127,7 +127,17 @@ namespace GameCore
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
         };
 
+        public static List<T> GetRandomFromList<T>(List<T> OriList, int number, SRandom random, List<T> exceptList = null)
+        {
+            return GetRandomFromListCore(OriList, number, random, exceptList);
+        }
+
         public static List<T> GetRandomFromList<T>(List<T> OriList, int number, List<T> exceptList = null)
+        {
+            return GetRandomFromListCore(OriList, number, null, exceptList);
+        }
+
+        private static List<T> GetRandomFromListCore<T>(List<T> OriList, int number, SRandom random = null, List<T> exceptList = null)
         {
             if (OriList == null || OriList.Count == 0) return new List<T>();
 
@@ -152,13 +162,27 @@ namespace GameCore
             if (number > ori.Count) number = ori.Count;
 
             HashSet<int> indices = new HashSet<int>();
-            Random rd = new Random(DateTime.Now.Millisecond * number);
-            while (indices.Count < number)
+            if (random == null)
             {
-                int index = rd.Next(0, ori.Count);
-                if (!indices.Contains(index))
+                Random rd = new Random(DateTime.Now.Millisecond * number);
+                while (indices.Count < number)
                 {
-                    indices.Add(index);
+                    int index = rd.Next(0, ori.Count);
+                    if (!indices.Contains(index))
+                    {
+                        indices.Add(index);
+                    }
+                }
+            }
+            else
+            {
+                while (indices.Count < number)
+                {
+                    int index = random.Range(0, ori.Count);
+                    if (!indices.Contains(index))
+                    {
+                        indices.Add(index);
+                    }
                 }
             }
 
@@ -186,7 +210,7 @@ namespace GameCore
                 }
             }
 
-            System.Random rd = new System.Random(DateTime.Now.Millisecond * number);
+            Random rd = new Random(DateTime.Now.Millisecond * number);
             HashSet<T> res = new HashSet<T>();
             while (res.Count < number)
             {
@@ -246,7 +270,7 @@ namespace GameCore
                 coloredStrings[i] = "<" + color + ">" + args[i] + "</color>";
             }
 
-            return string.Format(src, coloredStrings);
+            return String.Format(src, coloredStrings);
         }
 
         public static string HighlightStringFormat(string src, string color, bool[] needTint, params object[] args)
@@ -264,7 +288,7 @@ namespace GameCore
                 }
             }
 
-            return string.Format(src, coloredStrings);
+            return String.Format(src, coloredStrings);
         }
 
         public static string AddHighLightColorToText(string highLightText, string color)

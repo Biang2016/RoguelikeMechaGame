@@ -11,12 +11,10 @@ namespace Client
         {
         }
 
-        public bool AbilityForbidMovement = false;
         public float Speed = 6f;
 
         void Update_Fighting()
         {
-            AbilityForbidMovement = false;
             foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
             {
                 if (!kv.Value.IsRecycled)
@@ -25,25 +23,11 @@ namespace Client
                 }
             }
 
-            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
-            {
-                if (!kv.Value.IsRecycled)
-                {
-                    kv.Value.PowerUpdate_Fighting();
-                }
-            }
-
-            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
-            {
-                if (!kv.Value.IsRecycled)
-                {
-                    kv.Value.Update_Fighting();
-                }
-            }
+            MechaInfo.Update_Fighting();
 
             if (MechaInfo.MechaType == MechaType.Player)
             {
-                if (!AbilityForbidMovement)
+                if (!MechaInfo.AbilityForbidMovement)
                 {
                     Vector2 speed = Time.deltaTime * Speed * ControlManager.Instance.Battle_Move.normalized;
                     speed = Quaternion.Euler(0f, 0f, 45f) * speed;
@@ -52,22 +36,16 @@ namespace Client
 
                 RotateToMouseDirection();
             }
-
-            foreach (KeyValuePair<uint, MechaComponentBase> kv in MechaComponentDict)
-            {
-                if (!kv.Value.IsRecycled)
-                {
-                    kv.Value.LateUpdate_Fighting();
-                }
-            }
-        }
-
-        void FixedUpdate_Fighting()
-        {
         }
 
         void LateUpdate_Fighting()
         {
+            MechaInfo.LateUpdate_Fighting();
+        }
+
+        void FixedUpdate_Fighting()
+        {
+            MechaInfo.FixedUpdate_Fighting();
         }
 
         private Quaternion lastRotationByMouse;

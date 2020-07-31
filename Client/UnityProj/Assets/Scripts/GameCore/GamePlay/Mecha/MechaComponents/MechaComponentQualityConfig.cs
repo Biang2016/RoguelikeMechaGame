@@ -50,7 +50,7 @@ namespace GameCore
         [ColorPalette("MechaComponentQualityColor")]
         public Color HighLightColor;
 
-        [LabelText("输入功率能力差异表")]
+        [LabelText("功率能力差异表")]
         [ListDrawerSettings(ListElementLabelName = "PowerConsume")]
         [TableList]
         public List<PowerUpgradeDataBase> PowerUpgradeDataList = new List<PowerUpgradeDataBase>();
@@ -100,7 +100,7 @@ namespace GameCore
     public abstract class PowerUpgradeDataBase : IClone<PowerUpgradeDataBase>
     {
         [TableColumnWidth(10)]
-        [VerticalGroup("输入功率阈值(MW)")]
+        [VerticalGroup("功率阈值(MW)")]
         [HideLabel]
         public int PowerConsume;
 
@@ -226,6 +226,16 @@ namespace GameCore
     {
         [LabelText("输出功率")]
         public int OutputPower;
+
+        protected override void ChildClone(QualityUpgradeDataBase newConfig)
+        {
+            base.ChildClone(newConfig);
+            QualityUpgradeData_Engine config = ((QualityUpgradeData_Engine)newConfig);
+            config.OutputPower = OutputPower;
+        }
     }
 
+    public class PowerUpgradeData_Engine : PowerUpgradeDataBase
+    {
+    }
 }

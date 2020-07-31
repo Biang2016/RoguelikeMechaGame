@@ -23,7 +23,7 @@ namespace GameCore.AbilityDataDriven
         [NonSerialized]
         public int cooldownTicker = 0;
 
-        public bool canTriggered => cooldownTicker > AbilityCooldown;
+        public bool canTriggered => cooldownTicker >= AbilityCooldown;
 
         [LabelText("能量消耗（负数为能量输出）")]
         public int AbilityPowerCost;
