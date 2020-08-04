@@ -10,7 +10,6 @@ using BiangStudio.Messenger;
 using BiangStudio.ShapedInventory;
 using BiangStudio.Singleton;
 using GameCore;
-using GameCore.AbilityDataDriven;
 using UnityEngine;
 using DragAreaDefines = GameCore.DragAreaDefines;
 
@@ -51,6 +50,7 @@ namespace Client
 
         private BackpackManager BackpackManager => BackpackManager.Instance;
         private DragManager DragManager => DragManager.Instance;
+        private MouseHoverManager MouseHoverManager => MouseHoverManager.Instance;
         private DragExecuteManager DragExecuteManager => DragExecuteManager.Instance;
 
         #region Level
@@ -109,6 +109,12 @@ namespace Client
             BackpackManager.Awake();
 
             DragManager.Awake();
+            MouseHoverManager.Awake();
+            MouseHoverManager.Initialize(
+                () => ControlManager.Instance.Common_MouseLeft.Down,
+                () => ControlManager.Instance.Common_MouseLeft.Up,
+                () => ControlManager.Instance.Common_MousePosition);
+            InitMouseHoverManager();
             DragExecuteManager.Init();
             DragExecuteManager.Awake();
 
@@ -138,6 +144,107 @@ namespace Client
             RoutineManager.Start();
             GameStateManager.Start();
 
+            InitBackpack();
+            BackpackManager.Start();
+            DragManager.Start();
+            MouseHoverManager.Start();
+            DragExecuteManager.Start();
+
+            ClientLevelManager.Start();
+            BattleManager.Start();
+            ClientBattleManager.Start();
+            FXManager.Start();
+            UIBattleTipManager.Start();
+            ProjectileManager.Init(ClientProjectileManager.EmitProjectile);
+            ClientProjectileManager.Start();
+
+            ControlManager.Start();
+
+            UIManager.Instance.ShowUIForms<DebugPanel>();
+#if !DEBUG
+            UIManager.Instance.CloseUIForm<DebugPanel>();
+#endif
+
+            StartGame();
+        }
+
+        private void Update()
+        {
+            ConfigManager.Update();
+            LayerManager.Update();
+            PrefabManager.Update();
+            GameObjectPoolManager.Update();
+
+            RoutineManager.Update(Time.deltaTime, Time.frameCount);
+            GameStateManager.Update();
+
+            BackpackManager.Update();
+            DragManager.Update();
+            MouseHoverManager.Update();
+            DragExecuteManager.Update();
+
+            ClientLevelManager.Update();
+            BattleManager.Update();
+            ClientBattleManager.Update();
+            FXManager.Update();
+            UIBattleTipManager.Update();
+            ClientProjectileManager.Update();
+
+            ControlManager.Update();
+        }
+
+        void LateUpdate()
+        {
+            ConfigManager.LateUpdate();
+            LayerManager.LateUpdate();
+            PrefabManager.LateUpdate();
+            GameObjectPoolManager.LateUpdate();
+
+            RoutineManager.LateUpdate();
+            GameStateManager.LateUpdate();
+
+            BackpackManager.LateUpdate();
+            DragManager.LateUpdate();
+            MouseHoverManager.LateUpdate();
+            DragExecuteManager.LateUpdate();
+
+            ClientLevelManager.LateUpdate();
+            BattleManager.LateUpdate();
+            ClientBattleManager.LateUpdate();
+            FXManager.LateUpdate();
+            UIBattleTipManager.LateUpdate();
+            ClientProjectileManager.LateUpdate();
+
+            ControlManager.LateUpdate();
+        }
+
+        void FixedUpdate()
+        {
+            ConfigManager.FixedUpdate();
+            LayerManager.FixedUpdate();
+            PrefabManager.FixedUpdate();
+            GameObjectPoolManager.FixedUpdate();
+
+            RoutineManager.FixedUpdate();
+            GameStateManager.FixedUpdate();
+
+            BackpackManager.FixedUpdate();
+            DragManager.FixedUpdate();
+            MouseHoverManager.FixedUpdate();
+            DragExecuteManager.FixedUpdate();
+
+            ClientLevelManager.FixedUpdate();
+            BattleManager.FixedUpdate();
+            ClientBattleManager.FixedUpdate();
+            FXManager.FixedUpdate();
+            UIBattleTipManager.FixedUpdate();
+            ClientProjectileManager.FixedUpdate();
+
+            ControlManager.FixedUpdate();
+        }
+
+        private void InitBackpack()
+        {
             Backpack myBackPack = new Backpack(
                 DragAreaDefines.BattleInventory.DragAreaName,
                 DragAreaDefines.BattleInventory,
@@ -181,101 +288,10 @@ namespace Client
 
             BackpackPanel backpackPanel = Instantiate(PrefabManager.Instance.GetPrefab("BattleInventoryPanel"), UIManager.Instance.UINormalRoot).GetComponent<BackpackPanel>();
             backpackPanel.gameObject.SetActive(false);
-            backpackPanel.Init(myBackPack);
+            backpackPanel.Init(myBackPack,
+                delegate(BackpackItem bi) { UIManager.Instance.ShowUIForms<BackpackItemInfoPanel>().Initialize(bi.InventoryItem.ItemContentInfo); },
+                delegate(BackpackItem bi) { UIManager.Instance.CloseUIForm<BackpackItemInfoPanel>(); });
             BackpackManager.AddBackPack(myBackPack);
-
-            BackpackManager.Start();
-            DragManager.Start();
-            DragExecuteManager.Start();
-
-            ClientLevelManager.Start();
-            BattleManager.Start();
-            ClientBattleManager.Start();
-            FXManager.Start();
-            UIBattleTipManager.Start();
-            ProjectileManager.Init(ClientProjectileManager.EmitProjectile);
-            ClientProjectileManager.Start();
-
-            ControlManager.Start();
-
-            UIManager.Instance.ShowUIForms<DebugPanel>();
-#if !DEBUG
-            UIManager.Instance.CloseUIForm<DebugPanel>();
-#endif
-
-            StartGame();
-        }
-
-        private void Update()
-        {
-            ConfigManager.Update();
-            LayerManager.Update();
-            PrefabManager.Update();
-            GameObjectPoolManager.Update();
-
-            RoutineManager.Update(Time.deltaTime, Time.frameCount);
-            GameStateManager.Update();
-
-            BackpackManager.Update();
-            DragManager.Update();
-            DragExecuteManager.Update();
-
-            ClientLevelManager.Update();
-            BattleManager.Update();
-            ClientBattleManager.Update();
-            FXManager.Update();
-            UIBattleTipManager.Update();
-            ClientProjectileManager.Update();
-
-            ControlManager.Update();
-        }
-
-        void LateUpdate()
-        {
-            ConfigManager.LateUpdate();
-            LayerManager.LateUpdate();
-            PrefabManager.LateUpdate();
-            GameObjectPoolManager.LateUpdate();
-
-            RoutineManager.LateUpdate();
-            GameStateManager.LateUpdate();
-
-            BackpackManager.LateUpdate();
-            DragManager.LateUpdate();
-            DragExecuteManager.LateUpdate();
-
-            ClientLevelManager.LateUpdate();
-            BattleManager.LateUpdate();
-            ClientBattleManager.LateUpdate();
-            FXManager.LateUpdate();
-            UIBattleTipManager.LateUpdate();
-            ClientProjectileManager.LateUpdate();
-
-            ControlManager.LateUpdate();
-        }
-
-        void FixedUpdate()
-        {
-            ConfigManager.FixedUpdate();
-            LayerManager.FixedUpdate();
-            PrefabManager.FixedUpdate();
-            GameObjectPoolManager.FixedUpdate();
-
-            RoutineManager.FixedUpdate();
-            GameStateManager.FixedUpdate();
-
-            BackpackManager.FixedUpdate();
-            DragManager.FixedUpdate();
-            DragExecuteManager.FixedUpdate();
-
-            ClientLevelManager.FixedUpdate();
-            BattleManager.FixedUpdate();
-            ClientBattleManager.FixedUpdate();
-            FXManager.FixedUpdate();
-            UIBattleTipManager.FixedUpdate();
-            ClientProjectileManager.FixedUpdate();
-
-            ControlManager.FixedUpdate();
         }
 
         private void StartGame()
@@ -309,6 +325,7 @@ namespace Client
         // todo 做成AI原子
         private void ToggleBattleInventory(bool open)
         {
+            MouseHoverManager.M_StateMachine.SetState(MouseHoverManager.StateMachine.States.BattleInventory);
             BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.gameObject.SetActive(open);
             ClientBattleManager.Instance.PlayerMecha.MechaLight.enabled = open;
             if (open)
@@ -364,6 +381,12 @@ namespace Client
             }
 
             return backpackItemSpriteDict;
+        }
+
+        private void InitMouseHoverManager()
+        {
+            MouseHoverManager.Instance.AddHoverAction(new MouseHoverManager.Hover<MouseHoverUI>(LayerManager.LayerMask_UI, MouseHoverManager.StateMachine.States.UI, UIManager.Instance.UICamera));
+            MouseHoverManager.Instance.AddHoverAction(new MouseHoverManager.Hover<BackpackItem>(LayerManager.LayerMask_BackpackItemHitBox, MouseHoverManager.StateMachine.States.BattleInventory, UIManager.Instance.UICamera, 0.3f));
         }
     }
 }

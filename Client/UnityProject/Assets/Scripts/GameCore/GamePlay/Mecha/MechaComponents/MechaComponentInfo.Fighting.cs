@@ -25,7 +25,7 @@ namespace GameCore
                 mechaInfo = value;
                 if (mechaInfo != null)
                 {
-                    logIdentityName = $"{MechaInfo.LogIdentityName}-<color=\"#7D67FF\">{ItemName}</color>-{GUID}";
+                    logIdentityName = $"{MechaInfo.LogIdentityName}-<color=\"#7D67FF\">机甲组件.{ItemSpriteKey}</color>-{GUID}";
                 }
             }
         }

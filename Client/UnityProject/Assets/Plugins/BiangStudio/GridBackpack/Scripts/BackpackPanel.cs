@@ -2,6 +2,7 @@
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ShapedInventory;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace BiangStudio.GridBackpack
@@ -10,8 +11,12 @@ namespace BiangStudio.GridBackpack
     {
         public Backpack Backpack;
 
-        [SerializeField] private GridLayoutGroup ItemContainerGridLayout;
-        [SerializeField] private Transform GridContainer;
+        [SerializeField]
+        private GridLayoutGroup ItemContainerGridLayout;
+
+        [SerializeField]
+        private Transform GridContainer;
+
         internal BackpackItemVirtualOccupationRoot BackpackItemVirtualOccupationRoot;
 
         public BackpackDragArea BackpackDragArea;
@@ -20,6 +25,9 @@ namespace BiangStudio.GridBackpack
 
         private BackpackGrid[,] backpackGridMatrix; // column, row
         private SortedDictionary<uint, BackpackItem> backpackItems = new SortedDictionary<uint, BackpackItem>();
+
+        public UnityAction<BackpackItem> OnHoverBackpackItem;
+        public UnityAction<BackpackItem> OnHoverEndBackpackItem;
 
         void Awake()
         {
@@ -40,9 +48,11 @@ namespace BiangStudio.GridBackpack
             backpackItems.Clear();
         }
 
-        public void Init(Backpack backPack)
+        public void Init(Backpack backPack, UnityAction<BackpackItem> onHoverBackpackItem = null, UnityAction<BackpackItem> onHoverEndBackpackItem = null)
         {
             Backpack = backPack;
+            OnHoverBackpackItem = onHoverBackpackItem;
+            OnHoverEndBackpackItem = onHoverEndBackpackItem;
             BackpackDragArea.Init(backPack);
             Backpack.BackpackPanel = this;
             backpackGridMatrix = new BackpackGrid[Backpack.Columns, Backpack.Rows];
@@ -70,7 +80,7 @@ namespace BiangStudio.GridBackpack
         private void OnAddItemSuc(InventoryItem ii)
         {
             BackpackItem backpackItem = Backpack.CreateBackpackItem(ItemContainer);
-            backpackItem.Initialize(Backpack, ii);
+            backpackItem.Initialize(Backpack, ii, delegate { OnHoverBackpackItem?.Invoke(backpackItem); }, delegate { OnHoverEndBackpackItem?.Invoke(backpackItem); });
             backpackItems.Add(ii.GUID, backpackItem);
         }
 

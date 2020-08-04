@@ -5,11 +5,12 @@ using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ObjectPool;
 using BiangStudio.ShapedInventory;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace BiangStudio.GridBackpack
 {
-    public class BackpackItem : PoolObject, IDraggable
+    public class BackpackItem : PoolObject, IDraggable, IMouseHoverComponent
     {
         public override void PoolRecycle()
         {
@@ -22,6 +23,9 @@ namespace BiangStudio.GridBackpack
         public InventoryItem InventoryItem;
         private Draggable Draggable;
         public RectTransform PanelRectTransform => (RectTransform) Backpack.BackpackPanel.ItemContainer;
+
+        internal UnityAction OnHoverAction;
+        internal UnityAction OnHoverEndAction;
 
         [SerializeField]
         private Image Image;
@@ -39,10 +43,12 @@ namespace BiangStudio.GridBackpack
             Draggable = GetComponent<Draggable>();
         }
 
-        public void Initialize(Backpack backpack, InventoryItem inventoryItem)
+        public void Initialize(Backpack backpack, InventoryItem inventoryItem, UnityAction onHoverAction, UnityAction onHoverEndAction)
         {
             Backpack = backpack;
             SetInventoryItem(inventoryItem);
+            OnHoverAction = onHoverAction;
+            OnHoverEndAction = onHoverEndAction;
             size = new Vector2(InventoryItem.BoundingRect.size.x * Backpack.GridSize, InventoryItem.BoundingRect.size.z * Backpack.GridSize);
             sizeRev = new Vector2(size.y, size.x);
             RefreshView();
@@ -56,6 +62,29 @@ namespace BiangStudio.GridBackpack
             Image.color = inventoryItem.ItemContentInfo.ItemColor;
         }
 
+        private void Rotate()
+        {
+            InventoryItem.GridPos_Matrix.orientation = GridPosR.RotateOrientationClockwise90(InventoryItem.GridPos_Matrix.orientation);
+            InventoryItem.SetGridPosition(InventoryItem.GridPos_Matrix);
+            dragStartLocalPos += new Vector2(InventoryItem.BoundingRect.x_min * Backpack.GridSize, -InventoryItem.BoundingRect.z_min * Backpack.GridSize) - RectTransform.anchoredPosition;
+            RefreshView();
+        }
+
+        private void RefreshView()
+        {
+            int UI_Pos_X = InventoryItem.BoundingRect.x_min * Backpack.GridSize;
+            int UI_Pos_Z = -InventoryItem.BoundingRect.z_min * Backpack.GridSize;
+
+            bool isRotated = InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Right || InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Left;
+            Image.rectTransform.sizeDelta = size;
+            Image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f * (int) InventoryItem.GridPos_Matrix.orientation);
+
+            RectTransform.sizeDelta = isRotated ? sizeRev : size;
+
+            RectTransform.anchoredPosition = new Vector2(UI_Pos_X, UI_Pos_Z);
+            BackpackItemGridHitBoxRoot.Initialize(Backpack, InventoryItem);
+        }
+
         #region IDraggable
 
         private Vector2 dragStartLocalPos;
@@ -63,11 +92,6 @@ namespace BiangStudio.GridBackpack
         private List<GridPos> dragStartOccupiedPositions_Matrix = new List<GridPos>();
 
         public void Draggable_OnMouseDown(DragArea dragArea, Collider collider)
-        {
-            PickUp();
-        }
-
-        public void PickUp()
         {
             dragStartLocalPos = RectTransform.anchoredPosition;
             dragStartOccupiedPositions_Matrix = InventoryItem.OccupiedGridPositions_Matrix.Clone();
@@ -97,7 +121,7 @@ namespace BiangStudio.GridBackpack
 
                 if (diffFromStart.magnitude <= Draggable_DragMinDistance)
                 {
-                    //不动
+                    // stay
                 }
                 else
                 {
@@ -125,14 +149,6 @@ namespace BiangStudio.GridBackpack
                     }
                 }
             }
-        }
-
-        private void Rotate()
-        {
-            InventoryItem.GridPos_Matrix.orientation = GridPosR.RotateOrientationClockwise90(InventoryItem.GridPos_Matrix.orientation);
-            InventoryItem.SetGridPosition(InventoryItem.GridPos_Matrix);
-            dragStartLocalPos += new Vector2(InventoryItem.BoundingRect.x_min * Backpack.GridSize, -InventoryItem.BoundingRect.z_min * Backpack.GridSize) - RectTransform.anchoredPosition;
-            RefreshView();
         }
 
         public void Draggable_OnMouseUp(DragArea dragArea, Vector3 diffFromStart, Vector3 deltaFromLastFrame)
@@ -170,21 +186,6 @@ namespace BiangStudio.GridBackpack
             }
         }
 
-        private void RefreshView()
-        {
-            int UI_Pos_X = InventoryItem.BoundingRect.x_min * Backpack.GridSize;
-            int UI_Pos_Z = -InventoryItem.BoundingRect.z_min * Backpack.GridSize;
-
-            bool isRotated = InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Right || InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Left;
-            Image.rectTransform.sizeDelta = size;
-            Image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f * (int) InventoryItem.GridPos_Matrix.orientation);
-
-            RectTransform.sizeDelta = isRotated ? sizeRev : size;
-
-            RectTransform.anchoredPosition = new Vector2(UI_Pos_X, UI_Pos_Z);
-            BackpackItemGridHitBoxRoot.Initialize(Backpack, InventoryItem);
-        }
-
         public void Draggable_SetStates(ref bool canDrag, ref DragArea dragFrom)
         {
             canDrag = true;
@@ -194,6 +195,36 @@ namespace BiangStudio.GridBackpack
         public float Draggable_DragMinDistance => 0f;
 
         public float Draggable_DragMaxDistance => 99f;
+
+        #endregion
+
+        #region IMouseHoverComponent
+
+        public void MouseHoverComponent_OnHoverBegin(Vector3 mousePosition)
+        {
+            OnHoverAction?.Invoke();
+        }
+
+        public void MouseHoverComponent_OnHoverEnd()
+        {
+            OnHoverEndAction?.Invoke();
+        }
+
+        public void MouseHoverComponent_OnFocusBegin(Vector3 mousePosition)
+        {
+        }
+
+        public void MouseHoverComponent_OnFocusEnd()
+        {
+        }
+
+        public void MouseHoverComponent_OnMousePressEnterImmediately(Vector3 mousePosition)
+        {
+        }
+
+        public void MouseHoverComponent_OnMousePressLeaveImmediately()
+        {
+        }
 
         #endregion
     }

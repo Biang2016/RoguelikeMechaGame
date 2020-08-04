@@ -77,6 +77,7 @@ namespace BiangStudio.GridBackpack
         /// <param name="rotateItemKeyDownHandler">This handler should return a signal which rotates the backpack item(e.g. return Input.GetKeyDown(KeyCode.R);)</param>
         /// <param name="instantiateBackpackGridHandler">This handler should instantiate a prefab with BackpackGrid component.</param>
         /// <param name="instantiateBackpackItemHandler">This handler should instantiate a prefab with BackpackItem component.</param>
+        /// <param name="instantiateBackpackItemVirtualOccupationQuadHandler">This handler should instantiate a image for indicating the occupation.</param>
         /// <param name="instantiateBackpackItemGridHitBoxHandler">This handler should instantiate a prefab with BackpackItemGridHitBox component.</param>
         public Backpack(
             string inventoryName, DragArea dragArea, int gridSize, int rows, int columns, bool unlockPartialGrids, int unlockedGridCount,

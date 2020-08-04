@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 3607725738807460286}
   - component: {fileID: 7180132716111535730}
   - component: {fileID: 8203846030680788437}
+  - component: {fileID: 4019105194127375658}
   m_Layer: 17
   m_Name: BackpackItem
   m_TagString: Untagged
@@ -164,6 +165,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartDragPos: {x: 0, y: 0, z: 0}
+--- !u!114 &4019105194127375658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962769552901066460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4001d6008e4059f44ae5562fee28fd1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3604793192171843364
 GameObject:
   m_ObjectHideFlags: 0

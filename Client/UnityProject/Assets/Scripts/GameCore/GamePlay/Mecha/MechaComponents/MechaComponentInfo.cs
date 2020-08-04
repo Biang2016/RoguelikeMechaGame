@@ -30,14 +30,23 @@ namespace GameCore
         public InventoryItem InventoryItem;
 
         private MechaComponentOriginalOccupiedGridInfo MechaComponentOriginalOccupiedGridInfo;
-        public List<GridPos> OriginalOccupiedGridPositions => MechaComponentOriginalOccupiedGridInfo.MechaComponentOccupiedGridPositionList;
-        public List<GridPos> OriginalAllSlotLocalPositions => MechaComponentOriginalOccupiedGridInfo.MechaComponentAllSlotLocalPositionsList;
 
-        public string ItemName => "机甲组件." + ItemSpriteKey;
-        public MechaComponentType MechaComponentType => MechaComponentConfig.MechaComponentType;
+        #region IInventoryItemContentInfo
+
+        public List<GridPos> OriginalOccupiedGridPositions => MechaComponentOriginalOccupiedGridInfo.MechaComponentOccupiedGridPositionList;
+        public string ItemCategoryName => MechaComponentType.ToString();
+        public string ItemName => ItemSpriteKey;
+        public string ItemQuality => Quality.ToString();
+        public string ItemDetailInfo => ItemCategoryName + ItemName + ItemQuality;
         public string ItemSpriteKey => MechaComponentConfig.ItemSpriteKey;
         public Color ItemColor => QualityManager.GetQuality(Quality).Color;
-            
+
+        #endregion
+
+        public List<GridPos> OriginalAllSlotLocalPositions => MechaComponentOriginalOccupiedGridInfo.MechaComponentAllSlotLocalPositionsList;
+
+        public MechaComponentType MechaComponentType => MechaComponentConfig.MechaComponentType;
+
         private string logIdentityName;
         public string LogIdentityName => logIdentityName;
 

@@ -5,6 +5,7 @@ namespace Client
 {
     public class LayerManager : TSingletonBaseManager<LayerManager>
     {
+        public int LayerMask_UI;
         public int LayerMask_ComponentHitBox;
         public int LayerMask_BackpackItemHitBox;
         public int LayerMask_DragAreas;
@@ -12,6 +13,7 @@ namespace Client
 
         public override void Awake()
         {
+            LayerMask_UI = LayerMask.GetMask("UI");
             LayerMask_ComponentHitBox = LayerMask.GetMask("ComponentHitBox");
             LayerMask_BackpackItemHitBox = LayerMask.GetMask("BackpackItemHitBox");
             LayerMask_DragAreas = LayerMask.GetMask("DragAreas");
