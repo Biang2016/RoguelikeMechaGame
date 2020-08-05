@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using BiangStudio.CloneVariant;
 using BiangStudio.GameDataFormat.Grid;
-using BiangStudio.GamePlay;
 using BiangStudio.ShapedInventory;
-using GameCore.AbilityDataDriven;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -37,7 +33,7 @@ namespace GameCore
         public string ItemCategoryName => MechaComponentType.ToString();
         public string ItemName => ItemSpriteKey;
         public string ItemQuality => Quality.ToString();
-        public string ItemDetailInfo => ItemCategoryName + ItemName + ItemQuality;
+        public string ItemDetailInfo => CurrentQualityUpgradeData.GetDescription();
         public string ItemSpriteKey => MechaComponentConfig.ItemSpriteKey;
         public Color ItemColor => QualityManager.GetQuality(Quality).Color;
 

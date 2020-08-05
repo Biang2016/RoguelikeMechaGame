@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -95,6 +96,24 @@ namespace GameCore
         protected virtual void ChildClone(QualityUpgradeDataBase newConfig)
         {
         }
+
+        public virtual string GetDescription()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"HP: {Life}\n");
+            GetChildDescription(sb);
+            foreach (PowerUpgradeDataBase pud in PowerUpgradeDataList)
+            {
+                sb.Append(pud.Description);
+                sb.Append("\n");
+            }
+
+            return sb.ToString();
+        }
+
+        protected virtual void GetChildDescription(StringBuilder sb)
+        {
+        }
     }
 
     public abstract class PowerUpgradeDataBase : IClone<PowerUpgradeDataBase>
@@ -127,6 +146,45 @@ namespace GameCore
 
         protected virtual void ChildClone(PowerUpgradeDataBase newConfig)
         {
+        }
+
+        public virtual string Description => GetDescription().ToString();
+
+        private StringBuilder GetDescription()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($">{PowerConsume}MW:");
+            bool noContent = true;
+            if (AddOnAbilityList.Count > 0)
+            {
+                sb.Append($"获得以下能力：");
+
+                foreach (string abilityKey in AddOnAbilityList)
+                {
+                    sb.Append($"{abilityKey}\n");
+                    noContent = false;
+                }
+            }
+
+            sb.Append("\n");
+            StringBuilder childSB = GetChildDescription();
+            if (childSB.Length > 0)
+            {
+                sb.Append(childSB);
+                noContent = false;
+            }
+
+            if (noContent)
+            {
+                sb.Clear();
+            }
+
+            return sb;
+        }
+
+        protected virtual StringBuilder GetChildDescription()
+        {
+            return new StringBuilder();
         }
     }
 
@@ -201,6 +259,23 @@ namespace GameCore
             config.CanReflectOverride = CanReflectOverride;
             config.ReflectTimesOverride = ReflectTimesOverride;
         }
+
+        protected override StringBuilder GetChildDescription()
+        {
+            StringBuilder sb = base.GetChildDescription();
+            if (DamageIncreasePercent > 0) sb.Append($"伤害+{DamageIncreasePercent}%; ");
+            if (DamageIncreasePercent < 0) sb.Append($"伤害{DamageIncreasePercent}%; ");
+            if (DamageRangeIncreasePercent > 0) sb.Append($"溅射范围+{DamageRangeIncreasePercent}%; ");
+            if (DamageRangeIncreasePercent < 0) sb.Append($"溅射范围{DamageRangeIncreasePercent}%; ");
+            if (AbilityCooldownDecreasePercent > 0) sb.Append($"CD-{AbilityCooldownDecreasePercent}%; ");
+            if (AbilityCooldownDecreasePercent < 0) sb.Append($"CD{-AbilityCooldownDecreasePercent}%; ");
+            if (MaxRangeIncreasePercent > 0) sb.Append($"射程+{MaxRangeIncreasePercent}%; ");
+            if (MaxRangeIncreasePercent < 0) sb.Append($"射程{MaxRangeIncreasePercent}%; ");
+            if (MaxDurationIncreasePercent > 0) sb.Append($"飞行时间+{MaxDurationIncreasePercent}%; ");
+            if (MaxDurationIncreasePercent < 0) sb.Append($"飞行时间{MaxDurationIncreasePercent}%; ");
+            if (CanReflectOverride) sb.Append($"反弹次数{ReflectTimesOverride}; ");
+            return sb;
+        }
     }
 
     public class QualityUpgradeData_Core : QualityUpgradeDataBase
@@ -220,6 +295,14 @@ namespace GameCore
             PowerUpgradeData_Core config = ((PowerUpgradeData_Core) newConfig);
             config.AbilityCooldownDecreasePercent = AbilityCooldownDecreasePercent;
         }
+
+        protected override StringBuilder GetChildDescription()
+        {
+            StringBuilder sb = base.GetChildDescription();
+            if (AbilityCooldownDecreasePercent > 0) sb.Append($"CD-{AbilityCooldownDecreasePercent}%; ");
+            if (AbilityCooldownDecreasePercent < 0) sb.Append($"CD{-AbilityCooldownDecreasePercent}%; ");
+            return sb;
+        }
     }
 
     public class QualityUpgradeData_Engine : QualityUpgradeDataBase
@@ -230,8 +313,14 @@ namespace GameCore
         protected override void ChildClone(QualityUpgradeDataBase newConfig)
         {
             base.ChildClone(newConfig);
-            QualityUpgradeData_Engine config = ((QualityUpgradeData_Engine)newConfig);
+            QualityUpgradeData_Engine config = ((QualityUpgradeData_Engine) newConfig);
             config.OutputPower = OutputPower;
+        }
+
+        protected override void GetChildDescription(StringBuilder sb)
+        {
+            base.GetChildDescription(sb);
+            sb.Append($"输出功率: {OutputPower}MW\n");
         }
     }
 
