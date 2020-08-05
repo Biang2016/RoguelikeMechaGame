@@ -56,6 +56,10 @@
       {
         "x": 0,
         "z": -1
+      },
+      {
+        "x": 1,
+        "z": -1
       }
     ],
     "MechaComponentAllSlotLocalPositionsList": []

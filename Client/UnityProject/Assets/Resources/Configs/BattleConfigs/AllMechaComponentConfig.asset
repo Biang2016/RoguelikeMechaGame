@@ -24,10 +24,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 465c1ba3d5d384a4993afaf4ddb96ff1, type: 3}
     - {fileID: 11400000, guid: 6a8767c769887da4bbc7dc5c249c127b, type: 2}
     - {fileID: 1244351346966676, guid: 76a6c66a84d937748afc72e320b4d937, type: 3}
-    - {fileID: 21300000, guid: 079a85fb43f13284992191098e855a3e, type: 3}
+    - {fileID: 21300000, guid: 694eb612f5acb5e4cb04221475119f34, type: 3}
     - {fileID: 11400000, guid: 58ba4afb9f685544bbf6d210d2150489, type: 2}
     - {fileID: 11400000, guid: 5b13508841de5c641b38b609ee82a483, type: 2}
     - {fileID: 1244351346966676, guid: f5b5ff501b7e044f09afb208e34504cc, type: 3}
+    - {fileID: 21300000, guid: 079a85fb43f13284992191098e855a3e, type: 3}
     - {fileID: 11400000, guid: 0e190606f345ebd46b8ee3b0e4784dd6, type: 2}
     - {fileID: 11400000, guid: e373da448d4efe146af33384ace303dc, type: 2}
     - {fileID: 1244351346966676, guid: 4aba09d2d08a3304e9fd6096e06ecf3f, type: 3}
@@ -53,6 +54,12 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 1|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: EnglishName
+      Entry: 1
+      Data: Basic Core
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u57FA\u7840\u6838\u5FC3"
     - Name: MechaComponentPrefab
       Entry: 10
       Data: 0
@@ -74,6 +81,12 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 2|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: EnglishName
+      Entry: 1
+      Data: Basic Block
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u57FA\u7840\u6A21\u5757"
     - Name: MechaComponentPrefab
       Entry: 10
       Data: 4
@@ -95,6 +108,12 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 3|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: EnglishName
+      Entry: 1
+      Data: Canon
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u52A0\u519C\u70AE"
     - Name: MechaComponentPrefab
       Entry: 10
       Data: 7
@@ -116,6 +135,12 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 4|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: EnglishName
+      Entry: 1
+      Data: Mechine Gun
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u673A\u67AA"
     - Name: MechaComponentPrefab
       Entry: 10
       Data: 11
@@ -124,55 +149,67 @@ MonoBehaviour:
       Data: 2
     - Name: ItemSprite
       Entry: 10
-      Data: 8
+      Data: 12
     - Name: AbilityGroupConfigSSO
       Entry: 10
-      Data: 12
+      Data: 13
     - Name: MechaComponentQualityConfigSSO
       Entry: 10
-      Data: 13
+      Data: 14
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
       Data: 5|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: EnglishName
+      Entry: 1
+      Data: Water Gun
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u6C34\u67AA"
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 14
+      Data: 15
     - Name: MechaComponentType
       Entry: 3
       Data: 2
     - Name: ItemSprite
       Entry: 10
-      Data: 15
+      Data: 16
     - Name: AbilityGroupConfigSSO
       Entry: 10
-      Data: 16
+      Data: 17
     - Name: MechaComponentQualityConfigSSO
       Entry: 10
-      Data: 17
+      Data: 18
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
       Data: 6|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: EnglishName
+      Entry: 1
+      Data: Basic Engine
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u57FA\u7840\u5F15\u64CE"
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 18
+      Data: 19
     - Name: MechaComponentType
       Entry: 3
       Data: 4
     - Name: ItemSprite
       Entry: 10
-      Data: 19
+      Data: 20
     - Name: AbilityGroupConfigSSO
       Entry: 10
-      Data: 20
+      Data: 21
     - Name: MechaComponentQualityConfigSSO
       Entry: 10
-      Data: 21
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -195,6 +232,12 @@ MonoBehaviour:
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_BasicCore
+    - Name: EnglishName
+      Entry: 1
+      Data: Basic Core
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u57FA\u7840\u6838\u5FC3"
     - Name: MechaComponentType
       Entry: 3
       Data: 0
@@ -216,6 +259,12 @@ MonoBehaviour:
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_BasicBlock
+    - Name: EnglishName
+      Entry: 1
+      Data: Basic Block
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u57FA\u7840\u6A21\u5757"
     - Name: MechaComponentType
       Entry: 3
       Data: 1
@@ -237,12 +286,18 @@ MonoBehaviour:
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_ArcPurpleGravBallCanon
+    - Name: EnglishName
+      Entry: 1
+      Data: Canon
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u52A0\u519C\u70AE"
     - Name: MechaComponentType
       Entry: 3
       Data: 2
     - Name: ItemSpriteKey
       Entry: 1
-      Data: BasicGun
+      Data: ArcPurpleGravBallCanon
     - Name: MechaComponentQualityConfigKey
       Entry: 1
       Data: Q_ArcPurpleGravBallCanon
@@ -258,6 +313,12 @@ MonoBehaviour:
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_LeaveGun
+    - Name: EnglishName
+      Entry: 1
+      Data: Mechine Gun
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u673A\u67AA"
     - Name: MechaComponentType
       Entry: 3
       Data: 2
@@ -279,6 +340,12 @@ MonoBehaviour:
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_WaterBallGun
+    - Name: EnglishName
+      Entry: 1
+      Data: Water Gun
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u6C34\u67AA"
     - Name: MechaComponentType
       Entry: 3
       Data: 2
@@ -300,6 +367,12 @@ MonoBehaviour:
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_BasicEngine
+    - Name: EnglishName
+      Entry: 1
+      Data: Basic Engine
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u57FA\u7840\u5F15\u64CE"
     - Name: MechaComponentType
       Entry: 3
       Data: 4

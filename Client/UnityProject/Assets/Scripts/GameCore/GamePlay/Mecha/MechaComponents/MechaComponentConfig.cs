@@ -1,5 +1,4 @@
-﻿using System;
-using BiangStudio.CloneVariant;
+﻿using BiangStudio.CloneVariant;
 using Sirenix.OdinInspector;
 
 namespace GameCore
@@ -9,6 +8,18 @@ namespace GameCore
         [ReadOnly]
         [LabelText("机甲组件名称")]
         public string MechaComponentKey;
+
+        [VerticalGroup("名称(英)")]
+        [TableColumnWidth(100, true)]
+        [HideLabel]
+        [Required]
+        public string EnglishName;
+
+        [VerticalGroup("名称(中)")]
+        [TableColumnWidth(100, true)]
+        [HideLabel]
+        [Required]
+        public string ChineseName;
 
         [ReadOnly]
         [LabelText("机甲组件类型")]
@@ -26,12 +37,12 @@ namespace GameCore
         [LabelText("机甲组件技能组配置Key")]
         public string AbilityGroupConfigKey;
 
-        private string EditorDisplayName => MechaComponentKey != null ? MechaComponentKey.Replace("MechaComponent_", "") : "";
-
         public MechaComponentConfig Clone()
         {
             MechaComponentConfig newConfig = new MechaComponentConfig();
             newConfig.MechaComponentKey = MechaComponentKey;
+            newConfig.EnglishName = EnglishName;
+            newConfig.ChineseName = ChineseName;
             newConfig.MechaComponentType = MechaComponentType;
             newConfig.ItemSpriteKey = ItemSpriteKey;
             newConfig.MechaComponentQualityConfigKey = MechaComponentQualityConfigKey;

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8787363159894584536}
   - component: {fileID: -2509402043850843953}
   m_Layer: 12
-  m_Name: MechaComponent_ArcPurpleGravBallCanon
+  m_Name: MC_ArcPurpleGravBallCanon
   m_TagString: MechaComponent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,10 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b5d5dfc7895504b923a6c808fa37b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mechaComponentGrids:
-  - {fileID: 0}
-  - {fileID: 5531817401336595189}
-  - {fileID: 0}
+  mechaComponentGrids: []
 --- !u!1001 &2391780408010732232
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -412,6 +409,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grid (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5458413493394818293, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6979953286152409997, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_IsActive
@@ -425,15 +427,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6517386590714318681}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5531817401336595189 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1636669293193448876, guid: 6505c5b1f033442c4bf82c6641ecccf0,
-    type: 3}
-  m_PrefabInstance: {fileID: 6517386590714318681}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f24379969e41294cbcd1366b3f450d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

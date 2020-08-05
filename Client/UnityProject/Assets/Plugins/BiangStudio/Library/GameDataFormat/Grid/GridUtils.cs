@@ -39,6 +39,31 @@ namespace BiangStudio.GameDataFormat.Grid
             return res;
         }
 
+        public static GridPosR.OrientationFlag ToFlag(this GridPosR.Orientation ori)
+        {
+            switch (ori)
+            {
+                case GridPosR.Orientation.Up:
+                {
+                    return GridPosR.OrientationFlag.Up;
+                }
+                case GridPosR.Orientation.Down:
+                {
+                    return GridPosR.OrientationFlag.Down;
+                }
+                case GridPosR.Orientation.Left:
+                {
+                    return GridPosR.OrientationFlag.Left;
+                }
+                case GridPosR.Orientation.Right:
+                {
+                    return GridPosR.OrientationFlag.Right;
+                }
+            }
+
+            return 0;
+        }
+
         public static GridRect GetBoundingRectFromListGridPos(this List<GridPos> gridPositions)
         {
             int X_min = 999;
@@ -69,6 +94,52 @@ namespace BiangStudio.GameDataFormat.Grid
             }
 
             return new GridRect(X_min, Z_min, X_max - X_min + 1, Z_max - Z_min + 1);
+        }
+
+        public static void GetConnectionMatrix(this List<GridPos> gridPositions, out bool[,] connectionMatrix, out GridPos offset)
+        {
+            connectionMatrix = null;
+            offset = GridPos.Zero;
+            if (gridPositions.Count == 0) return;
+
+            GridRect gridRect = gridPositions.GetBoundingRectFromListGridPos();
+            offset = -gridRect.position;
+            gridRect.position = GridPos.Zero;
+            connectionMatrix = new bool[gridRect.size.x, gridRect.size.z];
+            foreach (GridPos gp in gridPositions)
+            {
+                connectionMatrix[gp.x + offset.x, gp.z + offset.z] = true;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gridPos"></param>
+        /// <param name="connectionMatrix"></param>
+        /// <param name="offset"></param>
+        /// <param name="adjacentConnection"></param>
+        /// <param name="diagonalConnection">Up->TopRight, Right->BottomRight, Down->BottomLeft, Left->TopLeft</param>
+        /// <returns></returns>
+        public static void GetConnection(this GridPos gridPos, bool[,] connectionMatrix, GridPos offset, out GridPosR.OrientationFlag adjacentConnection, out GridPosR.OrientationFlag diagonalConnection)
+        {
+            adjacentConnection = GridPosR.OrientationFlag.None;
+            diagonalConnection = GridPosR.OrientationFlag.None;
+            GridPos localGP = gridPos + offset;
+            if (localGP.x < 0 || localGP.x >= connectionMatrix.GetLength(0) || localGP.z < 0 || localGP.z >= connectionMatrix.GetLength(1))
+            {
+                return;
+            }
+
+            if (localGP.x + 1 < connectionMatrix.GetLength(0) && connectionMatrix[localGP.x + 1, localGP.z]) adjacentConnection |= GridPosR.OrientationFlag.Right;
+            if (localGP.x - 1 >= 0 && connectionMatrix[localGP.x - 1, localGP.z]) adjacentConnection |= GridPosR.OrientationFlag.Left;
+            if (localGP.z + 1 < connectionMatrix.GetLength(1) && connectionMatrix[localGP.x, localGP.z + 1]) adjacentConnection |= GridPosR.OrientationFlag.Up;
+            if (localGP.z - 1 >= 0 && connectionMatrix[localGP.x, localGP.z - 1]) adjacentConnection |= GridPosR.OrientationFlag.Down;
+
+            if (localGP.x + 1 < connectionMatrix.GetLength(0) && localGP.z + 1 < connectionMatrix.GetLength(1) && connectionMatrix[localGP.x + 1, localGP.z + 1]) diagonalConnection |= GridPosR.OrientationFlag.Up;
+            if (localGP.x + 1 < connectionMatrix.GetLength(0) && localGP.z - 1 >= 0 && connectionMatrix[localGP.x + 1, localGP.z - 1]) diagonalConnection |= GridPosR.OrientationFlag.Right;
+            if (localGP.x - 1 >= 0 && localGP.z - 1 >= 0 && connectionMatrix[localGP.x - 1, localGP.z - 1]) diagonalConnection |= GridPosR.OrientationFlag.Down;
+            if (localGP.x - 1 >= 0 && localGP.z + 1 < connectionMatrix.GetLength(1) && connectionMatrix[localGP.x - 1, localGP.z + 1]) diagonalConnection |= GridPosR.OrientationFlag.Left;
         }
     }
 }

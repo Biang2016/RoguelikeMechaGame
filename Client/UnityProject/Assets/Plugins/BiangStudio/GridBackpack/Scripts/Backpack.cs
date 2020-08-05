@@ -16,8 +16,8 @@ namespace BiangStudio.GridBackpack
 
         private InstantiatePrefabDelegate InstantiateBackpackGridHandler;
         private InstantiatePrefabDelegate InstantiateBackpackItemHandler;
+        private InstantiatePrefabDelegate InstantiateBackpackItemGridHandler;
         private InstantiatePrefabDelegate InstantiateBackpackItemVirtualOccupationQuadHandler;
-        private InstantiatePrefabDelegate InstantiateBackpackItemGridHitBoxHandler;
 
         /// <summary>
         /// This callback will be execute when the backpack is opened or closed
@@ -77,16 +77,16 @@ namespace BiangStudio.GridBackpack
         /// <param name="rotateItemKeyDownHandler">This handler should return a signal which rotates the backpack item(e.g. return Input.GetKeyDown(KeyCode.R);)</param>
         /// <param name="instantiateBackpackGridHandler">This handler should instantiate a prefab with BackpackGrid component.</param>
         /// <param name="instantiateBackpackItemHandler">This handler should instantiate a prefab with BackpackItem component.</param>
+        /// <param name="instantiateBackpackItemGridHandler">This handler should instantiate a prefab with BackpackItemGrid component.</param>
         /// <param name="instantiateBackpackItemVirtualOccupationQuadHandler">This handler should instantiate a image for indicating the occupation.</param>
-        /// <param name="instantiateBackpackItemGridHitBoxHandler">This handler should instantiate a prefab with BackpackItemGridHitBox component.</param>
         public Backpack(
             string inventoryName, DragArea dragArea, int gridSize, int rows, int columns, bool unlockPartialGrids, int unlockedGridCount,
             KeyDownDelegate toggleBackpackKeyDownHandler,
             KeyDownDelegate rotateItemKeyDownHandler,
             InstantiatePrefabDelegate instantiateBackpackGridHandler,
             InstantiatePrefabDelegate instantiateBackpackItemHandler,
-            InstantiatePrefabDelegate instantiateBackpackItemVirtualOccupationQuadHandler,
-            InstantiatePrefabDelegate instantiateBackpackItemGridHitBoxHandler
+            InstantiatePrefabDelegate instantiateBackpackItemGridHandler,
+            InstantiatePrefabDelegate instantiateBackpackItemVirtualOccupationQuadHandler
         ) : base(inventoryName, dragArea, gridSize, rows, columns, unlockPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
             (gridPos) => new GridPosR(gridPos.x, -gridPos.z),
             (gridPos_matrix) => new GridPosR(gridPos_matrix.x, -gridPos_matrix.z),
@@ -96,8 +96,8 @@ namespace BiangStudio.GridBackpack
             ToggleBackpackKeyDownHandler = toggleBackpackKeyDownHandler;
             InstantiateBackpackGridHandler = instantiateBackpackGridHandler;
             InstantiateBackpackItemHandler = instantiateBackpackItemHandler;
+            InstantiateBackpackItemGridHandler = instantiateBackpackItemGridHandler;
             InstantiateBackpackItemVirtualOccupationQuadHandler = instantiateBackpackItemVirtualOccupationQuadHandler;
-            InstantiateBackpackItemGridHitBoxHandler = instantiateBackpackItemGridHitBoxHandler;
         }
 
         public void Update()
@@ -157,16 +157,16 @@ namespace BiangStudio.GridBackpack
             return null;
         }
 
-        public BackpackVirtualOccupationQuad CreateBackpackItemVirtualOccupationQuad(Transform transform)
+        public BackpackItemGrid CreateBackpackItemGrid(Transform transform)
         {
-            if (InstantiateBackpackItemVirtualOccupationQuadHandler != null)
+            if (InstantiateBackpackItemGridHandler != null)
             {
-                MonoBehaviour mono = InstantiateBackpackItemVirtualOccupationQuadHandler?.Invoke(transform);
+                MonoBehaviour mono = InstantiateBackpackItemGridHandler?.Invoke(transform);
                 if (mono != null)
                 {
                     try
                     {
-                        BackpackVirtualOccupationQuad res = (BackpackVirtualOccupationQuad) mono;
+                        BackpackItemGrid res = (BackpackItemGrid) mono;
                         return res;
                     }
                     catch (Exception e)
@@ -179,16 +179,16 @@ namespace BiangStudio.GridBackpack
             return null;
         }
 
-        public BackpackItemGridHitBox CreateBackpackItemGridHitBox(Transform transform)
+        public BackpackVirtualOccupationQuad CreateBackpackItemVirtualOccupationQuad(Transform transform)
         {
-            if (InstantiateBackpackItemGridHitBoxHandler != null)
+            if (InstantiateBackpackItemVirtualOccupationQuadHandler != null)
             {
-                MonoBehaviour mono = InstantiateBackpackItemGridHitBoxHandler?.Invoke(transform);
+                MonoBehaviour mono = InstantiateBackpackItemVirtualOccupationQuadHandler?.Invoke(transform);
                 if (mono != null)
                 {
                     try
                     {
-                        BackpackItemGridHitBox res = (BackpackItemGridHitBox) mono;
+                        BackpackVirtualOccupationQuad res = (BackpackVirtualOccupationQuad) mono;
                         return res;
                     }
                     catch (Exception e)

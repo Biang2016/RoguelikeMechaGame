@@ -10,7 +10,8 @@ namespace BiangStudio.ShapedInventory
         string ItemCategoryName { get; }
         string ItemName { get; }
         string ItemQuality { get; }
-        string ItemDetailInfo { get; }
+        string ItemBasicInfo { get; }
+        string ItemDetailedInfo { get; }
         string ItemSpriteKey { get; }
         Color ItemColor { get; }
     }

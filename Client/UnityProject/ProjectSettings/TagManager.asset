@@ -23,7 +23,7 @@ TagManager:
   - Surroundings
   - ItemDropped
   - ItemDroppedSprite
-  - BackpackItemHitBox
+  - BackpackItemGrid
   - BattleUI
   - Slot
   - 

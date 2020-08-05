@@ -43,24 +43,6 @@ MonoBehaviour:
     - Name: Life
       Entry: 3
       Data: 50
-    - Name: HighLightColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0.6156863
-    - Name: 
-      Entry: 4
-      Data: 0.6156863
-    - Name: 
-      Entry: 4
-      Data: 0.6156863
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: PowerUpgradeDataList
       Entry: 7
       Data: 3|System.Collections.Generic.List`1[[GameCore.PowerUpgradeDataBase, GameCore]],
@@ -140,24 +122,6 @@ MonoBehaviour:
     - Name: Life
       Entry: 3
       Data: 100
-    - Name: HighLightColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: PowerUpgradeDataList
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[GameCore.PowerUpgradeDataBase, GameCore]],
@@ -345,24 +309,6 @@ MonoBehaviour:
     - Name: Life
       Entry: 3
       Data: 100
-    - Name: HighLightColor
-      Entry: 7
-      Data: UnityEngine.Color, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0.117647059
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: PowerUpgradeDataList
       Entry: 7
       Data: 15|System.Collections.Generic.List`1[[GameCore.PowerUpgradeDataBase,

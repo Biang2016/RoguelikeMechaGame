@@ -7,7 +7,7 @@ namespace Client
     {
         public int LayerMask_UI;
         public int LayerMask_ComponentHitBox;
-        public int LayerMask_BackpackItemHitBox;
+        public int LayerMask_BackpackItemGrid;
         public int LayerMask_DragAreas;
         public int LayerMask_ItemDropped;
 
@@ -15,7 +15,7 @@ namespace Client
         {
             LayerMask_UI = LayerMask.GetMask("UI");
             LayerMask_ComponentHitBox = LayerMask.GetMask("ComponentHitBox");
-            LayerMask_BackpackItemHitBox = LayerMask.GetMask("BackpackItemHitBox");
+            LayerMask_BackpackItemGrid = LayerMask.GetMask("BackpackItemGrid");
             LayerMask_DragAreas = LayerMask.GetMask("DragAreas");
             LayerMask_ItemDropped = LayerMask.GetMask("ItemDropped");
         }

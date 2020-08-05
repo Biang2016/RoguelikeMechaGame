@@ -34,7 +34,7 @@ namespace Client
         {
             MechaInfo enemyMechaInfo = new MechaInfo("Junk Mecha", MechaType.Enemy);
             BattleManager.Instance.AddEnemyMecha(enemyMechaInfo);
-            MechaComponentInfo core = new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicCore"), Quality.Poor);
+            MechaComponentInfo core = new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicCore"), Quality.Common);
             enemyMechaInfo.AddMechaComponentInfo(core, new GridPosR(0, 0, GridPosR.Orientation.Up));
 
             for (int i = -2; i <= 2; i++)
@@ -44,7 +44,7 @@ namespace Client
                     if (i != 0 && j != 0)
                     {
                         MechaComponentInfo mci;
-                        mci = new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicBlock"), Quality.Poor);
+                        mci = new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MechaComponent_BasicBlock"), Quality.Common);
                         enemyMechaInfo.AddMechaComponentInfo(mci, new GridPosR(i, j, GridPosR.Orientation.Up));
                     }
                 }

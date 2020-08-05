@@ -47,10 +47,6 @@ namespace GameCore
         [LabelText("生命值")]
         public int Life;
 
-        [LabelText("荧光颜色")]
-        [ColorPalette("MechaComponentQualityColor")]
-        public Color HighLightColor;
-
         [LabelText("功率能力差异表")]
         [ListDrawerSettings(ListElementLabelName = "PowerConsume")]
         [TableList]
@@ -87,7 +83,6 @@ namespace GameCore
             QualityUpgradeDataBase newConfig = (QualityUpgradeDataBase) Activator.CreateInstance(type);
             newConfig.Quality = Quality;
             newConfig.Life = Life;
-            newConfig.HighLightColor = HighLightColor;
             newConfig.PowerUpgradeDataList = PowerUpgradeDataList.Clone();
             ChildClone(newConfig);
             return newConfig;
@@ -97,22 +92,27 @@ namespace GameCore
         {
         }
 
-        public virtual string GetDescription()
+        public string GetBasicDescription()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"HP: {Life}\n");
-            GetChildDescription(sb);
-            foreach (PowerUpgradeDataBase pud in PowerUpgradeDataList)
-            {
-                sb.Append(pud.Description);
-                sb.Append("\n");
-            }
-
+            GetChildBasicDescription(sb);
             return sb.ToString();
         }
 
-        protected virtual void GetChildDescription(StringBuilder sb)
+        protected virtual void GetChildBasicDescription(StringBuilder sb)
         {
+        }
+
+        public virtual string GetDetailedDescription()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (PowerUpgradeDataBase pud in PowerUpgradeDataList)
+            {
+                sb.Append(pud.Description);
+            }
+
+            return sb.ToString();
         }
     }
 
@@ -177,6 +177,11 @@ namespace GameCore
             if (noContent)
             {
                 sb.Clear();
+            }
+
+            if (sb.Length != 0)
+            {
+                sb.Append("\n");
             }
 
             return sb;
@@ -317,9 +322,9 @@ namespace GameCore
             config.OutputPower = OutputPower;
         }
 
-        protected override void GetChildDescription(StringBuilder sb)
+        protected override void GetChildBasicDescription(StringBuilder sb)
         {
-            base.GetChildDescription(sb);
+            base.GetChildBasicDescription(sb);
             sb.Append($"输出功率: {OutputPower}MW\n");
         }
     }

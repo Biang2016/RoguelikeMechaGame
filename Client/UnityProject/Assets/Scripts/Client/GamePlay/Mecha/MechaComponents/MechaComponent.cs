@@ -99,7 +99,7 @@ namespace Client
             };
 
             mechaComponentInfo.OnHighLightColorChange += HighLightColorChange;
-            HighLightColorChange(mechaComponentInfo.CurrentQualityUpgradeData.HighLightColor, mechaComponentInfo.CurrentPowerUpgradeData.HighLightColorIntensity);
+            HighLightColorChange(QualityManager.GetQuality(mechaComponentInfo.Quality).Color, mechaComponentInfo.CurrentPowerUpgradeData.HighLightColorIntensity);
 
             {
                 mechaComponentInfo.InventoryItem.OnSetGridPosHandler = (gridPos_World) =>

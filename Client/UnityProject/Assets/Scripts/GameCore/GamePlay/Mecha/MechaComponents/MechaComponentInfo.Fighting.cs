@@ -136,7 +136,7 @@ namespace GameCore
                     _inputPower = value;
                     OnInputPowerChange?.Invoke(_inputPower);
                     CurrentPowerUpgradeData = CurrentQualityUpgradeData.GetPowerUpgradeData(_inputPower);
-                    OnHighLightColorChange?.Invoke(CurrentQualityUpgradeData.HighLightColor, CurrentPowerUpgradeData.HighLightColorIntensity);
+                    OnHighLightColorChange?.Invoke(QualityManager.GetQuality(Quality).Color, CurrentPowerUpgradeData.HighLightColorIntensity);
                 }
             }
         }

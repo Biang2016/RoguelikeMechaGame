@@ -15,7 +15,7 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
         DragProcessor<BackpackItem> dragProcessor_BackpackItem = new DragProcessor<BackpackItem>();
         dragProcessor_BackpackItem.Init(
             UIManager.Instance.UICamera,
-            LayerManager.Instance.LayerMask_BackpackItemHitBox,
+            LayerManager.Instance.LayerMask_BackpackItemGrid,
             (out Vector2 mouseScreenPos) =>
             {
                 if (ControlManager.Instance.BuildingInputActionEnabled)

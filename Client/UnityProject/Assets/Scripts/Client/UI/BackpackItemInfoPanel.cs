@@ -9,8 +9,11 @@ namespace Client
 {
     public class BackpackItemInfoPanel : BaseUIPanel
     {
+        private float ItemImageMaxHeight;
+
         void Awake()
         {
+            ItemImageMaxHeight = ItemImageContainer.sizeDelta.y;
             UIType.InitUIType(
                 false,
                 true,
@@ -23,29 +26,58 @@ namespace Client
         private IInventoryItemContentInfo IInventoryItemContentInfo;
 
         [SerializeField]
-        private TextMeshProUGUI ItemCategoryText;
+        private Image ItemNameBG;
 
         [SerializeField]
         private TextMeshProUGUI ItemNameText;
 
         [SerializeField]
+        private RectTransform ItemImageContainer;
+
+        [SerializeField]
         private Image ItemImage;
+
+        [SerializeField]
+        private TextMeshProUGUI ItemCategoryText;
 
         [SerializeField]
         private TextMeshProUGUI ItemQualityText;
 
         [SerializeField]
-        private TextMeshProUGUI ItemDetailInfoText;
+        private TextMeshProUGUI ItemBasicInfoText;
+
+        [SerializeField]
+        private TextMeshProUGUI ItemDetailedInfoText;
+
+        [SerializeField]
+        private Image[] Decorators;
 
         public void Initialize(IInventoryItemContentInfo iInventoryItemContentInfo)
         {
             IInventoryItemContentInfo = iInventoryItemContentInfo;
-            ItemCategoryText.text = IInventoryItemContentInfo.ItemCategoryName;
+            Color bgColor = IInventoryItemContentInfo.ItemColor;
+            ItemNameBG.color = bgColor;
             ItemNameText.text = IInventoryItemContentInfo.ItemName;
+
             ItemImage.sprite = BackpackManager.Instance.GetBackpackItemSprite(iInventoryItemContentInfo.ItemSpriteKey);
+            Rect rect = ItemImage.sprite.rect;
+            float ratio = Mathf.Min(ItemImageContainer.sizeDelta.x / rect.width, ItemImageMaxHeight / rect.height);
+            rect.height = rect.height * ratio;
+            ItemImageContainer.sizeDelta = new Vector2(ItemImageContainer.sizeDelta.x, rect.height);
+
+            ItemCategoryText.text = IInventoryItemContentInfo.ItemCategoryName;
+            ItemCategoryText.color = IInventoryItemContentInfo.ItemColor;
             ItemQualityText.text = IInventoryItemContentInfo.ItemQuality;
             ItemQualityText.color = IInventoryItemContentInfo.ItemColor;
-            ItemDetailInfoText.text = IInventoryItemContentInfo.ItemDetailInfo;
+            ItemBasicInfoText.text = IInventoryItemContentInfo.ItemBasicInfo;
+            ItemDetailedInfoText.text = IInventoryItemContentInfo.ItemDetailedInfo;
+
+            foreach (Image image in Decorators)
+            {
+                image.color = bgColor;
+            }
+
+            StartCoroutine(ClientUtils.UpdateLayout((RectTransform) transform));
         }
     }
 }

@@ -31,9 +31,10 @@ namespace GameCore
 
         public List<GridPos> OriginalOccupiedGridPositions => MechaComponentOriginalOccupiedGridInfo.MechaComponentOccupiedGridPositionList;
         public string ItemCategoryName => MechaComponentType.ToString();
-        public string ItemName => ItemSpriteKey;
+        public string ItemName => MechaComponentConfig.EnglishName;
         public string ItemQuality => Quality.ToString();
-        public string ItemDetailInfo => CurrentQualityUpgradeData.GetDescription();
+        public string ItemBasicInfo => CurrentQualityUpgradeData.GetBasicDescription();
+        public string ItemDetailedInfo => CurrentQualityUpgradeData.GetDetailedDescription();
         public string ItemSpriteKey => MechaComponentConfig.ItemSpriteKey;
         public Color ItemColor => QualityManager.GetQuality(Quality).Color;
 

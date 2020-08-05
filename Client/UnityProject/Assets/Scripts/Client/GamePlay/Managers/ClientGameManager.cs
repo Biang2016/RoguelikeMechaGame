@@ -257,8 +257,8 @@ namespace Client
                 () => ControlManager.Instance.Building_RotateItem.Down,
                 (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackGrid].AllocateGameObject<BackpackGrid>(parent),
                 (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItem].AllocateGameObject<BackpackItem>(parent),
-                (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackVirtualOccupationQuad].AllocateGameObject<BackpackVirtualOccupationQuad>(parent),
-                (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItemGridHitBox].AllocateGameObject<BackpackItemGridHitBox>(parent)
+                (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackItemGrid].AllocateGameObject<BackpackItemGrid>(parent),
+                (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackVirtualOccupationQuad].AllocateGameObject<BackpackVirtualOccupationQuad>(parent)
             );
 
             myBackPack.ToggleDebugKeyDownHandler = () => ControlManager.Instance.Common_Debug.Down;
@@ -312,7 +312,7 @@ namespace Client
             ClientBattleManager.Instance.StartBattle(battleInfo);
             UIBattleTipManager.Init();
 
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MC_BasicCore"), Quality.Poor), new GridPosR(9, 9));
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MC_BasicCore"), Quality.Common), new GridPosR(9, 9));
 
             ClientLevelManager.Instance.StartLevel();
         }
@@ -386,7 +386,7 @@ namespace Client
         private void InitMouseHoverManager()
         {
             MouseHoverManager.Instance.AddHoverAction(new MouseHoverManager.Hover<MouseHoverUI>(LayerManager.LayerMask_UI, MouseHoverManager.StateMachine.States.UI, UIManager.Instance.UICamera));
-            MouseHoverManager.Instance.AddHoverAction(new MouseHoverManager.Hover<BackpackItem>(LayerManager.LayerMask_BackpackItemHitBox, MouseHoverManager.StateMachine.States.BattleInventory, UIManager.Instance.UICamera, 0.3f));
+            MouseHoverManager.Instance.AddHoverAction(new MouseHoverManager.Hover<BackpackItem>(LayerManager.LayerMask_BackpackItemGrid, MouseHoverManager.StateMachine.States.BattleInventory, UIManager.Instance.UICamera));
         }
     }
 }

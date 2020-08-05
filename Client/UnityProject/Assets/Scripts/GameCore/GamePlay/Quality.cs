@@ -9,9 +9,6 @@ namespace GameCore
         [LabelText("空")]
         None,
 
-        [LabelText("破旧")]
-        Poor,
-
         [LabelText("普通")]
         Common,
 
@@ -37,13 +34,12 @@ namespace GameCore
 
         public static void Initialize()
         {
-            QualityConfigs.Add(Quality.Poor, new QualityConfig(Quality.Poor, Utils.HTMLColorToColor("#9d9d9d")));
-            QualityConfigs.Add(Quality.Common, new QualityConfig(Quality.Common, Utils.HTMLColorToColor("#ffffff")));
-            QualityConfigs.Add(Quality.Uncommon, new QualityConfig(Quality.Uncommon, Utils.HTMLColorToColor("#1eff00")));
-            QualityConfigs.Add(Quality.Rare, new QualityConfig(Quality.Rare, Utils.HTMLColorToColor("#0070dd")));
-            QualityConfigs.Add(Quality.Epic, new QualityConfig(Quality.Epic, Utils.HTMLColorToColor("#a335ee")));
+            QualityConfigs.Add(Quality.Common, new QualityConfig(Quality.Common, Utils.HTMLColorToColor("#5E5E5E")));
+            QualityConfigs.Add(Quality.Uncommon, new QualityConfig(Quality.Uncommon, Utils.HTMLColorToColor("#108C00")));
+            QualityConfigs.Add(Quality.Rare, new QualityConfig(Quality.Rare, Utils.HTMLColorToColor("#0070DD")));
+            QualityConfigs.Add(Quality.Epic, new QualityConfig(Quality.Epic, Utils.HTMLColorToColor("#A335EE")));
             QualityConfigs.Add(Quality.Legendary, new QualityConfig(Quality.Legendary, Utils.HTMLColorToColor("#ff8000")));
-            QualityConfigs.Add(Quality.Artifact, new QualityConfig(Quality.Artifact, Utils.HTMLColorToColor("#e6cc80")));
+            QualityConfigs.Add(Quality.Artifact, new QualityConfig(Quality.Artifact, Utils.HTMLColorToColor("#FF3600")));
         }
 
         public static QualityConfig GetQuality(Quality quality)

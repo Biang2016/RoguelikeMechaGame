@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -7,12 +8,13 @@ using GameCore;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.UI;
 
 namespace Client
 {
     public static class ClientUtils
     {
-        public static Color ChangeColorToWhite(Color color, float whiteRatio)
+        public static Color ChangeColorToWhite(this Color color, float whiteRatio)
         {
             float r = color.r;
             float g = color.g;
@@ -30,6 +32,28 @@ namespace Client
             {
                 max = max + 0.3f;
                 Color res = Color.Lerp(color, new Color(max, max, max, color.a), whiteRatio);
+                return res;
+            }
+        }
+
+        public static Color ChangeColorToBlack(this Color color, float blackRatio)
+        {
+            float r = color.r;
+            float g = color.g;
+            float b = color.b;
+
+            float min = Mathf.Min(r, g, b);
+
+            if (r - min < 0.2f && g - min < 0.2f && b - min < 0.2f) //本来就是灰色
+            {
+                min = min - 0.3f;
+                Color res = Color.Lerp(color, new Color(min, min, min, color.a), 1f);
+                return res;
+            }
+            else
+            {
+                min = min - 0.3f;
+                Color res = Color.Lerp(color, new Color(min, min, min, color.a), blackRatio);
                 return res;
             }
         }
@@ -263,29 +287,16 @@ namespace Client
             return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
 
-        public static GridPosR.OrientationFlag ToFlag(this GridPosR.Orientation ori)
+        public static IEnumerator UpdateLayout(RectTransform rect)
         {
-            switch (ori)
-            {
-                case GridPosR.Orientation.Up:
-                {
-                    return GridPosR.OrientationFlag.Up;
-                }
-                case GridPosR.Orientation.Down:
-                {
-                    return GridPosR.OrientationFlag.Down;
-                }
-                case GridPosR.Orientation.Left:
-                {
-                    return GridPosR.OrientationFlag.Left;
-                }
-                case GridPosR.Orientation.Right:
-                {
-                    return GridPosR.OrientationFlag.Right;
-                }
-            }
-
-            return 0;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+            yield return new WaitForEndOfFrame();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+            yield return new WaitForEndOfFrame();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+            yield return new WaitForEndOfFrame();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+            yield return null;
         }
     }
 }

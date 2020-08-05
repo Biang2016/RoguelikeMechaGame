@@ -22,6 +22,18 @@ namespace GameCore
 
         public class MechaComponentConfigRaw
         {
+            [VerticalGroup("名称(英)")]
+            [TableColumnWidth(100, true)]
+            [HideLabel]
+            [Required]
+            public string EnglishName;
+
+            [VerticalGroup("名称(中)")]
+            [TableColumnWidth(100, true)]
+            [HideLabel]
+            [Required]
+            public string ChineseName;
+
             [VerticalGroup("机甲组件")]
             [TableColumnWidth(300, true)]
             [HideLabel]
@@ -97,6 +109,8 @@ namespace GameCore
                     {
                         MechaComponentKey = raw.MechaComponentPrefab.name,
                         MechaComponentType = raw.MechaComponentType,
+                        EnglishName = raw.EnglishName,
+                        ChineseName = raw.ChineseName,
                         ItemSpriteKey = raw.ItemSprite.name,
                         AbilityGroupConfigKey = raw.AbilityGroupConfigSSO.AbilityGroupName,
                         MechaComponentQualityConfigKey = raw.MechaComponentQualityConfigSSO.MechaComponentQualityConfig.MechaComponentQualityConfigName,

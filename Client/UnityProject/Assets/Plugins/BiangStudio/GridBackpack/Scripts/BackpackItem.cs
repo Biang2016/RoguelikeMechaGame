@@ -14,13 +14,18 @@ namespace BiangStudio.GridBackpack
     {
         public override void PoolRecycle()
         {
+            BackpackItemGridRoot.Clear();
             base.PoolRecycle();
             Backpack = null;
             InventoryItem = null;
         }
 
+        [HideInInspector]
         public Backpack Backpack;
+
+        [HideInInspector]
         public InventoryItem InventoryItem;
+
         private Draggable Draggable;
         public RectTransform PanelRectTransform => (RectTransform) Backpack.BackpackPanel.ItemContainer;
 
@@ -31,7 +36,7 @@ namespace BiangStudio.GridBackpack
         private Image Image;
 
         [SerializeField]
-        private BackpackItemGridHitBoxRoot BackpackItemGridHitBoxRoot;
+        private BackpackItemGridRoot BackpackItemGridRoot;
 
         public RectTransform RectTransform => (RectTransform) transform;
 
@@ -59,7 +64,6 @@ namespace BiangStudio.GridBackpack
             InventoryItem = inventoryItem;
             InventoryItem.OnSetGridPosHandler = SetVirtualGridPos;
             Image.sprite = BackpackManager.Instance.GetBackpackItemSprite(inventoryItem.ItemContentInfo.ItemSpriteKey);
-            Image.color = inventoryItem.ItemContentInfo.ItemColor;
         }
 
         private void Rotate()
@@ -76,13 +80,14 @@ namespace BiangStudio.GridBackpack
             int UI_Pos_Z = -InventoryItem.BoundingRect.z_min * Backpack.GridSize;
 
             bool isRotated = InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Right || InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Left;
-            Image.rectTransform.sizeDelta = size;
+            Image.rectTransform.sizeDelta = size - Vector2.one * 8;
             Image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f * (int) InventoryItem.GridPos_Matrix.orientation);
 
             RectTransform.sizeDelta = isRotated ? sizeRev : size;
 
             RectTransform.anchoredPosition = new Vector2(UI_Pos_X, UI_Pos_Z);
-            BackpackItemGridHitBoxRoot.Initialize(Backpack, InventoryItem);
+            BackpackItemGridRoot.Initialize(Backpack, InventoryItem);
+            BackpackItemGridRoot.SetGridColor(InventoryItem.ItemContentInfo.ItemColor);
         }
 
         #region IDraggable
