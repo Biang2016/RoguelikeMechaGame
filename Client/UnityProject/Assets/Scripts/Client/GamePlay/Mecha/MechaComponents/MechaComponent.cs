@@ -90,6 +90,13 @@ namespace Client
             return mc;
         }
 
+        public static MechaComponent BaseInitialize_Editor(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
+        {
+            MechaComponent mc = GameObjectPoolManager.Instance.MechaComponentPoolDict[mechaComponentInfo.MechaComponentConfig.MechaComponentKey]
+                .AllocateGameObject<MechaComponent>(parentMecha ? parentMecha.transform : null);
+            return mc;
+        }
+
         private void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
             mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) =>

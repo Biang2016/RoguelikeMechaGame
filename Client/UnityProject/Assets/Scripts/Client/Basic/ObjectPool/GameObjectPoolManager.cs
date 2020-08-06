@@ -55,6 +55,8 @@ namespace Client
             Root = root;
         }
 
+        public bool IsInit = false;
+
         public override void Awake()
         {
             foreach (KeyValuePair<PrefabNames, int> kv in PoolConfigs)
@@ -165,6 +167,8 @@ namespace Client
                     pool.Initiate(po, 20);
                 }
             }
+
+            IsInit = true;
         }
 
         public void WarmUpPool()

@@ -9,9 +9,12 @@ namespace BiangStudio.GamePlay
         private const string ResourcePath = "Prefabs/";
         private static Dictionary<string, GameObject> PrefabNameDict = new Dictionary<string, GameObject>();
 
+        public bool IsInit = false;
+
         public override void Awake()
         {
             LoadPrefabs();
+            IsInit = true;
         }
 
         public GameObject GetPrefab(string prefabName)
