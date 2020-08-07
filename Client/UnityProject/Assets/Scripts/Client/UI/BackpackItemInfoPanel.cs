@@ -16,7 +16,7 @@ namespace Client
             ItemImageMaxHeight = ItemImageContainer.sizeDelta.y;
             UIType.InitUIType(
                 false,
-                true,
+                false,
                 false,
                 UIFormTypes.Normal,
                 UIFormShowModes.Normal,

@@ -119,10 +119,9 @@ namespace BiangStudio.GamePlay.UI
         /// <summary>
         /// 关闭（返回上一个）窗体
         /// </summary>
-        /// <param name="uiFormName"></param>
         public void CloseUIForm<T>() where T : BaseUIPanel
         {
-            string uiFormNameStr = typeof(T).ToString();
+            string uiFormNameStr = typeof(T).Name;
             CloseUIForm(uiFormNameStr);
         }
 

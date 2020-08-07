@@ -350,7 +350,7 @@ MonoBehaviour:
       Data: 2
     - Name: ItemSpriteKey
       Entry: 1
-      Data: LongGun
+      Data: BasicGun
     - Name: MechaComponentQualityConfigKey
       Entry: 1
       Data: Q_WaterBallGun
