@@ -32,7 +32,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0e190606f345ebd46b8ee3b0e4784dd6, type: 2}
     - {fileID: 11400000, guid: e373da448d4efe146af33384ace303dc, type: 2}
     - {fileID: 1244351346966676, guid: 4aba09d2d08a3304e9fd6096e06ecf3f, type: 3}
-    - {fileID: 21300000, guid: 48c122bbc7755e1458267441350bce3d, type: 3}
     - {fileID: 11400000, guid: 1466daa93a327794890e783ea56e332a, type: 2}
     - {fileID: 11400000, guid: f6c8f0779edfd7f4b81bb547818d395a, type: 2}
     - {fileID: 1244351346966676, guid: f36e0474dea271b4f9ef4a813e4ebfc4, type: 3}
@@ -176,13 +175,13 @@ MonoBehaviour:
       Data: 2
     - Name: ItemSprite
       Entry: 10
-      Data: 16
+      Data: 12
     - Name: AbilityGroupConfigSSO
       Entry: 10
-      Data: 17
+      Data: 16
     - Name: MechaComponentQualityConfigSSO
       Entry: 10
-      Data: 18
+      Data: 17
     - Name: 
       Entry: 8
       Data: 
@@ -197,19 +196,19 @@ MonoBehaviour:
       Data: "\u57FA\u7840\u5F15\u64CE"
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 19
+      Data: 18
     - Name: MechaComponentType
       Entry: 3
       Data: 4
     - Name: ItemSprite
       Entry: 10
-      Data: 20
+      Data: 19
     - Name: AbilityGroupConfigSSO
       Entry: 10
-      Data: 21
+      Data: 20
     - Name: MechaComponentQualityConfigSSO
       Entry: 10
-      Data: 22
+      Data: 21
     - Name: 
       Entry: 8
       Data: 

@@ -27,7 +27,7 @@ namespace GameCore
 
         public void Init()
         {
-            LevelInfo startLevelInfo = new LevelInfo(6789, "StartLevel");
+            LevelInfo startLevelInfo = new LevelInfo(6789, "Level_Demo");
             AddLevel(startLevelInfo);
             SetCurrentLevel(startLevelInfo);
         }

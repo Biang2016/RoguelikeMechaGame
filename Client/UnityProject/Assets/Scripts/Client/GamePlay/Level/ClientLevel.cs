@@ -1,12 +1,14 @@
-﻿using GameCore;
+﻿using BiangStudio.GamePlay;
+using GameCore;
 using UnityEngine;
 
 public class ClientLevel : MonoBehaviour
 {
     public static ClientLevel GenerateClientLevel(LevelInfo levelInfo)
     {
-        GameObject levelGO = new GameObject($"Level_{levelInfo.LevelName}");
-        ClientLevel clientLevel = levelGO.AddComponent<ClientLevel>();
+        GameObject levelPrefab = PrefabManager.Instance.GetPrefab(levelInfo.LevelName);
+        GameObject levelGO = Instantiate(levelPrefab);
+        ClientLevel clientLevel = levelGO.GetComponent<ClientLevel>();
         clientLevel.Init(levelInfo);
         return clientLevel;
     }
