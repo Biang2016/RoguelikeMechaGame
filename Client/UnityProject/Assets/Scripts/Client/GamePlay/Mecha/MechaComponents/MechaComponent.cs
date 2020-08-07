@@ -146,7 +146,7 @@ namespace Client
 
 #if UNITY_EDITOR
 
-        [MenuItem("开发工具/序列化模组占位")]
+        [MenuItem("开发工具/配置/序列化模组占位")]
         public static void SerializeMechaComponentOccupiedPositions()
         {
             PrefabManager.Instance.LoadPrefabs();

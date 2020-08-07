@@ -84,7 +84,7 @@ namespace GameCore
             MechaComponentOriginalOccupiedGridInfoDict = JsonConvert.DeserializeObject<Dictionary<string, MechaComponentOriginalOccupiedGridInfo>>(content);
         }
 
-        [MenuItem("开发工具/序列化配置")]
+        [MenuItem("开发工具/配置/序列化配置")]
         public static void ExportConfigs()
         {
             // http://www.sirenix.net/odininspector/faq?Search=&t-11=on#faq
@@ -196,7 +196,7 @@ namespace GameCore
 
         public static bool IsLoaded = false;
 
-        [MenuItem("开发工具/加载配置")]
+        [MenuItem("开发工具/配置/加载配置")]
         public static void LoadAllConfigs()
         {
             DataFormat dataFormat = DataFormat.Binary;
