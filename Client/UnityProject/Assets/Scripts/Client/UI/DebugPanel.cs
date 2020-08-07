@@ -52,24 +52,5 @@ namespace Client
 
             ClientBattleManager.Instance.MechaDict[enemyMechaInfo.GUID].transform.position = new Vector3(10, 0, 10);
         }
-
-        public void DecreasePower()
-        {
-            foreach (KeyValuePair<uint, MechaComponentInfo> kv in BattleManager.Instance.PlayerMechaInfo.MechaComponentInfoDict)
-            {
-                if (kv.Value.M_InputPower > 0)
-                {
-                    kv.Value.M_InputPower -= 50;
-                }
-            }
-        }
-
-        public void AddPower()
-        {
-            foreach (KeyValuePair<uint, MechaComponentInfo> kv in BattleManager.Instance.PlayerMechaInfo.MechaComponentInfoDict)
-            {
-                kv.Value.M_InputPower += 50;
-            }
-        }
     }
 }

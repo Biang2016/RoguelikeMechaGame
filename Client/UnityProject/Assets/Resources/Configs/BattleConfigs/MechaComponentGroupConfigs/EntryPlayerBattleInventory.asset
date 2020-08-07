@@ -22,6 +22,7 @@ MonoBehaviour:
     - {fileID: 1244351346966676, guid: f36e0474dea271b4f9ef4a813e4ebfc4, type: 3}
     - {fileID: 1244351346966676, guid: f5b5ff501b7e044f09afb208e34504cc, type: 3}
     - {fileID: 1244351346966676, guid: 4aba09d2d08a3304e9fd6096e06ecf3f, type: 3}
+    - {fileID: 1244351346966676, guid: 63d53d9c54a31904f98a02d1673971c7, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -33,7 +34,7 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 12
+      Data: 13
     - Name: 
       Entry: 7
       Data: 1|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
@@ -208,6 +209,21 @@ MonoBehaviour:
     - Name: Quality
       Entry: 3
       Data: 2
+    - Name: Count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 13|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 6
+    - Name: Quality
+      Entry: 3
+      Data: 1
     - Name: Count
       Entry: 3
       Data: 1

@@ -79,7 +79,46 @@
         "z": -1
       }
     ],
-    "MechaComponentAllSlotLocalPositionsList": []
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": -1,
+        "z": -1
+      },
+      {
+        "x": 1,
+        "z": -1
+      }
+    ]
+  },
+  "MC_WaterBallGunPlus": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 1
+      },
+      {
+        "x": 0,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": -1
+      },
+      {
+        "x": 1,
+        "z": 0
+      },
+      {
+        "x": 1,
+        "z": -1
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": -1,
+        "z": -1
+      }
+    ]
   },
   "MC_BasicEngine": {
     "MechaComponentOccupiedGridPositionList": [

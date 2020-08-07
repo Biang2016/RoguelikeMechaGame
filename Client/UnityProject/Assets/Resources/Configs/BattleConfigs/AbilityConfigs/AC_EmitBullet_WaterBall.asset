@@ -30,12 +30,6 @@ MonoBehaviour:
     - Name: AbilityBehaviors
       Entry: 3
       Data: 0
-    - Name: CastDummyPosition
-      Entry: 3
-      Data: 0
-    - Name: AbilityCastRange
-      Entry: 3
-      Data: 0
     - Name: AbilityCooldown
       Entry: 3
       Data: 300
@@ -111,34 +105,10 @@ MonoBehaviour:
       Data: 8|GameCore.AbilityDataDriven.Action_DealDamage, GameCore
     - Name: Target
       Entry: 7
-      Data: 9|GameCore.AbilityDataDriven.MultipleActionTarget, GameCore
-    - Name: Center
-      Entry: 3
-      Data: 5
-    - Name: Radius
-      Entry: 3
-      Data: 0
-    - Name: Team
-      Entry: 3
-      Data: 2
-    - Name: Types
-      Entry: 3
-      Data: 0
-    - Name: ExcludeTypes
-      Entry: 3
-      Data: 0
-    - Name: Flags
-      Entry: 3
-      Data: 0
-    - Name: ExcludeFlags
-      Entry: 3
-      Data: 0
-    - Name: MaxTargets
+      Data: 9|GameCore.AbilityDataDriven.SingleActionTarget, GameCore
+    - Name: Target
       Entry: 3
       Data: 3
-    - Name: Random
-      Entry: 5
-      Data: true
     - Name: 
       Entry: 8
       Data: 
