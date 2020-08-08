@@ -29,7 +29,7 @@ namespace GameCore
 
         #region IInventoryItemContentInfo
 
-        public List<GridPos> OriginalOccupiedGridPositions => MechaComponentOriginalOccupiedGridInfo.MechaComponentOccupiedGridPositionList;
+        public List<GridPos> IInventoryItemContentInfo_OriginalOccupiedGridPositions => MechaComponentOriginalOccupiedGridInfo.MechaComponentOccupiedGridPositionList_Backpack;
         public string ItemCategoryName => MechaComponentType.ToString();
         public string ItemName => MechaComponentConfig.EnglishName;
         public string ItemQuality => Quality.ToString();

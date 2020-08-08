@@ -33,7 +33,7 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 7
       Data: 2|GameCore.QualityUpgradeData_Gun, GameCore
@@ -436,6 +436,193 @@ MonoBehaviour:
     - Name: AddOnAbilityList
       Entry: 7
       Data: 21|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: DamageIncreasePercent
+      Entry: 3
+      Data: 100
+    - Name: DamageRangeIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: DamageMaxTargetsOverride
+      Entry: 3
+      Data: 999
+    - Name: AbilityCooldownDecreasePercent
+      Entry: 3
+      Data: 50
+    - Name: MaxRangeIncreasePercent
+      Entry: 3
+      Data: 100
+    - Name: MaxDurationIncreasePercent
+      Entry: 3
+      Data: 100
+    - Name: ScaleIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: VelocityIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: CanReflectOverride
+      Entry: 5
+      Data: true
+    - Name: ReflectTimesOverride
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 22|GameCore.QualityUpgradeData_Gun, GameCore
+    - Name: Quality
+      Entry: 3
+      Data: 6
+    - Name: Life
+      Entry: 3
+      Data: 500
+    - Name: PowerUpgradeDataList
+      Entry: 7
+      Data: 23|System.Collections.Generic.List`1[[GameCore.PowerUpgradeDataBase,
+        GameCore]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 24|GameCore.PowerUpgradeData_Gun, GameCore
+    - Name: PowerConsume
+      Entry: 3
+      Data: 0
+    - Name: HighLightColorIntensity
+      Entry: 4
+      Data: 2
+    - Name: AddOnAbilityList
+      Entry: 7
+      Data: 25|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: DamageIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: DamageRangeIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: DamageMaxTargetsOverride
+      Entry: 3
+      Data: 999
+    - Name: AbilityCooldownDecreasePercent
+      Entry: 3
+      Data: 0
+    - Name: MaxRangeIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: MaxDurationIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: ScaleIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: VelocityIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: CanReflectOverride
+      Entry: 5
+      Data: false
+    - Name: ReflectTimesOverride
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 26|GameCore.PowerUpgradeData_Gun, GameCore
+    - Name: PowerConsume
+      Entry: 3
+      Data: 50
+    - Name: HighLightColorIntensity
+      Entry: 4
+      Data: 5
+    - Name: AddOnAbilityList
+      Entry: 7
+      Data: 27|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: DamageIncreasePercent
+      Entry: 3
+      Data: 50
+    - Name: DamageRangeIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: DamageMaxTargetsOverride
+      Entry: 3
+      Data: 999
+    - Name: AbilityCooldownDecreasePercent
+      Entry: 3
+      Data: 20
+    - Name: MaxRangeIncreasePercent
+      Entry: 3
+      Data: 50
+    - Name: MaxDurationIncreasePercent
+      Entry: 3
+      Data: 50
+    - Name: ScaleIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: VelocityIncreasePercent
+      Entry: 3
+      Data: 0
+    - Name: CanReflectOverride
+      Entry: 5
+      Data: false
+    - Name: ReflectTimesOverride
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 28|GameCore.PowerUpgradeData_Gun, GameCore
+    - Name: PowerConsume
+      Entry: 3
+      Data: 100
+    - Name: HighLightColorIntensity
+      Entry: 4
+      Data: 10
+    - Name: AddOnAbilityList
+      Entry: 7
+      Data: 29|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0

@@ -69,6 +69,9 @@ namespace Client
 
         private Vector3 offset_Manually;
 
+        public static bool NeedLerp = true;
+        public static float SmoothTime = 0.05f;
+
         private void Update()
         {
             RefreshTargetingPosition();
@@ -80,7 +83,15 @@ namespace Client
                     {
                         Vector3 destination = transform.position + target.position - targetingPoint + Offset_Building;
                         Vector3 curVelocity = Vector3.zero;
-                        transform.position = Vector3.SmoothDamp(transform.position, destination + offset_Manually, ref curVelocity, 0.05f);
+                        if (NeedLerp)
+                        {
+                            transform.position = Vector3.SmoothDamp(transform.position, destination + offset_Manually, ref curVelocity, SmoothTime);
+                        }
+                        else
+                        {
+                            transform.position = destination + offset_Manually;
+                        }
+
                         break;
                     }
                     case GameState.Fighting:
@@ -88,7 +99,15 @@ namespace Client
                         offset_Manually = Vector3.zero;
                         Vector3 destination = transform.position + target.position - targetingPoint + Offset_Fighting;
                         Vector3 curVelocity = Vector3.zero;
-                        transform.position = Vector3.SmoothDamp(transform.position, destination, ref curVelocity, 0.05f);
+                        if (NeedLerp)
+                        {
+                            transform.position = Vector3.SmoothDamp(transform.position, destination, ref curVelocity, SmoothTime);
+                        }
+                        else
+                        {
+                            transform.position = destination;
+                        }
+
                         break;
                     }
                 }

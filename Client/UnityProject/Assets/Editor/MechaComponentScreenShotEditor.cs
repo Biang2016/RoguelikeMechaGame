@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using BiangStudio.GameDataFormat.Grid;
 using Client;
 using GameCore;
 using Sirenix.Utilities.Editor;
@@ -26,20 +27,45 @@ public class MechaComponentScreenShotEditor : Editor
         ClientLevelManager.Instance.CurrentClientLevel.gameObject.SetActive(false);
         ClientBattleManager.Instance.MechaContainerRoot.gameObject.SetActive(false);
         Camera camera = CameraManager.Instance.MainCamera;
+        Quaternion oriRot = camera.transform.rotation;
+        Quaternion topDownViewRot = Quaternion.Euler(90, 0, 0);
         float ori_FieldOfView = camera.fieldOfView;
         camera.fieldOfView = 6f;
+        CameraFollow.NeedLerp = false;
 
         foreach (KeyValuePair<string, MechaComponentConfig> kv in ConfigManager.MechaComponentConfigDict)
         {
             string filename = Application.dataPath + "/../../Arts/MechaComponentScreenShots/" + kv.Key + ".png";
             MechaComponentInfo mci = new MechaComponentInfo(kv.Value, Quality.Common);
+            GridRect boundingRect = mci.IInventoryItemContentInfo_OriginalOccupiedGridPositions.GetBoundingRectFromListGridPos();
+            if (boundingRect.size.x != boundingRect.size.z)
+            {
+                camera.transform.rotation = topDownViewRot;
+            }
+            else
+            {
+                camera.transform.rotation = oriRot;
+            }
+
+            if (boundingRect.size.x == 1 && boundingRect.size.z == 1)
+            {
+                camera.fieldOfView = 6f;
+            }
+            else
+            {
+                camera.fieldOfView = 10f;
+            }
+
+            yield return new WaitForSeconds(0.1f);
             MechaComponent mc = MechaComponent.BaseInitialize_Editor(mci, null);
             CaptureScreenShot.CaptureTransparentScreenShot(camera, 800, 800, filename);
             DestroyImmediate(mc.gameObject);
             yield return new WaitForSeconds(0.1f);
         }
 
+        camera.transform.rotation = oriRot;
         camera.fieldOfView = ori_FieldOfView;
+        CameraFollow.NeedLerp = true;
         ClientLevelManager.Instance.CurrentClientLevel.gameObject.SetActive(true);
         ClientBattleManager.Instance.MechaContainerRoot.gameObject.SetActive(true);
     }

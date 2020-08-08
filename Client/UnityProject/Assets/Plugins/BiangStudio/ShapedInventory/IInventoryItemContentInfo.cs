@@ -6,7 +6,7 @@ namespace BiangStudio.ShapedInventory
 {
     public interface IInventoryItemContentInfo
     {
-        List<GridPos> OriginalOccupiedGridPositions { get; }
+        List<GridPos> IInventoryItemContentInfo_OriginalOccupiedGridPositions { get; }
         string ItemCategoryName { get; }
         string ItemName { get; }
         string ItemQuality { get; }

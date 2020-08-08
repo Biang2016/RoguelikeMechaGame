@@ -33,7 +33,7 @@ namespace BiangStudio.ShapedInventory
 
         public List<GridPos> OccupiedGridPositions_Matrix
         {
-            get { return GridPosR.TransformOccupiedPositions(GridPos_Matrix, ItemContentInfo.OriginalOccupiedGridPositions); }
+            get { return GridPosR.TransformOccupiedPositions(GridPos_Matrix, ItemContentInfo.IInventoryItemContentInfo_OriginalOccupiedGridPositions); }
         }
 
         [HideInInspector] public GridRect BoundingRect => OccupiedGridPositions_Matrix.GetBoundingRectFromListGridPos();

@@ -35,7 +35,7 @@ namespace GameCore
         public static void Initialize()
         {
             QualityConfigs.Clear();
-            QualityConfigs.Add(Quality.Common, new QualityConfig(Quality.Common, Utils.HTMLColorToColor("#5E5E5E")));
+            QualityConfigs.Add(Quality.Common, new QualityConfig(Quality.Common, Utils.HTMLColorToColor("#5CC5CA")));
             QualityConfigs.Add(Quality.Uncommon, new QualityConfig(Quality.Uncommon, Utils.HTMLColorToColor("#108C00")));
             QualityConfigs.Add(Quality.Rare, new QualityConfig(Quality.Rare, Utils.HTMLColorToColor("#0070DD")));
             QualityConfigs.Add(Quality.Epic, new QualityConfig(Quality.Epic, Utils.HTMLColorToColor("#A335EE")));
