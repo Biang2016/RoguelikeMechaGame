@@ -23,7 +23,7 @@ namespace GameCore
 
         public const int EDIT_AREA_HALF_SIZE = 9;
         public static int EDIT_AREA_FULL_SIZE => EDIT_AREA_HALF_SIZE * 2 + 1;
-        public static bool ShowMechaEditorAreaGridPosText = false;
+        public static bool ShowMechaEditorAreaGridPosText = true;
 
         public const int BackpackGridSize = 60;
 

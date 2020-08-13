@@ -9,11 +9,13 @@ namespace BiangStudio.GridBackpack
     public class BackpackItemGrid : PoolObject
     {
         public BoxCollider BoxCollider;
+        public Text LocalGridPosText;
 
         public GridPos LocalGridPos;
 
         public void Initialize(GridPos localGP, GridRect space, GridPosR.OrientationFlag adjacentConnection, GridPosR.OrientationFlag diagonalConnection)
         {
+            LocalGridPosText.text = localGP.ToString();
             LocalGridPos = localGP;
             BoxCollider.size = new Vector3(space.size.x, space.size.z, 1);
             BoxCollider.center = new Vector3((space.position.x + 0.5f) * space.size.x, (space.position.z - 0.5f) * space.size.z, 0);

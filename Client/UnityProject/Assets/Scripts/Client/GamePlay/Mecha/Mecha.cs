@@ -55,6 +55,8 @@ namespace Client
                 ConfigManager.EDIT_AREA_FULL_SIZE,
                 ConfigManager.EDIT_AREA_FULL_SIZE,
                 false,
+                false,
+                false,
                 0,
                 () => ControlManager.Instance.Building_RotateItem.Down);
             MechaInfo.MechaEditorInventory.OnRemoveItemSucAction = (item) => { ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo(); };

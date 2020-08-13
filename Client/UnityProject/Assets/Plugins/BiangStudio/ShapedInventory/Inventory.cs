@@ -47,6 +47,8 @@ namespace BiangStudio.ShapedInventory
         public int GridSize { get; private set; }
         public int Rows { get; private set; }
         public int Columns { get; private set; }
+        public bool X_Mirror { get; private set; }
+        public bool Z_Mirror { get; private set; }
 
         [ShowInInspector]
         public bool UnlockedPartialGrids { get; private set; }
@@ -78,6 +80,8 @@ namespace BiangStudio.ShapedInventory
         /// <param name="gridSize">the gridSize of inventory</param>
         /// <param name="rows">how many rows in total</param>
         /// <param name="columns">how many columns in total</param>
+        /// <param name="x_Mirror">is X axis mirrored</param>
+        /// <param name="z_Mirror">is Z axis mirrored</param>
         /// <param name="unlockedPartialGrids">is there any grid locked at the beginning</param>
         /// <param name="unlockedGridCount">how many grids are locked at the beginning</param>
         /// <param name="rotateItemKeyDownHandler">this delegate should return a bool whether the rotate item key is pressed down</param>
@@ -91,6 +95,8 @@ namespace BiangStudio.ShapedInventory
             int gridSize,
             int rows,
             int columns,
+            bool x_Mirror,
+            bool z_Mirror,
             bool unlockedPartialGrids,
             int unlockedGridCount,
             KeyDownDelegate rotateItemKeyDownHandler,
@@ -105,6 +111,8 @@ namespace BiangStudio.ShapedInventory
             GridSize = gridSize;
             Rows = rows;
             Columns = columns;
+            X_Mirror = x_Mirror;
+            Z_Mirror = z_Mirror;
             UnlockedPartialGrids = unlockedPartialGrids;
             this.unlockedGridCount = unlockedGridCount;
 

@@ -80,14 +80,14 @@ namespace BiangStudio.GridBackpack
         /// <param name="instantiateBackpackItemGridHandler">This handler should instantiate a prefab with BackpackItemGrid component.</param>
         /// <param name="instantiateBackpackItemVirtualOccupationQuadHandler">This handler should instantiate a image for indicating the occupation.</param>
         public Backpack(
-            string inventoryName, DragArea dragArea, int gridSize, int rows, int columns, bool unlockPartialGrids, int unlockedGridCount,
+            string inventoryName, DragArea dragArea, int gridSize, int rows, int columns, bool x_Mirror, bool z_Mirror, bool unlockPartialGrids, int unlockedGridCount,
             KeyDownDelegate toggleBackpackKeyDownHandler,
             KeyDownDelegate rotateItemKeyDownHandler,
             InstantiatePrefabDelegate instantiateBackpackGridHandler,
             InstantiatePrefabDelegate instantiateBackpackItemHandler,
             InstantiatePrefabDelegate instantiateBackpackItemGridHandler,
             InstantiatePrefabDelegate instantiateBackpackItemVirtualOccupationQuadHandler
-        ) : base(inventoryName, dragArea, gridSize, rows, columns, unlockPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
+        ) : base(inventoryName, dragArea, gridSize, rows, columns, x_Mirror, z_Mirror, unlockPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
             (gridPos) => new GridPosR(gridPos.x, -gridPos.z),
             (gridPos_matrix) => new GridPosR(gridPos_matrix.x, -gridPos_matrix.z),
             (gridPos) => new GridPosR(gridPos.x, -gridPos.z),

@@ -165,13 +165,6 @@ namespace Client
                         mcs.Add(mc);
                         MechaComponentOriginalOccupiedGridInfo info = new MechaComponentOriginalOccupiedGridInfo();
                         info.MechaComponentOccupiedGridPositionList = mc.MechaComponentGridRoot.GetOccupiedPositions();
-                        GridRect bounding = info.MechaComponentOccupiedGridPositionList.GetBoundingRectFromListGridPos(); // 背包坐标Y轴是反过来的，因此要减掉
-                        foreach (GridPos gridPos in info.MechaComponentOccupiedGridPositionList)
-                        {
-                            GridPos gp = new GridPos(gridPos.x, bounding.size.z - gridPos.z - 1);
-                            info.MechaComponentOccupiedGridPositionList_Backpack.Add(gp);
-                        }
-
                         info.MechaComponentAllSlotLocalPositionsList = mc.MechaComponentGridRoot.GetAllSlotPositions_Local();
                         dict.Add(kv.Key, info);
                     }

@@ -6,12 +6,6 @@
         "z": 0
       }
     ],
-    "MechaComponentOccupiedGridPositionList_Backpack": [
-      {
-        "x": 0,
-        "z": 0
-      }
-    ],
     "MechaComponentAllSlotLocalPositionsList": []
   },
   "MC_BasicBlock": {
@@ -21,22 +15,10 @@
         "z": 0
       }
     ],
-    "MechaComponentOccupiedGridPositionList_Backpack": [
-      {
-        "x": 0,
-        "z": 0
-      }
-    ],
     "MechaComponentAllSlotLocalPositionsList": []
   },
   "MC_ArcPurpleGravBallCanon": {
     "MechaComponentOccupiedGridPositionList": [
-      {
-        "x": 0,
-        "z": 0
-      }
-    ],
-    "MechaComponentOccupiedGridPositionList_Backpack": [
       {
         "x": 0,
         "z": 0
@@ -76,20 +58,6 @@
         "z": -1
       }
     ],
-    "MechaComponentOccupiedGridPositionList_Backpack": [
-      {
-        "x": 0,
-        "z": 1
-      },
-      {
-        "x": 0,
-        "z": 2
-      },
-      {
-        "x": 0,
-        "z": 3
-      }
-    ],
     "MechaComponentAllSlotLocalPositionsList": []
   },
   "MC_WaterBallGun": {
@@ -105,20 +73,6 @@
       {
         "x": 0,
         "z": -1
-      }
-    ],
-    "MechaComponentOccupiedGridPositionList_Backpack": [
-      {
-        "x": 0,
-        "z": 1
-      },
-      {
-        "x": 0,
-        "z": 2
-      },
-      {
-        "x": 0,
-        "z": 3
       }
     ],
     "MechaComponentAllSlotLocalPositionsList": [
@@ -151,24 +105,6 @@
         "z": -1
       }
     ],
-    "MechaComponentOccupiedGridPositionList_Backpack": [
-      {
-        "x": 0,
-        "z": 1
-      },
-      {
-        "x": 0,
-        "z": 2
-      },
-      {
-        "x": 0,
-        "z": 3
-      },
-      {
-        "x": 1,
-        "z": 3
-      }
-    ],
     "MechaComponentAllSlotLocalPositionsList": [
       {
         "x": -1,
@@ -178,12 +114,6 @@
   },
   "MC_BasicEngine": {
     "MechaComponentOccupiedGridPositionList": [
-      {
-        "x": 0,
-        "z": 0
-      }
-    ],
-    "MechaComponentOccupiedGridPositionList_Backpack": [
       {
         "x": 0,
         "z": 0

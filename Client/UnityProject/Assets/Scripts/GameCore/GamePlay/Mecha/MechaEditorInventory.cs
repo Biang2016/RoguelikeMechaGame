@@ -12,10 +12,12 @@ namespace GameCore
             int gridSize,
             int rows,
             int columns,
+            bool x_Mirror,
+            bool z_Mirror,
             bool unlockedPartialGrids,
             int unlockedGridCount,
             KeyDownDelegate rotateItemKeyDownHandler
-        ) : base(inventoryName, dragArea, gridSize, rows, columns, unlockedPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
+        ) : base(inventoryName, dragArea, gridSize, rows, columns, x_Mirror, z_Mirror, unlockedPartialGrids, unlockedGridCount, rotateItemKeyDownHandler,
             (gridPos) => new GridPosR(gridPos.x + ConfigManager.EDIT_AREA_HALF_SIZE, gridPos.z + ConfigManager.EDIT_AREA_HALF_SIZE, gridPos.orientation),
             (gp_matrix) => new GridPosR(gp_matrix.x - ConfigManager.EDIT_AREA_HALF_SIZE, gp_matrix.z - ConfigManager.EDIT_AREA_HALF_SIZE, gp_matrix.orientation),
             (gridPos) => new GridPos(gridPos.x, gridPos.z),

@@ -251,6 +251,8 @@ namespace Client
                 ConfigManager.BackpackGridSize,
                 10,
                 10,
+                false,
+                true,
                 true,
                 75,
                 () => ControlManager.Instance.Common_Tab.Down,
@@ -301,7 +303,8 @@ namespace Client
             MechaComponentGroupConfig mcg_config = ConfigManager.Instance.GetMechaComponentGroupConfig("EntryPlayerBattleInventory");
             foreach (MechaComponentGroupConfig.Config config in mcg_config.MechaComponentList)
             {
-                inventoryInfo.InventoryItems.Add(new InventoryItem(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig(config.MechaComponentKey), config.Quality), myBackPack, GridPosR.Zero));
+                MechaComponentInfo mci = new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig(config.MechaComponentKey), config.Quality);
+                inventoryInfo.InventoryItems.Add(new InventoryItem(mci, myBackPack, new GridPosR(0, 0, GridPosR.Orientation.Up)));
             }
 
             myBackPack.LoadInventoryInfo(inventoryInfo);

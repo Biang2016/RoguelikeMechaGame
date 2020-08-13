@@ -24,10 +24,9 @@ namespace BiangStudio.GridBackpack
             foreach (GridPos gp in item.OccupiedGridPositions_Matrix)
             {
                 gp.GetConnection(connectionMatrix, offset, out GridPosR.OrientationFlag adjacentConnection, out GridPosR.OrientationFlag diagonalConnection);
-                GridPos local = GridPos.GetLocalGridPosByCenter(item.GridPos_Matrix, gp);
                 GridPos localGP = gp - item.BoundingRect.position;
                 BackpackItemGrid grid = Backpack.CreateBackpackItemGrid(BackpackItemGridContainer);
-                grid.Initialize(local, new GridRect(localGP.x, -localGP.z, Backpack.GridSize, Backpack.GridSize), adjacentConnection, diagonalConnection);
+                grid.Initialize(localGP, new GridRect(localGP.x, -localGP.z, Backpack.GridSize, Backpack.GridSize), adjacentConnection, diagonalConnection);
                 BackpackItemGrids.Add(grid);
             }
         }

@@ -21,7 +21,8 @@ namespace BiangStudio.ShapedInventory
 
         private static uint guidGenerator = 10000;
 
-        [HideInInspector] public uint GUID;
+        [HideInInspector]
+        public uint GUID;
 
         public IInventoryItemContentInfo ItemContentInfo;
 
@@ -33,10 +34,21 @@ namespace BiangStudio.ShapedInventory
 
         public List<GridPos> OccupiedGridPositions_Matrix
         {
-            get { return GridPosR.TransformOccupiedPositions(GridPos_Matrix, ItemContentInfo.IInventoryItemContentInfo_OriginalOccupiedGridPositions); }
+            get
+            {
+                List<GridPos> res = ItemContentInfo.IInventoryItemContentInfo_OriginalOccupiedGridPositions.Clone();
+                for (int i = 0; i < res.Count; i++)
+                {
+                    res[i] = new GridPos(Inventory.X_Mirror ? -res[i].x : res[i].x, Inventory.Z_Mirror ? -res[i].z : res[i].z);
+                }
+
+                res = GridPosR.TransformOccupiedPositions(GridPos_Matrix, res);
+                return res;
+            }
         }
 
-        [HideInInspector] public GridRect BoundingRect => OccupiedGridPositions_Matrix.GetBoundingRectFromListGridPos();
+        [HideInInspector]
+        public GridRect BoundingRect => OccupiedGridPositions_Matrix.GetBoundingRectFromListGridPos();
 
         public OnSetGridPosDelegate OnSetGridPosHandler;
         public OnIsolatedDelegate OnIsolatedHandler;
