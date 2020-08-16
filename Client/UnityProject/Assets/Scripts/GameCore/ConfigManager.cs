@@ -280,7 +280,9 @@ namespace GameCore
 
         public static bool IsLoaded = false;
 
+#if UNITY_EDITOR
         [MenuItem("开发工具/配置/加载配置")]
+#endif
         public static void LoadAllConfigs()
         {
             DataFormat dataFormat = DataFormat.Binary;
