@@ -9,6 +9,10 @@ namespace GameCore
     {
         #region GamePlay Info
 
+        [LabelText("机甲组件花名")]
+        [HideInEditorMode]
+        public string Alias;
+
         public MechaComponentConfig MechaComponentConfig;
 
         [LabelText("品质")]
@@ -202,27 +206,37 @@ namespace GameCore
 
             if (TriggerButtonThisFrame)
             {
-                foreach (Ability ability in AbilityGroup.Abilities)
-                {
-                    if (ability.canTriggered && !ability.Passive)
-                    {
-                        if (!ability.Passive && !ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_AUTOCAST))
-                        {
-                            if (ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_FORBID_MOVEMENT))
-                            {
-                                MechaInfo.AbilityForbidMovement = true;
-                            }
+                TriggerSkill();
+            }
+        }
 
-                            BattleManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, new ExecuteInfo
-                            {
-                                MechaInfo = MechaInfo,
-                                MechaComponentInfo = this,
-                                Ability = ability
-                            });
+        public bool TriggerSkill()
+        {
+            bool suc = false;
+            foreach (Ability ability in AbilityGroup.Abilities)
+            {
+                if (ability.canTriggered && !ability.Passive)
+                {
+                    if (!ability.Passive && !ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_AUTOCAST))
+                    {
+                        if (ability.AbilityBehaviors.HasFlag(ENUM_AbilityBehavior.ABILITY_BEHAVIOR_FORBID_MOVEMENT))
+                        {
+                            MechaInfo.AbilityForbidMovement = true;
                         }
+
+                        BattleManager.Instance.BattleMessenger.Broadcast<ExecuteInfo>((uint) ENUM_AbilityEvent.OnAbilityStart, new ExecuteInfo
+                        {
+                            MechaInfo = MechaInfo,
+                            MechaComponentInfo = this,
+                            Ability = ability
+                        });
+
+                        suc = true;
                     }
                 }
             }
+
+            return suc;
         }
 
         public void LateUpdate_Fighting()

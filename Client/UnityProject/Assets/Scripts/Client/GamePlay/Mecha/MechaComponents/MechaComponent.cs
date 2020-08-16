@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using System.IO;
 using BiangStudio;
 using BiangStudio.DragHover;
@@ -13,7 +14,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using DragAreaDefines = GameCore.DragAreaDefines;
 #if UNITY_EDITOR
-using System;
 using UnityEditor;
 
 #endif
@@ -42,11 +42,6 @@ namespace Client
         [PropertyOrder(-9)]
         [LabelText("模型根节点")]
         public MechaComponentModelRoot MechaComponentModelRoot;
-
-        [HideInPlayMode]
-        [Title("Editor Params")]
-        [LabelText("拍照角度")]
-        public float ScreenShotAngle;
 
         internal Draggable Draggable;
         private bool isReturningToBackpack = false;
@@ -158,6 +153,11 @@ namespace Client
 
 #if UNITY_EDITOR
 
+        [HideInPlayMode]
+        [TitleGroup("Editor Params")]
+        [LabelText("拍照角度")]
+        public float ScreenShotAngle;
+
         [MenuItem("开发工具/配置/序列化模组占位")]
         public static void SerializeMechaComponentOccupiedPositions()
         {
@@ -180,6 +180,11 @@ namespace Client
                         info.MechaComponentAllSlotLocalPositionsList = mc.MechaComponentGridRoot.GetAllSlotPositions_Local();
                         dict.Add(kv.Key, info);
                     }
+                }
+
+                if (!Directory.Exists(ConfigManager.MechaComponentOriginalOccupiedGridInfoJsonFileFolder))
+                {
+                    Directory.CreateDirectory(ConfigManager.MechaComponentOriginalOccupiedGridInfoJsonFileFolder);
                 }
 
                 string json = JsonConvert.SerializeObject(dict, Formatting.Indented);

@@ -2,6 +2,7 @@
 using System.Linq;
 using GameCore;
 using GameCore.AbilityDataDriven;
+using NodeCanvas.BehaviourTrees;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
@@ -38,14 +39,18 @@ public class ConfigPreviewerWindow : OdinEditorWindow
     public List<MechaComponentConfig> MechaComponentConfigDict => ConfigManager.MechaComponentConfigDict.Values.ToList();
 
     [ShowInInspector]
-    [LabelText("机甲组件组配置表")]
-    public List<MechaComponentGroupConfig> MechaComponentGroupConfigDict => ConfigManager.MechaComponentGroupConfigDict.Values.ToList();
+    [Title("机甲组件组配置表")]
+    public Dictionary<string, MechaComponentGroupConfig> MechaComponentGroupConfigDict => ConfigManager.MechaComponentGroupConfigDict;
 
     [ShowInInspector]
-    [LabelText("机甲组件品质配置表")]
-    public List<MechaComponentQualityConfig> MechaComponentQualityConfigDict => ConfigManager.MechaComponentQualityConfigDict.Values.ToList();
+    [Title("机甲组件品质配置表")]
+    public Dictionary<string, MechaComponentQualityConfig> MechaComponentQualityConfigDict => ConfigManager.MechaComponentQualityConfigDict;
 
     [ShowInInspector]
-    [LabelText("机甲配置表")]
-    public List<MechaConfig> MechaConfigDict => ConfigManager.MechaConfigDict.Values.ToList();
+    [Title("机甲配置表")]
+    public Dictionary<string, MechaConfig> MechaConfigDict => ConfigManager.MechaConfigDict;
+
+    [ShowInInspector]
+    [Title("敌兵AI配置表")]
+    public Dictionary<string, BehaviourTree> EnemyAIConfigDict => ConfigManager.EnemyAIConfigDict;
 }

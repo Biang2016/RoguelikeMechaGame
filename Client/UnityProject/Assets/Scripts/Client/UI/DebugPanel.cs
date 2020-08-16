@@ -111,7 +111,7 @@ namespace Client
             }
         }
 
-        [DebugButton("战斗/添加敌人")]
+        [DebugButton("战斗/添加随机敌人")]
         public void AddEnemy()
         {
             MechaConfig mechaConfig = ConfigManager.Instance.GetRandomMechaConfig();
@@ -120,13 +120,13 @@ namespace Client
             ClientBattleManager.Instance.MechaDict[mechaInfo.GUID].transform.position = new Vector3(Random.Range(0,20), 0, Random.Range(0, 20));
         }
 
-        [DebugButton("背包/asdf/asdfasd/增加5格")]
+        [DebugButton("背包/增加5格")]
         public void AddBackpackGrid5()
         {
             BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).UnlockGrids(5);
         }
 
-        [DebugButton("背包/asdf/增加10格")]
+        [DebugButton("背包/增加10格")]
         public void AddBackpackGrid10()
         {
             BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).UnlockGrids(10);

@@ -2,12 +2,10 @@
 using System.IO;
 using System.Linq;
 using BiangStudio;
-using BiangStudio.CloneVariant;
-using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.Singleton;
-using Client;
 using GameCore.AbilityDataDriven;
 using Newtonsoft.Json;
+using NodeCanvas.BehaviourTrees;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEditor;
@@ -31,8 +29,11 @@ namespace GameCore
 
         public const int BackpackGridSize = 60;
 
-        public static string MechaComponentOriginalOccupiedGridInfoJsonFilePath = Application.streamingAssetsPath + "/Configs/MechaComponentPrefabConfigs/MechaComponentOriginalOccupiedGridInfo.json";
+        public static string MechaComponentOriginalOccupiedGridInfoJsonFilePath = $"{MechaComponentOriginalOccupiedGridInfoJsonFileFolder}/MechaComponentOriginalOccupiedGridInfo.json";
+        public static string MechaComponentOriginalOccupiedGridInfoJsonFileFolder = Application.streamingAssetsPath + "/Configs/MechaComponentPrefabConfigs";
         public static Dictionary<string, MechaComponentOriginalOccupiedGridInfo> MechaComponentOriginalOccupiedGridInfoDict = new Dictionary<string, MechaComponentOriginalOccupiedGridInfo>();
+
+        public static string DesignRoot = "/Designs/";
 
         public static string AbilityConfigFolder_Relative = "Configs/BattleConfigs/AbilityConfigs";
         public static string AbilityGroupConfigFolder_Relative = "Configs/BattleConfigs/AbilityGroupConfigs";
@@ -40,8 +41,9 @@ namespace GameCore
         public static string MechaComponentGroupConfigFolder_Relative = "Configs/BattleConfigs/MechaComponentGroupConfigs";
         public static string MechaComponentQualityConfigFolder_Relative = "Configs/BattleConfigs/MechaComponentQualityConfigs";
         public static string MechaConfigFolder_Relative = "Configs/MechaConfigs";
+        public static string EnemyAIFolder_Relative = "AI/EnemyAI";
 
-        public static string AllMechaComponentConfigPath_Relative = "Configs/BattleConfigs/AllMechaComponentConfig";
+        public static string AllMechaComponentConfigPath_Relative = "Configs/BattleConfigs/AllMechaComponentConfig.asset";
 
         public static string AbilityConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityConfigFolder_Relative + "/";
         public static string AbilityGroupConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityGroupConfigFolder_Relative + "/";
@@ -49,8 +51,9 @@ namespace GameCore
         public static string MechaComponentGroupConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaComponentGroupConfigFolder_Relative + "/";
         public static string MechaComponentQualityConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaComponentQualityConfigFolder_Relative + "/";
         public static string MechaConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaConfigFolder_Relative + "/";
+        public static string EnemyAIFolder_Build = EnemyAIFolder_Relative + "/"; // UnderResources
 
-        public static string AllMechaComponentConfigPath_Build = Application.streamingAssetsPath + "/" + AllMechaComponentConfigPath_Relative + ".config";
+        public static string AllMechaComponentConfigPath_Build = Application.streamingAssetsPath + "/" + AllMechaComponentConfigPath_Relative;
 
         [ShowInInspector]
         [LabelText("技能配置表")]
@@ -80,6 +83,10 @@ namespace GameCore
         [LabelText("机甲配置表")]
         public static readonly Dictionary<string, MechaConfig> MechaConfigDict = new Dictionary<string, MechaConfig>();
 
+        [ShowInInspector]
+        [LabelText("敌兵AI配置表")]
+        public static readonly Dictionary<string, BehaviourTree> EnemyAIConfigDict = new Dictionary<string, BehaviourTree>();
+
         public override void Awake()
         {
             LoadMechaComponentOccupiedGridPosDict();
@@ -94,6 +101,9 @@ namespace GameCore
             MechaComponentOriginalOccupiedGridInfoDict = JsonConvert.DeserializeObject<Dictionary<string, MechaComponentOriginalOccupiedGridInfo>>(content);
         }
 
+        #region Export
+
+#if UNITY_EDITOR
         [MenuItem("开发工具/配置/序列化配置")]
         public static void ExportConfigs()
         {
@@ -105,21 +115,25 @@ namespace GameCore
             ExportProjectileConfig(dataFormat);
             ExportMechaComponentConfig(dataFormat);
             LoadMechaComponentConfig(dataFormat);
-            ExportMechaComponentGroupConfig(dataFormat);
             ExportMechaComponentQualityConfig(dataFormat);
+            LoadMechaComponentQualityConfig(dataFormat);
+            ExportMechaComponentGroupConfig(dataFormat);
             ExportMechaConfig(dataFormat);
             AssetDatabase.Refresh();
         }
 
         private static void ExportAbilityConfig(DataFormat dataFormat)
         {
-            Object[] configObjs = Resources.LoadAll(AbilityConfigFolder_Relative, typeof(Object));
             string folder = AbilityConfigFolder_Build;
             if (Directory.Exists(folder)) Directory.Delete(folder, true);
             Directory.CreateDirectory(folder);
-            foreach (Object obj in configObjs)
+
+            DirectoryInfo di = new DirectoryInfo(Application.dataPath + DesignRoot + AbilityConfigFolder_Relative);
+            foreach (FileInfo fi in di.GetFiles("*.asset"))
             {
-                AbilityConfigSSO configSSO = (AbilityConfigSSO) obj;
+                string relativePath = CommonUtils.ConvertAbsolutePathToProjectPath(fi.FullName);
+                Object configObj = AssetDatabase.LoadAssetAtPath<Object>(relativePath);
+                AbilityConfigSSO configSSO = (AbilityConfigSSO) configObj;
                 Ability config = configSSO.Ability;
                 string path = folder + configSSO.name + ".config";
                 byte[] bytes = SerializationUtility.SerializeValue(config, dataFormat);
@@ -129,13 +143,16 @@ namespace GameCore
 
         private static void ExportProjectileConfig(DataFormat dataFormat)
         {
-            Object[] configObjs = Resources.LoadAll(ProjectileConfigFolder_Relative, typeof(Object));
             string folder = ProjectileConfigFolder_Build;
             if (Directory.Exists(folder)) Directory.Delete(folder, true);
             Directory.CreateDirectory(folder);
-            foreach (Object obj in configObjs)
+
+            DirectoryInfo di = new DirectoryInfo(Application.dataPath + DesignRoot + ProjectileConfigFolder_Relative);
+            foreach (FileInfo fi in di.GetFiles("*.asset"))
             {
-                ProjectileConfigSSO configSSO = (ProjectileConfigSSO) obj;
+                string relativePath = CommonUtils.ConvertAbsolutePathToProjectPath(fi.FullName);
+                Object configObj = AssetDatabase.LoadAssetAtPath<Object>(relativePath);
+                ProjectileConfigSSO configSSO = (ProjectileConfigSSO) configObj;
                 ProjectileConfig config = configSSO.ProjectileConfig;
                 string path = folder + configSSO.name + ".config";
                 byte[] bytes = SerializationUtility.SerializeValue(config, dataFormat);
@@ -145,13 +162,16 @@ namespace GameCore
 
         private static void ExportAbilityGroupConfig(DataFormat dataFormat)
         {
-            Object[] configObjs = Resources.LoadAll(AbilityGroupConfigFolder_Relative, typeof(Object));
             string folder = AbilityGroupConfigFolder_Build;
             if (Directory.Exists(folder)) Directory.Delete(folder, true);
             Directory.CreateDirectory(folder);
-            foreach (Object obj in configObjs)
+
+            DirectoryInfo di = new DirectoryInfo(Application.dataPath + DesignRoot + AbilityGroupConfigFolder_Relative);
+            foreach (FileInfo fi in di.GetFiles("*.asset"))
             {
-                AbilityGroupConfigSSO configSSO = (AbilityGroupConfigSSO) obj;
+                string relativePath = CommonUtils.ConvertAbsolutePathToProjectPath(fi.FullName);
+                Object configObj = AssetDatabase.LoadAssetAtPath<Object>(relativePath);
+                AbilityGroupConfigSSO configSSO = (AbilityGroupConfigSSO) configObj;
                 AbilityGroup config = configSSO.GetAbilityGroup_NoData();
                 string path = folder + configSSO.name + ".config";
                 byte[] bytes = SerializationUtility.SerializeValue(config, dataFormat);
@@ -161,10 +181,13 @@ namespace GameCore
 
         private static void ExportMechaComponentConfig(DataFormat dataFormat)
         {
-            Object configObj = Resources.Load(AllMechaComponentConfigPath_Relative, typeof(Object));
             string path = AllMechaComponentConfigPath_Build;
             FileInfo fi = new FileInfo(path);
             if (fi.Exists) fi.Delete();
+
+            FileInfo configFileInfo = new FileInfo(Application.dataPath + DesignRoot + AllMechaComponentConfigPath_Relative);
+            string relativePath = CommonUtils.ConvertAbsolutePathToProjectPath(configFileInfo.FullName);
+            Object configObj = AssetDatabase.LoadAssetAtPath<Object>(relativePath);
             AllMechaComponentConfigSSO configSSO = (AllMechaComponentConfigSSO) configObj;
             configSSO.RefreshConfigList();
             byte[] bytes = SerializationUtility.SerializeValue(configSSO.MechaComponentConfigList, dataFormat);
@@ -173,13 +196,16 @@ namespace GameCore
 
         private static void ExportMechaComponentGroupConfig(DataFormat dataFormat)
         {
-            Object[] configObjs = Resources.LoadAll(MechaComponentGroupConfigFolder_Relative, typeof(Object));
             string folder = MechaComponentGroupConfigFolder_Build;
             if (Directory.Exists(folder)) Directory.Delete(folder, true);
             Directory.CreateDirectory(folder);
-            foreach (Object obj in configObjs)
+
+            DirectoryInfo di = new DirectoryInfo(Application.dataPath + DesignRoot + MechaComponentGroupConfigFolder_Relative);
+            foreach (FileInfo fi in di.GetFiles("*.asset"))
             {
-                MechaComponentGroupConfigSSO configSSO = (MechaComponentGroupConfigSSO) obj;
+                string relativePath = CommonUtils.ConvertAbsolutePathToProjectPath(fi.FullName);
+                Object configObj = AssetDatabase.LoadAssetAtPath<Object>(relativePath);
+                MechaComponentGroupConfigSSO configSSO = (MechaComponentGroupConfigSSO) configObj;
                 configSSO.RefreshConfigListBeforeExport();
                 MechaComponentGroupConfig config = configSSO.MechaComponentGroupConfig;
                 if (string.IsNullOrEmpty(configSSO.MechaComponentGroupConfig.MechaComponentGroupConfigName))
@@ -197,13 +223,16 @@ namespace GameCore
 
         private static void ExportMechaComponentQualityConfig(DataFormat dataFormat)
         {
-            Object[] configObjs = Resources.LoadAll(MechaComponentQualityConfigFolder_Relative, typeof(Object));
             string folder = MechaComponentQualityConfigFolder_Build;
             if (Directory.Exists(folder)) Directory.Delete(folder, true);
             Directory.CreateDirectory(folder);
-            foreach (Object obj in configObjs)
+
+            DirectoryInfo di = new DirectoryInfo(Application.dataPath + DesignRoot + MechaComponentQualityConfigFolder_Relative);
+            foreach (FileInfo fi in di.GetFiles("*.asset"))
             {
-                MechaComponentQualityConfigSSO configSSO = (MechaComponentQualityConfigSSO) obj;
+                string relativePath = CommonUtils.ConvertAbsolutePathToProjectPath(fi.FullName);
+                Object configObj = AssetDatabase.LoadAssetAtPath<Object>(relativePath);
+                MechaComponentQualityConfigSSO configSSO = (MechaComponentQualityConfigSSO) configObj;
                 MechaComponentQualityConfig config = configSSO.MechaComponentQualityConfig;
                 if (string.IsNullOrEmpty(configSSO.MechaComponentQualityConfig.MechaComponentQualityConfigName))
                 {
@@ -220,13 +249,16 @@ namespace GameCore
 
         private static void ExportMechaConfig(DataFormat dataFormat)
         {
-            Object[] configObjs = Resources.LoadAll(MechaConfigFolder_Relative, typeof(Object));
             string folder = MechaConfigFolder_Build;
             if (Directory.Exists(folder)) Directory.Delete(folder, true);
             Directory.CreateDirectory(folder);
-            foreach (Object obj in configObjs)
+
+            DirectoryInfo di = new DirectoryInfo(Application.dataPath + DesignRoot + MechaConfigFolder_Relative);
+            foreach (FileInfo fi in di.GetFiles("*.prefab"))
             {
-                MechaDesignerHelper helper = ((GameObject) obj).GetComponent<MechaDesignerHelper>();
+                string relativePath = CommonUtils.ConvertAbsolutePathToProjectPath(fi.FullName);
+                Object configObj = AssetDatabase.LoadAssetAtPath<Object>(relativePath);
+                MechaDesignerHelper helper = ((GameObject) configObj).GetComponent<MechaDesignerHelper>();
                 if (helper)
                 {
                     MechaConfig config = helper.ExportMechaConfig();
@@ -236,10 +268,15 @@ namespace GameCore
                 }
                 else
                 {
-                    Debug.LogError($"{obj.name}机甲配置未绑定脚本MechaDesignerHelper，无法序列化");
+                    Debug.LogError($"{configObj.name}机甲配置未绑定脚本MechaDesignerHelper，无法序列化");
                 }
             }
         }
+#endif
+
+        #endregion
+
+        #region Load
 
         public static bool IsLoaded = false;
 
@@ -254,6 +291,7 @@ namespace GameCore
             LoadMechaComponentQualityConfig(dataFormat);
             LoadMechaComponentGroupConfig(dataFormat);
             LoadMechaConfig(dataFormat);
+            LoadEnemyAIConfig();
             IsLoaded = true;
         }
 
@@ -453,6 +491,25 @@ namespace GameCore
             }
         }
 
+        private static void LoadEnemyAIConfig()
+        {
+            EnemyAIConfigDict.Clear();
+            BehaviourTree[] bts = Resources.LoadAll<BehaviourTree>(EnemyAIFolder_Build);
+            foreach (BehaviourTree bt in bts)
+            {
+                if (EnemyAIConfigDict.ContainsKey(bt.name))
+                {
+                    Debug.LogError($"敌兵AI配置重名:{bt.name}");
+                }
+                else
+                {
+                    EnemyAIConfigDict.Add(bt.name, bt);
+                }
+            }
+        }
+
+        #endregion
+
         public Ability GetAbility(string abilityName)
         {
             if (!IsLoaded) LoadAllConfigs();
@@ -512,6 +569,13 @@ namespace GameCore
             }
 
             return null;
+        }
+
+        public BehaviourTree GetEnemyAIConfig(string aiConfigKey)
+        {
+            if (!IsLoaded) LoadAllConfigs();
+            EnemyAIConfigDict.TryGetValue(aiConfigKey, out BehaviourTree bt);
+            return bt;
         }
     }
 }

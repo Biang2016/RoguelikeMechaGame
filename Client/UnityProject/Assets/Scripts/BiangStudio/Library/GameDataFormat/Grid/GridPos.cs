@@ -13,6 +13,8 @@ namespace BiangStudio.GameDataFormat.Grid
 
         private static readonly GridPos zeroGPR = new GridPosR(0, 0, Orientation.Up);
         public static GridPosR Zero => zeroGPR;
+        private static readonly GridPos oneGPR = new GridPosR(1, 1, Orientation.Up);
+        public static GridPosR One => oneGPR;
 
         public GridPosR(int x, int z)
         {

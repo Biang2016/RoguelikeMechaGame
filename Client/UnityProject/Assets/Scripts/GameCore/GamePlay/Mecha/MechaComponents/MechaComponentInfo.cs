@@ -51,11 +51,12 @@ namespace GameCore
         public UnityAction<MechaComponentInfo> OnRemoveMechaComponentInfoSuc;
         public UnityAction<Color, float> OnHighLightColorChange;
 
-        public MechaComponentInfo(MechaComponentConfig mechaComponentConfig, Quality quality)
+        public MechaComponentInfo(MechaComponentConfig mechaComponentConfig, Quality quality, string alias = "")
         {
             GUID = GetGUID();
             MechaComponentConfig = mechaComponentConfig;
             Quality = quality;
+            Alias = alias;
             AbilityGroup = ConfigManager.Instance.GetAbilityGroup(MechaComponentConfig.AbilityGroupConfigKey);
             MechaComponentQualityConfig = ConfigManager.Instance.GetMechaComponentQualityConfig(MechaComponentConfig.MechaComponentQualityConfigKey);
 
@@ -87,7 +88,7 @@ namespace GameCore
 
         public MechaComponentInfo Clone()
         {
-            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentConfig, Quality);
+            MechaComponentInfo mci = new MechaComponentInfo(MechaComponentConfig, Quality, Alias);
             return mci;
         }
 

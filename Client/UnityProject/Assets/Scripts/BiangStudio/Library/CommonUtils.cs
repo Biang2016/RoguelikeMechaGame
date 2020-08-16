@@ -575,5 +575,34 @@ namespace BiangStudio
             float d = Vector3.Dot(planePoint - point, planeNormal) / Vector3.Dot(direct.normalized, planeNormal);
             return d * direct.normalized + point;
         }
+
+        public static string ConvertProjectPathToAbsolutePath(string projectPath)
+        {
+            if (projectPath.StartsWith("/"))
+            {
+                return Application.dataPath + projectPath;
+            }
+            else
+            {
+                return $"{Application.dataPath}/{projectPath}";
+            }
+        }
+
+        public static string ConvertAbsolutePathToProjectPath(string absolutePath)
+        {
+            if (absolutePath.Contains("\\"))
+            {
+                absolutePath = absolutePath.Replace("\\", "/");
+            }
+
+            if (absolutePath.StartsWith(Application.dataPath))
+            {
+                return "Assets" + absolutePath.Replace(Application.dataPath, "");
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

@@ -52,6 +52,7 @@ namespace Client
         private DragManager DragManager => DragManager.Instance;
         private MouseHoverManager MouseHoverManager => MouseHoverManager.Instance;
         private DragExecuteManager DragExecuteManager => DragExecuteManager.Instance;
+        private AIManager AIManager => AIManager.Instance;
 
         #region Level
 
@@ -117,6 +118,8 @@ namespace Client
             InitMouseHoverManager();
             DragExecuteManager.Init();
             DragExecuteManager.Awake();
+            AIManager.Init(0.1f);
+            AIManager.Awake();
 
             ClientLevelManager.Init();
             LevelManager.Init();
@@ -149,6 +152,7 @@ namespace Client
             DragManager.Start();
             MouseHoverManager.Start();
             DragExecuteManager.Start();
+            AIManager.Start();
 
             ClientLevelManager.Start();
             BattleManager.Start();
@@ -170,77 +174,80 @@ namespace Client
 
         private void Update()
         {
-            ConfigManager.Update();
-            LayerManager.Update();
-            PrefabManager.Update();
-            GameObjectPoolManager.Update();
+            ConfigManager.Update(Time.deltaTime);
+            LayerManager.Update(Time.deltaTime);
+            PrefabManager.Update(Time.deltaTime);
+            GameObjectPoolManager.Update(Time.deltaTime);
 
             RoutineManager.Update(Time.deltaTime, Time.frameCount);
-            GameStateManager.Update();
+            GameStateManager.Update(Time.deltaTime);
 
-            BackpackManager.Update();
-            DragManager.Update();
-            MouseHoverManager.Update();
-            DragExecuteManager.Update();
+            BackpackManager.Update(Time.deltaTime);
+            DragManager.Update(Time.deltaTime);
+            MouseHoverManager.Update(Time.deltaTime);
+            DragExecuteManager.Update(Time.deltaTime);
+            AIManager.Update(Time.deltaTime);
 
-            ClientLevelManager.Update();
-            BattleManager.Update();
-            ClientBattleManager.Update();
-            FXManager.Update();
-            UIBattleTipManager.Update();
-            ClientProjectileManager.Update();
+            ClientLevelManager.Update(Time.deltaTime);
+            BattleManager.Update(Time.deltaTime);
+            ClientBattleManager.Update(Time.deltaTime);
+            FXManager.Update(Time.deltaTime);
+            UIBattleTipManager.Update(Time.deltaTime);
+            ClientProjectileManager.Update(Time.deltaTime);
 
-            ControlManager.Update();
+            ControlManager.Update(Time.deltaTime);
         }
 
         void LateUpdate()
         {
-            ConfigManager.LateUpdate();
-            LayerManager.LateUpdate();
-            PrefabManager.LateUpdate();
-            GameObjectPoolManager.LateUpdate();
+            ConfigManager.LateUpdate(Time.deltaTime);
+            LayerManager.LateUpdate(Time.deltaTime);
+            PrefabManager.LateUpdate(Time.deltaTime);
+            GameObjectPoolManager.LateUpdate(Time.deltaTime);
 
-            RoutineManager.LateUpdate();
-            GameStateManager.LateUpdate();
+            RoutineManager.LateUpdate(Time.deltaTime);
+            GameStateManager.LateUpdate(Time.deltaTime);
 
-            BackpackManager.LateUpdate();
-            DragManager.LateUpdate();
-            MouseHoverManager.LateUpdate();
-            DragExecuteManager.LateUpdate();
+            BackpackManager.LateUpdate(Time.deltaTime);
+            DragManager.LateUpdate(Time.deltaTime);
+            MouseHoverManager.LateUpdate(Time.deltaTime);
+            DragExecuteManager.LateUpdate(Time.deltaTime);
+            AIManager.LateUpdate(Time.deltaTime);
 
-            ClientLevelManager.LateUpdate();
-            BattleManager.LateUpdate();
-            ClientBattleManager.LateUpdate();
-            FXManager.LateUpdate();
-            UIBattleTipManager.LateUpdate();
-            ClientProjectileManager.LateUpdate();
+            ClientLevelManager.LateUpdate(Time.deltaTime);
+            BattleManager.LateUpdate(Time.deltaTime);
+            ClientBattleManager.LateUpdate(Time.deltaTime);
+            FXManager.LateUpdate(Time.deltaTime);
+            UIBattleTipManager.LateUpdate(Time.deltaTime);
+            ClientProjectileManager.LateUpdate(Time.deltaTime);
 
-            ControlManager.LateUpdate();
+            ControlManager.LateUpdate(Time.deltaTime);
         }
 
         void FixedUpdate()
         {
-            ConfigManager.FixedUpdate();
-            LayerManager.FixedUpdate();
-            PrefabManager.FixedUpdate();
-            GameObjectPoolManager.FixedUpdate();
+            ConfigManager.FixedUpdate(Time.fixedDeltaTime);
+            LayerManager.FixedUpdate(Time.fixedDeltaTime);
+            PrefabManager.FixedUpdate(Time.fixedDeltaTime);
+            GameObjectPoolManager.FixedUpdate(Time.fixedDeltaTime);
 
-            RoutineManager.FixedUpdate();
-            GameStateManager.FixedUpdate();
+            RoutineManager.FixedUpdate(Time.fixedDeltaTime);
+            GameStateManager.FixedUpdate(Time.fixedDeltaTime);
 
-            BackpackManager.FixedUpdate();
-            DragManager.FixedUpdate();
-            MouseHoverManager.FixedUpdate();
-            DragExecuteManager.FixedUpdate();
+            BackpackManager.FixedUpdate(Time.fixedDeltaTime);
+            DragManager.FixedUpdate(Time.fixedDeltaTime);
+            MouseHoverManager.FixedUpdate(Time.fixedDeltaTime);
+            DragExecuteManager.FixedUpdate(Time.fixedDeltaTime);
+            AIManager.FixedUpdate(Time.fixedDeltaTime);
 
-            ClientLevelManager.FixedUpdate();
-            BattleManager.FixedUpdate();
-            ClientBattleManager.FixedUpdate();
-            FXManager.FixedUpdate();
-            UIBattleTipManager.FixedUpdate();
-            ClientProjectileManager.FixedUpdate();
+            ClientLevelManager.FixedUpdate(Time.fixedDeltaTime);
+            BattleManager.FixedUpdate(Time.fixedDeltaTime);
+            ClientBattleManager.FixedUpdate(Time.fixedDeltaTime);
+            FXManager.FixedUpdate(Time.fixedDeltaTime);
+            UIBattleTipManager.FixedUpdate(Time.fixedDeltaTime);
+            ClientProjectileManager.FixedUpdate(Time.fixedDeltaTime);
 
-            ControlManager.FixedUpdate();
+            ControlManager.FixedUpdate(Time.fixedDeltaTime);
         }
 
         private void InitBackpack()
@@ -309,7 +316,7 @@ namespace Client
 
             myBackPack.LoadInventoryInfo(inventoryInfo);
 
-            MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player);
+            MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player, null);
             playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MC_BasicCore"), Quality.Common), new GridPosR(9, 9));
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
@@ -329,7 +336,6 @@ namespace Client
         {
             MouseHoverManager.M_StateMachine.SetState(MouseHoverManager.StateMachine.States.BattleInventory);
             BackpackManager.Instance.GetBackPack(DragAreaDefines.BattleInventory.DragAreaName).BackpackPanel.gameObject.SetActive(open);
-            ClientBattleManager.Instance.PlayerMecha.MechaLight.enabled = open;
             if (open)
             {
                 ClientBattleManager.Instance.SetAllEnemyMechaShown(false);

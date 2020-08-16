@@ -20,7 +20,7 @@ namespace FlowCanvas.Nodes
         private string _description;
 
         ///A reference to the parent node this SimplexNode lives within
-        protected FlowNode parentNode { get; private set; }
+        public FlowNode parentNode { get; private set; }
 
         virtual public string name {
             get

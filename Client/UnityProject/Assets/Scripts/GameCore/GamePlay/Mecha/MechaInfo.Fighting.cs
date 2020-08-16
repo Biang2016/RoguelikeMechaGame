@@ -114,9 +114,9 @@ namespace GameCore
         public bool IsOpponent(MechaType targetMechaType)
         {
             if (targetMechaType == MechaType.Player && MechaType == MechaType.Enemy) return true;
-            if (MechaType == MechaType.Enemy && targetMechaType == MechaType.Player) return true;
+            if (MechaType == MechaType.Player && targetMechaType == MechaType.Enemy) return true;
             if (targetMechaType == MechaType.Friend && MechaType == MechaType.Enemy) return true;
-            if (MechaType == MechaType.Enemy && targetMechaType == MechaType.Friend) return true;
+            if (MechaType == MechaType.Friend && targetMechaType == MechaType.Enemy) return true;
             return false;
         }
 

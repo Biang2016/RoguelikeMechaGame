@@ -24,6 +24,9 @@ namespace Client
         [SerializeField]
         private MechaEditorAreaGridRoot MechaEditorAreaGridRoot;
 
+        [SerializeField]
+        private Light MechaEditorLight;
+
         private DragProcessor DragProcessor;
 
         void Start()
@@ -35,17 +38,9 @@ namespace Client
         {
             DragProcessor = DragManager.Instance.GetDragProcessor<MechaComponent>();
             Clear();
-            gameObject.SetActive(mechaInfo.IsPlayer);
             SetShown(false);
-            if (mechaInfo.IsPlayer)
-            {
-                DragArea.DragAreaName = mechaInfo.MechaEditorInventory.DragArea.DragAreaName;
-                MechaEditorAreaGridRoot.Init();
-            }
-            else
-            {
-                DragArea.DragAreaName = BiangStudio.DragHover.DragAreaDefines.None.DragAreaName;
-            }
+            DragArea.DragAreaName = mechaInfo.MechaEditorInventory.DragArea.DragAreaName;
+            MechaEditorAreaGridRoot.Init();
         }
 
         public void Clear()
@@ -172,6 +167,7 @@ namespace Client
             BoxCollider.enabled = shown;
             PivotIndicator.SetActive(shown);
             MechaEditorAreaGridRoot.gameObject.SetActive(shown);
+            MechaEditorLight.enabled = shown;
         }
     }
 }

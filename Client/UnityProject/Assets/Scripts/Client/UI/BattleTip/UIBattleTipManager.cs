@@ -19,9 +19,9 @@ namespace Client
             RegisterEvent();
         }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
-            base.Update();
+            base.Update(deltaTime);
             if (ControlManager.Instance.Battle_ToggleBattleTip.Up)
             {
                 EnableUIBattleTip = !EnableUIBattleTip;

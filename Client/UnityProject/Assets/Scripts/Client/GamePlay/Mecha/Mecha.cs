@@ -1,22 +1,24 @@
 ﻿using System.Collections.Generic;
-using BiangStudio.ObjectPool;
+using BiangStudio.GamePlay;
 using GameCore;
+using NodeCanvas.BehaviourTrees;
+using NodeCanvas.Framework;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Client
 {
-    public partial class Mecha : PoolObject
+    public partial class Mecha : MechaBase
     {
-        public MechaInfo MechaInfo;
         public UnityAction<Mecha> OnRemoveMechaSuc;
 
         [SerializeField]
         private Transform MechaComponentContainer;
 
-        public Light MechaLight;
-
         public MechaEditArea MechaEditArea;
+
+        [SerializeField]
+        protected BehaviourTreeOwner BehaviourTreeOwner;
 
         public SortedDictionary<uint, MechaComponent> MechaComponentDict = new SortedDictionary<uint, MechaComponent>();
         public bool IsPlayer => MechaInfo.IsPlayer;
@@ -26,8 +28,13 @@ namespace Client
         public override void PoolRecycle()
         {
             Clean();
+            if (MechaEditArea != null)
+            {
+                DestroyImmediate(MechaEditArea);
+                MechaEditArea = null;
+            }
+
             base.PoolRecycle();
-            MechaLight.enabled = false;
         }
 
         public void Initialize(MechaInfo mechaInfo)
@@ -35,6 +42,25 @@ namespace Client
             Clean();
 
             MechaInfo = mechaInfo;
+            if (!IsPlayer)
+            {
+                MechaBaseAIAgent = new MechaBaseAIAgent(this);
+            }
+
+            // AI
+            if (mechaInfo.MechaConfig != null)
+            {
+                string aiConfigKey = mechaInfo.MechaConfig.MechaAIConfigKey;
+                if (!string.IsNullOrEmpty(aiConfigKey))
+                {
+                    BehaviourTree bt = ConfigManager.Instance.GetEnemyAIConfig(aiConfigKey);
+                    BehaviourTreeOwner.behaviour = bt;
+                    BehaviourTreeOwner.updateMode = Graph.UpdateMode.NormalUpdate;
+                    BehaviourTreeOwner.StartBehaviour();
+                    AIManager.Instance.AddBehaviourTreeOwner(BehaviourTreeOwner);
+                }
+            }
+
             MechaInfo.OnAddMechaComponentInfoSuc = (mci, gp_matrix) => AddMechaComponent(mci);
             MechaInfo.OnRemoveMechaInfoSuc += (mi) =>
             {
@@ -65,13 +91,22 @@ namespace Client
             MechaInfo.OnInstantiated = null;
             MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation();
 
+            // MechaEditorArea
+            if (mechaInfo.MechaType == MechaType.Player)
+            {
+                GameObject mea = PrefabManager.Instance.GetPrefab(nameof(MechaEditArea));
+                GameObject meaGO = Instantiate(mea);
+                meaGO.transform.parent = transform;
+                meaGO.transform.localPosition = new Vector3(0, -0.5f, 0);
+                MechaEditArea = meaGO.GetComponent<MechaEditArea>();
+                MechaEditArea.Init(mechaInfo);
+            }
+
             foreach (KeyValuePair<uint, MechaComponentInfo> kv in mechaInfo.MechaComponentInfoDict) // 将其它的组件实例化
             {
                 if (MechaComponentDict.ContainsKey(kv.Key)) continue;
                 AddMechaComponent(kv.Value);
             }
-
-            MechaEditArea.Init(mechaInfo);
 
             GridShown = false;
             SlotLightsShown = false;
@@ -85,7 +120,7 @@ namespace Client
 
         public void Clean()
         {
-            MechaEditArea.Clear();
+            MechaEditArea?.Clear();
             foreach (KeyValuePair<uint, MechaComponent> kv in MechaComponentDict)
             {
                 kv.Value.PoolRecycle();
@@ -94,12 +129,26 @@ namespace Client
             MechaComponentDict.Clear();
             OnRemoveMechaSuc = null;
             MechaInfo = null;
+            BehaviourTreeOwner.behaviour = null;
+            AIManager.Instance.RemoveBehaviourTreeOwner(BehaviourTreeOwner);
+            if (MechaBaseAIAgent != null)
+            {
+                MechaBaseAIAgent.MechaBase = null;
+                MechaBaseAIAgent = null;
+            }
+
         }
 
-        void Update()
+        protected void Update()
         {
             if (!IsRecycled)
             {
+                if (MechaInfo != null)
+                {
+                    MechaInfo.Position = transform.position;
+                    MechaInfo.Rotation = transform.rotation;
+                }
+
                 if (IsBuilding && IsPlayer)
                 {
                     Update_Building();
@@ -108,6 +157,10 @@ namespace Client
                 if (IsFighting)
                 {
                     Update_Fighting();
+                    if (!IsPlayer)
+                    {
+                        MechaBaseAIAgent?.Update();
+                    }
                 }
             }
         }

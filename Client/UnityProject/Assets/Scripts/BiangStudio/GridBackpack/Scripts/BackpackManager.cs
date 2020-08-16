@@ -34,7 +34,7 @@ namespace BiangStudio.GridBackpack
         {
         }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             foreach (KeyValuePair<string, Backpack> kv in BackpackDict)
             {

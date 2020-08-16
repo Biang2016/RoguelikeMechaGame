@@ -51,7 +51,7 @@ namespace BiangStudio.DragHover
             DragAreaLayerMask = dragAreaLayerMask;
         }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             Current_DragArea = CheckCurrentDragArea();
             if (ForbidDrag)

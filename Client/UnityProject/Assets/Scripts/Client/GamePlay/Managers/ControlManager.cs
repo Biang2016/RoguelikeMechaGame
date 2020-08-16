@@ -213,7 +213,7 @@ namespace Client
             MechaBuildingInputActions.Disable();
         }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             if (false)
             {
@@ -228,7 +228,7 @@ namespace Client
             }
         }
 
-        public override void LateUpdate()
+        public override void LateUpdate(float deltaTime)
         {
             foreach (KeyValuePair<ButtonNames, ButtonState> kv in ButtonStateDict)
             {

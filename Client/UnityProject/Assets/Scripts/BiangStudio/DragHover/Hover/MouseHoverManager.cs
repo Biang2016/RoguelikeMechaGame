@@ -45,7 +45,7 @@ namespace BiangStudio.DragHover
         {
         }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             M_StateMachine.Update();
         }

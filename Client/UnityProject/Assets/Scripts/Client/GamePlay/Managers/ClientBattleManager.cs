@@ -41,7 +41,7 @@ namespace Client
             HUDPanel = UIManager.Instance.ShowUIForms<HUDPanel>();
         }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Battle_MousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerManager.Instance.LayerMask_ComponentHitBox))

@@ -31,7 +31,7 @@ namespace GameCore
         {
         }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             BattleInfo?.BattleMechaInfoData?.PlayerMechaInfo?.UpdateLifeChange();
             if (BattleInfo?.BattleMechaInfoData != null)

@@ -1,4 +1,5 @@
-﻿using BiangStudio.GameDataFormat.Grid;
+﻿using System;
+using BiangStudio.GameDataFormat.Grid;
 using GameCore;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -38,12 +39,13 @@ namespace Client
 
         public static MechaInfo GetMechaInfo(this MechaConfig mechaConfig, MechaType mechaType)
         {
-            MechaInfo mechaInfo = new MechaInfo(mechaConfig.MechaConfigName, mechaType);
+            MechaInfo mechaInfo = new MechaInfo(mechaConfig.MechaConfigName, mechaType, mechaConfig.Clone());
             foreach (MechaConfig.Config config in mechaConfig.MechaComponentList)
             {
                 MechaComponentConfig mcc = ConfigManager.Instance.GetMechaComponentConfig(config.MechaComponentKey);
-                MechaComponentInfo mci = new MechaComponentInfo(mcc, Quality.Common);
-                mechaInfo.AddMechaComponentInfo(mci, config.GridPosR);
+                MechaComponentInfo mci = new MechaComponentInfo(mcc, config.MechaComponentQuality, config.MechaComponentAlias);
+                GridPosR finalGPR = config.GridPosR + ConfigManager.EDIT_AREA_HALF_SIZE * GridPosR.One;
+                mechaInfo.AddMechaComponentInfo(mci, finalGPR);
             }
 
             return mechaInfo;
