@@ -35,5 +35,18 @@ namespace Client
 
             action.canceled += context => { state.Pressed = false; };
         }
+
+        public static MechaInfo GetMechaInfo(this MechaConfig mechaConfig, MechaType mechaType)
+        {
+            MechaInfo mechaInfo = new MechaInfo(mechaConfig.MechaConfigName, mechaType);
+            foreach (MechaConfig.Config config in mechaConfig.MechaComponentList)
+            {
+                MechaComponentConfig mcc = ConfigManager.Instance.GetMechaComponentConfig(config.MechaComponentKey);
+                MechaComponentInfo mci = new MechaComponentInfo(mcc, Quality.Common);
+                mechaInfo.AddMechaComponentInfo(mci, config.GridPosR);
+            }
+
+            return mechaInfo;
+        }
     }
 }

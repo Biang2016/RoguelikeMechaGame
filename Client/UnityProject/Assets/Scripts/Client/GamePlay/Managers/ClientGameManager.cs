@@ -249,8 +249,8 @@ namespace Client
                 DragAreaDefines.BattleInventory.DragAreaName,
                 DragAreaDefines.BattleInventory,
                 ConfigManager.BackpackGridSize,
+                10,
                 8,
-                20,
                 false,
                 true,
                 true,
@@ -310,12 +310,11 @@ namespace Client
             myBackPack.LoadInventoryInfo(inventoryInfo);
 
             MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player);
+            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MC_BasicCore"), Quality.Common), new GridPosR(9, 9));
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);
             ClientBattleManager.Instance.StartBattle(battleInfo);
             UIBattleTipManager.Init();
-
-            playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MC_BasicCore"), Quality.Common), new GridPosR(9, 9));
 
             ClientLevelManager.Instance.StartLevel();
         }

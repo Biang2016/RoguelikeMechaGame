@@ -122,6 +122,8 @@ namespace GameCore
 
         public UnityAction<int> OnInputPowerChange;
 
+        [LabelText("实时能量输入")]
+        [ReadOnly]
         public int AccumulatedPowerInsideThisFrame;
 
         private int _inputPower;
@@ -143,6 +145,7 @@ namespace GameCore
 
         #endregion
 
+        [HideInInspector]
         public bool TriggerButtonThisFrame = false;
 
         public void PreUpdate_Fighting()

@@ -61,10 +61,13 @@ namespace Client
                 () => ControlManager.Instance.Building_RotateItem.Down);
             MechaInfo.MechaEditorInventory.OnRemoveItemSucAction = (item) => { ((MechaComponentInfo) item.ItemContentInfo).RemoveMechaComponentInfo(); };
             MechaInfo.MechaEditorInventory.RefreshInventoryGrids();
+            MechaInfo.OnInstantiated?.Invoke(); // 将已经积攒的未实例化的组件实例化
+            MechaInfo.OnInstantiated = null;
             MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation();
 
-            foreach (KeyValuePair<uint, MechaComponentInfo> kv in mechaInfo.MechaComponentInfoDict)
+            foreach (KeyValuePair<uint, MechaComponentInfo> kv in mechaInfo.MechaComponentInfoDict) // 将其它的组件实例化
             {
+                if (MechaComponentDict.ContainsKey(kv.Key)) continue;
                 AddMechaComponent(kv.Value);
             }
 

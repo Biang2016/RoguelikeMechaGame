@@ -47,7 +47,7 @@ namespace Client
         [Title("Editor Params")]
         [LabelText("拍照角度")]
         public float ScreenShotAngle;
-        
+
         internal Draggable Draggable;
         private bool isReturningToBackpack = false;
         internal UnityAction<MechaComponent> OnRemoveMechaComponentSuc;
@@ -81,8 +81,11 @@ namespace Client
         {
             if (!Application.isPlaying) // 编辑器中不允许调整位置
             {
-                transform.localPosition = Vector3.zero;
-                transform.localRotation = Quaternion.identity;
+                if (!GetComponentInParent<MechaDesignerHelper>())
+                {
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = Quaternion.identity;
+                }
             }
         }
 

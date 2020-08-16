@@ -44,4 +44,8 @@ public class ConfigPreviewerWindow : OdinEditorWindow
     [ShowInInspector]
     [LabelText("机甲组件品质配置表")]
     public List<MechaComponentQualityConfig> MechaComponentQualityConfigDict => ConfigManager.MechaComponentQualityConfigDict.Values.ToList();
+
+    [ShowInInspector]
+    [LabelText("机甲配置表")]
+    public List<MechaConfig> MechaConfigDict => ConfigManager.MechaConfigDict.Values.ToList();
 }

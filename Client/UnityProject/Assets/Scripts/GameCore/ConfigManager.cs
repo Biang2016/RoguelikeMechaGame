@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using BiangStudio;
+using BiangStudio.CloneVariant;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.Singleton;
+using Client;
 using GameCore.AbilityDataDriven;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
@@ -33,16 +37,18 @@ namespace GameCore
         public static string AbilityConfigFolder_Relative = "Configs/BattleConfigs/AbilityConfigs";
         public static string AbilityGroupConfigFolder_Relative = "Configs/BattleConfigs/AbilityGroupConfigs";
         public static string ProjectileConfigFolder_Relative = "Configs/BattleConfigs/ProjectileConfigs";
-        public static string MechaComponentQualityConfigFolder_Relative = "Configs/BattleConfigs/MechaComponentQualityConfigs";
         public static string MechaComponentGroupConfigFolder_Relative = "Configs/BattleConfigs/MechaComponentGroupConfigs";
+        public static string MechaComponentQualityConfigFolder_Relative = "Configs/BattleConfigs/MechaComponentQualityConfigs";
+        public static string MechaConfigFolder_Relative = "Configs/MechaConfigs";
 
         public static string AllMechaComponentConfigPath_Relative = "Configs/BattleConfigs/AllMechaComponentConfig";
 
         public static string AbilityConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityConfigFolder_Relative + "/";
         public static string AbilityGroupConfigFolder_Build = Application.streamingAssetsPath + "/" + AbilityGroupConfigFolder_Relative + "/";
         public static string ProjectileConfigFolder_Build = Application.streamingAssetsPath + "/" + ProjectileConfigFolder_Relative + "/";
-        public static string MechaComponentQualityConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaComponentQualityConfigFolder_Relative + "/";
         public static string MechaComponentGroupConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaComponentGroupConfigFolder_Relative + "/";
+        public static string MechaComponentQualityConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaComponentQualityConfigFolder_Relative + "/";
+        public static string MechaConfigFolder_Build = Application.streamingAssetsPath + "/" + MechaConfigFolder_Relative + "/";
 
         public static string AllMechaComponentConfigPath_Build = Application.streamingAssetsPath + "/" + AllMechaComponentConfigPath_Relative + ".config";
 
@@ -69,6 +75,10 @@ namespace GameCore
         [ShowInInspector]
         [LabelText("机甲组件品质配置表")]
         public static readonly Dictionary<string, MechaComponentQualityConfig> MechaComponentQualityConfigDict = new Dictionary<string, MechaComponentQualityConfig>();
+
+        [ShowInInspector]
+        [LabelText("机甲配置表")]
+        public static readonly Dictionary<string, MechaConfig> MechaConfigDict = new Dictionary<string, MechaConfig>();
 
         public override void Awake()
         {
@@ -97,6 +107,7 @@ namespace GameCore
             LoadMechaComponentConfig(dataFormat);
             ExportMechaComponentGroupConfig(dataFormat);
             ExportMechaComponentQualityConfig(dataFormat);
+            ExportMechaConfig(dataFormat);
             AssetDatabase.Refresh();
         }
 
@@ -207,6 +218,29 @@ namespace GameCore
             }
         }
 
+        private static void ExportMechaConfig(DataFormat dataFormat)
+        {
+            Object[] configObjs = Resources.LoadAll(MechaConfigFolder_Relative, typeof(Object));
+            string folder = MechaConfigFolder_Build;
+            if (Directory.Exists(folder)) Directory.Delete(folder, true);
+            Directory.CreateDirectory(folder);
+            foreach (Object obj in configObjs)
+            {
+                MechaDesignerHelper helper = ((GameObject) obj).GetComponent<MechaDesignerHelper>();
+                if (helper)
+                {
+                    MechaConfig config = helper.ExportMechaConfig();
+                    string path = folder + config.MechaConfigName + ".config";
+                    byte[] bytes = SerializationUtility.SerializeValue(config, dataFormat);
+                    File.WriteAllBytes(path, bytes);
+                }
+                else
+                {
+                    Debug.LogError($"{obj.name}机甲配置未绑定脚本MechaDesignerHelper，无法序列化");
+                }
+            }
+        }
+
         public static bool IsLoaded = false;
 
         [MenuItem("开发工具/配置/加载配置")]
@@ -219,6 +253,7 @@ namespace GameCore
             LoadMechaComponentConfig(dataFormat);
             LoadMechaComponentQualityConfig(dataFormat);
             LoadMechaComponentGroupConfig(dataFormat);
+            LoadMechaConfig(dataFormat);
             IsLoaded = true;
         }
 
@@ -391,6 +426,33 @@ namespace GameCore
             }
         }
 
+        private static void LoadMechaConfig(DataFormat dataFormat)
+        {
+            MechaConfigDict.Clear();
+
+            DirectoryInfo di = new DirectoryInfo(MechaConfigFolder_Build);
+            if (di.Exists)
+            {
+                foreach (FileInfo fi in di.GetFiles("*.config", SearchOption.AllDirectories))
+                {
+                    byte[] bytes = File.ReadAllBytes(fi.FullName);
+                    MechaConfig config = SerializationUtility.DeserializeValue<MechaConfig>(bytes, dataFormat);
+                    if (MechaConfigDict.ContainsKey(config.MechaConfigName))
+                    {
+                        Debug.LogError($"机甲配置重名:{config.MechaConfigName}");
+                    }
+                    else
+                    {
+                        MechaConfigDict.Add(config.MechaConfigName, config);
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError("机甲配置表不存在");
+            }
+        }
+
         public Ability GetAbility(string abilityName)
         {
             if (!IsLoaded) LoadAllConfigs();
@@ -431,6 +493,25 @@ namespace GameCore
             if (!IsLoaded) LoadAllConfigs();
             MechaComponentQualityConfigDict.TryGetValue(mechaComponentQualityConfigName, out MechaComponentQualityConfig mechaComponentQualityConfig);
             return mechaComponentQualityConfig?.Clone();
+        }
+
+        public MechaConfig GetMechaConfig(string mechaConfigName)
+        {
+            if (!IsLoaded) LoadAllConfigs();
+            MechaConfigDict.TryGetValue(mechaConfigName, out MechaConfig mechaConfig);
+            return mechaConfig?.Clone();
+        }
+
+        public MechaConfig GetRandomMechaConfig()
+        {
+            if (!IsLoaded) LoadAllConfigs();
+            List<MechaConfig> list = CommonUtils.GetRandomFromList(MechaConfigDict.Values.ToList(), 1);
+            if (list.Count > 0)
+            {
+                return list[0].Clone();
+            }
+
+            return null;
         }
     }
 }

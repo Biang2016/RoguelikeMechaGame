@@ -68,7 +68,7 @@ namespace Client
         public void PreUpdate_Fighting()
         {
             MechaComponentInfo.AccumulatedPowerInsideThisFrame = 0;
-            MechaComponentInfo.TriggerButtonThisFrame = ControlManager.Instance.CheckButtonAction(TriggerButtonState);
+            MechaComponentInfo.TriggerButtonThisFrame = MechaInfo.IsPlayer && ControlManager.Instance.CheckButtonAction(TriggerButtonState);
         }
 
         private void OnDamaged(MechaComponentInfo attacker, int damage)

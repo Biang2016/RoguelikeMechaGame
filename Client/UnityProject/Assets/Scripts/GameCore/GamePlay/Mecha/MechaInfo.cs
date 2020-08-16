@@ -62,10 +62,26 @@ namespace GameCore
             InventoryItem item = new InventoryItem(mci, MechaEditorInventory, gp_matrix);
             item.AmIRootItemInIsolationCalculationHandler = () => ((MechaComponentInfo) item.ItemContentInfo).MechaComponentType == MechaComponentType.Core;
             mci.SetInventoryItem(item);
-            OnAddMechaComponentInfoSuc?.Invoke(mci, gp_matrix);
-            MechaEditorInventory.TryAddItem(item);
-            MechaEditorInventory.RefreshConflictAndIsolation();
+
+            void instantiateMechaComponent()
+            {
+                item.Inventory = MechaEditorInventory;
+                OnAddMechaComponentInfoSuc.Invoke(mci, gp_matrix);
+                MechaEditorInventory.TryAddItem(item);
+                MechaEditorInventory.RefreshConflictAndIsolation();
+            }
+
+            if (MechaEditorInventory != null)
+            {
+                instantiateMechaComponent();
+            }
+            else
+            {
+                OnInstantiated += instantiateMechaComponent;
+            }
         }
+
+        public UnityAction OnInstantiated;
 
         private void RemoveMechaComponentInfo(MechaComponentInfo mci)
         {
