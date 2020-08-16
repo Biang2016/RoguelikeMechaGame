@@ -30,12 +30,6 @@ MonoBehaviour:
     - Name: AbilityBehaviors
       Entry: 3
       Data: 0
-    - Name: CastDummyPosition
-      Entry: 3
-      Data: 0
-    - Name: AbilityCastRange
-      Entry: 3
-      Data: 0
     - Name: AbilityCooldown
       Entry: 3
       Data: 300
@@ -120,7 +114,7 @@ MonoBehaviour:
       Data: 1
     - Name: Team
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: Types
       Entry: 3
       Data: 0

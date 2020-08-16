@@ -12,5 +12,6 @@
         MirrorShield = 7,
         Sword = 8,
         Battery = 9,
+        Armor = 10,
     }
 }

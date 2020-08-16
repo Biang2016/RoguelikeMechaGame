@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.ShapedInventory;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,19 +10,26 @@ namespace BiangStudio.GridBackpack
 {
     public class BackpackPanel : MonoBehaviour
     {
+        [ReadOnly]
         public Backpack Backpack;
+
+        [SerializeField]
+        private Text BackpackTitle;
 
         [SerializeField]
         private GridLayoutGroup ItemContainerGridLayout;
 
+        public RectTransform PanelTransform;
+        public Transform Container;
+
         [SerializeField]
         private Transform GridContainer;
+
+        public Transform ItemContainer;
 
         internal BackpackItemVirtualOccupationRoot BackpackItemVirtualOccupationRoot;
 
         public BackpackDragArea BackpackDragArea;
-
-        public Transform ItemContainer;
 
         private BackpackGrid[,] backpackGridMatrix; // column, row
         private SortedDictionary<uint, BackpackItem> backpackItems = new SortedDictionary<uint, BackpackItem>();
@@ -55,6 +63,12 @@ namespace BiangStudio.GridBackpack
             OnHoverEndBackpackItem = onHoverEndBackpackItem;
             BackpackDragArea.Init(backPack);
             Backpack.BackpackPanel = this;
+
+            BackpackTitle.text = backPack.InventoryName;
+            ((RectTransform) BackpackTitle.transform).sizeDelta = new Vector2(backPack.GridSize * Backpack.Columns, ((RectTransform) BackpackTitle.transform).sizeDelta.y);
+            ((RectTransform) Container).sizeDelta = new Vector2(backPack.GridSize * Backpack.Columns, backPack.GridSize * Backpack.Rows);
+            ItemContainerGridLayout.constraintCount = backPack.Columns;
+
             backpackGridMatrix = new BackpackGrid[Backpack.Columns, Backpack.Rows];
             for (int row = 0; row < Backpack.Rows; row++)
             {

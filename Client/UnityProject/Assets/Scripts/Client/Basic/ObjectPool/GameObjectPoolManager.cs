@@ -12,6 +12,8 @@ namespace Client
     {
         public enum PrefabNames
         {
+            DebugPanelColumn,
+            DebugPanelButton,
             Mecha,
             BackpackItem,
             BackpackItemGrid,
@@ -25,6 +27,8 @@ namespace Client
 
         public Dictionary<PrefabNames, int> PoolConfigs = new Dictionary<PrefabNames, int>
         {
+            {PrefabNames.DebugPanelColumn, 4},
+            {PrefabNames.DebugPanelButton, 4},
             {PrefabNames.Mecha, 4},
             {PrefabNames.BackpackItem, 20},
             {PrefabNames.BackpackItemGrid, 20},

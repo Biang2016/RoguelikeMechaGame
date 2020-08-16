@@ -25,10 +25,14 @@ namespace GameCore.AbilityDataDriven
         [LabelText("目标")]
         public ENUM_SingleTarget Target;
 
+        [LabelText("阵营筛选")]
+        public ENUM_MultipleTargetTeam Team;
+
         protected override void ChildClone(GamePlayActionTarget newActionTarget)
         {
             base.ChildClone(newActionTarget);
             ((SingleActionTarget) newActionTarget).Target = Target;
+            ((SingleActionTarget) newActionTarget).Team = Team;
         }
     }
 

@@ -9,9 +9,12 @@ namespace Client
         [SerializeField]
         private List<MechaComponentModel> Models = new List<MechaComponentModel>();
 
+        private Animator ModelAnimator;
+
         void Awake()
         {
             Models = GetComponentsInChildren<MechaComponentModel>().ToList();
+            ModelAnimator = GetComponent<Animator>();
         }
 
         public void SetShown(bool shown)
@@ -68,6 +71,11 @@ namespace Client
             {
                 model.ResetColor();
             }
+        }
+
+        public void SetAnimTrigger(string trigger)
+        {
+            if (ModelAnimator) ModelAnimator.SetTrigger(trigger);
         }
     }
 }

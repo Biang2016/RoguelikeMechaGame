@@ -1,4 +1,5 @@
-﻿using BiangStudio.ObjectPool;
+﻿using BiangStudio;
+using BiangStudio.ObjectPool;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -240,7 +241,7 @@ namespace Client
             SetElementTextContext(TextElementContent, info.ElementHP);
 
             Animator.SetTrigger("Play");
-            float duration_ori = ClientUtils.GetClipLength(Animator, "AttackNumberTip");
+            float duration_ori = CommonUtils.GetClipLength(Animator, "AttackNumberTip");
             Animator.speed = Animator.speed * duration_ori / info.DisappearTime;
         }
 

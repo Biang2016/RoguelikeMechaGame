@@ -310,6 +310,22 @@ namespace GameCore
         }
     }
 
+    public class QualityUpgradeData_Block : QualityUpgradeDataBase
+    {
+    }
+
+    public class PowerUpgradeData_Block : PowerUpgradeDataBase
+    {
+    }
+
+    public class QualityUpgradeData_Armor : QualityUpgradeDataBase
+    {
+    }
+
+    public class PowerUpgradeData_Armor : PowerUpgradeDataBase
+    {
+    }
+
     public class QualityUpgradeData_Engine : QualityUpgradeDataBase
     {
         [LabelText("输出功率")]

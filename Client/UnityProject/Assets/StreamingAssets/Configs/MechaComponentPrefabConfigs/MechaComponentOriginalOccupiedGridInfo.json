@@ -137,5 +137,19 @@
         "z": -1
       }
     ]
+  },
+  "MC_SmallArmor": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 0
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": 0,
+        "z": -1
+      }
+    ]
   }
 }

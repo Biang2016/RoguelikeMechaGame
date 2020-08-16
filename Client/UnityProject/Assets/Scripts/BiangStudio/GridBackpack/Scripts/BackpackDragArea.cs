@@ -9,13 +9,25 @@ namespace BiangStudio.GridBackpack
         private Backpack Backpack;
         private DragProcessor DragProcessor;
 
-        [SerializeField] private BoxCollider BoxCollider;
+        [SerializeField]
+        private BoxCollider BoxCollider;
 
         public void Init(Backpack backpack)
         {
             Backpack = backpack;
             DragArea = new DragArea(backpack.DragArea.DragAreaName);
             DragProcessor = DragManager.Instance.GetDragProcessor<BackpackItem>();
+        }
+
+        void Update()
+        {
+            Vector2 size = ((RectTransform) transform).rect.size;
+            BoxCollider.size = new Vector3(size.x, size.y, 0.1f);
+        }
+
+        public void SetColliderSize(Vector2 size)
+        {
+            BoxCollider.size = new Vector3(size.x, size.y, 0.1f);
         }
 
         public bool GetMousePosOnThisArea(out Vector3 pos_world, out Vector3 pos_local, out Vector3 pos_matrix, out GridPos gp_matrix)

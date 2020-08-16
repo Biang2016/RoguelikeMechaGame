@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BiangStudio.CloneVariant;
 using BiangStudio.GameDataFormat.Grid;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BiangStudio.ShapedInventory
 {
@@ -56,21 +57,6 @@ namespace BiangStudio.ShapedInventory
         public OnResetConflictDelegate OnResetConflictHandler;
         public AmIRootItemInIsolationCalculationDelegate AmIRootItemInIsolationCalculationHandler;
 
-        public string ItemContentName
-        {
-            get
-            {
-                if (ItemContentInfo != null)
-                {
-                    return ItemContentInfo.ItemName;
-                }
-                else
-                {
-                    return "";
-                }
-            }
-        }
-
         private uint GetGUID()
         {
             return guidGenerator++;
@@ -83,6 +69,8 @@ namespace BiangStudio.ShapedInventory
             GridPos_Matrix = gp_matrix;
             ItemContentInfo = itemContentInfo;
         }
+
+        public UnityAction OnRefreshViewHandler;
 
         public void SetGridPosition(GridPosR gp_matrix)
         {

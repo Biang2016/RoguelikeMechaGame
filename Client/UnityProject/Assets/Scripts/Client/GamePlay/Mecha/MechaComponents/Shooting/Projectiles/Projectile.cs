@@ -189,7 +189,7 @@ namespace Client
                 }
                 else
                 {
-                    if (mc && !mc.IsRecycled && mc.MechaInfo == ProjectileInfo.ParentExecuteInfo.MechaInfo)
+                    if (mc && !mc.IsRecycled)
                     {
                         hit = false;
                         recycle = false;

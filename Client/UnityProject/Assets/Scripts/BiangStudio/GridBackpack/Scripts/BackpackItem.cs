@@ -40,9 +40,6 @@ namespace BiangStudio.GridBackpack
 
         public RectTransform RectTransform => (RectTransform) transform;
 
-        private Vector2 size;
-        private Vector2 sizeRev;
-
         private void Awake()
         {
             Draggable = GetComponent<Draggable>();
@@ -54,8 +51,7 @@ namespace BiangStudio.GridBackpack
             SetInventoryItem(inventoryItem);
             OnHoverAction = onHoverAction;
             OnHoverEndAction = onHoverEndAction;
-            size = new Vector2(InventoryItem.BoundingRect.size.x * Backpack.GridSize, InventoryItem.BoundingRect.size.z * Backpack.GridSize);
-            sizeRev = new Vector2(size.y, size.x);
+
             RefreshView();
         }
 
@@ -63,6 +59,7 @@ namespace BiangStudio.GridBackpack
         {
             InventoryItem = inventoryItem;
             InventoryItem.OnSetGridPosHandler = SetVirtualGridPos;
+            InventoryItem.OnRefreshViewHandler = RefreshView;
             Image.sprite = BackpackManager.Instance.GetBackpackItemSprite(inventoryItem.ItemContentInfo.ItemSpriteKey);
         }
 
@@ -71,19 +68,23 @@ namespace BiangStudio.GridBackpack
             InventoryItem.GridPos_Matrix.orientation = GridPosR.RotateOrientationClockwise90(InventoryItem.GridPos_Matrix.orientation);
             InventoryItem.SetGridPosition(InventoryItem.GridPos_Matrix);
             dragStartLocalPos += new Vector2(InventoryItem.BoundingRect.x_min * Backpack.GridSize, -InventoryItem.BoundingRect.z_min * Backpack.GridSize) - RectTransform.anchoredPosition;
+            SetVirtualGridPos(InventoryItem.GridPos_World);
             RefreshView();
         }
 
         private void RefreshView()
         {
+            Vector2 size = new Vector2(InventoryItem.BoundingRect.size.x * Backpack.GridSize, InventoryItem.BoundingRect.size.z * Backpack.GridSize);
+            Vector2 sizeRev = new Vector2(size.y, size.x);
+
             int UI_Pos_X = InventoryItem.BoundingRect.x_min * Backpack.GridSize;
             int UI_Pos_Z = -InventoryItem.BoundingRect.z_min * Backpack.GridSize;
 
             bool isRotated = InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Right || InventoryItem.GridPos_Matrix.orientation == GridPosR.Orientation.Left;
-            Image.rectTransform.sizeDelta = size - Vector2.one * 8;
+            Image.rectTransform.sizeDelta = (isRotated ? sizeRev : size) - Vector2.one * 8;
             Image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f * (int) InventoryItem.GridPos_Matrix.orientation);
 
-            RectTransform.sizeDelta = isRotated ? sizeRev : size;
+            RectTransform.sizeDelta = size;
 
             RectTransform.anchoredPosition = new Vector2(UI_Pos_X, UI_Pos_Z);
             BackpackItemGridRoot.Initialize(Backpack, InventoryItem);

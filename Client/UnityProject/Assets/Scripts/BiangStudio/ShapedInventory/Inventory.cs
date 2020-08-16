@@ -136,6 +136,12 @@ namespace BiangStudio.ShapedInventory
             InventoryItemMatrix = new InventoryItem[Columns, Rows];
         }
 
+        public void UnlockGrids(int number)
+        {
+            this.unlockedGridCount = Mathf.Clamp(unlockedGridCount + number, 0, Columns * Rows);
+            RefreshInventoryGrids();
+        }
+
         public void RemoveAllInventoryItems()
         {
             foreach (InventoryItem inventoryItem in InventoryInfo.InventoryItems)
@@ -209,6 +215,7 @@ namespace BiangStudio.ShapedInventory
                         item.GridPos_Matrix.x = x;
                         if (CheckSpaceAvailable(item.OccupiedGridPositions_Matrix))
                         {
+                            item.OnRefreshViewHandler?.Invoke();
                             return true;
                         }
                     }
@@ -225,7 +232,7 @@ namespace BiangStudio.ShapedInventory
             {
                 GridPos addedGP = gp;
 
-                if (addedGP.x < 0 || addedGP.x >= Rows || addedGP.z < 0 || addedGP.z >= Columns)
+                if (addedGP.x < 0 || addedGP.x >= Columns || addedGP.z < 0 || addedGP.z >= Rows)
                 {
                     return false;
                 }
@@ -262,7 +269,10 @@ namespace BiangStudio.ShapedInventory
         {
             foreach (GridPos gp in oldOccupiedGPs)
             {
-                InventoryGridMatrix[gp.x, gp.z].State = InventoryGrid.States.Available;
+                if (InventoryGridMatrix[gp.x, gp.z].State != InventoryGrid.States.Locked)
+                {
+                    InventoryGridMatrix[gp.x, gp.z].State = InventoryGrid.States.Available;
+                }
             }
         }
 
@@ -276,7 +286,10 @@ namespace BiangStudio.ShapedInventory
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
                     sb.Append(gp_matrix.ToString());
-                    InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Available;
+                    if (InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State != InventoryGrid.States.Locked)
+                    {
+                        InventoryGridMatrix[gp_matrix.x, gp_matrix.z].State = InventoryGrid.States.Available;
+                    }
                 }
 
                 if (EnableLog) Debug.Log("RemoveItem: " + sb.ToString());
@@ -355,8 +368,8 @@ namespace BiangStudio.ShapedInventory
                 bool hasConflict = false;
                 foreach (GridPos gp_matrix in item.OccupiedGridPositions_Matrix)
                 {
-                    if (gp_matrix.x < 0 || gp_matrix.x >= Rows
-                                        || gp_matrix.z < 0 || gp_matrix.z >= Columns)
+                    if (gp_matrix.x < 0 || gp_matrix.x >= Columns
+                                        || gp_matrix.z < 0 || gp_matrix.z >= Rows)
                     {
                         hasConflict = true;
                         conflictGridPositions.Add(gp_matrix);

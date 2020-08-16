@@ -72,6 +72,7 @@ MonoBehaviour:
         orientation: 0
   MechaComponentGridRoot: {fileID: 4618707353109224937}
   MechaComponentModelRoot: {fileID: 8018876574517878512}
+  ScreenShotAngle: 0
 --- !u!114 &8787363159894584536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,7 +238,6 @@ MonoBehaviour:
   - {fileID: 137945223006192848}
   - {fileID: 5531817401336595189}
   - {fileID: 5216271677949615221}
-  - {fileID: 0}
   - {fileID: 2780151171611385848}
 --- !u!1001 &1683372642891647356
 PrefabInstance:
@@ -324,6 +324,11 @@ PrefabInstance:
     - target: {fileID: 6979953286152409997, guid: 6505c5b1f033442c4bf82c6641ecccf0,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -432,6 +437,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.7725973
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.16370142
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.3770332
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.012592554
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6505c5b1f033442c4bf82c6641ecccf0, type: 3}
@@ -651,6 +676,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.6162891
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.25814462
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6505c5b1f033442c4bf82c6641ecccf0, type: 3}

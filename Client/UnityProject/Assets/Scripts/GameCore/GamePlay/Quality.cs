@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BiangStudio;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -35,12 +36,12 @@ namespace GameCore
         public static void Initialize()
         {
             QualityConfigs.Clear();
-            QualityConfigs.Add(Quality.Common, new QualityConfig(Quality.Common, Utils.HTMLColorToColor("#5CC5CA")));
-            QualityConfigs.Add(Quality.Uncommon, new QualityConfig(Quality.Uncommon, Utils.HTMLColorToColor("#108C00")));
-            QualityConfigs.Add(Quality.Rare, new QualityConfig(Quality.Rare, Utils.HTMLColorToColor("#0070DD")));
-            QualityConfigs.Add(Quality.Epic, new QualityConfig(Quality.Epic, Utils.HTMLColorToColor("#A335EE")));
-            QualityConfigs.Add(Quality.Legendary, new QualityConfig(Quality.Legendary, Utils.HTMLColorToColor("#ff8000")));
-            QualityConfigs.Add(Quality.Artifact, new QualityConfig(Quality.Artifact, Utils.HTMLColorToColor("#FF3600")));
+            QualityConfigs.Add(Quality.Common, new QualityConfig(Quality.Common, CommonUtils.HTMLColorToColor("#5CC5CA")));
+            QualityConfigs.Add(Quality.Uncommon, new QualityConfig(Quality.Uncommon, CommonUtils.HTMLColorToColor("#108C00")));
+            QualityConfigs.Add(Quality.Rare, new QualityConfig(Quality.Rare, CommonUtils.HTMLColorToColor("#0070DD")));
+            QualityConfigs.Add(Quality.Epic, new QualityConfig(Quality.Epic, CommonUtils.HTMLColorToColor("#A335EE")));
+            QualityConfigs.Add(Quality.Legendary, new QualityConfig(Quality.Legendary, CommonUtils.HTMLColorToColor("#ff8000")));
+            QualityConfigs.Add(Quality.Artifact, new QualityConfig(Quality.Artifact, CommonUtils.HTMLColorToColor("#FF3600")));
         }
 
         public static QualityConfig GetQuality(Quality quality)

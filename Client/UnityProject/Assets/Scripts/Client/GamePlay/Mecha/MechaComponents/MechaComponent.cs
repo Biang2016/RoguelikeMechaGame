@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using BiangStudio;
 using BiangStudio.DragHover;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay;
@@ -25,20 +26,28 @@ namespace Client
         [ReadOnly]
         [PropertyOrder(-10)]
         [HideInEditorMode]
+        [LabelText("父Mecha")]
         public Mecha Mecha = null;
 
-        [PropertyOrder(10)]
+        [PropertyOrder(-10)]
         [Title("Data")]
         public MechaComponentInfo MechaComponentInfo;
 
         [TitleGroup("GameObjectContainers")]
         [PropertyOrder(-9)]
+        [LabelText("Grid根节点")]
         public MechaComponentGridRoot MechaComponentGridRoot;
 
         [TitleGroup("GameObjectContainers")]
         [PropertyOrder(-9)]
+        [LabelText("模型根节点")]
         public MechaComponentModelRoot MechaComponentModelRoot;
 
+        [HideInPlayMode]
+        [Title("Editor Params")]
+        [LabelText("拍照角度")]
+        public float ScreenShotAngle;
+        
         internal Draggable Draggable;
         private bool isReturningToBackpack = false;
         internal UnityAction<MechaComponent> OnRemoveMechaComponentSuc;
@@ -118,7 +127,7 @@ namespace Client
                 {
                     if (shown)
                     {
-                        MechaComponentModelRoot.SetBuildingBasicEmissionColor(Utils.HTMLColorToColor("#E42835"));
+                        MechaComponentModelRoot.SetBuildingBasicEmissionColor(CommonUtils.HTMLColorToColor("#E42835"));
                     }
                     else
                     {

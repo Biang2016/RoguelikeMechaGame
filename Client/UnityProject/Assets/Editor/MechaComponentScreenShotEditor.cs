@@ -58,6 +58,7 @@ public class MechaComponentScreenShotEditor : Editor
 
             yield return new WaitForSeconds(0.1f);
             MechaComponent mc = MechaComponent.BaseInitialize_Editor(mci, null);
+            mc.transform.rotation = Quaternion.Euler(0, mc.ScreenShotAngle, 0);
             CaptureScreenShot.CaptureTransparentScreenShot(camera, 800, 800, filename);
             DestroyImmediate(mc.gameObject);
             yield return new WaitForSeconds(0.1f);

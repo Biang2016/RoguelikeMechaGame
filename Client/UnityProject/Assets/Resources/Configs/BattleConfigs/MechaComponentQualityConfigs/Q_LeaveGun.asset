@@ -417,10 +417,10 @@ MonoBehaviour:
       Data: 0
     - Name: CanReflectOverride
       Entry: 5
-      Data: false
+      Data: true
     - Name: ReflectTimesOverride
       Entry: 3
-      Data: 0
+      Data: 3
     - Name: 
       Entry: 8
       Data: 

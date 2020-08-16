@@ -41,6 +41,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 27dc2b670192213438dc29a8cb525c9a, type: 3}
     - {fileID: 11400000, guid: 5a3f264460e93c14a8ce6a55d3c4491e, type: 2}
     - {fileID: 11400000, guid: 21e17162e6e0dc44e8080685df4caf15, type: 2}
+    - {fileID: 1244351346966676, guid: c340d16aea6fe1d49b3e3e6bfad97418, type: 3}
+    - {fileID: 21300000, guid: 340d431cf54334349beb10a069ecce42, type: 3}
+    - {fileID: 11400000, guid: fc3c2db0dc2e1b645bfe9dfc5bcb6741, type: 2}
+    - {fileID: 11400000, guid: a1cee1e8ffc75fd47b790fe62430b41a, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -52,7 +56,7 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 8
     - Name: 
       Entry: 7
       Data: 1|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
@@ -243,6 +247,33 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 8|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: EnglishName
+      Entry: 1
+      Data: Small Armor
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u5C0F\u578B\u88C5\u7532"
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 25
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 10
+    - Name: ItemSprite
+      Entry: 10
+      Data: 26
+    - Name: AbilityGroupConfigSSO
+      Entry: 10
+      Data: 27
+    - Name: MechaComponentQualityConfigSSO
+      Entry: 10
+      Data: 28
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -250,14 +281,14 @@ MonoBehaviour:
       Data: 
     - Name: MechaComponentConfigList
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[GameCore.MechaComponentConfig, GameCore]],
+      Data: 9|System.Collections.Generic.List`1[[GameCore.MechaComponentConfig, GameCore]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 8
     - Name: 
       Entry: 7
-      Data: 9|GameCore.MechaComponentConfig, GameCore
+      Data: 10|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_BasicCore
@@ -284,7 +315,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 10|GameCore.MechaComponentConfig, GameCore
+      Data: 11|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_BasicBlock
@@ -311,7 +342,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 11|GameCore.MechaComponentConfig, GameCore
+      Data: 12|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_ArcPurpleGravBallCanon
@@ -338,7 +369,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 12|GameCore.MechaComponentConfig, GameCore
+      Data: 13|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_LeaveGun
@@ -365,7 +396,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 13|GameCore.MechaComponentConfig, GameCore
+      Data: 14|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_WaterBallGun
@@ -392,7 +423,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 14|GameCore.MechaComponentConfig, GameCore
+      Data: 15|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_WaterBallGunPlus
@@ -419,7 +450,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 15|GameCore.MechaComponentConfig, GameCore
+      Data: 16|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_BasicEngine
@@ -441,6 +472,33 @@ MonoBehaviour:
     - Name: AbilityGroupConfigKey
       Entry: 1
       Data: AGC_BasicEngine
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|GameCore.MechaComponentConfig, GameCore
+    - Name: MechaComponentKey
+      Entry: 1
+      Data: MC_SmallArmor
+    - Name: EnglishName
+      Entry: 1
+      Data: Small Armor
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u5C0F\u578B\u88C5\u7532"
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 10
+    - Name: ItemSpriteKey
+      Entry: 1
+      Data: BasicCore
+    - Name: MechaComponentQualityConfigKey
+      Entry: 1
+      Data: Q_SmallArmor
+    - Name: AbilityGroupConfigKey
+      Entry: 1
+      Data: AGC_SmallArmor
     - Name: 
       Entry: 8
       Data: 

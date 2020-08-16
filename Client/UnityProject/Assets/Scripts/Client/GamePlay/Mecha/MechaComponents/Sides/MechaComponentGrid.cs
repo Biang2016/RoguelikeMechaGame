@@ -92,5 +92,11 @@ namespace Client
                 Slots[orientation].IsCandidate = SlotEnumFlag_Editor.HasFlag(orientation.ToFlag());
             }
         }
+
+        void OnDrawGizmos()
+        {
+            Gizmos.color = new Color(0, 1, 0.0f, 0.1f);
+            Gizmos.DrawCube(Vector3.zero, Vector3.one);
+        }
     }
 }

@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 8787363159894584536}
   - component: {fileID: -2509402043850843953}
   m_Layer: 12
-  m_Name: MechaComponent_BasicBlock
+  m_Name: MC_BasicBlock
   m_TagString: MechaComponent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,6 +85,7 @@ MonoBehaviour:
         orientation: 0
   MechaComponentGridRoot: {fileID: 4618707353109224937}
   MechaComponentModelRoot: {fileID: 8018876574517878512}
+  ScreenShotAngle: 0
 --- !u!114 &8787363159894584536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +384,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.76056445
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.0019068718
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.7605644
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.0019070208
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.76819205
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057972773433806588, guid: 6505c5b1f033442c4bf82c6641ecccf0,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.16590399
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6505c5b1f033442c4bf82c6641ecccf0, type: 3}

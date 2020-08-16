@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BiangStudio;
 using BiangStudio.GameDataFormat.Grid;
 using BiangStudio.GamePlay.UI;
 using BiangStudio.Singleton;
@@ -195,7 +196,7 @@ namespace Client
 
             if (random)
             {
-                return Utils.GetRandomFromList(res.Values.ToList(), maxTargets, LevelManager.SRandom);
+                return CommonUtils.GetRandomFromList(res.Values.ToList(), maxTargets, LevelManager.SRandom);
             }
             else
             {

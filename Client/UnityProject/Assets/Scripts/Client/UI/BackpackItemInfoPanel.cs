@@ -1,4 +1,5 @@
-﻿using BiangStudio.GamePlay.UI;
+﻿using BiangStudio;
+using BiangStudio.GamePlay.UI;
 using BiangStudio.GridBackpack;
 using BiangStudio.ShapedInventory;
 using TMPro;
@@ -52,8 +53,10 @@ namespace Client
         [SerializeField]
         private Image[] Decorators;
 
-        public void Initialize(IInventoryItemContentInfo iInventoryItemContentInfo)
+        public void Initialize(IInventoryItemContentInfo iInventoryItemContentInfo, BackpackPanel backpackPanel)
         {
+            ((RectTransform) transform).anchoredPosition = new Vector2(-((RectTransform) backpackPanel.Container.transform).sizeDelta.x, ((RectTransform) transform).anchoredPosition.y);
+
             IInventoryItemContentInfo = iInventoryItemContentInfo;
             Color bgColor = IInventoryItemContentInfo.ItemColor;
             ItemNameBG.color = bgColor;
@@ -77,7 +80,7 @@ namespace Client
                 image.color = bgColor;
             }
 
-            StartCoroutine(ClientUtils.UpdateLayout((RectTransform) transform));
+            StartCoroutine(CommonUtils.UpdateLayout((RectTransform) transform));
         }
     }
 }

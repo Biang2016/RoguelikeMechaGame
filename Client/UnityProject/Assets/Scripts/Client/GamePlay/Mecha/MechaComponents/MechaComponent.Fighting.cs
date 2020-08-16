@@ -14,13 +14,15 @@ namespace Client
         public ButtonState TriggerButtonState;
 
         [SerializeField]
-        [PropertyOrder(-8)]
+        [PropertyOrder(8)]
         [TitleGroup("DummyPositions")]
+        [LabelText("射击锚点")]
         private Transform ShooterDummyPos;
 
         [SerializeField]
-        [PropertyOrder(-8)]
+        [PropertyOrder(8)]
         [TitleGroup("DummyPositions")]
+        [LabelText("其他锚点（示例）")]
         private Transform AnotherSampleDummyPos;
 
         public Dictionary<ENUM_ProjectileDummyPosition, Transform> DummyPosDict = new Dictionary<ENUM_ProjectileDummyPosition, Transform>();
@@ -74,6 +76,7 @@ namespace Client
             ClientGameManager.Instance.BattleMessenger.Broadcast<AttackData>((uint) ENUM_BattleEvent.Battle_MechaComponentAttackTip,
                 new AttackData(attacker, this, damage, BattleTipType.Attack, 0, 0));
             MechaComponentModelRoot.OnDamage((float) MechaComponentInfo.M_LeftLife / MechaComponentInfo.M_TotalLife);
+            MechaComponentModelRoot.SetAnimTrigger("OnHit");
         }
     }
 }

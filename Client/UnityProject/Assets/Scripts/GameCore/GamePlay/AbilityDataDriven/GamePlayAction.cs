@@ -238,10 +238,38 @@ namespace GameCore.AbilityDataDriven
                             }
                             case ENUM_SingleTarget.UNIT:
                             {
-                                if (flyRealTimeData.HitMechaComponentInfo != null && flyRealTimeData.HitMechaComponentInfo.MechaInfo != executeInfo.MechaInfo && flyRealTimeData.HitMechaComponentInfo.CheckAlive())
+                                if (flyRealTimeData.HitMechaComponentInfo != null && flyRealTimeData.HitMechaComponentInfo.CheckAlive())
                                 {
-                                    Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{finalDamage}</color> damage to <color=\"#FF74FF\">{singleTarget.Target.ToString()}</color> {flyRealTimeData.HitMechaComponentInfo.LogIdentityName}");
-                                    flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, finalDamage);
+                                    bool canDamage = false;
+                                    switch (singleTarget.Team)
+                                    {
+                                        case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_BOTH:
+                                        {
+                                            canDamage = true;
+                                            break;
+                                        }
+                                        case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_ENEMY:
+                                        {
+                                            canDamage = flyRealTimeData.HitMechaComponentInfo.MechaInfo.IsOpponent(executeInfo.MechaInfo);
+                                            break;
+                                        }
+                                        case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_FRIENDLY:
+                                        {
+                                            canDamage = flyRealTimeData.HitMechaComponentInfo.MechaInfo.IsFriend(executeInfo.MechaInfo);
+                                            break;
+                                        }
+                                        case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_NONE:
+                                        {
+                                            canDamage = false;
+                                            break;
+                                        }
+                                    }
+
+                                    if (canDamage)
+                                    {
+                                        Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{finalDamage}</color> damage to <color=\"#FF74FF\">{singleTarget.Target.ToString()}</color> {flyRealTimeData.HitMechaComponentInfo.LogIdentityName}");
+                                        flyRealTimeData.HitMechaComponentInfo.Damage(executeInfo.MechaComponentInfo, finalDamage);
+                                    }
                                 }
 
                                 break;

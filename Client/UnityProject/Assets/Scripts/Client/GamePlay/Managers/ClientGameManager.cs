@@ -249,12 +249,12 @@ namespace Client
                 DragAreaDefines.BattleInventory.DragAreaName,
                 DragAreaDefines.BattleInventory,
                 ConfigManager.BackpackGridSize,
-                10,
-                10,
+                8,
+                20,
                 false,
                 true,
                 true,
-                75,
+                65,
                 () => ControlManager.Instance.Common_Tab.Down,
                 () => ControlManager.Instance.Building_RotateItem.Down,
                 (parent) => GameObjectPoolManager.Instance.PoolDict[GameObjectPoolManager.PrefabNames.BackpackGrid].AllocateGameObject<BackpackGrid>(parent),
@@ -289,10 +289,10 @@ namespace Client
             };
 
             BackpackPanel backpackPanel = Instantiate(PrefabManager.Instance.GetPrefab("BattleInventoryPanel"), UIManager.Instance.UINormalRoot).GetComponent<BackpackPanel>();
-            backpackPanel.gameObject.SetActive(false);
             backpackPanel.Init(myBackPack,
-                delegate(BackpackItem bi) { UIManager.Instance.ShowUIForms<BackpackItemInfoPanel>().Initialize(bi.InventoryItem.ItemContentInfo); },
+                delegate(BackpackItem bi) { UIManager.Instance.ShowUIForms<BackpackItemInfoPanel>().Initialize(bi.InventoryItem.ItemContentInfo, backpackPanel); },
                 delegate(BackpackItem bi) { UIManager.Instance.CloseUIForm<BackpackItemInfoPanel>(); });
+            backpackPanel.gameObject.SetActive(false);
             BackpackManager.AddBackPack(myBackPack);
         }
 
