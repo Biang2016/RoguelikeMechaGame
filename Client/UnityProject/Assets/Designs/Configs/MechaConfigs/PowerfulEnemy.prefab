@@ -51,6 +51,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e33882898cae6849a28793c6b7dfd0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MechaAIParams:
+  - ParamType: 1
+    ParamValue: 15
+  - ParamType: 2
+    ParamValue: 2
+  - ParamType: 10
+    ParamValue: 0.1
+  - ParamType: 20
+    ParamValue: 8
 --- !u!114 &-6045640018126388429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,7 +592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1244351346966676, guid: f5b5ff501b7e044f09afb208e34504cc, type: 3}
       propertyPath: EditorAlias
-      value: MainWeapon
+      value: Weapon0
       objectReference: {fileID: 0}
     - target: {fileID: 113634007938543383, guid: f5b5ff501b7e044f09afb208e34504cc,
         type: 3}

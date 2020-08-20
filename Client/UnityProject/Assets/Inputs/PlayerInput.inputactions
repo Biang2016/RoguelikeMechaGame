@@ -613,6 +613,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "RestartGame",
+                    "type": "Button",
+                    "id": "072a09ac-3b24-472b-aa42-f116b670abde",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
                 }
             ],
             "bindings": [
@@ -712,6 +720,17 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "MouseWheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5a85a49-e777-4c4a-b3f5-2ceb978fcb5f",
+                    "path": "<Keyboard>/F10",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "Clamp(max=1)",
+                    "groups": "KeyboardMouse",
+                    "action": "RestartGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

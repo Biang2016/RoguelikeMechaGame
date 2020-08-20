@@ -12,21 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d31b62ec9d586a4e94389d9071559ca, type: 3}
   m_Name: Flow_MainWeaponAttack
   m_EditorClassIdentifier: 
-  _serializedGraph: '{"type":"FlowCanvas.FlowScript","nodes":[{"_position":{"y":270.0},"$type":"FlowCanvas.Nodes.EnableEvent","$id":"0"},{"_simplexNode":{},"_position":{"x":225.0,"y":270.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[GameCore.MainWeaponShoot,
-    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"1"},{"_simplexNode":{},"_position":{"x":450.0,"y":270.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.Wait,
-    ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"2"},{"_inputPortValues":{"Success":{"$content":true,"$type":"System.Boolean"}},"_position":{"x":690.0,"y":315.0},"$type":"FlowCanvas.Nodes.Finish","$id":"3"},{"value":{"_name":"AttackInterval","_targetVariableID":"116ba06f-f2d0-46e5-9f3e-dbcf54c492fe"},"_position":{"x":225.0,"y":390.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"4"}],"connections":[{"_sourcePortName":"Out","_targetPortName":"
-    ","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"
-    ","_targetPortName":"In","_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Done","_targetPortName":"In","_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"time","_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}],"canvasGroups":[],"localBlackboard":{"_variables":{"AttackInterval":{"_value":0.1,"_name":"AttackInterval","_id":"116ba06f-f2d0-46e5-9f3e-dbcf54c492fe","_isPublic":true,"$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}}'
+  _serializedGraph: '{"type":"FlowCanvas.FlowScript","nodes":[{"_position":{"x":75.0,"y":255.0},"$type":"FlowCanvas.Nodes.EnableEvent","$id":"0"},{"_simplexNode":{},"_position":{"x":255.0,"y":255.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[GameCore.GetWeaponShootInterval,
+    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"1"},{"_simplexNode":{},"_position":{"x":510.0,"y":255.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.Wait,
+    ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"2"},{"_simplexNode":{},"_position":{"x":705.0,"y":300.0},"$type":"FlowCanvas.Nodes.SimplexNodeWrapper`1[[GameCore.MainWeaponShoot,
+    GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","$id":"3"},{"_inputPortValues":{"Success":{"$content":true,"$type":"System.Boolean"}},"_position":{"x":870.0,"y":300.0},"$type":"FlowCanvas.Nodes.Finish","$id":"4"},{"value":{"_value":"Weapon0"},"_position":{"x":90.0,"y":360.0},"$type":"FlowCanvas.Nodes.GetVariable`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]","$id":"5"}],"connections":[{"_sourcePortName":"Out","_targetPortName":"
+    ","_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"time","_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},{"_sourcePortName":"
+    ","_targetPortName":"In","_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Done","_targetPortName":"
+    ","_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"
+    ","_targetPortName":"In","_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"4"},"$type":"FlowCanvas.BinderConnection"},{"_sourcePortName":"Value","_targetPortName":"weaponName","_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"1"},"$type":"FlowCanvas.BinderConnection`1[[System.String,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
   _objectReferences: []
   _graphSource:
     _version: 3.08
-    _category: 
+    _category: Enemy AI Atom
     _comments: 
-    _translation: {x: 23, y: -80}
-    _zoomFactor: 0.99998933
+    _translation: {x: 30, y: -8}
+    _zoomFactor: 0.7251909
   _haltSerialization: 0
 #---GRAPH_START---
 #The pretty formatted json serialization bellow is only a reference to help in version control diff. Other than that it is not used at all.
@@ -35,7 +38,8 @@ MonoBehaviour:
 #    "nodes": [
 #        {
 #            "_position": {
-#                "y": 270.0
+#                "x": 75.0,
+#                "y": 255.0
 #            },
 #            "$type": "FlowCanvas.Nodes.EnableEvent",
 #            "$id": "0"
@@ -45,10 +49,10 @@ MonoBehaviour:
 #
 #            },
 #            "_position": {
-#                "x": 225.0,
-#                "y": 270.0
+#                "x": 255.0,
+#                "y": 255.0
 #            },
-#            "$type": "FlowCanvas.Nodes.SimplexNodeWrapper`1[[GameCore.MainWeaponShoot, GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+#            "$type": "FlowCanvas.Nodes.SimplexNodeWrapper`1[[GameCore.GetWeaponShootInterval, GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
 #            "$id": "1"
 #        },
 #        {
@@ -56,11 +60,22 @@ MonoBehaviour:
 #
 #            },
 #            "_position": {
-#                "x": 450.0,
-#                "y": 270.0
+#                "x": 510.0,
+#                "y": 255.0
 #            },
 #            "$type": "FlowCanvas.Nodes.SimplexNodeWrapper`1[[FlowCanvas.Nodes.Wait, ParadoxNotion, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
 #            "$id": "2"
+#        },
+#        {
+#            "_simplexNode": {
+#
+#            },
+#            "_position": {
+#                "x": 705.0,
+#                "y": 300.0
+#            },
+#            "$type": "FlowCanvas.Nodes.SimplexNodeWrapper`1[[GameCore.MainWeaponShoot, GameCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+#            "$id": "3"
 #        },
 #        {
 #            "_inputPortValues": {
@@ -70,23 +85,22 @@ MonoBehaviour:
 #                }
 #            },
 #            "_position": {
-#                "x": 690.0,
-#                "y": 315.0
+#                "x": 870.0,
+#                "y": 300.0
 #            },
 #            "$type": "FlowCanvas.Nodes.Finish",
-#            "$id": "3"
+#            "$id": "4"
 #        },
 #        {
 #            "value": {
-#                "_name": "AttackInterval",
-#                "_targetVariableID": "116ba06f-f2d0-46e5-9f3e-dbcf54c492fe"
+#                "_value": "Weapon0"
 #            },
 #            "_position": {
-#                "x": 225.0,
-#                "y": 390.0
+#                "x": 90.0,
+#                "y": 360.0
 #            },
-#            "$type": "FlowCanvas.Nodes.GetVariable`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]",
-#            "$id": "4"
+#            "$type": "FlowCanvas.Nodes.GetVariable`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]",
+#            "$id": "5"
 #        }
 #    ],
 #    "connections": [
@@ -102,6 +116,17 @@ MonoBehaviour:
 #            "$type": "FlowCanvas.BinderConnection"
 #        },
 #        {
+#            "_sourcePortName": "Value",
+#            "_targetPortName": "time",
+#            "_sourceNode": {
+#                "$ref": "1"
+#            },
+#            "_targetNode": {
+#                "$ref": "2"
+#            },
+#            "$type": "FlowCanvas.BinderConnection`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+#        },
+#        {
 #            "_sourcePortName": " ",
 #            "_targetPortName": "In",
 #            "_sourceNode": {
@@ -114,7 +139,7 @@ MonoBehaviour:
 #        },
 #        {
 #            "_sourcePortName": "Done",
-#            "_targetPortName": "In",
+#            "_targetPortName": " ",
 #            "_sourceNode": {
 #                "$ref": "2"
 #            },
@@ -124,27 +149,32 @@ MonoBehaviour:
 #            "$type": "FlowCanvas.BinderConnection"
 #        },
 #        {
-#            "_sourcePortName": "Value",
-#            "_targetPortName": "time",
+#            "_sourcePortName": " ",
+#            "_targetPortName": "In",
 #            "_sourceNode": {
-#                "$ref": "4"
+#                "$ref": "3"
 #            },
 #            "_targetNode": {
-#                "$ref": "2"
+#                "$ref": "4"
 #            },
-#            "$type": "FlowCanvas.BinderConnection`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+#            "$type": "FlowCanvas.BinderConnection"
+#        },
+#        {
+#            "_sourcePortName": "Value",
+#            "_targetPortName": "weaponName",
+#            "_sourceNode": {
+#                "$ref": "5"
+#            },
+#            "_targetNode": {
+#                "$ref": "1"
+#            },
+#            "$type": "FlowCanvas.BinderConnection`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
 #        }
 #    ],
 #    "canvasGroups": [],
 #    "localBlackboard": {
 #        "_variables": {
-#            "AttackInterval": {
-#                "_value": 0.1,
-#                "_name": "AttackInterval",
-#                "_id": "116ba06f-f2d0-46e5-9f3e-dbcf54c492fe",
-#                "_isPublic": true,
-#                "$type": "NodeCanvas.Framework.Variable`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
-#            }
+#
 #        }
 #    }
 #}

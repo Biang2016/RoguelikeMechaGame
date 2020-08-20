@@ -11,6 +11,7 @@ using BiangStudio.ShapedInventory;
 using BiangStudio.Singleton;
 using GameCore;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DragAreaDefines = GameCore.DragAreaDefines;
 
 namespace Client
@@ -174,6 +175,12 @@ namespace Client
 
         private void Update()
         {
+            if (ControlManager.Common_RestartGame.Up)
+            {
+                SceneManager.LoadScene(0);
+                return;
+            }
+
             ConfigManager.Update(Time.deltaTime);
             LayerManager.Update(Time.deltaTime);
             PrefabManager.Update(Time.deltaTime);

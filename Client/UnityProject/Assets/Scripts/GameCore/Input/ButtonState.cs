@@ -78,6 +78,7 @@ namespace GameCore
         Common_Debug,
         Common_Exit,
         Common_Tab,
+        Common_RestartGame,
 
         COMMON_MAX_FLAG = 600,
     }

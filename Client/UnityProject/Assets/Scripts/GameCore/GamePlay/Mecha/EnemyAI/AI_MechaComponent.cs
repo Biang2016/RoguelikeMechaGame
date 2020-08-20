@@ -56,7 +56,7 @@ namespace GameCore
 
             if (Enum.TryParse<MechaAIConfigParamType>(weaponName + "_AttackInterval", out MechaAIConfigParamType paramType))
             {
-                mecha.MechaInfo.MechaConfig.MechaAIParams.TryGetValue(paramType, out float interval);
+                mecha.MechaInfo.MechaConfig.MechaAIParamDict.TryGetValue(paramType, out float interval);
                 return interval;
             }
 
@@ -72,7 +72,7 @@ namespace GameCore
         {
             MechaBase mecha = this.GetMechaBase();
             if (mecha == null || mecha.MechaInfo == null) return;
-            if (mecha.MechaInfo.MechaConfig.MechaAIParams.TryGetValue(MechaAIConfigParamType.RotateSpeed, out float rotateSpeed))
+            if (mecha.MechaInfo.MechaConfig.MechaAIParamDict.TryGetValue(MechaAIConfigParamType.RotateSpeed, out float rotateSpeed))
             {
                 mecha.MechaBaseAIAgent.RotateSpeed = rotateSpeed;
                 mecha.MechaBaseAIAgent.SetRotateTarget(BattleManager.Instance.PlayerMechaInfo.Position);
@@ -92,7 +92,7 @@ namespace GameCore
             {
                 MechaBase mecha = this.GetMechaBase();
                 if (mecha == null || mecha.MechaInfo == null) return;
-                if (mecha.MechaInfo.MechaConfig.MechaAIParams.TryGetValue(MechaAIConfigParamType.MoveSpeed, out float moveSpeed))
+                if (mecha.MechaInfo.MechaConfig.MechaAIParamDict.TryGetValue(MechaAIConfigParamType.MoveSpeed, out float moveSpeed))
                 {
                     mecha.MechaBaseAIAgent.MoveSpeed = moveSpeed;
                     mecha.MechaBaseAIAgent.SetDestination(BattleManager.Instance.PlayerMechaInfo.Position);
@@ -113,11 +113,19 @@ namespace GameCore
             {
                 MechaBase mecha = this.GetMechaBase();
                 if (mecha == null || mecha.MechaInfo == null) return;
-                if (mecha.MechaInfo.MechaConfig.MechaAIParams.TryGetValue(MechaAIConfigParamType.MoveSpeed, out float moveSpeed))
+                if (mecha.MechaInfo.MechaConfig.MechaAIParamDict.TryGetValue(MechaAIConfigParamType.MoveSpeed, out float moveSpeed))
                 {
-                    mecha.MechaBaseAIAgent.MoveSpeed = moveSpeed;
-                    mecha.MechaBaseAIAgent.SetDestination(BattleManager.Instance.PlayerMechaInfo.Position);
-                    mecha.MechaBaseAIAgent.EnableMove = true;
+                    if (mecha.MechaInfo.MechaConfig.MechaAIParamDict.TryGetValue(MechaAIConfigParamType.AttackDistance, out float attackDistance))
+                    {
+                        mecha.MechaBaseAIAgent.MoveSpeed = moveSpeed;
+                        Vector3 diff = mecha.MechaInfo.Position - BattleManager.Instance.PlayerMechaInfo.Position;  
+                        mecha.MechaBaseAIAgent.SetDestination((BattleManager.Instance.PlayerMechaInfo.Position + diff.normalized * attackDistance));
+                        mecha.MechaBaseAIAgent.EnableMove = true;
+                    }
+                    else
+                    {
+                        Debug.LogError($"【AI原子】{mecha.name}不存在AI参数配置{MechaAIConfigParamType.AttackDistance},请检查AI配置");
+                    }
                 }
                 else
                 {

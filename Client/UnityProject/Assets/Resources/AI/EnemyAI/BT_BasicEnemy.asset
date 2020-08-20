@@ -12,21 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a686a47eee2fa44cb0a34b5d86e4d5e, type: 3}
   m_Name: BT_BasicEnemy
   m_EditorClassIdentifier: 
-  _serializedGraph: '{"type":"NodeCanvas.BehaviourTrees.BehaviourTree","nodes":[{"_position":{"x":375.0,"y":195.0},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"0"},{"_flowScript":{"_value":1},"_variablesMap":[{"_targetSubGraphVariableID":"116ba06f-f2d0-46e5-9f3e-dbcf54c492fe","_canRead":true,"_canWrite":true,"_type":"System.Single","_name":"AttackInterval","_targetVariableID":"6b40f0f5-4d7a-4874-a1a2-d1fd07566abe"}],"_position":{"x":165.0,"y":315.0},"$type":"NodeCanvas.BehaviourTrees.BTNestedFlowScript","$id":"1"},{"_flowScript":{"_value":2},"_variablesMap":[{"_targetSubGraphVariableID":"555a6250-621d-4e2b-a387-faecef6ffeb5","_canRead":true,"_canWrite":true,"_type":"System.Single","_name":"RotateSpeed","_targetVariableID":"cce94ab5-9662-4d16-875d-57b1b82674ca"}],"_position":{"x":420.0,"y":315.0},"$type":"NodeCanvas.BehaviourTrees.BTNestedFlowScript","$id":"2"},{"_flowScript":{"_value":3},"_variablesMap":[{"_targetSubGraphVariableID":"251c7d9e-6ef4-4f7d-9f1b-54a57cf01524","_canRead":true,"_canWrite":true,"_type":"System.Single","_name":"MoveSpeed","_targetVariableID":"63b6f7ec-ddef-45e4-ac8c-775561b0b8fc"}],"_position":{"x":735.0,"y":315.0},"$type":"NodeCanvas.BehaviourTrees.BTNestedFlowScript","$id":"3"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"3"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{"AttackInterval":{"_name":"AttackInterval","_id":"6b40f0f5-4d7a-4874-a1a2-d1fd07566abe","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"MoveSpeed":{"_value":5.0,"_name":"MoveSpeed","_id":"63b6f7ec-ddef-45e4-ac8c-775561b0b8fc","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"RotateSpeed":{"_value":2.0,"_name":"RotateSpeed","_id":"cce94ab5-9662-4d16-875d-57b1b82674ca","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}},"derivedData":{"repeat":true,"$type":"NodeCanvas.BehaviourTrees.BehaviourTree+DerivedSerializationData"}}'
+  _serializedGraph: '{"type":"NodeCanvas.BehaviourTrees.BehaviourTree","nodes":[{"_position":{"x":375.0,"y":195.0},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"0"},{"_flowScript":{"_value":1},"_position":{"x":-30.0,"y":315.0},"_comment":"\u4e3b\u6b66\u5668\u653b\u51fb","$type":"NodeCanvas.BehaviourTrees.BTNestedFlowScript","$id":"1"},{"_flowScript":{"_value":2},"_position":{"x":195.0,"y":315.0},"_comment":"\u671d\u5411\u73a9\u5bb6\u673a\u7532","$type":"NodeCanvas.BehaviourTrees.BTNestedFlowScript","$id":"2"},{"_flowScript":{"_value":3},"_position":{"x":465.0,"y":315.0},"$type":"NodeCanvas.BehaviourTrees.BTNestedFlowScript","$id":"3"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"3"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}},"derivedData":{"repeat":true,"$type":"NodeCanvas.BehaviourTrees.BehaviourTree+DerivedSerializationData"}}'
   _objectReferences:
   - {fileID: 0}
   - {fileID: 11400000, guid: c49201898d8078a4c901f2e23b3f8d6a, type: 2}
   - {fileID: 11400000, guid: 74955aba27ef3cd4abd8713b2a0f483a, type: 2}
-  - {fileID: 11400000, guid: 8b8883cf08e75f54388121e04cb49fab, type: 2}
+  - {fileID: 11400000, guid: 344359e001cd2064eb98de6604228031, type: 2}
   _graphSource:
     _version: 3.08
     _category: 
     _comments: 
-    _translation: {x: -52, y: -6}
-    _zoomFactor: 0.9776337
+    _translation: {x: 83, y: -57}
+    _zoomFactor: 0.97814983
   _haltSerialization: 0
 #---GRAPH_START---
 #The pretty formatted json serialization bellow is only a reference to help in version control diff. Other than that it is not used at all.
@@ -45,20 +42,11 @@ MonoBehaviour:
 #            "_flowScript": {
 #                "_value": 1
 #            },
-#            "_variablesMap": [
-#                {
-#                    "_targetSubGraphVariableID": "116ba06f-f2d0-46e5-9f3e-dbcf54c492fe",
-#                    "_canRead": true,
-#                    "_canWrite": true,
-#                    "_type": "System.Single",
-#                    "_name": "AttackInterval",
-#                    "_targetVariableID": "6b40f0f5-4d7a-4874-a1a2-d1fd07566abe"
-#                }
-#            ],
 #            "_position": {
-#                "x": 165.0,
+#                "x": -30.0,
 #                "y": 315.0
 #            },
+#            "_comment": "\u4e3b\u6b66\u5668\u653b\u51fb",
 #            "$type": "NodeCanvas.BehaviourTrees.BTNestedFlowScript",
 #            "$id": "1"
 #        },
@@ -66,20 +54,11 @@ MonoBehaviour:
 #            "_flowScript": {
 #                "_value": 2
 #            },
-#            "_variablesMap": [
-#                {
-#                    "_targetSubGraphVariableID": "555a6250-621d-4e2b-a387-faecef6ffeb5",
-#                    "_canRead": true,
-#                    "_canWrite": true,
-#                    "_type": "System.Single",
-#                    "_name": "RotateSpeed",
-#                    "_targetVariableID": "cce94ab5-9662-4d16-875d-57b1b82674ca"
-#                }
-#            ],
 #            "_position": {
-#                "x": 420.0,
+#                "x": 195.0,
 #                "y": 315.0
 #            },
+#            "_comment": "\u671d\u5411\u73a9\u5bb6\u673a\u7532",
 #            "$type": "NodeCanvas.BehaviourTrees.BTNestedFlowScript",
 #            "$id": "2"
 #        },
@@ -87,18 +66,8 @@ MonoBehaviour:
 #            "_flowScript": {
 #                "_value": 3
 #            },
-#            "_variablesMap": [
-#                {
-#                    "_targetSubGraphVariableID": "251c7d9e-6ef4-4f7d-9f1b-54a57cf01524",
-#                    "_canRead": true,
-#                    "_canWrite": true,
-#                    "_type": "System.Single",
-#                    "_name": "MoveSpeed",
-#                    "_targetVariableID": "63b6f7ec-ddef-45e4-ac8c-775561b0b8fc"
-#                }
-#            ],
 #            "_position": {
-#                "x": 735.0,
+#                "x": 465.0,
 #                "y": 315.0
 #            },
 #            "$type": "NodeCanvas.BehaviourTrees.BTNestedFlowScript",
@@ -137,23 +106,7 @@ MonoBehaviour:
 #    "canvasGroups": [],
 #    "localBlackboard": {
 #        "_variables": {
-#            "AttackInterval": {
-#                "_name": "AttackInterval",
-#                "_id": "6b40f0f5-4d7a-4874-a1a2-d1fd07566abe",
-#                "$type": "NodeCanvas.Framework.Variable`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
-#            },
-#            "MoveSpeed": {
-#                "_value": 5.0,
-#                "_name": "MoveSpeed",
-#                "_id": "63b6f7ec-ddef-45e4-ac8c-775561b0b8fc",
-#                "$type": "NodeCanvas.Framework.Variable`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
-#            },
-#            "RotateSpeed": {
-#                "_value": 2.0,
-#                "_name": "RotateSpeed",
-#                "_id": "cce94ab5-9662-4d16-875d-57b1b82674ca",
-#                "$type": "NodeCanvas.Framework.Variable`1[[System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
-#            }
+#
 #        }
 #    },
 #    "derivedData": {

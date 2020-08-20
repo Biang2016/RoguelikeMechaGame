@@ -628,6 +628,14 @@ namespace Client
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""RestartGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""072a09ac-3b24-472b-aa42-f116b670abde"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -729,6 +737,17 @@ namespace Client
                     ""action"": ""MouseWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5a85a49-e777-4c4a-b3f5-2ceb978fcb5f"",
+                    ""path"": ""<Keyboard>/F10"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": ""Clamp(max=1)"",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RestartGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -778,6 +797,7 @@ namespace Client
             m_Common_Tab = m_Common.FindAction("Tab", throwIfNotFound: true);
             m_Common_Confirm = m_Common.FindAction("Confirm", throwIfNotFound: true);
             m_Common_Debug = m_Common.FindAction("Debug", throwIfNotFound: true);
+            m_Common_RestartGame = m_Common.FindAction("RestartGame", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1022,6 +1042,7 @@ namespace Client
         private readonly InputAction m_Common_Tab;
         private readonly InputAction m_Common_Confirm;
         private readonly InputAction m_Common_Debug;
+        private readonly InputAction m_Common_RestartGame;
         public struct CommonActions
         {
             private @PlayerInput m_Wrapper;
@@ -1035,6 +1056,7 @@ namespace Client
             public InputAction @Tab => m_Wrapper.m_Common_Tab;
             public InputAction @Confirm => m_Wrapper.m_Common_Confirm;
             public InputAction @Debug => m_Wrapper.m_Common_Debug;
+            public InputAction @RestartGame => m_Wrapper.m_Common_RestartGame;
             public InputActionMap Get() { return m_Wrapper.m_Common; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1071,6 +1093,9 @@ namespace Client
                     @Debug.started -= m_Wrapper.m_CommonActionsCallbackInterface.OnDebug;
                     @Debug.performed -= m_Wrapper.m_CommonActionsCallbackInterface.OnDebug;
                     @Debug.canceled -= m_Wrapper.m_CommonActionsCallbackInterface.OnDebug;
+                    @RestartGame.started -= m_Wrapper.m_CommonActionsCallbackInterface.OnRestartGame;
+                    @RestartGame.performed -= m_Wrapper.m_CommonActionsCallbackInterface.OnRestartGame;
+                    @RestartGame.canceled -= m_Wrapper.m_CommonActionsCallbackInterface.OnRestartGame;
                 }
                 m_Wrapper.m_CommonActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1102,6 +1127,9 @@ namespace Client
                     @Debug.started += instance.OnDebug;
                     @Debug.performed += instance.OnDebug;
                     @Debug.canceled += instance.OnDebug;
+                    @RestartGame.started += instance.OnRestartGame;
+                    @RestartGame.performed += instance.OnRestartGame;
+                    @RestartGame.canceled += instance.OnRestartGame;
                 }
             }
         }
@@ -1158,6 +1186,7 @@ namespace Client
             void OnTab(InputAction.CallbackContext context);
             void OnConfirm(InputAction.CallbackContext context);
             void OnDebug(InputAction.CallbackContext context);
+            void OnRestartGame(InputAction.CallbackContext context);
         }
     }
 }

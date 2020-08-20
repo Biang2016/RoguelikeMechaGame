@@ -161,6 +161,7 @@ namespace Client
         public ButtonState Common_Debug = new ButtonState() {ButtonName = ButtonNames.Common_Debug};
         public ButtonState Common_Exit = new ButtonState() {ButtonName = ButtonNames.Common_Exit};
         public ButtonState Common_Tab = new ButtonState() {ButtonName = ButtonNames.Common_Tab};
+        public ButtonState Common_RestartGame = new ButtonState() {ButtonName = ButtonNames.Common_RestartGame };
 
         #endregion
 
@@ -206,6 +207,7 @@ namespace Client
             Common_Debug.GetStateCallbackFromContext(CommonInputActions.Debug);
             Common_Exit.GetStateCallbackFromContext(CommonInputActions.Exit);
             Common_Tab.GetStateCallbackFromContext(CommonInputActions.Tab);
+            Common_RestartGame.GetStateCallbackFromContext(CommonInputActions.RestartGame);
 
             PlayerInput.Enable();
             CommonInputActions.Enable();
