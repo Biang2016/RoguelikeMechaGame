@@ -1,0 +1,155 @@
+{
+  "MC_BasicCore": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 0
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": []
+  },
+  "MC_BasicBlock": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 0
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": []
+  },
+  "MC_ArcPurpleGravBallCanon": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 0
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": -1,
+        "z": 0
+      },
+      {
+        "x": 1,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": 1
+      },
+      {
+        "x": 0,
+        "z": -1
+      }
+    ]
+  },
+  "MC_LeaveGun": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 1
+      },
+      {
+        "x": 0,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": -1
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": []
+  },
+  "MC_WaterBallGun": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 1
+      },
+      {
+        "x": 0,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": -1
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": -1,
+        "z": -1
+      },
+      {
+        "x": 1,
+        "z": -1
+      }
+    ]
+  },
+  "MC_WaterBallGunPlus": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 1
+      },
+      {
+        "x": 0,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": -1
+      },
+      {
+        "x": 1,
+        "z": -1
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": -1,
+        "z": -1
+      }
+    ]
+  },
+  "MC_BasicEngine": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 0
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": -1,
+        "z": 0
+      },
+      {
+        "x": 1,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": 1
+      },
+      {
+        "x": 0,
+        "z": -1
+      }
+    ]
+  },
+  "MC_SmallArmor": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 0
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": 0,
+        "z": -1
+      }
+    ]
+  }
+}

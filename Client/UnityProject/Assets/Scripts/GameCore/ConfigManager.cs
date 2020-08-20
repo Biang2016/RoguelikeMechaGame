@@ -29,7 +29,7 @@ namespace GameCore
 
         public const int BackpackGridSize = 60;
 
-        public static string MechaComponentOriginalOccupiedGridInfoJsonFilePath = $"{MechaComponentOriginalOccupiedGridInfoJsonFileFolder}/MechaComponentOriginalOccupiedGridInfo.json";
+        public static string MechaComponentOriginalOccupiedGridInfoJsonFilePath => $"{MechaComponentOriginalOccupiedGridInfoJsonFileFolder}/MechaComponentOriginalOccupiedGridInfo.json";
         public static string MechaComponentOriginalOccupiedGridInfoJsonFileFolder = Application.streamingAssetsPath + "/Configs/MechaComponentPrefabConfigs";
         public static Dictionary<string, MechaComponentOriginalOccupiedGridInfo> MechaComponentOriginalOccupiedGridInfoDict = new Dictionary<string, MechaComponentOriginalOccupiedGridInfo>();
 
