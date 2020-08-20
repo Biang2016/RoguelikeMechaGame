@@ -16,10 +16,6 @@ namespace GameCore
         [TableList]
         public List<Config> MechaComponentList = new List<Config>();
 
-        [ReadOnly]
-        [LabelText("敌兵AI配置Key")]
-        public string MechaAIConfigKey;
-
         public struct Config
         {
             public string MechaComponentKey;
@@ -28,14 +24,33 @@ namespace GameCore
             public GridPosR GridPosR;
         }
 
+        [ReadOnly]
+        [LabelText("AI配置Key")]
+        public string MechaAIConfigKey;
+
+        [ReadOnly]
+        [LabelText("AI参数")]
+        public Dictionary<MechaAIConfigParamType, float> MechaAIParams = new Dictionary<MechaAIConfigParamType, float>();
+
         public MechaConfig Clone()
         {
             return new MechaConfig
             {
                 MechaConfigName = MechaConfigName,
                 MechaComponentList = MechaComponentList.Clone(),
-                MechaAIConfigKey = MechaAIConfigKey
+                MechaAIConfigKey = MechaAIConfigKey,
+                MechaAIParams = MechaAIParams.Clone(),
             };
         }
+    }
+
+    public enum MechaAIConfigParamType
+    {
+        MoveSpeed = 1,
+        RotateSpeed = 2,
+
+        Weapon0_AttackInterval = 10,
+
+        AttackDistance = 20,
     }
 }

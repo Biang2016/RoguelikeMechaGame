@@ -1,5 +1,7 @@
-﻿using FlowCanvas.Nodes;
+﻿using System;
+using FlowCanvas.Nodes;
 using ParadoxNotion.Design;
+using UnityEngine;
 
 namespace GameCore
 {
@@ -26,14 +28,14 @@ namespace GameCore
     }
 
     [Category("MechaComponent")]
-    [Name("主武器射击")]
+    [Name("Weapon0射击")]
     public class MainWeaponShoot : CallableFunctionNode<bool>
     {
         public override bool Invoke()
         {
             MechaBase mecha = this.GetMechaBase();
             if (mecha == null || mecha.MechaInfo == null) return false;
-            mecha.MechaInfo.MechaComponentInfoDict_Alias.TryGetValue("MainWeapon", out MechaComponentInfo mci);
+            mecha.MechaInfo.MechaComponentInfoDict_Alias.TryGetValue("Weapon0", out MechaComponentInfo mci);
             if (mci != null)
             {
                 return mci.TriggerSkill();
@@ -44,30 +46,84 @@ namespace GameCore
     }
 
     [Category("MechaComponent")]
-    [Name("转向玩家")]
-    public class RotateTowardsMainPlayer : CallableActionNode<float>
+    [Name("获取射击间隔")]
+    public class GetWeaponShootInterval : CallableFunctionNode<float, string>
     {
-        public override void Invoke(float rotateSpeed)
+        public override float Invoke(string weaponName)
         {
             MechaBase mecha = this.GetMechaBase();
-            if (mecha == null || mecha.MechaInfo == null) return;
-            mecha.MechaBaseAIAgent.RotateSpeed = rotateSpeed;
-            mecha.MechaBaseAIAgent.SetRotateTarget(BattleManager.Instance.PlayerMechaInfo.Position);
-            mecha.MechaBaseAIAgent.EnableRotate = true;
+            if (mecha == null || mecha.MechaInfo == null) return 9999f;
+
+            if (Enum.TryParse<MechaAIConfigParamType>(weaponName + "_AttackInterval", out MechaAIConfigParamType paramType))
+            {
+                mecha.MechaInfo.MechaConfig.MechaAIParams.TryGetValue(paramType, out float interval);
+                return interval;
+            }
+
+            return 9999f;
         }
     }
 
     [Category("MechaComponent")]
-    [Name("朝玩家移动")]
-    public class MoveTowardsMainPlayer : CallableActionNode<float>
+    [Name("转向玩家")]
+    public class RotateTowardsMainPlayer : CallableActionNode
     {
-        public override void Invoke(float moveSpeed)
+        public override void Invoke()
         {
             MechaBase mecha = this.GetMechaBase();
             if (mecha == null || mecha.MechaInfo == null) return;
-            mecha.MechaBaseAIAgent.MoveSpeed = moveSpeed;
-            mecha.MechaBaseAIAgent.SetDestination(BattleManager.Instance.PlayerMechaInfo.Position);
-            mecha.MechaBaseAIAgent.EnableMove = true;
+            if (mecha.MechaInfo.MechaConfig.MechaAIParams.TryGetValue(MechaAIConfigParamType.RotateSpeed, out float rotateSpeed))
+            {
+                mecha.MechaBaseAIAgent.RotateSpeed = rotateSpeed;
+                mecha.MechaBaseAIAgent.SetRotateTarget(BattleManager.Instance.PlayerMechaInfo.Position);
+                mecha.MechaBaseAIAgent.EnableRotate = true;
+            }
+            else
+            {
+                Debug.LogError($"【AI原子】{mecha.name}不存在AI参数配置{MechaAIConfigParamType.RotateSpeed},请检查AI配置");
+            }
+        }
+
+        [Category("MechaComponent")]
+        [Name("朝玩家移动")]
+        public class MoveTowardsMainPlayer : CallableActionNode
+        {
+            public override void Invoke()
+            {
+                MechaBase mecha = this.GetMechaBase();
+                if (mecha == null || mecha.MechaInfo == null) return;
+                if (mecha.MechaInfo.MechaConfig.MechaAIParams.TryGetValue(MechaAIConfigParamType.MoveSpeed, out float moveSpeed))
+                {
+                    mecha.MechaBaseAIAgent.MoveSpeed = moveSpeed;
+                    mecha.MechaBaseAIAgent.SetDestination(BattleManager.Instance.PlayerMechaInfo.Position);
+                    mecha.MechaBaseAIAgent.EnableMove = true;
+                }
+                else
+                {
+                    Debug.LogError($"【AI原子】{mecha.name}不存在AI参数配置{MechaAIConfigParamType.MoveSpeed},请检查AI配置");
+                }
+            }
+        }
+
+        [Category("MechaComponent")]
+        [Name("朝玩家移动并保持距离")]
+        public class MoveTowardsMainPlayerWithMinDistance : CallableActionNode
+        {
+            public override void Invoke()
+            {
+                MechaBase mecha = this.GetMechaBase();
+                if (mecha == null || mecha.MechaInfo == null) return;
+                if (mecha.MechaInfo.MechaConfig.MechaAIParams.TryGetValue(MechaAIConfigParamType.MoveSpeed, out float moveSpeed))
+                {
+                    mecha.MechaBaseAIAgent.MoveSpeed = moveSpeed;
+                    mecha.MechaBaseAIAgent.SetDestination(BattleManager.Instance.PlayerMechaInfo.Position);
+                    mecha.MechaBaseAIAgent.EnableMove = true;
+                }
+                else
+                {
+                    Debug.LogError($"【AI原子】{mecha.name}不存在AI参数配置{MechaAIConfigParamType.MoveSpeed},请检查AI配置");
+                }
+            }
         }
     }
 }
