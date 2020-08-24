@@ -52,11 +52,11 @@ MonoBehaviour:
   - ParamType: 1
     ParamValue: 3
   - ParamType: 2
-    ParamValue: 10
+    ParamValue: 0.1
   - ParamType: 10
     ParamValue: 3
   - ParamType: 20
-    ParamValue: 20
+    ParamValue: 25
 --- !u!114 &9018293396621330623
 MonoBehaviour:
   m_ObjectHideFlags: 0

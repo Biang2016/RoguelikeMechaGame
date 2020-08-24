@@ -27,8 +27,16 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 694eb612f5acb5e4cb04221475119f34, type: 3}
     - {fileID: 11400000, guid: 58ba4afb9f685544bbf6d210d2150489, type: 2}
     - {fileID: 11400000, guid: 5b13508841de5c641b38b609ee82a483, type: 2}
-    - {fileID: 1244351346966676, guid: f5b5ff501b7e044f09afb208e34504cc, type: 3}
+    - {fileID: 1244351346966676, guid: a1a25cf09aeb4584484fdfcb4a1cb199, type: 3}
     - {fileID: 21300000, guid: 079a85fb43f13284992191098e855a3e, type: 3}
+    - {fileID: 11400000, guid: 9b80600bdc35e944bac04bd83bf010d4, type: 2}
+    - {fileID: 11400000, guid: 695556e0bee68aa40923a307310c2dc0, type: 2}
+    - {fileID: 2064287783220693693, guid: 9df5bc6c8b0c8014385d73387e88e633, type: 3}
+    - {fileID: 21300000, guid: f0e78e0ac5b46804dae8ceac5baccde5, type: 3}
+    - {fileID: 11400000, guid: 2662aa17aad4ef542b39fe4ad6053a6c, type: 2}
+    - {fileID: 11400000, guid: 53eae9a135dba8d49b16297f82e93fe9, type: 2}
+    - {fileID: 1244351346966676, guid: f5b5ff501b7e044f09afb208e34504cc, type: 3}
+    - {fileID: 21300000, guid: 5fc018d0c1b1a4342953c9891f0d249e, type: 3}
     - {fileID: 11400000, guid: 0e190606f345ebd46b8ee3b0e4784dd6, type: 2}
     - {fileID: 11400000, guid: e373da448d4efe146af33384ace303dc, type: 2}
     - {fileID: 1244351346966676, guid: 4aba09d2d08a3304e9fd6096e06ecf3f, type: 3}
@@ -56,7 +64,7 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 10
     - Name: 
       Entry: 7
       Data: 1|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
@@ -143,10 +151,10 @@ MonoBehaviour:
       Data: 4|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
     - Name: EnglishName
       Entry: 1
-      Data: Mechine Gun
+      Data: Basic Gun
     - Name: ChineseName
       Entry: 1
-      Data: "\u673A\u67AA"
+      Data: "\u57FA\u7840\u67AA"
     - Name: MechaComponentPrefab
       Entry: 10
       Data: 11
@@ -170,10 +178,10 @@ MonoBehaviour:
       Data: 5|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
     - Name: EnglishName
       Entry: 1
-      Data: Water Gun
+      Data: Blade Gun
     - Name: ChineseName
       Entry: 1
-      Data: "\u6C34\u67AA"
+      Data: "\u5200\u6247\u53D1\u5C04\u5668"
     - Name: MechaComponentPrefab
       Entry: 10
       Data: 15
@@ -197,10 +205,10 @@ MonoBehaviour:
       Data: 6|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
     - Name: EnglishName
       Entry: 1
-      Data: Water Gun Ex
+      Data: Mechine Gun
     - Name: ChineseName
       Entry: 1
-      Data: "\u5F3A\u5316\u6C34\u67AA"
+      Data: "\u673A\u67AA"
     - Name: MechaComponentPrefab
       Entry: 10
       Data: 19
@@ -212,10 +220,10 @@ MonoBehaviour:
       Data: 20
     - Name: AbilityGroupConfigSSO
       Entry: 10
-      Data: 17
+      Data: 21
     - Name: MechaComponentQualityConfigSSO
       Entry: 10
-      Data: 18
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -224,25 +232,25 @@ MonoBehaviour:
       Data: 7|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
     - Name: EnglishName
       Entry: 1
-      Data: Basic Engine
+      Data: Water Gun
     - Name: ChineseName
       Entry: 1
-      Data: "\u57FA\u7840\u5F15\u64CE"
+      Data: "\u6C34\u67AA"
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 21
+      Data: 23
     - Name: MechaComponentType
       Entry: 3
-      Data: 4
+      Data: 2
     - Name: ItemSprite
       Entry: 10
-      Data: 22
+      Data: 24
     - Name: AbilityGroupConfigSSO
       Entry: 10
-      Data: 23
+      Data: 25
     - Name: MechaComponentQualityConfigSSO
       Entry: 10
-      Data: 24
+      Data: 26
     - Name: 
       Entry: 8
       Data: 
@@ -251,25 +259,79 @@ MonoBehaviour:
       Data: 8|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
     - Name: EnglishName
       Entry: 1
+      Data: Water Gun Ex
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u5F3A\u5316\u6C34\u67AA"
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 27
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 2
+    - Name: ItemSprite
+      Entry: 10
+      Data: 28
+    - Name: AbilityGroupConfigSSO
+      Entry: 10
+      Data: 25
+    - Name: MechaComponentQualityConfigSSO
+      Entry: 10
+      Data: 26
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: EnglishName
+      Entry: 1
+      Data: Basic Engine
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u57FA\u7840\u5F15\u64CE"
+    - Name: MechaComponentPrefab
+      Entry: 10
+      Data: 29
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 4
+    - Name: ItemSprite
+      Entry: 10
+      Data: 30
+    - Name: AbilityGroupConfigSSO
+      Entry: 10
+      Data: 31
+    - Name: MechaComponentQualityConfigSSO
+      Entry: 10
+      Data: 32
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|GameCore.AllMechaComponentConfigSSO+MechaComponentConfigRaw, GameCore
+    - Name: EnglishName
+      Entry: 1
       Data: Small Armor
     - Name: ChineseName
       Entry: 1
       Data: "\u5C0F\u578B\u88C5\u7532"
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 25
+      Data: 33
     - Name: MechaComponentType
       Entry: 3
       Data: 10
     - Name: ItemSprite
       Entry: 10
-      Data: 26
+      Data: 34
     - Name: AbilityGroupConfigSSO
       Entry: 10
-      Data: 27
+      Data: 35
     - Name: MechaComponentQualityConfigSSO
       Entry: 10
-      Data: 28
+      Data: 36
     - Name: 
       Entry: 8
       Data: 
@@ -281,14 +343,14 @@ MonoBehaviour:
       Data: 
     - Name: MechaComponentConfigList
       Entry: 7
-      Data: 9|System.Collections.Generic.List`1[[GameCore.MechaComponentConfig, GameCore]],
-        mscorlib
+      Data: 11|System.Collections.Generic.List`1[[GameCore.MechaComponentConfig,
+        GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 10
     - Name: 
       Entry: 7
-      Data: 10|GameCore.MechaComponentConfig, GameCore
+      Data: 12|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_BasicCore
@@ -315,7 +377,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 11|GameCore.MechaComponentConfig, GameCore
+      Data: 13|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_BasicBlock
@@ -342,7 +404,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 12|GameCore.MechaComponentConfig, GameCore
+      Data: 14|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_ArcPurpleGravBallCanon
@@ -369,7 +431,61 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 13|GameCore.MechaComponentConfig, GameCore
+      Data: 15|GameCore.MechaComponentConfig, GameCore
+    - Name: MechaComponentKey
+      Entry: 1
+      Data: MC_BasicGun
+    - Name: EnglishName
+      Entry: 1
+      Data: Basic Gun
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u57FA\u7840\u67AA"
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 2
+    - Name: ItemSpriteKey
+      Entry: 1
+      Data: BasicGun
+    - Name: MechaComponentQualityConfigKey
+      Entry: 1
+      Data: Q_BasicGun
+    - Name: AbilityGroupConfigKey
+      Entry: 1
+      Data: AGC_BasicGun
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 16|GameCore.MechaComponentConfig, GameCore
+    - Name: MechaComponentKey
+      Entry: 1
+      Data: MC_BladeGun
+    - Name: EnglishName
+      Entry: 1
+      Data: Blade Gun
+    - Name: ChineseName
+      Entry: 1
+      Data: "\u5200\u6247\u53D1\u5C04\u5668"
+    - Name: MechaComponentType
+      Entry: 3
+      Data: 2
+    - Name: ItemSpriteKey
+      Entry: 1
+      Data: BladeGun
+    - Name: MechaComponentQualityConfigKey
+      Entry: 1
+      Data: Q_BladeGun
+    - Name: AbilityGroupConfigKey
+      Entry: 1
+      Data: AGC_BladeGun
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_LeaveGun
@@ -384,7 +500,7 @@ MonoBehaviour:
       Data: 2
     - Name: ItemSpriteKey
       Entry: 1
-      Data: BasicGun
+      Data: LeaveGun
     - Name: MechaComponentQualityConfigKey
       Entry: 1
       Data: Q_LeaveGun
@@ -396,7 +512,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 14|GameCore.MechaComponentConfig, GameCore
+      Data: 18|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_WaterBallGun
@@ -423,7 +539,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 15|GameCore.MechaComponentConfig, GameCore
+      Data: 19|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_WaterBallGunPlus
@@ -450,7 +566,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 16|GameCore.MechaComponentConfig, GameCore
+      Data: 20|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_BasicEngine
@@ -477,7 +593,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 17|GameCore.MechaComponentConfig, GameCore
+      Data: 21|GameCore.MechaComponentConfig, GameCore
     - Name: MechaComponentKey
       Entry: 1
       Data: MC_SmallArmor
@@ -492,7 +608,7 @@ MonoBehaviour:
       Data: 10
     - Name: ItemSpriteKey
       Entry: 1
-      Data: BasicCore
+      Data: SmallArmor
     - Name: MechaComponentQualityConfigKey
       Entry: 1
       Data: Q_SmallArmor

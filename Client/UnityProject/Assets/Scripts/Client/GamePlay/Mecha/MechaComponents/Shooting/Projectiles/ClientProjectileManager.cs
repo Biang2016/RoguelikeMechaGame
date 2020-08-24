@@ -28,8 +28,12 @@ namespace Client
 
         public void EmitProjectile(ProjectileInfo projectileInfo)
         {
-            Transform dummyPos = ClientBattleManager.Instance.FindMechaComponent(projectileInfo.ParentExecuteInfo.MechaComponentInfo.GUID).DummyPosDict[projectileInfo.ProjectileConfig.DummyPos];
-            ShootProjectile(projectileInfo, dummyPos.position, dummyPos.forward, dummyPos);
+            MechaComponent mc = ClientBattleManager.Instance.FindMechaComponent(projectileInfo.ParentExecuteInfo.MechaComponentInfo.GUID);
+            if (mc != null && !mc.MechaInfo.IsDead)
+            {
+                Transform dummyPos = mc.DummyPosDict[projectileInfo.ProjectileConfig.DummyPos];
+                ShootProjectile(projectileInfo, dummyPos.position, dummyPos.forward, dummyPos);
+            }
         }
 
         private Projectile ShootProjectile(ProjectileInfo projectileInfo, Vector3 from, Vector3 dir, Transform dummyPos)

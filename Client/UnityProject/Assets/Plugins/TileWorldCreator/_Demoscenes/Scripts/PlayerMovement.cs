@@ -93,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
 			Quaternion newRotation = Quaternion.LookRotation (playerToMouse);
 			
             // Set the player's rotation to this new rotation.
-			playerRigidbody.MoveRotation (newRotation);
+			this.transform.rotation = newRotation;
 		}
 	}
 
@@ -112,6 +112,6 @@ public class PlayerMovement : MonoBehaviour
 
         Quaternion _newRot = Quaternion.LookRotation(_playerToPos);
 
-        playerRigidbody.MoveRotation(_newRot);
+	    this.transform.rotation = _newRot;
     }
 }

@@ -7,15 +7,18 @@ Thank you for purchasing TileWorldCreator
 you are supporting a small indie studio.
 ____________________________________________
 
+Getting started:
+----------------
+Create an empty gameobject, name it TileWorldCreator and add the TileWorldCreator component to it.
 
-Installation:
-
-Just drag the TileWorldCreator prefab to an empty scene.
+Object scatter:
+---------------
+If you want to use the object scatter tool, simply add the TileWorldObjectScatter component to your TileWorldCreator game object.
 
 
 using Runtime Editor:
-make sure a TileWorldCreator prefab is already in the scene and has a correct setup.
-Drag the TileWorldCreatorRTE prefab to your scene. Hit play
+make sure a TileWorldCreator game object is already in the scene and has a correct setup.
+Create a new game object and add the TileWorldCreatorRTE component to it. Drag the TileWorldCreator object to the TileWorldCreatorRTE object.
 
 
 

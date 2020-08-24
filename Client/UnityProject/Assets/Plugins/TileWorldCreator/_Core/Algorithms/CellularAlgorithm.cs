@@ -44,6 +44,7 @@ public class CellularAlgorithm : TileWorldAlgorithms, IAlgorithms {
     public List<Island> islands = new List<Island>();
     public List<Island> waterIslands = new List<Island>();
     public int bigIslandIndex = 0;
+	
 
     /// <summary>
     /// Implemented interface IAlgorithms
@@ -53,7 +54,7 @@ public class CellularAlgorithm : TileWorldAlgorithms, IAlgorithms {
         //we do not set any start or end position for cellular map
         _startPosition = new Vector2(0, 0);
         _endPosition = new Vector2(0, 0);
-
+	    
         //assign properties from config
         width = _config.global.width;
         height = _config.global.height;
@@ -81,39 +82,39 @@ public class CellularAlgorithm : TileWorldAlgorithms, IAlgorithms {
             cellularMap = FloodFill(cellularMap);
         }
 
-        //flood holes floods all smaller holes inside of a map
+	    //flood holes floods all smaller holes inside of a map
+	    //Debug.Log(_config.cellularAlgorithm.floodHoles);
         if (_config.cellularAlgorithm.floodHoles && (_config.global.width <= 150 || _config.global.height <= 150))
         {
-            CountWater(cellularMap);
+        	CountWater(cellularMap);
 
             cellularMap = FloodFillWater(cellularMap);
         }
 
 
+	    // REMOVED DUE TO STACK OVERFLOW ISSUES
         //check if biggest island is big enough.
         //if not, regenerate map
-        //only do this when the random seed is set to -1 so we don't get
-        //a stackoverflow if a random seed generates a map who does not meet the min cell count.
-        bool _mapSizeOK = false;
-        //if (_config.global.randomSeed < 0)
-        //{
-            if (islands.Count > 0)
-            {
-                for (int i = 0; i < islands.Count; i++)
-                {
-                    if (islands[i].cellCount >= _config.cellularAlgorithm.minCellCount)
-                    {
-                        _mapSizeOK = true;
-                    }
-                }
-            }
-        //}
+        //bool _mapSizeOK = false;
+        ////if (_config.global.randomSeed < 0)
+        ////{
+        //    if (islands.Count > 0)
+        //    {
+        //        for (int i = 0; i < islands.Count; i++)
+        //        {
+        //            if (islands[i].cellCount >= _config.cellularAlgorithm.minCellCount)
+        //            {
+        //                _mapSizeOK = true;
+        //            }
+        //        }
+        //    }
+        ////}
 
-        if (!_mapSizeOK)
-        {
-            //Debug.Log("size to small");
-            Generate(_config, out _startPosition, out _endPosition);
-        }
+        //if (!_mapSizeOK)
+        //{
+        //    //Debug.Log("size to small");
+        //    Generate(_config, out _startPosition, out _endPosition);
+        //}
 
         return cellularMap;
     }
@@ -426,7 +427,7 @@ public class CellularAlgorithm : TileWorldAlgorithms, IAlgorithms {
                 {
 
                     FillWater(neighbour_x, neighbour_y);
-
+         
                 }
 
             }

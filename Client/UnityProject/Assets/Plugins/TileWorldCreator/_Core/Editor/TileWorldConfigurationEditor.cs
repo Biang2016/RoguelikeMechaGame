@@ -125,7 +125,7 @@ public class TileWorldConfigurationEditor : Editor
         //Show preset settings foldout
         ShowPresetSettingsFoldout(_config);
 
-        //EditorUtility.SetDirty(_config);
+        EditorUtility.SetDirty(_config);
     }
 
     static void ShowGlobalSettingsFoldout(TileWorldConfiguration _config)

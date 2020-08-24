@@ -24,18 +24,19 @@ namespace TileWorld
 {
 	public class TileWorldAbout : EditorWindow {
 		
-		string version = "2.0.3";
+		string version = "2.0.5";
 		string doc = "http://tileworldcreator.doorfortyfour.com/documentation";
-        string api = "http://tileworldcreator.doorfortyfour.com/api.html";
 		string web = "http://tileworldcreator.doorfortyfour.com";
 		string mail = "mailto:mail@doorfortyfour.com";
 
-        string ppfxUrl = "http://u3d.as/8FM";
-        string savemeUrl = "http://u3d.as/5mc";
-
+		string ppfxUrl = "http://u3d.as/8FM";
+		string databoxUrl = "https://assetstore.unity.com/packages/slug/155189";
+		string flowReactorUrl = "http://u3d.as/1RhS";
+		
 		Texture2D logo;
-        Texture2D iconPPFX;
-        Texture2D iconSaveme;
+		Texture2D iconPPFX;
+		Texture2D iconDatabox;
+		Texture2D iconFlowReactor;
 
         string changelog = "";
         Vector2 scrollPos = new Vector2(0, 0);
@@ -53,9 +54,9 @@ namespace TileWorld
             var _path = ReturnInstallPath.GetInstallPath("Editor", this);
 			logo = AssetDatabase.LoadAssetAtPath(_path + "Res/topLogo.png",typeof(Texture2D)) as Texture2D;
             iconPPFX = AssetDatabase.LoadAssetAtPath(_path + "Res/ppfx_icon.png", typeof(Texture2D)) as Texture2D;
-            iconSaveme = AssetDatabase.LoadAssetAtPath(_path + "Res/saveme_icon.png", typeof(Texture2D)) as Texture2D;
-
-
+			iconDatabox = AssetDatabase.LoadAssetAtPath(_path + "Res/databox_icon.png", typeof(Texture2D)) as Texture2D;
+			iconFlowReactor = AssetDatabase.LoadAssetAtPath(_path + "Res/flowReactor_icon.png", typeof(Texture2D)) as Texture2D;
+			
             //load changelog
             var _changelogPath = Path.Combine(_path.Substring(0, _path.Length - 6), "changelog.txt");
             var changelogAsset = AssetDatabase.LoadAssetAtPath(_changelogPath, typeof(TextAsset)) as TextAsset;
@@ -79,10 +80,7 @@ namespace TileWorld
 			{
 				Application.OpenURL(doc);
 			}
-            //if (GUILayout.Button("API"))
-            //{
-            //    Application.OpenURL(api);
-            //}
+          
 			if (GUILayout.Button("Support"))
 			{
 				Application.OpenURL(mail);
@@ -97,17 +95,20 @@ namespace TileWorld
             GUILayout.BeginVertical("Box");
             GUILayout.Space(20);
                 GUILayout.BeginHorizontal();
-                GUILayout.Space(100);
+			GUILayout.Space(20);
+					if (GUILayout.Button(iconFlowReactor, GUILayout.Width(80), GUILayout.Height(80)))
+					{
+						Application.OpenURL(flowReactorUrl);
+					}
+					if (GUILayout.Button(iconDatabox, GUILayout.Width(80), GUILayout.Height(80)))
+					{
+						Application.OpenURL(databoxUrl);
+					}
                     if (GUILayout.Button(iconPPFX, GUILayout.Width(80), GUILayout.Height(80)))
                     {
                         Application.OpenURL(ppfxUrl);
                     }
-                    //GUILayout.Space(20);
-                    //if (GUILayout.Button(iconSaveme, GUILayout.Width(80), GUILayout.Height(80)))
-                    //{
-                    //    Application.OpenURL(savemeUrl);
-                    //}
-                    
+                   
                 GUILayout.EndHorizontal();
             GUILayout.Space(20);
             GUILayout.EndVertical();

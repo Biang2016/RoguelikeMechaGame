@@ -65,13 +65,13 @@ MonoBehaviour:
       Data: 0.0413258374
     - Name: m_Value
       Entry: 4
-      Data: 25
+      Data: 15
     - Name: m_InTangent
       Entry: 4
-      Data: 0
+      Data: 7.033104
     - Name: m_OutTangent
       Entry: 4
-      Data: 0
+      Data: 7.033104
     - Name: m_TangentMode
       Entry: 3
       Data: 34
@@ -98,13 +98,13 @@ MonoBehaviour:
       Data: 5.01779175
     - Name: m_Value
       Entry: 4
-      Data: 25
+      Data: 50
     - Name: m_InTangent
       Entry: 4
-      Data: 0
+      Data: 7.033104
     - Name: m_OutTangent
       Entry: 4
-      Data: 0
+      Data: 7.033104
     - Name: m_TangentMode
       Entry: 3
       Data: 34
@@ -164,7 +164,7 @@ MonoBehaviour:
       Data: 0
     - Name: CanReflect
       Entry: 5
-      Data: false
+      Data: true
     - Name: ReflectTimes
       Entry: 3
       Data: 1

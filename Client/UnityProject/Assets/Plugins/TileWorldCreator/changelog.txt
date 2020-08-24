@@ -1,3 +1,22 @@
+2.0.5p2
+-------
+- Fixed: Mask layer not working in runtime editor
+
+2.0.5p1
+-------
+- Fixed: RemoveTiles does not take the TileWorldCreator object position offset in to account (same for map cruncher script)
+
+2.0.5
+-----
+- Fixed: Save bug where selected layer preset will not get saved
+- Fixed: Rare stack overflow issue with cellular algorithm
+
+2.0.4
+-----
+- Updated to support Unity 2018 + 2019
+- Removed predefined TileWorldCreator prefab. Please create an empty gameObject with a TileWorldCreator component instead.
+- BUGFIX: Fixed demoscenes according to new prefab workflow.
+
 2.0.3
 -----
 - BUGFIX: Fixed bug where editor settings won't get saved

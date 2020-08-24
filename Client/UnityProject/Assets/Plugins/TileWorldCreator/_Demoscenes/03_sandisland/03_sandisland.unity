@@ -65571,6 +65571,7 @@ MonoBehaviour:
   mouseWorldPosition: {x: 435.848, y: -0.0000038146973, z: -73.991745}
   mouseOverGrid: 0
   showGrid: 1
+  isSelected: 0
   maskNames: []
   algorithmNames: []
 --- !u!4 &1332197367

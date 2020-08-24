@@ -147,20 +147,22 @@ namespace TileWorld
                 //use the settings from the tileworldcreator prefab
                 //if this is false we will have to assign new settings like in the 
                 //runtime demoscene (new TileWorldCreator.Settings();)
-                //creator.useSettingsFromReference = true;
-                //first generate a new map then we build the complete map 
-                //with coroutine set to false, merge false and optimization set to true.
+	            //creator.useSettingsFromReference = true;
+                
+                //first generate a new map
                 creator.GenerateMaps();
-                creator.BuildMapComplete(false, false, true);
 
-                //assign a new mask map to layers who are using one
+	            //assign a new mask map to layers which are using one
                 for (int l = 0; l < creator.configuration.global.layerCount; l++)
                 {
                     if (creator.configuration.worldMap[l].useMask)
-                    {                      
-                        creator.AddNewMask(l);
+                    {   
+                    	creator.AddNewMask(l);          
                     }
                 }
+                
+	            // Build the map with coroutine set to false, merge false and optimization set to true.
+	            creator.BuildMapComplete(false, false, true);
 
                 //bool array for painted cells
                 cellMap = new bool[creator.configuration.global.width, creator.configuration.global.height];
@@ -656,7 +658,7 @@ namespace TileWorld
         {
             string _finalPath = Path.Combine(Application.dataPath, Path.Combine(path, _name + fileExtension));
 
-            TileWorldCreatorSaveLoad.Save(_finalPath, creator);
+	        TileWorldCreatorSaveLoad.Save(_finalPath, creator);
         }
 
      
@@ -670,7 +672,7 @@ namespace TileWorld
             GameObject _container = GameObject.Find("TWC_World");
             Destroy(_container.gameObject);
 
-            TileWorldCreatorSaveLoad.Load(_path, creator);
+	        TileWorldCreatorSaveLoad.Load(_path, creator);
 
             creator.firstTimeBuild = true;
             BuildMap();
@@ -934,7 +936,7 @@ namespace TileWorld
 
         void OnDrawGizmosSelected()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && UNITY_2017_OR_OLDER
             if (PrefabUtility.GetPrefabType(this.gameObject) != PrefabType.DisconnectedPrefabInstance)
             {
                 PrefabUtility.DisconnectPrefabInstance(this.gameObject);

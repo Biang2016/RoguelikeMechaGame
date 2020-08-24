@@ -48,7 +48,7 @@ public class TileWorldObjectScatterEditor : Editor
 #endif
 
     string[] placeLayers = new string[] { "layer 1" };
-
+#pragma warning disable CS0618
     void OnEnable()
     {
         twos = (TileWorldObjectScatter)target;
@@ -65,6 +65,7 @@ public class TileWorldObjectScatterEditor : Editor
 #endif
         EditorApplication.hierarchyWindowChanged += HierarchyWindowChanged;
     }
+#pragma warning restore
 
     void HierarchyWindowChanged()
     {

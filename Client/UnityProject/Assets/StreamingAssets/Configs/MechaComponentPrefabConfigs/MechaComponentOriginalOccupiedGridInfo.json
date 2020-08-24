@@ -43,6 +43,50 @@
       }
     ]
   },
+  "MC_BasicGun": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": -1
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": 0,
+        "z": -2
+      }
+    ]
+  },
+  "MC_BladeGun": {
+    "MechaComponentOccupiedGridPositionList": [
+      {
+        "x": 0,
+        "z": 0
+      }
+    ],
+    "MechaComponentAllSlotLocalPositionsList": [
+      {
+        "x": -1,
+        "z": 0
+      },
+      {
+        "x": 1,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": 1
+      },
+      {
+        "x": 0,
+        "z": -1
+      }
+    ]
+  },
   "MC_LeaveGun": {
     "MechaComponentOccupiedGridPositionList": [
       {

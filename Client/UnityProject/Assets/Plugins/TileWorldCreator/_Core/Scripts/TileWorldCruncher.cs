@@ -84,6 +84,9 @@ public class TileWorldCruncher : MonoBehaviour {
                 Vector3 _gP = this.transform.position;
                 Vector3 _gPAbs = new Vector3(Mathf.Round(_gP.x) - 1, Mathf.Round(_gP.y), Mathf.Round(_gP.z) - 1);
                 
+	            // Remove the creator transform position offset
+	            _gPAbs -= creator.transform.position;
+	            
                 int layerHeightIndex = l;
                 
                 //if height dependent is true, set layer index according to the transform height of the object

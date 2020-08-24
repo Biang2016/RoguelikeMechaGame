@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
+using TileWorld.OdinSerializer;
 
 namespace TileWorld
 {
@@ -33,29 +34,35 @@ namespace TileWorld
             public int height = 0;
 
             public bool useMask = false;
-            public int selectedMask = 0;
+	        public int selectedMask = 0;
+            
+	        public int preset = 0;
 
             public SaveMap() { }
 
-            public SaveMap(bool[] _map, bool[] _maskMap, int _w, int _h, bool _useMask, int _selectedMask)
-            {
-                map = new bool[_map.Length];
-                map = _map;
+	        public SaveMap(bool[] _map, bool[] _maskMap, int _w, int _h, int _preset, bool _useMask, int _selectedMask)
+	        {
+		        map = new bool[_map.Length];
+		        map = _map;
 
-                maskMap = new bool[_maskMap.Length];
-                maskMap = _maskMap;
+		        maskMap = new bool[_maskMap.Length];
+		        maskMap = _maskMap;
 
-                width = _w;
-                height = _h;
+		        width = _w;
+		        height = _h;
+		        
+		        preset = _preset;
 
-                useMask = _useMask;
-                selectedMask = _selectedMask;
-            }
+		        useMask = _useMask;
+		        selectedMask = _selectedMask;
+	        }
         }
-
+        
 
         //Save and Load Methods
-        //--------
+	    //--------
+
+        
         public static void Save(string _path, TileWorldCreator _creator)
         {
             saveMapContent = "";
@@ -72,20 +79,16 @@ namespace TileWorld
                 _tmpMapSingle = _creator.configuration.worldMap[i].cellMapSingle;
                 _tmpMaskMapSingle = _creator.configuration.worldMap[i].maskMapSingle;
 
-                SaveMap _map = new SaveMap(_tmpMapSingle, _tmpMaskMapSingle, _creator.configuration.global.width, _creator.configuration.global.height, _creator.configuration.worldMap[i].useMask, _creator.configuration.worldMap[i].selectedMask);
+	            SaveMap _map = new SaveMap(_tmpMapSingle, _tmpMaskMapSingle, _creator.configuration.global.width, _creator.configuration.global.height, _creator.configuration.global.layerPresetIndex[i], _creator.configuration.worldMap[i].useMask, _creator.configuration.worldMap[i].selectedMask);
                 
 
                 AddData<SaveMap>(_map);
             }
 
+            
+	        byte[] bytes = SerializationUtility.SerializeValue(saveMapContent, DataFormat.Binary);
+	        File.WriteAllBytes(_path, bytes);
 
-            FileStream _fs = new FileStream(_path, FileMode.Create, FileAccess.Write);
-            StreamWriter _sw = new StreamWriter(_fs);
-
-            _sw.Write(saveMapContent);
-
-            _sw.Flush();
-            _sw.Close();
         }
 
 
@@ -111,12 +114,9 @@ namespace TileWorld
 
             isLoading = true;
 
-            FileStream _file = new FileStream(_path, FileMode.Open, FileAccess.Read);
-            StreamReader _sr = new StreamReader(_file);
 
-
-            saveMapContent = _sr.ReadToEnd();
-
+	        byte[] bytes = File.ReadAllBytes(_path);
+	        saveMapContent = SerializationUtility.DeserializeValue<string>(bytes, DataFormat.Binary);
 
             //split file in several xml maps
             string[] _sp = new string[] { "---" };
@@ -137,7 +137,7 @@ namespace TileWorld
 
                 _creator.configuration.global.width = _map.width;
                 _creator.configuration.global.height = _map.height;
-
+	            _creator.configuration.global.layerPresetIndex[l] = _map.preset;
 
 
                 _creator.configuration.worldMap.Add(new TileWorldConfiguration.WorldMap(_creator.configuration.global.width, _creator.configuration.global.height, false, _map.useMask, _map.selectedMask));
@@ -145,20 +145,11 @@ namespace TileWorld
 
                 //Load back multidimensional array from single dim array
                 _creator.configuration.worldMap[l].cellMap = new bool[_creator.configuration.global.width, _creator.configuration.global.height];
-                //_creator.configuration.worldMap[l].tileInformation = new TileWorldConfiguration.TileInformation[_creator.configuration.global.width, _creator.configuration.global.height];
                 _creator.configuration.worldMap[l].tileObjects = new GameObject[_creator.configuration.global.width, _creator.configuration.global.height];
                 _creator.configuration.worldMap[l].tileTypes = new TileWorldConfiguration.TileInformation.TileTypes[_creator.configuration.global.width, _creator.configuration.global.height];
                 _creator.configuration.worldMap[l].maskMap = new bool[_creator.configuration.global.width, _creator.configuration.global.height];
                 _creator.configuration.worldMap[l].oldCellMap = new bool[_creator.configuration.global.width, _creator.configuration.global.height];
 
-                //for (int i = 0; i < _creator.configuration.global.height; i++)
-                //{
-                //    for (int j = 0; j < _creator.configuration.global.width; j++)
-                //    {
-
-                //        _creator.configuration.worldMap[l].tileInformation[j, i] = new TileWorldConfiguration.TileInformation(); 
-                //    }
-                //}
 
                 int _index = 0;
 
@@ -185,7 +176,7 @@ namespace TileWorld
 
             }
 
-            _sr.Close();
+            //_sr.Close();
 
             isLoading = false;
         }

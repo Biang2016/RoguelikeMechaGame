@@ -167,11 +167,9 @@ namespace Client
                     FlyRealtimeData.HitMechaComponentInfo = mc.MechaComponentInfo;
                 }
 
-                bool hit = false;
                 bool recycle = false;
                 if (Override_CanReflect)
                 {
-                    hit = true;
                     Vector3 reflectDir = FlyRealtimeData.Velocity_Global.normalized - 2 * Vector3.Dot(FlyRealtimeData.Velocity_Global.normalized, contact.normal) * contact.normal;
                     FlyRealtimeData.Velocity_Global = reflectDir * FlyRealtimeData.Velocity_Global.magnitude;
                     transform.forward = FlyRealtimeData.Velocity_Global.normalized;
@@ -189,24 +187,12 @@ namespace Client
                 }
                 else
                 {
-                    if (mc && !mc.IsRecycled)
-                    {
-                        hit = false;
-                        recycle = false;
-                    }
-                    else
-                    {
-                        hit = true;
-                        recycle = true;
-                    }
+                    recycle = true;
                 }
 
-                if (hit)
-                {
-                    PlayHitEffect(contact.point, contact.normal);
-                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitUnit, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
-                    ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitAndFinish, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
-                }
+                PlayHitEffect(contact.point, contact.normal);
+                ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitUnit, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
+                ClientGameManager.Instance.BattleMessenger.Broadcast((uint) ENUM_AbilityEvent.OnProjectileHitAndFinish, ProjectileInfo.ParentExecuteInfo, FlyRealtimeData);
 
                 if (recycle) PoolRecycle();
             }

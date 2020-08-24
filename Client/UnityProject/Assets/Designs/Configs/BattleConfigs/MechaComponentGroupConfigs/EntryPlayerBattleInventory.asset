@@ -16,10 +16,12 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 2064287783220693693, guid: 9df5bc6c8b0c8014385d73387e88e633, type: 3}
     - {fileID: 1244351346966676, guid: 76a6c66a84d937748afc72e320b4d937, type: 3}
     - {fileID: 1244351346966676, guid: 08807f6e846898b47a094b9959061dcb, type: 3}
     - {fileID: 2064287783220693693, guid: 072337d035f52bd448e345658436cecf, type: 3}
     - {fileID: 1244351346966676, guid: f36e0474dea271b4f9ef4a813e4ebfc4, type: 3}
+    - {fileID: 1244351346966676, guid: a1a25cf09aeb4584484fdfcb4a1cb199, type: 3}
     - {fileID: 1244351346966676, guid: f5b5ff501b7e044f09afb208e34504cc, type: 3}
     - {fileID: 1244351346966676, guid: c340d16aea6fe1d49b3e3e6bfad97418, type: 3}
     - {fileID: 1244351346966676, guid: 4aba09d2d08a3304e9fd6096e06ecf3f, type: 3}
@@ -35,7 +37,7 @@ MonoBehaviour:
         GameCore]], mscorlib
     - Name: 
       Entry: 12
-      Data: 22
+      Data: 20
     - Name: 
       Entry: 7
       Data: 1|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
@@ -44,10 +46,10 @@ MonoBehaviour:
       Data: 0
     - Name: Quality
       Entry: 3
-      Data: 1
+      Data: 3
     - Name: Count
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -56,7 +58,7 @@ MonoBehaviour:
       Data: 2|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 0
+      Data: 1
     - Name: Quality
       Entry: 3
       Data: 2
@@ -71,7 +73,7 @@ MonoBehaviour:
       Data: 3|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 0
+      Data: 1
     - Name: Quality
       Entry: 3
       Data: 3
@@ -86,13 +88,13 @@ MonoBehaviour:
       Data: 4|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 0
+      Data: 1
     - Name: Quality
       Entry: 3
       Data: 6
     - Name: Count
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -101,7 +103,7 @@ MonoBehaviour:
       Data: 5|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: Quality
       Entry: 3
       Data: 1
@@ -116,13 +118,13 @@ MonoBehaviour:
       Data: 6|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: Quality
       Entry: 3
       Data: 5
     - Name: Count
       Entry: 3
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -131,7 +133,7 @@ MonoBehaviour:
       Data: 7|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 2
+      Data: 3
     - Name: Quality
       Entry: 3
       Data: 1
@@ -146,13 +148,13 @@ MonoBehaviour:
       Data: 8|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 2
+      Data: 3
     - Name: Quality
       Entry: 3
       Data: 4
     - Name: Count
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -161,13 +163,13 @@ MonoBehaviour:
       Data: 9|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 3
+      Data: 4
     - Name: Quality
       Entry: 3
       Data: 1
     - Name: Count
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -176,7 +178,7 @@ MonoBehaviour:
       Data: 10|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 3
+      Data: 4
     - Name: Quality
       Entry: 3
       Data: 2
@@ -191,13 +193,13 @@ MonoBehaviour:
       Data: 11|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 3
+      Data: 4
     - Name: Quality
       Entry: 3
       Data: 5
     - Name: Count
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -206,13 +208,13 @@ MonoBehaviour:
       Data: 12|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 3
+      Data: 4
     - Name: Quality
       Entry: 3
       Data: 6
     - Name: Count
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -221,10 +223,10 @@ MonoBehaviour:
       Data: 13|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 4
+      Data: 5
     - Name: Quality
       Entry: 3
-      Data: 1
+      Data: 3
     - Name: Count
       Entry: 3
       Data: 1
@@ -236,10 +238,10 @@ MonoBehaviour:
       Data: 14|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 4
+      Data: 6
     - Name: Quality
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: Count
       Entry: 3
       Data: 1
@@ -251,10 +253,10 @@ MonoBehaviour:
       Data: 15|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 4
+      Data: 7
     - Name: Quality
       Entry: 3
-      Data: 3
+      Data: 1
     - Name: Count
       Entry: 3
       Data: 2
@@ -266,13 +268,13 @@ MonoBehaviour:
       Data: 16|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 5
+      Data: 7
     - Name: Quality
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: Count
       Entry: 3
-      Data: 5
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -281,13 +283,13 @@ MonoBehaviour:
       Data: 17|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 5
+      Data: 8
     - Name: Quality
       Entry: 3
       Data: 2
     - Name: Count
       Entry: 3
-      Data: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -296,10 +298,10 @@ MonoBehaviour:
       Data: 18|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 6
+      Data: 8
     - Name: Quality
       Entry: 3
-      Data: 1
+      Data: 5
     - Name: Count
       Entry: 3
       Data: 1
@@ -311,10 +313,10 @@ MonoBehaviour:
       Data: 19|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 6
+      Data: 9
     - Name: Quality
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: Count
       Entry: 3
       Data: 1
@@ -326,37 +328,7 @@ MonoBehaviour:
       Data: 20|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
     - Name: MechaComponentPrefab
       Entry: 10
-      Data: 6
-    - Name: Quality
-      Entry: 3
-      Data: 5
-    - Name: Count
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 21|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
-    - Name: MechaComponentPrefab
-      Entry: 10
-      Data: 7
-    - Name: Quality
-      Entry: 3
-      Data: 1
-    - Name: Count
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 22|GameCore.MechaComponentGroupConfigSSO+ConfigRaw, GameCore
-    - Name: MechaComponentPrefab
-      Entry: 10
-      Data: 7
+      Data: 9
     - Name: Quality
       Entry: 3
       Data: 5

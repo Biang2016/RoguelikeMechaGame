@@ -86,7 +86,7 @@ public class TileWorldCreatorEditor : Editor
 #endif
 
     //----------------------------------------------------------------
-
+#pragma warning disable CS0618
     private void OnEnable()
     {
 
@@ -95,6 +95,8 @@ public class TileWorldCreatorEditor : Editor
 
         //SceneView.onSceneGUIDelegate = GridUpdate;
 
+	    creator.isSelected = true;
+	
         LoadResources();
 
         undoStack = new TileWorldUndoStack<bool[]>();
@@ -113,7 +115,12 @@ public class TileWorldCreatorEditor : Editor
 #endif
         EditorApplication.hierarchyWindowChanged += HierarchyWindowChanged;
     }
+#pragma warning restore
 
+	void OnDisable()
+	{
+		creator.isSelected = false;
+	}
 
     void HierarchyWindowChanged()
     {
@@ -165,7 +172,8 @@ public class TileWorldCreatorEditor : Editor
 
 
     public override void OnInspectorGUI()
-    {
+	{
+		
         EditorGUILayout.BeginHorizontal("Box");
 
         GUILayout.Label(topLogo);
@@ -340,21 +348,25 @@ public class TileWorldCreatorEditor : Editor
 
         if (GUI.changed)
         {
-            creator.firstTimeBuild = true;
+	        creator.firstTimeBuild = true;
+
+	        if (!Application.isPlaying)
+	        {
 #if  UNITY_5_3_OR_NEWER || UNITY_5_3
-            EditorSceneManager.MarkSceneDirty(this.currentScene);
+        	    EditorSceneManager.MarkSceneDirty(this.currentScene);
 #else
-            EditorApplication.MarkSceneDirty();
+        	   EditorApplication.MarkSceneDirty();
 #endif
+	        }
         }
-	    
+
 	    EditorUtility.SetDirty(creator);
 	    
 	    if (creator.configuration != null)
 	    {
 	    	EditorUtility.SetDirty(creator.configuration);
 	    }
-	    
+  
         
 
     }
@@ -368,15 +380,13 @@ public class TileWorldCreatorEditor : Editor
         GUILayout.BeginVertical("Box", GUILayout.ExpandWidth(false));
 
 
-        EditorGUILayout.HelpBox("Left Click Add / Right Click Remove Cell" + "\n" + "Undo/Redo: Z + Y" + "\n" + "Show/Hide grid: H", MessageType.Info);
+        EditorGUILayout.HelpBox("Left Click Add / Right Click Remove Cell" + "\n" + "Undo/Redo: Z + Y", MessageType.Info);
 
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Show Grid:");
-        creator.configuration.ui.showGrid = EditorGUILayout.Toggle(creator.configuration.ui.showGrid);
+        
 
-        GUILayout.Label("Show Grid on deselect:");
-        creator.configuration.ui.showGridAlways = EditorGUILayout.Toggle(creator.configuration.ui.showGridAlways);
-        GUILayout.EndHorizontal();
+	    creator.configuration.ui.showGrid = EditorGUILayout.Toggle("Show Grid:", creator.configuration.ui.showGrid);
+	    //creator.configuration.ui.showGridAlways = EditorGUILayout.Toggle("Show Grid on deselect:", creator.configuration.ui.showGridAlways);
+       
 
         creator.configuration.ui.autoBuild = EditorGUILayout.Toggle("Automatic build:", creator.configuration.ui.autoBuild);
 
@@ -628,27 +638,26 @@ public class TileWorldCreatorEditor : Editor
     }
 
 
-    private void OnSceneGUI()
-    {
-	    if (creator.configuration == null || !creator.showGrid || EditorApplication.isPlaying)
+	private void OnSceneGUI()
+	{  
+	    if (creator.configuration == null || EditorApplication.isPlaying)
             return;
 
         if (!creator.configuration.ui.showGrid)
         {
-            Event _eventH = Event.current;
+        //    Event _eventH = Event.current;
 
-            //Show grid
-            if (_eventH.type == EventType.KeyDown)
-            {
-                if (_eventH.keyCode == KeyCode.H)
-                {
-                    creator.configuration.ui.showGrid = true;
-                }
-            }
+        //    //Show grid
+        //    //if (_eventH.type == EventType.KeyDown)
+        //    //{
+        //    //    if (_eventH.keyCode == KeyCode.H)
+        //    //    {
+        //    //        creator.configuration.ui.showGrid = true;
+        //    //    }
+        //    //}
 
             return;
         }
-
 
         Event _event = Event.current;
 
@@ -794,19 +803,19 @@ public class TileWorldCreatorEditor : Editor
             }
 
             //Hide grid
-            else if (_event.keyCode == KeyCode.H)
-            {
+            //else if (_event.keyCode == KeyCode.H)
+            //{
 
-                creator.configuration.ui.showGrid = false;
+            //    creator.configuration.ui.showGrid = false;
 
-            }
+            //}
 
         }
 #if  UNITY_5_3_OR_NEWER || UNITY_5_3
         EditorSceneManager.MarkSceneDirty(this.currentScene);
 #else
         EditorUtility.SetDirty(this);
-#endif
+#endif 
     }
 
 

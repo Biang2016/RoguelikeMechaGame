@@ -78,7 +78,8 @@ namespace TileWorld
         public bool mergeReady = false;
         public Vector3 mouseWorldPosition = new Vector3(0, 0, 0);
         public bool mouseOverGrid = false;
-        public bool showGrid;
+	    public bool showGrid;
+	    public bool isSelected = false;
 
         public string[] maskNames;
         public string[] algorithmNames;
@@ -1037,7 +1038,8 @@ namespace TileWorld
             float _rfZ = configuration.presets[configuration.global.layerPresetIndex[_layerIndex]].tiles[_rndTilesetIndex].floorOffset.z;
 
             Vector3 _selT = new Vector3(_rX, _rY, _rZ);
-            Vector3 _selTFloor = new Vector3(_rfX, _rfY, _rfZ);
+	        Vector3 _selTFloor = new Vector3(_rfX, _rfY, _rfZ);
+           
 
             //BUILD INVERT FALSE
             //-------------------
@@ -1050,7 +1052,7 @@ namespace TileWorld
                 if (!_map[x, y])
                 {
 
-                    origin = new Vector3(transform.position.x + (_selT.x + x) * configuration.global.globalScale, transform.position.y + (_selT.y + _layerIndex) * configuration.global.globalScale, transform.position.z + (_selT.z + y) * configuration.global.globalScale);
+	                origin = new Vector3(transform.position.x + (_selT.x + x) * configuration.global.globalScale, transform.position.y + (_selT.y * (_layerIndex + 1)) * configuration.global.globalScale, transform.position.z + (_selT.z + y) * configuration.global.globalScale);
 
 
                     if (configuration.global.layerCount < 2)
@@ -1144,7 +1146,7 @@ namespace TileWorld
                 if (_map[x, y] && configuration.global.buildGroundTiles && _layerCount < 1)
                 {
 
-                    origin = new Vector3(transform.position.x + (_selTFloor.x + x) * configuration.global.globalScale, transform.position.y + (_selTFloor.y + _layerIndex) * configuration.global.globalScale, transform.position.z + (_selTFloor.z + y) * configuration.global.globalScale);
+	                origin = new Vector3(transform.position.x + (_selTFloor.x + x) * configuration.global.globalScale, transform.position.y + (_selTFloor.y * (_layerIndex + 1)) * configuration.global.globalScale, transform.position.z + (_selTFloor.z + y) * configuration.global.globalScale);
 
 
                     if (configuration.global.layerCount < 2)
@@ -1186,7 +1188,7 @@ namespace TileWorld
                 if (_map[x, y])
                 {
 
-                    origin = new Vector3(transform.position.x + (_selT.x + x) * configuration.global.globalScale, transform.position.y + (_selT.y + _layerIndex) * configuration.global.globalScale, transform.position.z + (_selT.z + y) * configuration.global.globalScale);
+	                origin = new Vector3(transform.position.x + (_selT.x + x) * configuration.global.globalScale, transform.position.y + (_selT.y * (_layerIndex + 1)) * configuration.global.globalScale, transform.position.z + (_selT.z + y) * configuration.global.globalScale);
 
 
                     if (configuration.global.layerCount < 2)
@@ -1235,7 +1237,7 @@ namespace TileWorld
                 if (!_map[x, y] && configuration.global.buildGroundTiles && _layerCount < 1)
                 {
 
-                    origin = new Vector3(transform.position.x + (_selTFloor.x + x) * configuration.global.globalScale, transform.position.y + (_selTFloor.y + _layerIndex) * configuration.global.globalScale, transform.position.z + (_selTFloor.z + y) * configuration.global.globalScale);
+	                origin = new Vector3(transform.position.x + (_selTFloor.x + x) * configuration.global.globalScale, transform.position.y + (_selTFloor.y * (_layerIndex + 1)) * configuration.global.globalScale, transform.position.z + (_selTFloor.z + y) * configuration.global.globalScale);
                    
                     if (configuration.global.layerCount < 2)
                     {
@@ -2737,6 +2739,10 @@ namespace TileWorld
 
                 Vector3 _gPAbs = new Vector3(Mathf.Round(_position.x) - 1, Mathf.Round(_position.y), Mathf.Round(_position.z) - 1);
 
+	            // Remove the creator transform position offset
+	            _gPAbs -= this.transform.position;
+	            
+	            
                 int _layerHeightIndex = l;
 
                 //if height dependent is true, set layer index according to the transform height of the object
@@ -2846,20 +2852,21 @@ namespace TileWorld
         #region scenegui
         void OnDrawGizmosSelected()
         {
-            if (configuration == null || !showGrid)
+            if (configuration == null || !configuration.ui.showGrid)
                 return;
 
-            if (!configuration.ui.showGridAlways)
-            {
+            //if (!configuration.ui.showGridAlways)
+            //{
                 DrawGrid();
                 DrawBrush();
-            }
+            //}
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && UNITY_2017_OR_OLDER
             if (PrefabUtility.GetPrefabType(this.gameObject) != PrefabType.DisconnectedPrefabInstance)
             {
-                PrefabUtility.DisconnectPrefabInstance(this.gameObject);
-
+               
+	            PrefabUtility.DisconnectPrefabInstance(this.gameObject);
+			
                 if (configuration.presets.Count == 0)
                 {
                     configuration.presets.Add(new TileWorldConfiguration.PresetsConfiguration());
@@ -2874,22 +2881,22 @@ namespace TileWorld
 #endif
         }
 
-        void OnDrawGizmos()
-        {
-            if (configuration == null || !showGrid)
-                return;
+        //void OnDrawGizmos()
+        //{
+        //    if (configuration == null || !showGrid)
+        //        return;
 
-            if (configuration.ui.showGridAlways)
-            {
-                DrawGrid();
-                DrawBrush();
-            }
-        }
+	    //    if (configuration.ui.showGridAlways &&  !isSelected)
+        //    {
+        //        DrawGrid();
+        //        DrawBrush();
+        //    }
+        //}
 
         void DrawGrid()
         {
-            if (!configuration.ui.showGrid || configuration == null)
-                return;
+            //if (!configuration.ui.showGrid || configuration == null)
+            //    return;
             if (configuration.worldMap.Count < 1 || configuration.presets.Count < 1)
                 return;
             //Load back multidimensional array from single dim array

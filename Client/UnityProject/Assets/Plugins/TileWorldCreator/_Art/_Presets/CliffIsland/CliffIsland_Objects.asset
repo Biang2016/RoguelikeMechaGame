@@ -32,11 +32,11 @@ MonoBehaviour:
     uniformScaling: 0
     randomScalingMax: {x: 1, y: 1, z: 1}
     randomScalingMin: {x: 1, y: 1, z: 1}
-    showPanel: 0
+    showPanel: 1
     ruleType: 0
     weight: 0.4
     blockType: 0
-    tileTypes: 4
+    tileTypes: 3
     everyNTile: 1
     inset: 0
   - go: {fileID: 106408, guid: 465f2651a5d5cd340ad9759b4b5bcd9f, type: 3}
@@ -56,7 +56,7 @@ MonoBehaviour:
     uniformScaling: 1
     randomScalingMax: {x: 1.2, y: 1.2, z: 1.2}
     randomScalingMin: {x: 0.5, y: 0.5, z: 0.5}
-    showPanel: 0
+    showPanel: 1
     ruleType: 0
     weight: 0.52
     blockType: 0
@@ -80,10 +80,10 @@ MonoBehaviour:
     uniformScaling: 1
     randomScalingMax: {x: 1.5, y: 1.5, z: 1.5}
     randomScalingMin: {x: 0.5, y: 0.5, z: 0.5}
-    showPanel: 0
+    showPanel: 1
     ruleType: 0
     weight: 0.3
     blockType: 0
-    tileTypes: 4
+    tileTypes: 3
     everyNTile: 1
     inset: 0
