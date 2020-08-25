@@ -16,22 +16,22 @@ TagManager:
   - 
   - GridIndicator
   - ComponentModel
-  - ComponentHitBox
+  - 
   - DragAreas
   - Mecha
-  - Projectile
+  - 
   - Surroundings
   - ItemDropped
   - ItemDroppedSprite
   - BackpackItemGrid
   - BattleUI
   - Slot
+  - ComponentHitBox_Player
+  - ComponentHitBox_Enemy
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Projectile_Both
+  - Projectile_PlayerOnly
+  - Projectile_EnemyOnly
   - 
   - 
   - 

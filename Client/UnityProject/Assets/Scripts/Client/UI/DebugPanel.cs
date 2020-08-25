@@ -115,7 +115,7 @@ namespace Client
         public void AddEnemy()
         {
             MechaConfig mechaConfig = ConfigManager.Instance.GetRandomMechaConfig();
-            MechaInfo mechaInfo = mechaConfig.GetMechaInfo(MechaType.Enemy);
+            MechaInfo mechaInfo = mechaConfig.GetMechaInfo(MechaCamp.Enemy);
             BattleManager.Instance.AddEnemyMecha(mechaInfo);
             ClientBattleManager.Instance.MechaDict[mechaInfo.GUID].transform.position = new Vector3(Random.Range(0,20), 0, Random.Range(0, 20));
         }

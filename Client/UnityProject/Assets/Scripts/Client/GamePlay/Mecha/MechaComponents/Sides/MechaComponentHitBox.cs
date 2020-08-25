@@ -36,7 +36,7 @@ namespace Client
             if (InBattle)
             {
                 Projectile p = collision.gameObject.GetComponent<Projectile>();
-                if (p && !p.IsRecycled && p.ProjectileInfo.MechaType != ParentGridRootRoot.MechaComponent.MechaType)
+                if (p && !p.IsRecycled && p.ProjectileInfo.MechaCamp != ParentGridRootRoot.MechaComponent.MechaCamp)
                 {
                     //ParentGridRootRoot.MechaComponent.MechaComponentInfo.Damage(p.ProjectileInfo.FinalDamage);
                     return;

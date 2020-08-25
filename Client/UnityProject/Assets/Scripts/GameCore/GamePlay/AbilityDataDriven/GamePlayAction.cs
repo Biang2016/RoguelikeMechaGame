@@ -296,7 +296,7 @@ namespace GameCore.AbilityDataDriven
                         {
                             case ENUM_MultipleTargetCenter.PROJECTILE:
                             {
-                                List<MechaComponentInfo> hitMCIs = BattleManager.Instance.SearchRangeHandler(flyRealTimeData.Position, finalRadius, executeInfo.MechaInfo.MechaType, multipleTarget.Team, finalMaxTargets, multipleTarget.Random);
+                                List<MechaComponentInfo> hitMCIs = BattleManager.Instance.SearchRangeHandler(flyRealTimeData.Position, finalRadius, executeInfo.MechaInfo.MechaCamp, multipleTarget.Team, finalMaxTargets, multipleTarget.Random);
                                 foreach (MechaComponentInfo mci in hitMCIs)
                                 {
                                     Debug.Log($"{executeInfo.MechaComponentInfo.LogIdentityName} Dealt <color=\"#FF585F\">{finalDamage}</color> damage to {mci.LogIdentityName}");

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using GameCore;
 using ParadoxNotion;
 using ParadoxNotion.Design;
 using ParadoxNotion.Serialization;
@@ -20,6 +21,18 @@ namespace NodeCanvas.Framework
     [Serializable, fsDeserializeOverwrite, SpoofAOT]
     abstract public partial class Task : ISerializationCollectable, ISerializationCallbackReceiver
     {
+        private MechaBase mecha;
+
+        public MechaBase Mecha {
+            get {
+                if (mecha == null)
+                {
+                    mecha = agent.GetComponent<MechaBase>();
+                }
+
+                return mecha;
+            }
+        }
 
         ///----------------------------------------------------------------------------------------------
 

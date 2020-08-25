@@ -75,7 +75,7 @@ public class DragExecuteManager : TSingletonBaseManager<DragExecuteManager>
         DragProcessor<MechaComponent> dragProcessor_MechaComponent = new DragProcessor<MechaComponent>();
         dragProcessor_MechaComponent.Init(
             CameraManager.Instance.MainCamera,
-            LayerManager.Instance.LayerMask_ComponentHitBox,
+            LayerManager.Instance.LayerMask_ComponentHitBox_Player,
             (out Vector2 mouseScreenPos) =>
             {
                 if (ControlManager.Instance.BuildingInputActionEnabled)

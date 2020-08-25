@@ -77,8 +77,6 @@ namespace GameCore
         MoveSpeed = 1,
         RotateSpeed = 2,
 
-        Weapon0_AttackInterval = 10,
-
         AttackDistance = 20,
     }
 

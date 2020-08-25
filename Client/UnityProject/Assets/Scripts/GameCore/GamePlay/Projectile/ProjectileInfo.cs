@@ -13,7 +13,7 @@ namespace GameCore
         public Transform ChasingTarget;
         public Vector3 ChasingPosition;
 
-        public MechaType MechaType => ParentExecuteInfo.MechaInfo.MechaType;
+        public MechaCamp MechaCamp => ParentExecuteInfo.MechaInfo.MechaCamp;
         public ProjectileConfig ProjectileConfig => ParentAction.ProjectileConfig;
         public ProjectileType ProjectileType => ProjectileConfig.ProjectileType;
 

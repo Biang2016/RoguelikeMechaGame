@@ -92,7 +92,7 @@ MonoBehaviour:
       Data: 6|GameCore.AbilityDataDriven.GamePlayEvent, GameCore
     - Name: EventType
       Entry: 3
-      Data: 5014
+      Data: 5015
     - Name: Actions
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[GameCore.AbilityDataDriven.GamePlayAction,
@@ -108,7 +108,7 @@ MonoBehaviour:
       Data: 9|GameCore.AbilityDataDriven.MultipleActionTarget, GameCore
     - Name: Center
       Entry: 3
-      Data: 3
+      Data: 5
     - Name: Radius
       Entry: 3
       Data: 3

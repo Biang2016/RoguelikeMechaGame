@@ -37,9 +37,9 @@ namespace Client
             action.canceled += context => { state.Pressed = false; };
         }
 
-        public static MechaInfo GetMechaInfo(this MechaConfig mechaConfig, MechaType mechaType)
+        public static MechaInfo GetMechaInfo(this MechaConfig mechaConfig, MechaCamp mechaCamp)
         {
-            MechaInfo mechaInfo = new MechaInfo(mechaConfig.MechaConfigName, mechaType, mechaConfig.Clone());
+            MechaInfo mechaInfo = new MechaInfo(mechaConfig.MechaConfigName, mechaCamp, mechaConfig.Clone());
             foreach (MechaConfig.Config config in mechaConfig.MechaComponentList)
             {
                 MechaComponentConfig mcc = ConfigManager.Instance.GetMechaComponentConfig(config.MechaComponentKey);

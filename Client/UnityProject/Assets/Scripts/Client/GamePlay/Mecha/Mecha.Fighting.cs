@@ -25,7 +25,7 @@ namespace Client
 
             MechaInfo.Update_Fighting();
 
-            if (MechaInfo.MechaType == MechaType.Player)
+            if (MechaInfo.MechaCamp == MechaCamp.Player)
             {
                 if (!MechaInfo.AbilityForbidMovement)
                 {

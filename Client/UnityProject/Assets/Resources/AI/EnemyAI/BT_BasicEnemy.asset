@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a686a47eee2fa44cb0a34b5d86e4d5e, type: 3}
   m_Name: BT_BasicEnemy
   m_EditorClassIdentifier: 
-  _serializedGraph: '{"type":"NodeCanvas.BehaviourTrees.BehaviourTree","nodes":[{"repeaterMode":2,"repeatTimes":{"_value":1},"_position":{"x":180.0,"y":30.0},"$type":"NodeCanvas.BehaviourTrees.Repeater","$id":"0"},{"_position":{"x":180.0,"y":135.0},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"1"},{"_position":{"x":30.0,"y":240.0},"$type":"NodeCanvas.BehaviourTrees.Optional","$id":"2"},{"_position":{"x":30.0,"y":315.0},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"3"},{"ParamType":{"_value":10},"_position":{"x":-45.0,"y":390.0},"$type":"GameCore.NodeExtensions+CheckWeaponAttackInterval","$id":"4"},{"WeaponAlias":{"_value":"Weapon0"},"_position":{"x":90.0,"y":390.0},"$type":"GameCore.NodeExtensions+WeaponAttackAction","$id":"5"},{"_position":{"x":180.0,"y":240.0},"$type":"GameCore.NodeExtensions+TurnToMainPlayer","$id":"6"},{"KeepDistance":{},"UseAIParam":{"_value":true},"AIParam":{"_value":20},"_position":{"x":315.0,"y":240.0},"$type":"GameCore.NodeExtensions+MoveToMainPlayer","$id":"7"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"6"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"7"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"4"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"5"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}},"derivedData":{"repeat":true,"$type":"NodeCanvas.BehaviourTrees.BehaviourTree+DerivedSerializationData"}}'
+  _serializedGraph: '{"type":"NodeCanvas.BehaviourTrees.BehaviourTree","nodes":[{"repeaterMode":2,"repeatTimes":{"_value":1},"_position":{"x":180.0,"y":30.0},"$type":"NodeCanvas.BehaviourTrees.Repeater","$id":"0"},{"_position":{"x":180.0,"y":135.0},"$type":"NodeCanvas.BehaviourTrees.Sequencer","$id":"1"},{"_position":{"x":30.0,"y":240.0},"$type":"NodeCanvas.BehaviourTrees.Optional","$id":"2"},{"WeaponAlias":{"_value":"Weapon0"},"_position":{"x":30.0,"y":315.0},"$type":"GameCore.NodeExtensions+WeaponAttackAction","$id":"3"},{"_position":{"x":180.0,"y":240.0},"$type":"GameCore.NodeExtensions+TurnToMainPlayer","$id":"4"},{"KeepDistance":{},"UseAIParam":{"_value":true},"AIParam":{"_value":20},"_position":{"x":315.0,"y":240.0},"$type":"GameCore.NodeExtensions+MoveToMainPlayer","$id":"5"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"4"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"5"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"},{"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"NodeCanvas.BehaviourTrees.BTConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}},"derivedData":{"repeat":true,"$type":"NodeCanvas.BehaviourTrees.BehaviourTree+DerivedSerializationData"}}'
   _objectReferences: []
   _graphSource:
     _version: 3.08
     _category: 
     _comments: 
-    _translation: {x: 81, y: 128}
+    _translation: {x: 223, y: 47}
     _zoomFactor: 1
   _haltSerialization: 0
 #---GRAPH_START---
@@ -55,34 +55,15 @@ MonoBehaviour:
 #            "$id": "2"
 #        },
 #        {
-#            "_position": {
-#                "x": 30.0,
-#                "y": 315.0
-#            },
-#            "$type": "NodeCanvas.BehaviourTrees.Sequencer",
-#            "$id": "3"
-#        },
-#        {
-#            "ParamType": {
-#                "_value": 10
-#            },
-#            "_position": {
-#                "x": -45.0,
-#                "y": 390.0
-#            },
-#            "$type": "GameCore.NodeExtensions+CheckWeaponAttackInterval",
-#            "$id": "4"
-#        },
-#        {
 #            "WeaponAlias": {
 #                "_value": "Weapon0"
 #            },
 #            "_position": {
-#                "x": 90.0,
-#                "y": 390.0
+#                "x": 30.0,
+#                "y": 315.0
 #            },
 #            "$type": "GameCore.NodeExtensions+WeaponAttackAction",
-#            "$id": "5"
+#            "$id": "3"
 #        },
 #        {
 #            "_position": {
@@ -90,7 +71,7 @@ MonoBehaviour:
 #                "y": 240.0
 #            },
 #            "$type": "GameCore.NodeExtensions+TurnToMainPlayer",
-#            "$id": "6"
+#            "$id": "4"
 #        },
 #        {
 #            "KeepDistance": {
@@ -107,7 +88,7 @@ MonoBehaviour:
 #                "y": 240.0
 #            },
 #            "$type": "GameCore.NodeExtensions+MoveToMainPlayer",
-#            "$id": "7"
+#            "$id": "5"
 #        }
 #    ],
 #    "connections": [
@@ -134,7 +115,7 @@ MonoBehaviour:
 #                "$ref": "1"
 #            },
 #            "_targetNode": {
-#                "$ref": "6"
+#                "$ref": "4"
 #            },
 #            "$type": "NodeCanvas.BehaviourTrees.BTConnection"
 #        },
@@ -143,7 +124,7 @@ MonoBehaviour:
 #                "$ref": "1"
 #            },
 #            "_targetNode": {
-#                "$ref": "7"
+#                "$ref": "5"
 #            },
 #            "$type": "NodeCanvas.BehaviourTrees.BTConnection"
 #        },
@@ -153,24 +134,6 @@ MonoBehaviour:
 #            },
 #            "_targetNode": {
 #                "$ref": "3"
-#            },
-#            "$type": "NodeCanvas.BehaviourTrees.BTConnection"
-#        },
-#        {
-#            "_sourceNode": {
-#                "$ref": "3"
-#            },
-#            "_targetNode": {
-#                "$ref": "4"
-#            },
-#            "$type": "NodeCanvas.BehaviourTrees.BTConnection"
-#        },
-#        {
-#            "_sourceNode": {
-#                "$ref": "3"
-#            },
-#            "_targetNode": {
-#                "$ref": "5"
 #            },
 #            "$type": "NodeCanvas.BehaviourTrees.BTConnection"
 #        }

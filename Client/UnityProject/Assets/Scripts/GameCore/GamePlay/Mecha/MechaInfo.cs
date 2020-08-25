@@ -21,7 +21,7 @@ namespace GameCore
 
         public MechaConfig MechaConfig;
         public string MechaName;
-        public MechaType MechaType;
+        public MechaCamp MechaCamp;
         public SortedDictionary<uint, MechaComponentInfo> MechaComponentInfoDict = new SortedDictionary<uint, MechaComponentInfo>();
         public Dictionary<string, MechaComponentInfo> MechaComponentInfoDict_Alias = new Dictionary<string, MechaComponentInfo>();
 
@@ -34,23 +34,23 @@ namespace GameCore
         public Vector3 Position;
         public Quaternion Rotation;
 
-        public bool IsPlayer => MechaType == MechaType.Player;
+        public bool IsPlayer => MechaCamp == MechaCamp.Player;
         public bool IsBuilding => GameStateManager.Instance.GetState() == GameState.Building;
         public bool IsFighting => GameStateManager.Instance.GetState() == GameState.Fighting;
 
         public string LogIdentityName => $"<color=\"#61B2FF\">{MechaName}</color>-{GUID}";
 
-        public MechaInfo(string mechaName, MechaType mechaType, MechaConfig mechaConfig)
+        public MechaInfo(string mechaName, MechaCamp mechaCamp, MechaConfig mechaConfig)
         {
             GUID = GetGUID();
             MechaName = mechaName;
-            MechaType = mechaType;
+            MechaCamp = mechaCamp;
             MechaConfig = mechaConfig;
         }
 
         public MechaInfo Clone()
         {
-            MechaInfo mechaInfo = new MechaInfo(MechaName, MechaType, MechaConfig.Clone());
+            MechaInfo mechaInfo = new MechaInfo(MechaName, MechaCamp, MechaConfig.Clone());
             foreach (KeyValuePair<uint, MechaComponentInfo> kv in MechaComponentInfoDict)
             {
                 AddMechaComponentInfo(kv.Value.Clone(), kv.Value.InventoryItem.GridPos_Matrix);
@@ -109,7 +109,7 @@ namespace GameCore
             if (IsBuilding) _totalLife = 0;
             MechaEditorInventory.RemoveItem(mci.InventoryItem, false);
             MechaEditorInventory.RefreshConflictAndIsolation(out List<InventoryItem> _, out List<InventoryItem> isolatedItems);
-            if (MechaType == MechaType.Enemy)
+            if (MechaCamp == MechaCamp.Enemy)
             {
                 foreach (InventoryItem item in isolatedItems)
                 {

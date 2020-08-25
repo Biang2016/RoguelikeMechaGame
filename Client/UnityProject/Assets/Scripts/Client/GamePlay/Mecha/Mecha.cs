@@ -92,7 +92,7 @@ namespace Client
             MechaInfo.MechaEditorInventory.RefreshConflictAndIsolation();
 
             // MechaEditorArea
-            if (mechaInfo.MechaType == MechaType.Player)
+            if (mechaInfo.MechaCamp == MechaCamp.Player)
             {
                 GameObject mea = PrefabManager.Instance.GetPrefab(nameof(MechaEditArea));
                 GameObject meaGO = Instantiate(mea);

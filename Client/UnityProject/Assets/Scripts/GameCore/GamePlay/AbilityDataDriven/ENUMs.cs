@@ -271,19 +271,20 @@ namespace GameCore.AbilityDataDriven
         PROJECTILE,
     }
 
+    [Flags]
     public enum ENUM_MultipleTargetTeam
     {
         [LabelText("无 [已实现]")]
-        UNIT_TARGET_TEAM_NONE,
-
-        [LabelText("全部 [已实现]")]
-        UNIT_TARGET_TEAM_BOTH,
-
-        [LabelText("敌方 [已实现]")]
-        UNIT_TARGET_TEAM_ENEMY,
+        UNIT_TARGET_TEAM_NONE = 0,
 
         [LabelText("友方 [已实现]")]
-        UNIT_TARGET_TEAM_FRIENDLY,
+        UNIT_TARGET_TEAM_FRIENDLY = 1 << 0,
+
+        [LabelText("敌方 [已实现]")]
+        UNIT_TARGET_TEAM_ENEMY = 1 << 1,
+
+        [LabelText("全部 [已实现]")]
+        UNIT_TARGET_TEAM_BOTH = UNIT_TARGET_TEAM_FRIENDLY | UNIT_TARGET_TEAM_ENEMY,
     }
 
     [Flags]

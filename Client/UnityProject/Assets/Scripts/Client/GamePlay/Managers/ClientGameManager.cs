@@ -323,7 +323,7 @@ namespace Client
 
             myBackPack.LoadInventoryInfo(inventoryInfo);
 
-            MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaType.Player, null);
+            MechaInfo playerMechaInfo = new MechaInfo("Solar 0", MechaCamp.Player, null);
             playerMechaInfo.AddMechaComponentInfo(new MechaComponentInfo(ConfigManager.Instance.GetMechaComponentConfig("MC_BasicCore"), Quality.Common), new GridPosR(9, 9));
 
             BattleInfo battleInfo = new BattleInfo(playerMechaInfo);

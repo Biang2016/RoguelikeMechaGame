@@ -162,6 +162,9 @@ MonoBehaviour:
     - Name: Gravity
       Entry: 3
       Data: 100
+    - Name: CollisionFilter
+      Entry: 3
+      Data: 3
     - Name: CanReflect
       Entry: 5
       Data: true

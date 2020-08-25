@@ -44,7 +44,7 @@ namespace Client
         {
             if (Input.GetButtonDown("Backpack"))
             {
-                //if (StayingMecha && StayingMecha.MechaInfo.MechaType == MechaType.Self)
+                //if (StayingMecha && StayingMecha.MechaInfo.MechaCamp == MechaCamp.Self)
                 //{
                 //    if (BackpackManager.Instance.AddMechaComponentToBackpack(MechaComponentInfo, out BackpackItem _))
                 //    {

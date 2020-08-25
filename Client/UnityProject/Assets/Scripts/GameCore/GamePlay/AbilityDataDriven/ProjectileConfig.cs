@@ -42,6 +42,9 @@ namespace GameCore.AbilityDataDriven
         [LabelText("重力加速度(unit/s^2)")]
         public int Gravity;
 
+        [LabelText("碰撞检测")]
+        public ENUM_MultipleTargetTeam CollisionFilter;
+
         [LabelText("反弹能力")]
         public bool CanReflect;
 
@@ -63,6 +66,7 @@ namespace GameCore.AbilityDataDriven
                 Velocity = Velocity,
                 Acceleration = Acceleration,
                 Gravity = Gravity,
+                CollisionFilter = CollisionFilter,
                 CanReflect = CanReflect,
                 ReflectTimes = ReflectTimes,
             };

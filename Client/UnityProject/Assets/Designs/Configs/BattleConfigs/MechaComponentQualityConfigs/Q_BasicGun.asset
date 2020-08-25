@@ -227,7 +227,7 @@ MonoBehaviour:
       Data: 20
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 200
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -281,7 +281,7 @@ MonoBehaviour:
       Data: 50
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 300
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -335,7 +335,7 @@ MonoBehaviour:
       Data: 100
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 500
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -468,7 +468,7 @@ MonoBehaviour:
       Data: 20
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 200
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -522,7 +522,7 @@ MonoBehaviour:
       Data: 50
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 300
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -576,7 +576,7 @@ MonoBehaviour:
       Data: 100
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 500
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true

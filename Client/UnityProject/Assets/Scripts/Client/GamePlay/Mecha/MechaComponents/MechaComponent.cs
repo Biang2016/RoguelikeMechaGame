@@ -50,7 +50,7 @@ namespace Client
         internal MechaInfo MechaInfo => Mecha.MechaInfo;
         internal Inventory Inventory => MechaComponentInfo.InventoryItem.Inventory;
         internal InventoryItem InventoryItem => MechaComponentInfo.InventoryItem;
-        internal MechaType MechaType => Mecha ? Mecha.MechaInfo.MechaType : MechaType.None;
+        internal MechaCamp MechaCamp => Mecha ? Mecha.MechaInfo.MechaCamp : MechaCamp.None;
 
         public override void PoolRecycle()
         {
@@ -106,6 +106,7 @@ namespace Client
 
         private void Initialize(MechaComponentInfo mechaComponentInfo, Mecha parentMecha)
         {
+            SetLayer(LayerManager.Instance.GetLayerByMechaCamp(mechaComponentInfo.MechaInfo.MechaCamp));
             mechaComponentInfo.OnRemoveMechaComponentInfoSuc += (mci) =>
             {
                 OnRemoveMechaComponentSuc?.Invoke(this);
@@ -144,6 +145,12 @@ namespace Client
             MechaComponentGridRoot.SetInBattle(true);
 
             Initialize_Fighting();
+        }
+
+        private void SetLayer(int layer)
+        {
+            gameObject.layer = layer;
+            MechaComponentGridRoot.SetLayer(layer);
         }
 
         private void HighLightColorChange(Color highLightColor, float intensity)
@@ -231,7 +238,7 @@ namespace Client
 
             if (dragArea.Equals(Inventory.DragArea))
             {
-                if (Mecha && Mecha.MechaInfo.MechaType == MechaType.Player)
+                if (Mecha && Mecha.MechaInfo.MechaCamp == MechaCamp.Player)
                 {
                     if (Inventory.RotateItemKeyDownHandler != null && Inventory.RotateItemKeyDownHandler.Invoke())
                     {

@@ -44,14 +44,14 @@ namespace Client
         public override void Update(float deltaTime)
         {
             Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(ControlManager.Instance.Battle_MousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerManager.Instance.LayerMask_ComponentHitBox))
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, LayerManager.Instance.LayerMask_ComponentHitBox_Enemy))
             {
                 if (hit.collider)
                 {
                     MechaComponentHitBox hitBox = hit.collider.GetComponent<MechaComponentHitBox>();
                     if (hitBox.Mecha != null)
                     {
-                        if (hitBox.Mecha.MechaInfo.MechaType == MechaType.Enemy)
+                        if (hitBox.Mecha.MechaInfo.MechaCamp == MechaCamp.Enemy)
                         {
                             HUDPanel.LoadEnemyMech(hitBox.Mecha);
                         }
@@ -90,7 +90,7 @@ namespace Client
             mecha.Initialize(mechaInfo);
             mecha.OnRemoveMechaSuc = RemoveMecha;
             MechaDict.Add(mecha.MechaInfo.GUID, mecha);
-            if (mechaInfo.MechaType == MechaType.Player)
+            if (mechaInfo.MechaCamp == MechaCamp.Player)
             {
                 PlayerMecha = mecha;
             }
@@ -147,11 +147,11 @@ namespace Client
             BattleManager.Instance.SearchRangeHandler = SearchRangeDelegate;
         }
 
-        private List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius, MechaType mechaType, ENUM_MultipleTargetTeam team, int maxTargets, bool random)
+        private List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius, MechaCamp mechaCamp, ENUM_MultipleTargetTeam team, int maxTargets, bool random)
         {
             if (maxTargets <= 0) return new List<MechaComponentInfo>();
             Dictionary<uint, MechaComponentInfo> res = new Dictionary<uint, MechaComponentInfo>();
-            Collider[] colliders = Physics.OverlapSphere(center, radius, LayerManager.Instance.LayerMask_ComponentHitBox, QueryTriggerInteraction.Collide);
+            Collider[] colliders = Physics.OverlapSphere(center, radius, LayerManager.Instance.GetLayerMaskByMultipleTargetTeam(team), QueryTriggerInteraction.Collide);
             if (!random) colliders = colliders.OrderBy(c => Vector3.Distance(center, c.transform.position)).ToArray();
             foreach (Collider collider in colliders)
             {
@@ -161,35 +161,7 @@ namespace Client
                 {
                     if (!res.ContainsKey(mc.MechaComponentInfo.GUID))
                     {
-                        bool match = true;
-                        switch (team)
-                        {
-                            case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_NONE:
-                            {
-                                match = false;
-                                break;
-                            }
-                            case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_BOTH:
-                            {
-                                match = true;
-                                break;
-                            }
-                            case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_ENEMY:
-                            {
-                                match = mc.MechaInfo.IsOpponent(mechaType);
-                                break;
-                            }
-                            case ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_FRIENDLY:
-                            {
-                                match = mc.MechaInfo.IsFriend(mechaType);
-                                break;
-                            }
-                        }
-
-                        if (match)
-                        {
-                            res.Add(mc.MechaComponentInfo.GUID, mc.MechaComponentInfo);
-                        }
+                        res.Add(mc.MechaComponentInfo.GUID, mc.MechaComponentInfo);
                     }
                 }
             }
@@ -203,7 +175,7 @@ namespace Client
                 return res.Values.ToList();
             }
         }
-       
+
         #endregion
     }
 }

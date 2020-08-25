@@ -90,33 +90,33 @@ namespace GameCore
 
         public bool IsFriend(MechaInfo mechaInfo)
         {
-            return IsFriend(mechaInfo.MechaType);
+            return IsFriend(mechaInfo.MechaCamp);
         }
 
-        public bool IsFriend(MechaType targetMechaType)
+        public bool IsFriend(MechaCamp targetMechaCamp)
         {
-            if (MechaType == targetMechaType) return true;
-            if (targetMechaType == MechaType.Friend && MechaType == MechaType.Player) return true;
-            if (MechaType == MechaType.Friend && targetMechaType == MechaType.Player) return true;
+            if (MechaCamp == targetMechaCamp) return true;
+            if (targetMechaCamp == MechaCamp.Friend && MechaCamp == MechaCamp.Player) return true;
+            if (MechaCamp == MechaCamp.Friend && targetMechaCamp == MechaCamp.Player) return true;
             return false;
         }
 
         public bool IsMainPlayerFriend()
         {
-            return MechaType == MechaType.Friend;
+            return MechaCamp == MechaCamp.Friend;
         }
 
         public bool IsOpponent(MechaInfo mechaInfo)
         {
-            return IsOpponent(mechaInfo.MechaType);
+            return IsOpponent(mechaInfo.MechaCamp);
         }
 
-        public bool IsOpponent(MechaType targetMechaType)
+        public bool IsOpponent(MechaCamp targetMechaCamp)
         {
-            if (targetMechaType == MechaType.Player && MechaType == MechaType.Enemy) return true;
-            if (MechaType == MechaType.Player && targetMechaType == MechaType.Enemy) return true;
-            if (targetMechaType == MechaType.Friend && MechaType == MechaType.Enemy) return true;
-            if (MechaType == MechaType.Friend && targetMechaType == MechaType.Enemy) return true;
+            if (targetMechaCamp == MechaCamp.Player && MechaCamp == MechaCamp.Enemy) return true;
+            if (MechaCamp == MechaCamp.Player && targetMechaCamp == MechaCamp.Enemy) return true;
+            if (targetMechaCamp == MechaCamp.Friend && MechaCamp == MechaCamp.Enemy) return true;
+            if (MechaCamp == MechaCamp.Friend && targetMechaCamp == MechaCamp.Enemy) return true;
             return false;
         }
 
@@ -241,7 +241,7 @@ namespace GameCore
         #endregion
     }
 
-    public enum MechaType
+    public enum MechaCamp
     {
         None = 0,
         Player = 1,

@@ -89,7 +89,7 @@ namespace GameCore
 
         #region Proxy
 
-        public delegate List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius, MechaType mechaType, ENUM_MultipleTargetTeam Team, int maxTargets, bool random);
+        public delegate List<MechaComponentInfo> SearchRangeDelegate(Vector3 center, float radius, MechaCamp mechaCamp, ENUM_MultipleTargetTeam Team, int maxTargets, bool random);
 
         public SearchRangeDelegate SearchRangeHandler;
 

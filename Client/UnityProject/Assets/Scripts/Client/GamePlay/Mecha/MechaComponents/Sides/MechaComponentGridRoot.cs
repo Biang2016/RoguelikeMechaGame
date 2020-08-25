@@ -27,6 +27,14 @@ namespace Client
             }
         }
 
+        public void SetLayer(int layer)
+        {
+            foreach (MechaComponentHitBox hb in HitBoxes)
+            {
+                hb.gameObject.layer = layer;
+            }
+        }
+
         public void SetInBattle(bool inBattle)
         {
             foreach (MechaComponentHitBox hitBox in HitBoxes)

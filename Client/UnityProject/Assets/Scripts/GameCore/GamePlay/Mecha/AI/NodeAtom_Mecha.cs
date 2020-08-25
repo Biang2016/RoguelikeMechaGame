@@ -73,28 +73,6 @@ namespace GameCore
         }
 
         [Category("机甲")]
-        [Name("检查武器攻击CD")]
-        [Description("检查武器攻击CD")]
-        public class CheckWeaponAttackInterval : BTNode
-        {
-            [Name("CD参数")]
-            public BBParameter<MechaAIConfigParamType> ParamType;
-
-            protected override Status OnExecute(Component agent, IBlackboard blackboard)
-            {
-                if (Mecha == null || Mecha.MechaInfo == null) return Status.Failure;
-                if (Mecha.MechaInfo.MechaConfig.MechaAIParamDict.TryGetValue(ParamType.value, out float interval))
-                {
-                    return elapsedTime > interval ? Status.Success : Status.Running;
-                }
-                else
-                {
-                    return Status.Failure;
-                }
-            }
-        }
-
-        [Category("机甲")]
         [Name("武器攻击")]
         [Description("武器攻击")]
         public class WeaponAttackAction : BTNode

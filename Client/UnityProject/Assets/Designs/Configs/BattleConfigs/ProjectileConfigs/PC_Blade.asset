@@ -65,7 +65,7 @@ MonoBehaviour:
       Data: 0.0413258374
     - Name: m_Value
       Entry: 4
-      Data: 25
+      Data: 15
     - Name: m_InTangent
       Entry: 4
       Data: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
       Data: 5.01779175
     - Name: m_Value
       Entry: 4
-      Data: 25
+      Data: 15
     - Name: m_InTangent
       Entry: 4
       Data: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 20
     - Name: 
       Entry: 4
       Data: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 200
+      Data: 100
     - Name: 
       Entry: 4
       Data: 0
@@ -162,6 +162,9 @@ MonoBehaviour:
     - Name: Gravity
       Entry: 3
       Data: 0
+    - Name: CollisionFilter
+      Entry: 3
+      Data: 2
     - Name: CanReflect
       Entry: 5
       Data: true

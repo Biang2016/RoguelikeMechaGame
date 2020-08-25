@@ -26,7 +26,7 @@ MonoBehaviour:
       Data: 0|GameCore.MechaComponentQualityConfig, GameCore
     - Name: MechaComponentQualityConfigName
       Entry: 1
-      Data: Q_BasicGun
+      Data: Q_BladeGun
     - Name: QualityUpgradeDataList
       Entry: 7
       Data: 1|System.Collections.Generic.List`1[[GameCore.QualityUpgradeDataBase,
@@ -215,7 +215,7 @@ MonoBehaviour:
       Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 30
+      Data: 20
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 200
@@ -227,7 +227,7 @@ MonoBehaviour:
       Data: 20
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 200
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -269,7 +269,7 @@ MonoBehaviour:
       Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 50
+      Data: 30
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 300
@@ -281,7 +281,7 @@ MonoBehaviour:
       Data: 50
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 300
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -323,7 +323,7 @@ MonoBehaviour:
       Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 80
+      Data: 40
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 500
@@ -335,7 +335,7 @@ MonoBehaviour:
       Data: 100
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 500
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -456,7 +456,7 @@ MonoBehaviour:
       Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 30
+      Data: 20
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 200
@@ -468,7 +468,7 @@ MonoBehaviour:
       Data: 20
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 200
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -510,7 +510,7 @@ MonoBehaviour:
       Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 50
+      Data: 30
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 300
@@ -522,7 +522,7 @@ MonoBehaviour:
       Data: 50
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 300
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
@@ -564,7 +564,7 @@ MonoBehaviour:
       Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 80
+      Data: 40
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 500
@@ -576,7 +576,7 @@ MonoBehaviour:
       Data: 100
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 500
+      Data: 0
     - Name: CanReflectOverride
       Entry: 5
       Data: true
