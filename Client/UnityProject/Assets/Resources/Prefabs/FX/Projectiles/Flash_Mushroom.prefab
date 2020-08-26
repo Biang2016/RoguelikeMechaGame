@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4664728654804812}
   - component: {fileID: 198434307614142734}
   - component: {fileID: 199079222709630044}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4822,7 +4823,7 @@ GameObject:
   - component: {fileID: 4635696418305184}
   - component: {fileID: 198703851234154736}
   - component: {fileID: 199815577275887730}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9583,6 +9584,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9642,7 +9644,7 @@ GameObject:
   - component: {fileID: 4220671669493908}
   - component: {fileID: 198357668285691194}
   - component: {fileID: 199911461301094758}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14403,6 +14405,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14463,7 +14466,7 @@ GameObject:
   - component: {fileID: 198532222479289530}
   - component: {fileID: 199868616816830408}
   - component: {fileID: 3816607409961667942}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19218,6 +19221,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19278,3 +19282,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0

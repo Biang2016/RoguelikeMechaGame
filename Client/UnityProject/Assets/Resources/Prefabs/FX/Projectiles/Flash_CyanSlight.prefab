@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198695349770165314}
   - component: {fileID: 199424741198008092}
   - component: {fileID: 1093505558888674812}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_CyanSlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4773,6 +4773,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4833,3 +4834,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0

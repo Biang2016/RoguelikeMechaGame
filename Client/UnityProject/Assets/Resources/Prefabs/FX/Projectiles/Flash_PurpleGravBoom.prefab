@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4427849391267806}
   - component: {fileID: 198765868398770276}
   - component: {fileID: 199136105721382526}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4822,7 +4823,7 @@ GameObject:
   - component: {fileID: 4692647657936638}
   - component: {fileID: 198404778297937352}
   - component: {fileID: 199402020612939306}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9574,6 +9575,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9634,7 +9636,7 @@ GameObject:
   - component: {fileID: 198831076092193846}
   - component: {fileID: 199419294882138122}
   - component: {fileID: 9131104322255944376}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_PurpleGravBoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14388,6 +14390,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14448,3 +14451,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0

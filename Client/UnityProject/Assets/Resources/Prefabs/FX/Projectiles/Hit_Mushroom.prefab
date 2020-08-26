@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4291874344257120}
   - component: {fileID: 198364794745385332}
   - component: {fileID: 199915857104061886}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4822,7 +4823,7 @@ GameObject:
   - component: {fileID: 4384801082451156}
   - component: {fileID: 198710430609505710}
   - component: {fileID: 199150003490038792}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9583,6 +9584,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9642,7 +9644,7 @@ GameObject:
   - component: {fileID: 4976507064153804}
   - component: {fileID: 198245233641912478}
   - component: {fileID: 199439942961206470}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: ShockWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14394,6 +14396,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14453,7 +14456,7 @@ GameObject:
   - component: {fileID: 4536056917373608}
   - component: {fileID: 198779207253517356}
   - component: {fileID: 199540655303792978}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19214,6 +19217,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19274,7 +19278,7 @@ GameObject:
   - component: {fileID: 198279036328731788}
   - component: {fileID: 199956427331092036}
   - component: {fileID: 7901475026458203240}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24030,6 +24034,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -24090,3 +24095,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0

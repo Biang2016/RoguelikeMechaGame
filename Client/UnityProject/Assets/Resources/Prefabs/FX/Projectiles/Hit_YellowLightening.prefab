@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4966217500333156}
   - component: {fileID: 198074159013571724}
   - component: {fileID: 199171294171591472}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4822,7 +4823,7 @@ GameObject:
   - component: {fileID: 4417540431322726}
   - component: {fileID: 198518975236277540}
   - component: {fileID: 199098034150230266}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9574,6 +9575,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9633,7 +9635,7 @@ GameObject:
   - component: {fileID: 4368375319415078}
   - component: {fileID: 198742058566546228}
   - component: {fileID: 199629303215778768}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14385,6 +14387,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14444,7 +14447,7 @@ GameObject:
   - component: {fileID: 4572113181836282}
   - component: {fileID: 198613913256103890}
   - component: {fileID: 199986257882398306}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19196,6 +19199,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19256,7 +19260,7 @@ GameObject:
   - component: {fileID: 198165982210011596}
   - component: {fileID: 199242675796946664}
   - component: {fileID: 4702241108854585416}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_YellowLightening
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24133,6 +24137,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -24193,3 +24198,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0

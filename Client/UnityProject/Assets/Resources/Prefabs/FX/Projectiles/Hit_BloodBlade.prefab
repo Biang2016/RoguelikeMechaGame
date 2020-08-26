@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4146911452217994}
   - component: {fileID: 198324038202715884}
   - component: {fileID: 199340480578836434}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Blood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4822,7 +4823,7 @@ GameObject:
   - component: {fileID: 4553869660002276}
   - component: {fileID: 198105483755306684}
   - component: {fileID: 199376765752287058}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: BloodDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9583,6 +9584,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9643,7 +9645,7 @@ GameObject:
   - component: {fileID: 198722778290592648}
   - component: {fileID: 199018023417127692}
   - component: {fileID: -6574999681503837826}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_BloodBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14399,6 +14401,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14459,6 +14462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1907868142113970
 GameObject:
   m_ObjectHideFlags: 0
@@ -14470,7 +14474,7 @@ GameObject:
   - component: {fileID: 4808555433763014}
   - component: {fileID: 198480383962788180}
   - component: {fileID: 199675095890212092}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Slash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19222,6 +19226,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19281,7 +19286,7 @@ GameObject:
   - component: {fileID: 4859048742564386}
   - component: {fileID: 198089934220021636}
   - component: {fileID: 199851144529687244}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24033,6 +24038,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

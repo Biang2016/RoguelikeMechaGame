@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4574546432899092}
   - component: {fileID: 198570068431254514}
   - component: {fileID: 199834635368225742}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Bubbles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4781,6 +4781,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4841,7 +4842,7 @@ GameObject:
   - component: {fileID: 198012778788621996}
   - component: {fileID: 199127073914257566}
   - component: {fileID: 2352685098462957679}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_BubbleBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9603,6 +9604,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9663,3 +9665,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0

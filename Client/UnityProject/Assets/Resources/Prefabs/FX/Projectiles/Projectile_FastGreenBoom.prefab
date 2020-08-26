@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4621329186527994}
   - component: {fileID: 198741877215741616}
   - component: {fileID: 199486298604746758}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Spiral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4881,7 +4881,7 @@ GameObject:
   - component: {fileID: 4219989313957308}
   - component: {fileID: 198350922855048194}
   - component: {fileID: 199588092980158680}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9698,7 +9698,7 @@ GameObject:
   - component: {fileID: 4424798454221260}
   - component: {fileID: 198539147046286758}
   - component: {fileID: 199691814781739082}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Darkness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14456,7 +14456,7 @@ GameObject:
   - component: {fileID: 4459804747225038}
   - component: {fileID: 198107866682351550}
   - component: {fileID: 199409316376825634}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: SideAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19286,7 +19286,7 @@ GameObject:
   - component: {fileID: 4441575915630564}
   - component: {fileID: 198271405244063478}
   - component: {fileID: 199874086736191684}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: CenterAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24119,7 +24119,7 @@ GameObject:
   - component: {fileID: 199345261193979196}
   - component: {fileID: 54506116816268022}
   - component: {fileID: 108625486811999762}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_FastGreenBoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

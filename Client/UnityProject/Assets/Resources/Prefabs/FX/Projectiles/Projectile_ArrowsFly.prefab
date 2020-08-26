@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 199132381681854488}
   - component: {fileID: 114457725672127144}
   - component: {fileID: 54354589119405752}
-  m_Layer: 26
+  m_Layer: 1
   m_Name: Projectile_ArrowsFly
   m_TagString: Untagged
   m_Icon: {fileID: 0}

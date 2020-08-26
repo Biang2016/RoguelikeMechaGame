@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 199170733352616202}
   - component: {fileID: 108270398590740674}
   - component: {fileID: 54997735773319930}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_LoveHeart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4922,7 +4922,7 @@ GameObject:
   - component: {fileID: 4937464707622018}
   - component: {fileID: 198201053788868498}
   - component: {fileID: 199315544735424468}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9685,7 +9685,7 @@ GameObject:
   - component: {fileID: 4781331910621024}
   - component: {fileID: 198507400043038998}
   - component: {fileID: 199854269442691580}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7371548310589592974}
   - component: {fileID: 6905761595862712381}
-  m_Layer: 25
+  m_Layer: 24
   m_Name: PlayerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

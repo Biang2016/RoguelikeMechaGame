@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4203511318614192}
   - component: {fileID: 198164662107259256}
   - component: {fileID: 199531073033321674}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4772,6 +4772,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4831,7 +4832,7 @@ GameObject:
   - component: {fileID: 4716857047221850}
   - component: {fileID: 198796665139384710}
   - component: {fileID: 199720622929708538}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: SparksBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9592,6 +9593,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9652,7 +9654,7 @@ GameObject:
   - component: {fileID: 198563800904457666}
   - component: {fileID: 199272658297249912}
   - component: {fileID: 758311969452666311}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14420,6 +14422,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14480,6 +14483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1398484883785726
 GameObject:
   m_ObjectHideFlags: 0
@@ -14491,7 +14495,7 @@ GameObject:
   - component: {fileID: 4993331991872326}
   - component: {fileID: 198477422280211646}
   - component: {fileID: 199437294357128122}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: ShockWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19243,6 +19247,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19302,7 +19307,7 @@ GameObject:
   - component: {fileID: 4887155816743598}
   - component: {fileID: 198153793428940532}
   - component: {fileID: 199334146440850938}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24054,6 +24059,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -24113,7 +24119,7 @@ GameObject:
   - component: {fileID: 4305094239514462}
   - component: {fileID: 198903249806167994}
   - component: {fileID: 199722441685121114}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28874,6 +28880,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -28933,7 +28940,7 @@ GameObject:
   - component: {fileID: 4198190131129782}
   - component: {fileID: 198271116119577452}
   - component: {fileID: 199871057903159324}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33685,6 +33692,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -33744,7 +33752,7 @@ GameObject:
   - component: {fileID: 4162590534380844}
   - component: {fileID: 198301226710999660}
   - component: {fileID: 199404738397182550}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38496,6 +38504,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

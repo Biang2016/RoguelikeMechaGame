@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4227043091718234}
   - component: {fileID: 198192220889981816}
   - component: {fileID: 199111209014400004}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4823,7 +4824,7 @@ GameObject:
   - component: {fileID: 198209695117294768}
   - component: {fileID: 199885119065110094}
   - component: {fileID: 3765972817287605535}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_BlueArrowSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9523,6 +9524,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9583,6 +9585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1924229463274416
 GameObject:
   m_ObjectHideFlags: 0
@@ -9594,7 +9597,7 @@ GameObject:
   - component: {fileID: 4907926346502284}
   - component: {fileID: 198150547399572392}
   - component: {fileID: 199706584877598952}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14355,6 +14358,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

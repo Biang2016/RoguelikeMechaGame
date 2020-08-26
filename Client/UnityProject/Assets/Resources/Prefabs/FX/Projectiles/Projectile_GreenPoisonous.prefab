@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4874681785835578}
   - component: {fileID: 198032771267645886}
   - component: {fileID: 199858790215094820}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: SmokeHQ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4777,7 +4777,7 @@ GameObject:
   - component: {fileID: 199500896755526810}
   - component: {fileID: 108427654974949236}
   - component: {fileID: 54406299046715380}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_GreenPoisonous
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9685,7 +9685,7 @@ GameObject:
   - component: {fileID: 4891131715782328}
   - component: {fileID: 198064937658762136}
   - component: {fileID: 199535472952102144}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}

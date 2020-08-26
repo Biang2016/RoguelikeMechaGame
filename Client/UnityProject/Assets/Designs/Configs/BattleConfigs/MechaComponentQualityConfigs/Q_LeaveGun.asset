@@ -206,7 +206,7 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 10
     - Name: DamageRangeIncreasePercent
       Entry: 3
       Data: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
       Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 30
+      Data: 20
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 200
@@ -227,7 +227,7 @@ MonoBehaviour:
       Data: 0
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 200
+      Data: 50
     - Name: CanReflectOverride
       Entry: 5
       Data: false
@@ -260,16 +260,16 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 20
     - Name: DamageRangeIncreasePercent
       Entry: 3
       Data: 0
     - Name: DamageMaxTargetsOverride
       Entry: 3
-      Data: 0
+      Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 50
+      Data: 30
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 300
@@ -281,7 +281,7 @@ MonoBehaviour:
       Data: 0
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 300
+      Data: 100
     - Name: CanReflectOverride
       Entry: 5
       Data: false
@@ -314,16 +314,16 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 50
     - Name: DamageRangeIncreasePercent
       Entry: 3
       Data: 0
     - Name: DamageMaxTargetsOverride
       Entry: 3
-      Data: 0
+      Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 80
+      Data: 50
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 500
@@ -335,7 +335,7 @@ MonoBehaviour:
       Data: 0
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 500
+      Data: 200
     - Name: CanReflectOverride
       Entry: 5
       Data: false
@@ -417,10 +417,10 @@ MonoBehaviour:
       Data: 0
     - Name: CanReflectOverride
       Entry: 5
-      Data: true
+      Data: false
     - Name: ReflectTimesOverride
       Entry: 3
-      Data: 3
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -432,7 +432,7 @@ MonoBehaviour:
       Data: 50
     - Name: HighLightColorIntensity
       Entry: 4
-      Data: 5
+      Data: 10
     - Name: AddOnAbilityList
       Entry: 7
       Data: 21|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -447,7 +447,7 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 20
     - Name: DamageRangeIncreasePercent
       Entry: 3
       Data: 0
@@ -456,7 +456,7 @@ MonoBehaviour:
       Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 30
+      Data: 20
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 200
@@ -468,7 +468,7 @@ MonoBehaviour:
       Data: 0
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 200
+      Data: 50
     - Name: CanReflectOverride
       Entry: 5
       Data: false
@@ -486,7 +486,7 @@ MonoBehaviour:
       Data: 100
     - Name: HighLightColorIntensity
       Entry: 4
-      Data: 10
+      Data: 20
     - Name: AddOnAbilityList
       Entry: 7
       Data: 23|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -501,16 +501,16 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 50
     - Name: DamageRangeIncreasePercent
       Entry: 3
       Data: 0
     - Name: DamageMaxTargetsOverride
       Entry: 3
-      Data: 0
+      Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 50
+      Data: 30
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 300
@@ -522,7 +522,7 @@ MonoBehaviour:
       Data: 0
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 300
+      Data: 100
     - Name: CanReflectOverride
       Entry: 5
       Data: false
@@ -540,7 +540,7 @@ MonoBehaviour:
       Data: 200
     - Name: HighLightColorIntensity
       Entry: 4
-      Data: 20
+      Data: 30
     - Name: AddOnAbilityList
       Entry: 7
       Data: 25|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -555,16 +555,16 @@ MonoBehaviour:
       Data: 
     - Name: DamageIncreasePercent
       Entry: 3
-      Data: 0
+      Data: 100
     - Name: DamageRangeIncreasePercent
       Entry: 3
       Data: 0
     - Name: DamageMaxTargetsOverride
       Entry: 3
-      Data: 0
+      Data: 3
     - Name: AbilityCooldownDecreasePercent
       Entry: 3
-      Data: 80
+      Data: 50
     - Name: MaxRangeIncreasePercent
       Entry: 3
       Data: 500
@@ -576,7 +576,7 @@ MonoBehaviour:
       Data: 0
     - Name: VelocityIncreasePercent
       Entry: 3
-      Data: 500
+      Data: 200
     - Name: CanReflectOverride
       Entry: 5
       Data: false

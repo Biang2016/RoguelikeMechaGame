@@ -36,7 +36,8 @@ namespace Client
 
             PlayerCollider.enabled = false;
             EnemyCollider.enabled = false;
-            SurroundingCollider.enabled = false;
+            SurroundingCollider.enabled = true;
+            SurroundingCollider.isTrigger = false;
 
             if (projectileInfo.ProjectileConfig.CollisionFilter.HasFlag(ENUM_MultipleTargetTeam.UNIT_TARGET_TEAM_ENEMY))
             {

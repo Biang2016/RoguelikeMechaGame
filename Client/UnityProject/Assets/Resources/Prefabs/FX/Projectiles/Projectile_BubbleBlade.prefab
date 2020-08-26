@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 199859417537359448}
   - component: {fileID: 108279450946548908}
   - component: {fileID: 54665894168347824}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_BubbleBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4922,7 +4922,7 @@ GameObject:
   - component: {fileID: 4272784787826670}
   - component: {fileID: 198468648650203034}
   - component: {fileID: 199385691493173370}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Flares
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9685,7 +9685,7 @@ GameObject:
   - component: {fileID: 4468560841386854}
   - component: {fileID: 198993377638096586}
   - component: {fileID: 199021857233684606}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Bubbles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

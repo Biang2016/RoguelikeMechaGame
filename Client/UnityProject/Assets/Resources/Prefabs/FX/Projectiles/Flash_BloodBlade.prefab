@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198280927657968772}
   - component: {fileID: 199771132963929918}
   - component: {fileID: 4738037748190711723}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_BloodBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4765,6 +4765,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4825,6 +4826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1150854562711114
 GameObject:
   m_ObjectHideFlags: 0
@@ -4836,7 +4838,7 @@ GameObject:
   - component: {fileID: 4224952706001814}
   - component: {fileID: 198222736358913996}
   - component: {fileID: 199996326924452998}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9588,6 +9590,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

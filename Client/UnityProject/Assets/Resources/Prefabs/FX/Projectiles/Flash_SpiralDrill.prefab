@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4280678828752694}
   - component: {fileID: 198827867566460608}
   - component: {fileID: 199716978078742170}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4772,6 +4772,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4832,7 +4833,7 @@ GameObject:
   - component: {fileID: 198331621026032334}
   - component: {fileID: 199720465790066152}
   - component: {fileID: -4710916707812790968}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_SpiralDrill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9586,6 +9587,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9646,6 +9648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1955724351059796
 GameObject:
   m_ObjectHideFlags: 0
@@ -9657,7 +9660,7 @@ GameObject:
   - component: {fileID: 4750284473282346}
   - component: {fileID: 198786518552947164}
   - component: {fileID: 199806247751785896}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14409,6 +14412,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

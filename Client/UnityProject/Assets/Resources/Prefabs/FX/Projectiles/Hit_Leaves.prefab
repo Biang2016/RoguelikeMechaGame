@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198652190930494444}
   - component: {fileID: 199499675225090684}
   - component: {fileID: -5238461831967662499}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_Leaves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4782,6 +4782,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4842,6 +4843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1046784998576440
 GameObject:
   m_ObjectHideFlags: 0
@@ -4853,7 +4855,7 @@ GameObject:
   - component: {fileID: 4535513542908324}
   - component: {fileID: 198553259374161848}
   - component: {fileID: 199923374425794040}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Leaves2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9614,6 +9616,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9673,7 +9676,7 @@ GameObject:
   - component: {fileID: 4343992287798594}
   - component: {fileID: 198617890845989572}
   - component: {fileID: 199700334656404966}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Leaves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14434,6 +14437,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14493,7 +14497,7 @@ GameObject:
   - component: {fileID: 4017760548233868}
   - component: {fileID: 198456296253770098}
   - component: {fileID: 199093406649196904}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19254,6 +19258,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19313,7 +19318,7 @@ GameObject:
   - component: {fileID: 4259350207680572}
   - component: {fileID: 198325540842303604}
   - component: {fileID: 199867125231304138}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24065,6 +24070,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -24124,7 +24130,7 @@ GameObject:
   - component: {fileID: 4701958928518484}
   - component: {fileID: 198980595284397332}
   - component: {fileID: 199699886376435688}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: ShockWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28876,6 +28882,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -28935,7 +28942,7 @@ GameObject:
   - component: {fileID: 4425856726294756}
   - component: {fileID: 198133994400257532}
   - component: {fileID: 199695001564087420}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33687,6 +33694,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -33746,7 +33754,7 @@ GameObject:
   - component: {fileID: 4418133240690430}
   - component: {fileID: 198660746562634756}
   - component: {fileID: 199892327733677744}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: LeavesBack2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38507,6 +38515,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -38566,7 +38575,7 @@ GameObject:
   - component: {fileID: 4173292384516928}
   - component: {fileID: 198769213268431180}
   - component: {fileID: 199839033946112236}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: GlowBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43327,6 +43336,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -43386,7 +43396,7 @@ GameObject:
   - component: {fileID: 4053522800841556}
   - component: {fileID: 198250862225907838}
   - component: {fileID: 199983775170629824}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48138,6 +48148,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

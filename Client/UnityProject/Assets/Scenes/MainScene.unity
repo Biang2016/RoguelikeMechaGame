@@ -214,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1500443317, guid: 776f29a684a9a412eb9b5171aa4742bd, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 59366147
+      value: 121232131
       objectReference: {fileID: 0}
     - target: {fileID: 1500443317, guid: 776f29a684a9a412eb9b5171aa4742bd, type: 3}
       propertyPath: field of view

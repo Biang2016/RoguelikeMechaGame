@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4288640449904024}
   - component: {fileID: 198416575730441870}
   - component: {fileID: 199372419702534796}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4822,7 +4823,7 @@ GameObject:
   - component: {fileID: 4457232277584166}
   - component: {fileID: 198126261517212852}
   - component: {fileID: 199455646751049090}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: ShockWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9574,6 +9575,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9633,7 +9635,7 @@ GameObject:
   - component: {fileID: 4837758482534730}
   - component: {fileID: 198077945595934636}
   - component: {fileID: 199462090819324656}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14385,6 +14387,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14445,7 +14448,7 @@ GameObject:
   - component: {fileID: 198048012468345860}
   - component: {fileID: 199100973891666236}
   - component: {fileID: -8701551977317681879}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_EvilBigGravBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19210,6 +19213,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19270,6 +19274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1985667934113690
 GameObject:
   m_ObjectHideFlags: 0
@@ -19281,7 +19286,7 @@ GameObject:
   - component: {fileID: 4788501799093380}
   - component: {fileID: 198680509301613478}
   - component: {fileID: 199510070720910376}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24033,6 +24038,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

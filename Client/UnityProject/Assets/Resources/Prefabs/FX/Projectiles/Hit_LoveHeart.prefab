@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4241676103301968}
   - component: {fileID: 198316446777700438}
   - component: {fileID: 199062173187954526}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Derbis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4822,7 +4823,7 @@ GameObject:
   - component: {fileID: 4875503250303432}
   - component: {fileID: 198825402336469492}
   - component: {fileID: 199406624305094724}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9574,6 +9575,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9634,7 +9636,7 @@ GameObject:
   - component: {fileID: 198510603497850608}
   - component: {fileID: 199173130962188016}
   - component: {fileID: -5979112546811788629}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_LoveHeart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14390,6 +14392,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14450,6 +14453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1809189214046922
 GameObject:
   m_ObjectHideFlags: 0
@@ -14461,7 +14465,7 @@ GameObject:
   - component: {fileID: 4965614127604726}
   - component: {fileID: 198106388638833360}
   - component: {fileID: 199050219498804620}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19213,6 +19217,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19272,7 +19277,7 @@ GameObject:
   - component: {fileID: 4318637143024682}
   - component: {fileID: 198104167782654880}
   - component: {fileID: 199941185433768010}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24024,6 +24029,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

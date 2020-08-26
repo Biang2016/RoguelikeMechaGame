@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198897076115281150}
   - component: {fileID: 199774004804777172}
   - component: {fileID: 5550495331198506151}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_TwinkleLittleWhite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4768,6 +4768,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4828,6 +4829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1231728272421276
 GameObject:
   m_ObjectHideFlags: 0
@@ -4839,7 +4841,7 @@ GameObject:
   - component: {fileID: 4453150737001634}
   - component: {fileID: 198774438477885910}
   - component: {fileID: 199513054164512262}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9591,6 +9593,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9650,7 +9653,7 @@ GameObject:
   - component: {fileID: 4469736669822296}
   - component: {fileID: 198877030427377042}
   - component: {fileID: 199809890537788622}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14411,6 +14414,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14470,7 +14474,7 @@ GameObject:
   - component: {fileID: 4606930311919512}
   - component: {fileID: 198907091164471868}
   - component: {fileID: 199731819714536816}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19231,6 +19235,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19290,7 +19295,7 @@ GameObject:
   - component: {fileID: 4359239095609568}
   - component: {fileID: 198812080756969636}
   - component: {fileID: 199995701735307744}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Crater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24042,6 +24047,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

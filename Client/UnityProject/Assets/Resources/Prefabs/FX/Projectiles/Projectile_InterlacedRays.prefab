@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4676422881007772}
   - component: {fileID: 198922292445585826}
   - component: {fileID: 199097654546861544}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4769,7 +4769,7 @@ GameObject:
   - component: {fileID: 108991988279912604}
   - component: {fileID: 199561921135206354}
   - component: {fileID: 54071781892700886}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_InterlacedRays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9677,7 +9677,7 @@ GameObject:
   - component: {fileID: 4449369110436016}
   - component: {fileID: 198758290244391330}
   - component: {fileID: 199133219548105348}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Derbis
   m_TagString: Untagged
   m_Icon: {fileID: 0}

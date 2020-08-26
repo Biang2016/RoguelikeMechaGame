@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 108095448666582800}
   - component: {fileID: 54496715902763870}
   - component: {fileID: 199280347088039186}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_YellowLightening
   m_TagString: Untagged
   m_Icon: {fileID: 0}

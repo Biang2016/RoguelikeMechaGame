@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4057166919693786}
   - component: {fileID: 198546249731553654}
   - component: {fileID: 199723274495976332}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Snow2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4772,6 +4772,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4832,7 +4833,7 @@ GameObject:
   - component: {fileID: 198143558759520766}
   - component: {fileID: 199969078739021238}
   - component: {fileID: 2544536686470555860}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_SnowFlake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9590,6 +9591,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9650,6 +9652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1562548414791972
 GameObject:
   m_ObjectHideFlags: 0
@@ -9661,7 +9664,7 @@ GameObject:
   - component: {fileID: 4284989666559246}
   - component: {fileID: 198710113550238746}
   - component: {fileID: 199964501916528264}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14422,6 +14425,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14481,7 +14485,7 @@ GameObject:
   - component: {fileID: 4025149768123802}
   - component: {fileID: 198423487730938980}
   - component: {fileID: 199001123515263006}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Snowflake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19242,6 +19246,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19301,7 +19306,7 @@ GameObject:
   - component: {fileID: 4490305532280372}
   - component: {fileID: 198978794451930446}
   - component: {fileID: 199936620986455634}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Cells
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24062,6 +24067,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -24121,7 +24127,7 @@ GameObject:
   - component: {fileID: 4738710574688576}
   - component: {fileID: 198832486895734224}
   - component: {fileID: 199709224981581788}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28882,6 +28888,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -28941,7 +28948,7 @@ GameObject:
   - component: {fileID: 4122939365812200}
   - component: {fileID: 198441970446745324}
   - component: {fileID: 199543828142175352}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33693,6 +33700,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

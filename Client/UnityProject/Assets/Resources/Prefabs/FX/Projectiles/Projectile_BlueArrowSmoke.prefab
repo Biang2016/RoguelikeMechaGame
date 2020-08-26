@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 199029229939319142}
   - component: {fileID: 108255700225900396}
   - component: {fileID: 54508532002122222}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_BlueArrowSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4020249096283684}
   - component: {fileID: 198317178407408692}
   - component: {fileID: 199710501713261578}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: FlashSparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4772,6 +4772,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4832,7 +4833,7 @@ GameObject:
   - component: {fileID: 198428836442132168}
   - component: {fileID: 199825750281911058}
   - component: {fileID: 1702267677362635384}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_GreenPoisonous
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9585,6 +9586,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9645,3 +9647,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0

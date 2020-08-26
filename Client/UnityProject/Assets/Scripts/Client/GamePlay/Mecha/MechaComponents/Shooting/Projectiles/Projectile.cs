@@ -20,7 +20,6 @@ namespace Client
         private Vector3 rotationOffset = new Vector3(0, 0, 0);
 
         private Rigidbody Rigidbody;
-        private Collider Collider;
         private ParticleSystem ParticleSystem;
 
         internal ProjectileInfo ProjectileInfo;
@@ -31,7 +30,6 @@ namespace Client
             ProjectileColliderRoot.OnRecycled();
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-            Collider.enabled = false;
             ProjectileInfo = null;
             FlyRealtimeData.HitMechaComponentInfo = null;
             FlyRealtimeData.HitCollider = null;
@@ -43,7 +41,6 @@ namespace Client
         void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
-            Collider = GetComponent<Collider>();
             ProjectileColliderRoot = GetComponentInChildren<ProjectileColliderRoot>();
             ParticleSystem = GetComponentInChildren<ParticleSystem>();
         }
@@ -96,7 +93,6 @@ namespace Client
         public void Launch(Transform dummyPos)
         {
             Rigidbody.constraints = RigidbodyConstraints.None;
-            Collider.enabled = true;
             transform.localScale = Vector3.one * (Override_Scale / 1000f);
 
             Vector3 initVelocity = new Vector3(ProjectileInfo.ProjectileConfig.Velocity.x, ProjectileInfo.ProjectileConfig.Velocity.y, ProjectileInfo.ProjectileConfig.VelocityCurve.Evaluate(0) * Override_VelocityFactor);

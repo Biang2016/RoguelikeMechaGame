@@ -165,6 +165,9 @@ MonoBehaviour:
     - Name: CollisionFilter
       Entry: 3
       Data: 2
+    - Name: PenetrateFilter
+      Entry: 3
+      Data: 2
     - Name: CanReflect
       Entry: 5
       Data: true

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4364912901593660}
   - component: {fileID: 198346693546781954}
   - component: {fileID: 199631425328136938}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Electricity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4826,6 +4826,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4885,7 +4886,7 @@ GameObject:
   - component: {fileID: 4562470516086342}
   - component: {fileID: 198523724765894352}
   - component: {fileID: 199348891968436354}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9637,6 +9638,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9697,7 +9699,7 @@ GameObject:
   - component: {fileID: 198397783741852124}
   - component: {fileID: 199318267386344112}
   - component: {fileID: 8600620051850414795}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_YellowLightening
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14453,6 +14455,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14513,6 +14516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1647428763677698
 GameObject:
   m_ObjectHideFlags: 0
@@ -14524,7 +14528,7 @@ GameObject:
   - component: {fileID: 4855936436315162}
   - component: {fileID: 198968457139188924}
   - component: {fileID: 199267902060409640}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19276,6 +19280,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19335,7 +19340,7 @@ GameObject:
   - component: {fileID: 4280495261760216}
   - component: {fileID: 198915029292838588}
   - component: {fileID: 199157525008745248}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: SparksDonw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24096,6 +24101,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

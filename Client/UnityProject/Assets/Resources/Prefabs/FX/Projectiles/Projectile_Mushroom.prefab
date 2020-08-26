@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 199865254318283598}
   - component: {fileID: 108204780233298718}
   - component: {fileID: 54953225180484114}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4943,7 +4943,7 @@ GameObject:
   - component: {fileID: 4702282410706314}
   - component: {fileID: 198849190835321302}
   - component: {fileID: 199745842046434202}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9755,7 +9755,7 @@ GameObject:
   - component: {fileID: 4597138759503960}
   - component: {fileID: 198488797301884742}
   - component: {fileID: 199140273679472108}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14518,7 +14518,7 @@ GameObject:
   - component: {fileID: 4051456160791628}
   - component: {fileID: 198085877717476928}
   - component: {fileID: 199481876126283556}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19330,7 +19330,7 @@ GameObject:
   - component: {fileID: 4655542008584570}
   - component: {fileID: 198875310950276182}
   - component: {fileID: 199858921527799788}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Rim
   m_TagString: Untagged
   m_Icon: {fileID: 0}

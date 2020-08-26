@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4563879321297270}
   - component: {fileID: 198350748427646016}
   - component: {fileID: 199203860304947680}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4823,7 +4824,7 @@ GameObject:
   - component: {fileID: 198940915552969734}
   - component: {fileID: 199752104216852388}
   - component: {fileID: 3538632783833425766}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_FastGreenBoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9588,6 +9589,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9648,6 +9650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1536049282590032
 GameObject:
   m_ObjectHideFlags: 0
@@ -9659,7 +9662,7 @@ GameObject:
   - component: {fileID: 4310774018667040}
   - component: {fileID: 198467267641680486}
   - component: {fileID: 199374972773205162}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14411,6 +14414,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14470,7 +14474,7 @@ GameObject:
   - component: {fileID: 4616348073729140}
   - component: {fileID: 198890700126423586}
   - component: {fileID: 199219126009321198}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: ShockWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19222,6 +19226,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19281,7 +19286,7 @@ GameObject:
   - component: {fileID: 4519642010442834}
   - component: {fileID: 198149823341552924}
   - component: {fileID: 199163215808599890}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24033,6 +24038,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

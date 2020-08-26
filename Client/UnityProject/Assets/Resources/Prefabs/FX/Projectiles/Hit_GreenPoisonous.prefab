@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 199311870342136618}
   - component: {fileID: 108314247292599642}
   - component: {fileID: 7392410119335888075}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_GreenPoisonous
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4770,6 +4770,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4826,8 +4827,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098451438589226}
   m_Enabled: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 2
+  m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -4890,6 +4892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1119903112256510
 GameObject:
   m_ObjectHideFlags: 0
@@ -4901,7 +4904,7 @@ GameObject:
   - component: {fileID: 4429820000716612}
   - component: {fileID: 198937847480404094}
   - component: {fileID: 199181512037985802}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9653,6 +9656,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9712,7 +9716,7 @@ GameObject:
   - component: {fileID: 4097087456226674}
   - component: {fileID: 198390218321615574}
   - component: {fileID: 199404585500236574}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14473,6 +14477,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14532,7 +14537,7 @@ GameObject:
   - component: {fileID: 4725319467843380}
   - component: {fileID: 198923810971641968}
   - component: {fileID: 199032807084946350}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Derbis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19284,6 +19289,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19343,7 +19349,7 @@ GameObject:
   - component: {fileID: 4080476820240034}
   - component: {fileID: 198303513433494612}
   - component: {fileID: 199373186784751110}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: ShockWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24095,6 +24101,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -24154,7 +24161,7 @@ GameObject:
   - component: {fileID: 4383150267028282}
   - component: {fileID: 198604070439506956}
   - component: {fileID: 199253662243903804}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Fire2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28915,6 +28922,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

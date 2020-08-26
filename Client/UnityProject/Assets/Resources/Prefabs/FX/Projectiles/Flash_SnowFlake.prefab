@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198309729739525634}
   - component: {fileID: 199672693032582126}
   - component: {fileID: -5180500235363866090}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash_SnowFlake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4767,6 +4767,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4827,6 +4828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f529fa81b784244c8b35dd878de8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1334464770651852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4838,7 +4840,7 @@ GameObject:
   - component: {fileID: 4927917097196720}
   - component: {fileID: 198667873304588514}
   - component: {fileID: 199432414274529666}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9590,6 +9592,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9649,7 +9652,7 @@ GameObject:
   - component: {fileID: 4122105410252158}
   - component: {fileID: 198142125207177858}
   - component: {fileID: 199189416929892212}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Snowflake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14410,6 +14413,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14469,7 +14473,7 @@ GameObject:
   - component: {fileID: 4432232064921522}
   - component: {fileID: 198437635711391278}
   - component: {fileID: 199245639119249204}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19230,6 +19234,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

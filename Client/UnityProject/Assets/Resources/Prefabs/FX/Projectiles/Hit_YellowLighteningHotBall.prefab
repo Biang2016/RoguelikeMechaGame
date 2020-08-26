@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4726784932558492}
   - component: {fileID: 198236788864637338}
   - component: {fileID: 199609516208470976}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Darkness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4709,6 +4709,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4768,7 +4769,7 @@ GameObject:
   - component: {fileID: 4014552918215346}
   - component: {fileID: 198187900949949952}
   - component: {fileID: 199346367231362696}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: CenterGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9475,6 +9476,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9534,7 +9536,7 @@ GameObject:
   - component: {fileID: 4502235734094542}
   - component: {fileID: 198933092312859972}
   - component: {fileID: 199067252525438862}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14295,6 +14297,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14354,7 +14357,7 @@ GameObject:
   - component: {fileID: 4286505852490586}
   - component: {fileID: 198570389619005558}
   - component: {fileID: 199329866931228094}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: SubSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19106,6 +19109,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -19165,7 +19169,7 @@ GameObject:
   - component: {fileID: 4358246480358042}
   - component: {fileID: 198303902703051750}
   - component: {fileID: 199097025616592570}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23917,6 +23921,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -23977,7 +23982,7 @@ GameObject:
   - component: {fileID: 198459042000340154}
   - component: {fileID: 199930653470066400}
   - component: {fileID: -434202463735650647}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_YellowLighteningHotBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28736,6 +28741,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -28796,6 +28802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1918563772670028
 GameObject:
   m_ObjectHideFlags: 0
@@ -28807,7 +28814,7 @@ GameObject:
   - component: {fileID: 4077744891954666}
   - component: {fileID: 198096362496087808}
   - component: {fileID: 199623758796500918}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: SubSparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33568,6 +33575,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -33627,7 +33635,7 @@ GameObject:
   - component: {fileID: 4138574360927588}
   - component: {fileID: 198789356499330486}
   - component: {fileID: 199415885768468370}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38442,6 +38450,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

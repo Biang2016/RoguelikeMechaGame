@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4551115970188028}
   - component: {fileID: 198462716587967406}
   - component: {fileID: 199363118221860904}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4822,7 +4823,7 @@ GameObject:
   - component: {fileID: 4062635478436120}
   - component: {fileID: 198711841754489868}
   - component: {fileID: 199540499320692524}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9574,6 +9575,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9634,7 +9636,7 @@ GameObject:
   - component: {fileID: 198149439886552118}
   - component: {fileID: 199975126801552102}
   - component: {fileID: -6600696228900454918}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Hit_ArrowsFly1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14389,6 +14391,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -14449,6 +14452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721765db1f6869a4e847b8c8de33f8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRecycled: 0
 --- !u!1 &1995928419330504
 GameObject:
   m_ObjectHideFlags: 0
@@ -14460,7 +14464,7 @@ GameObject:
   - component: {fileID: 4316484882106980}
   - component: {fileID: 198843330316428732}
   - component: {fileID: 199503102989363366}
-  m_Layer: 13
+  m_Layer: 26
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19221,6 +19225,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

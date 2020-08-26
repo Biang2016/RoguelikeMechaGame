@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 199626401336443300}
   - component: {fileID: 108858597636685324}
   - component: {fileID: 54610850387007412}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_TwinkleLittleWhite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4940,7 +4940,7 @@ GameObject:
   - component: {fileID: 4554369576913474}
   - component: {fileID: 198820072388439742}
   - component: {fileID: 199358788755595060}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9704,7 +9704,7 @@ GameObject:
   - component: {fileID: 4558691996639540}
   - component: {fileID: 198563080222100462}
   - component: {fileID: 199184059245651822}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}

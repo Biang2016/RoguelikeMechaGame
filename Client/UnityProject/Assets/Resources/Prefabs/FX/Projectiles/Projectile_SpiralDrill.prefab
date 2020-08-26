@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4101521856699400}
   - component: {fileID: 198410616642051370}
   - component: {fileID: 199388567726431750}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4823,7 +4823,7 @@ GameObject:
   - component: {fileID: 4276454524850690}
   - component: {fileID: 198507789579147546}
   - component: {fileID: 199626646811074284}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Wind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9580,7 +9580,7 @@ GameObject:
   - component: {fileID: 199307963145921556}
   - component: {fileID: 108519287932012084}
   - component: {fileID: 54051928621575228}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_SpiralDrill
   m_TagString: Untagged
   m_Icon: {fileID: 0}

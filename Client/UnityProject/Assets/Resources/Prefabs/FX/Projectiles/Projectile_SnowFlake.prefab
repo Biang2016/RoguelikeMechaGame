@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 199085376630515598}
   - component: {fileID: 108320471180231846}
   - component: {fileID: 54026867493614958}
-  m_Layer: 13
+  m_Layer: 1
   m_Name: Projectile_SnowFlake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4922,7 +4922,7 @@ GameObject:
   - component: {fileID: 4027575340155328}
   - component: {fileID: 198337719129872566}
   - component: {fileID: 199450610705254838}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9685,7 +9685,7 @@ GameObject:
   - component: {fileID: 4476547230820620}
   - component: {fileID: 198287256835688762}
   - component: {fileID: 199230031816184984}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Derbis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14448,7 +14448,7 @@ GameObject:
   - component: {fileID: 4915149813840288}
   - component: {fileID: 198359807666768676}
   - component: {fileID: 199869365633251996}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19211,7 +19211,7 @@ GameObject:
   - component: {fileID: 4379394965000066}
   - component: {fileID: 198987202803310668}
   - component: {fileID: 199574509586546038}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Snowflake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
