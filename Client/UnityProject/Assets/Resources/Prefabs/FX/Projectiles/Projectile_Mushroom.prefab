@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 199865254318283598}
   - component: {fileID: 108204780233298718}
   - component: {fileID: 54953225180484114}
-  - component: {fileID: 135567518640564876}
   m_Layer: 13
   m_Name: Projectile_Mushroom
   m_TagString: Untagged
@@ -33,6 +32,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4978755950749370194}
   - {fileID: 4655542008584570}
   - {fileID: 4051456160791628}
   - {fileID: 4702282410706314}
@@ -4789,6 +4789,7 @@ MonoBehaviour:
   IsRecycled: 0
   hitOffset: 0.1
   UseFirePointRotation: 0
+  ProjectileColliderRoot: {fileID: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!199 &199865254318283598
 ParticleSystemRenderer:
@@ -4931,19 +4932,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!135 &135567518640564876
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1047741547062842}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1322666646146556
 GameObject:
   m_ObjectHideFlags: 0
@@ -4974,7 +4962,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4379234586591618}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198849190835321302
 ParticleSystem:
@@ -4992,7 +4980,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -9786,7 +9774,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4379234586591618}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &198488797301884742
 ParticleSystem:
@@ -9804,7 +9792,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -14549,7 +14537,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.1999999, z: 1}
   m_Children: []
   m_Father: {fileID: 4379234586591618}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198085877717476928
 ParticleSystem:
@@ -14567,7 +14555,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -19361,7 +19349,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4379234586591618}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198875310950276182
 ParticleSystem:
@@ -19379,7 +19367,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -24143,3 +24131,78 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1001 &9219819482344001233
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4379234586591618}
+    m_Modifications:
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809689722592528222, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_Name
+      value: ProjectileColliderRoot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4342908cce4b5a743a890c19c27ae47c, type: 3}
+--- !u!4 &4978755950749370194 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+    type: 3}
+  m_PrefabInstance: {fileID: 9219819482344001233}
+  m_PrefabAsset: {fileID: 0}

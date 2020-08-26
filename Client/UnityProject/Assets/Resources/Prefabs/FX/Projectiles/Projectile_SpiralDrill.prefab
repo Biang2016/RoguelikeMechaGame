@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4304926407048384}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198410616642051370
 ParticleSystem:
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -4842,7 +4842,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4304926407048384}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &198507789579147546
 ParticleSystem:
@@ -4860,7 +4860,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -9580,7 +9580,6 @@ GameObject:
   - component: {fileID: 199307963145921556}
   - component: {fileID: 108519287932012084}
   - component: {fileID: 54051928621575228}
-  - component: {fileID: 135478432046551302}
   m_Layer: 13
   m_Name: Projectile_SpiralDrill
   m_TagString: Untagged
@@ -9599,6 +9598,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 796058457121904070}
   - {fileID: 4101521856699400}
   - {fileID: 4276454524850690}
   m_Father: {fileID: 0}
@@ -14335,6 +14335,7 @@ MonoBehaviour:
   IsRecycled: 0
   hitOffset: 0.1
   UseFirePointRotation: 0
+  ProjectileColliderRoot: {fileID: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!199 &199307963145921556
 ParticleSystemRenderer:
@@ -14477,16 +14478,78 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!135 &135478432046551302
-SphereCollider:
+--- !u!1001 &3595933133941382213
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462855424927428}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Modification:
+    m_TransformParent: {fileID: 4304926407048384}
+    m_Modifications:
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809689722592528222, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_Name
+      value: ProjectileColliderRoot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4342908cce4b5a743a890c19c27ae47c, type: 3}
+--- !u!4 &796058457121904070 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3595933133941382213}
+  m_PrefabAsset: {fileID: 0}

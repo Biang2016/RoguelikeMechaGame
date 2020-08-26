@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 114858159621136824}
   - component: {fileID: 199275608144092106}
   - component: {fileID: 54541207959183496}
-  - component: {fileID: 135443104936076632}
   m_Layer: 13
   m_Name: Projectile_YellowLighteningHotBall
   m_TagString: Untagged
@@ -32,6 +31,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 6547480988788560696}
   - {fileID: 4386413004761204}
   - {fileID: 4729167392178166}
   - {fileID: 4736755425962298}
@@ -4772,6 +4772,7 @@ MonoBehaviour:
   IsRecycled: 0
   hitOffset: 0.1
   UseFirePointRotation: 0
+  ProjectileColliderRoot: {fileID: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!199 &199275608144092106
 ParticleSystemRenderer:
@@ -4853,19 +4854,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!135 &135443104936076632
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033026374199576}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1266705764634346
 GameObject:
   m_ObjectHideFlags: 0
@@ -4914,7 +4902,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -9650,7 +9638,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4657959899363720}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!198 &198400002921194024
 ParticleSystem:
@@ -9668,7 +9656,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -14472,7 +14460,7 @@ Transform:
   m_Children:
   - {fileID: 4824884637708048}
   m_Father: {fileID: 4657959899363720}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &198245849294588934
 ParticleSystem:
@@ -14490,7 +14478,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -19226,7 +19214,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4657959899363720}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!198 &198892455232377490
 ParticleSystem:
@@ -19244,7 +19232,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -24047,7 +24035,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4657959899363720}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198731846123815800
 ParticleSystem:
@@ -24065,7 +24053,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -28859,7 +28847,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4657959899363720}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198283605089568258
 ParticleSystem:
@@ -28877,7 +28865,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -33617,7 +33605,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4657959899363720}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198030459419047656
 ParticleSystem:
@@ -33635,7 +33623,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
@@ -38345,3 +38333,98 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1001 &6932776591169542843
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4657959899363720}
+    m_Modifications:
+    - target: {fileID: 3804262270042760482, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: Radius
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809689722592528222, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_Name
+      value: ProjectileColliderRoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905761595862712381, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802227732529431521, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535565144282372733, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.31
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4342908cce4b5a743a890c19c27ae47c, type: 3}
+--- !u!4 &6547480988788560696 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+    type: 3}
+  m_PrefabInstance: {fileID: 6932776591169542843}
+  m_PrefabAsset: {fileID: 0}

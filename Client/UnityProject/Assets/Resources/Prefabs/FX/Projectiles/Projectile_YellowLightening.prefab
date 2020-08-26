@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 114771842933383490}
   - component: {fileID: 108095448666582800}
   - component: {fileID: 54496715902763870}
-  - component: {fileID: 135195918683395516}
   - component: {fileID: 199280347088039186}
   m_Layer: 13
   m_Name: Projectile_YellowLightening
@@ -32,7 +31,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7764894653407627410}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4727,6 +4727,7 @@ MonoBehaviour:
   IsRecycled: 0
   hitOffset: 0.1
   UseFirePointRotation: 0
+  ProjectileColliderRoot: {fileID: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!108 &108095448666582800
 Light:
@@ -4805,19 +4806,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!135 &135195918683395516
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557811069740550}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!199 &199280347088039186
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4882,3 +4870,78 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1001 &5848216985248284945
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4894478136417468}
+    m_Modifications:
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809689722592528222, guid: 4342908cce4b5a743a890c19c27ae47c,
+        type: 3}
+      propertyPath: m_Name
+      value: ProjectileColliderRoot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4342908cce4b5a743a890c19c27ae47c, type: 3}
+--- !u!4 &7764894653407627410 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4245619912393902467, guid: 4342908cce4b5a743a890c19c27ae47c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5848216985248284945}
+  m_PrefabAsset: {fileID: 0}

@@ -29,10 +29,10 @@ TagManager:
   - ComponentHitBox_Player
   - ComponentHitBox_Enemy
   - 
-  - Projectile_Both
-  - Projectile_PlayerOnly
-  - Projectile_EnemyOnly
   - 
+  - Projectile_CollidePlayer
+  - Projectile_CollideEnemy
+  - Projectile_CollideSurroundings
   - 
   - 
   - 

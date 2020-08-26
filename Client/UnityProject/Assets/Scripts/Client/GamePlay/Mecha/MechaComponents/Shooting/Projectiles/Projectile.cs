@@ -14,6 +14,9 @@ namespace Client
         private bool UseFirePointRotation;
 
         [SerializeField]
+        private ProjectileColliderRoot ProjectileColliderRoot;
+
+        [SerializeField]
         private Vector3 rotationOffset = new Vector3(0, 0, 0);
 
         private Rigidbody Rigidbody;
@@ -25,6 +28,7 @@ namespace Client
         public override void PoolRecycle()
         {
             StopSelfEffect();
+            ProjectileColliderRoot.OnRecycled();
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             Collider.enabled = false;
@@ -40,6 +44,7 @@ namespace Client
         {
             Rigidbody = GetComponent<Rigidbody>();
             Collider = GetComponent<Collider>();
+            ProjectileColliderRoot = GetComponentInChildren<ProjectileColliderRoot>();
             ParticleSystem = GetComponentInChildren<ParticleSystem>();
         }
 
@@ -50,6 +55,7 @@ namespace Client
         public void Initialize(ProjectileInfo projectileInfo)
         {
             ProjectileInfo = projectileInfo;
+            ProjectileColliderRoot.Init(projectileInfo);
             CalculateOverrideParams();
         }
 
